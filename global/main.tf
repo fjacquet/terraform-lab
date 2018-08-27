@@ -17,3 +17,7 @@ module "demand" {
 module "vpc" {
   source = "./vpc"
 }
+
+module "dynamodb" {
+  source = "./dynamodb"
+}
