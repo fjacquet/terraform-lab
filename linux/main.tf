@@ -1,0 +1,5 @@
+
+
+module "oracle" {
+  source = "./oracle"
+}
