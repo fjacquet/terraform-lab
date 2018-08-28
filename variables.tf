@@ -8,10 +8,77 @@ variable "key_name" {
   default     = "alfred"
 }
 
+variable "azs" {
+  description = "AWS availability zone to launch servers."
+  type        = "list"
+
+  default = [
+    "eu-west-1a",
+    "eu-west-1b",
+    "eu-west-1c",
+  ]
+}
+
+# Region
+variable "aws_region" {
+  type    = "string"
+  default = "eu-west-1"
+}
+
 variable "access_key" {
   default = ""
 }
 
 variable "secret_key" {
   default = ""
+}
+
+variable "cidr_back" {
+  type = "list"
+
+  default = [
+    "10.0.11.0/24",
+    "10.0.12.0/24",
+    "10.0.13.0/24",
+  ]
+}
+
+variable "cidr_exch" {
+  type = "list"
+
+  default = [
+    "10.0.21.0/24",
+    "10.0.22.0/24",
+    "10.0.23.0/24",
+  ]
+}
+
+variable "cidr_gw" {
+  default = "10.0.100.0/24"
+}
+
+variable "cidr_mgmt" {
+  default = "10.0.20.0/24"
+}
+
+variable "cidr_vpc" {
+  default = "10.0.0.0/16"
+}
+
+variable "cidr_web" {
+  type = "list"
+
+  default = [
+    "10.0.1.0/24",
+    "10.0.2.0/24",
+    "10.0.3.0/24",
+  ]
+}
+
+variable "aws_size_nbu_backups" {
+  default = 100
+}
+
+variable "aws_size_nbu_openv" {
+  default = 20
 }

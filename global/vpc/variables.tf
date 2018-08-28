@@ -1,11 +1,19 @@
+
+variable "access_key" {}
+variable "aws_region" {}
 variable "azs" {
-  description = "AWS availability zone to launch servers."
-  type        = "list"
-  default     = ["eu-west-1a", "eu-west-1b"]
+    type="list"
 }
-
-
-variable "aws_region" {
-  type    = "string"
-  default = "eu-west-1"
+variable "cidr_back" {
+    type="list"
 }
+variable "cidr_exch" {
+    type="list"
+}
+variable "cidr_gw" {}
+variable "cidr_mgmt" {}
+variable "cidr_vpc" {}
+variable "cidr_web" {
+    type="list"
+}
+variable "secret_key" {}
