@@ -18,10 +18,11 @@ resource "aws_instance" "jumpbox" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
-    "${var.aws_sg_ids}"
+    "${var.aws_sg_ids}",
   ]
 }
+
 resource "aws_eip" "jumpbox" {
-  vpc        = true
-  instance   = "${aws_instance.jumpbox.id}"
+  vpc      = true
+  instance = "${aws_instance.jumpbox.id}"
 }

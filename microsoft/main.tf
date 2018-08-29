@@ -1,16 +1,16 @@
 module "adcs" {
-  source                 = "./adcs"
-  aws_amis               = "${var.aws_amis_win2016}"
+  source                  = "./adcs"
+  aws_amis                = "${var.aws_amis_win2016}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number_pki_crl     = "${var.aws_number_pki_crl}"
-  aws_number_pki_ica     = "${var.aws_number_pki_ica}"
-  aws_number_pki_rca     = "${var.aws_number_pki_rca}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_back_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_back}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number_pki_crl      = "${var.aws_number_pki_crl}"
+  aws_number_pki_ica      = "${var.aws_number_pki_ica}"
+  aws_number_pki_rca      = "${var.aws_number_pki_rca}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_back_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_back}"
 
   aws_sg_ids = [
     "${var.aws_sg_cvltclient_id}",
@@ -23,16 +23,16 @@ module "adcs" {
 }
 
 module "adds" {
-  source                 = "./adds"
-  aws_amis               = "${var.aws_amis_win2016}"
+  source                  = "./adds"
+  aws_amis                = "${var.aws_amis_win2016}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_dc}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_back_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_back}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_dc}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_back_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_back}"
 
   aws_sg_ids = [
     "${var.aws_sg_cvltclient_id}",
@@ -51,16 +51,16 @@ module "dfs" {
 }
 
 module "dhcp" {
-  source                 = "./dhcp"
-  aws_amis               = "${var.aws_amis_win2016}"
+  source                  = "./dhcp"
+  aws_amis                = "${var.aws_amis_win2016}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_dhcp}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_back_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_back}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_dhcp}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_back_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_back}"
 
   aws_sg_ids = [
     "${var.aws_sg_cvltclient_id}",
@@ -71,16 +71,16 @@ module "dhcp" {
 }
 
 module "da" {
-  source                 = "./da"
-  aws_amis               = "${var.aws_amis_win2016}"
+  source                  = "./da"
+  aws_amis                = "${var.aws_amis_win2016}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_da}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_mgmt_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_web}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_da}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_web}"
 
   aws_sg_ids = [
     "${var.aws_sg_rdp_id}",
@@ -91,16 +91,16 @@ module "da" {
 }
 
 module "exch" {
-  source                 = "./exch"
-  aws_amis               = "${var.aws_amis_win2016}"
+  source                  = "./exch"
+  aws_amis                = "${var.aws_amis_win2016}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_exch}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_exch_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_exch}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_exch}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_exch_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_exch}"
 
   aws_sg_ids = [
     "${var.aws_sg_cvltclient_id}",
@@ -111,16 +111,16 @@ module "exch" {
 }
 
 module "ipam" {
-  source                 = "./ipam/"
-  aws_amis               = "${var.aws_amis_win2016}"
+  source                  = "./ipam/"
+  aws_amis                = "${var.aws_amis_win2016}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_ipam}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_mgmt_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_back}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_ipam}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_back}"
 
   aws_sg_ids = [
     "${var.aws_sg_cvltclient_id}",
@@ -131,16 +131,16 @@ module "ipam" {
 }
 
 module "sharepoint" {
-  source                 = "./sharepoint"
-  aws_amis               = "${var.aws_amis_sharepoint}"
+  source                  = "./sharepoint"
+  aws_amis                = "${var.aws_amis_sharepoint}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_sharepoint}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_web_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_web}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_sharepoint}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_web_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_web}"
 
   aws_sg_ids = [
     "${var.aws_sg_cvltclient_id}",
@@ -151,16 +151,16 @@ module "sharepoint" {
 }
 
 module "sql" {
-  source                 = "./sql"
-  aws_amis               = "${var.aws_amis_sql}"
+  source                  = "./sql"
+  aws_amis                = "${var.aws_amis_sql}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_sql}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_back_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_back}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_sql}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_back_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_back}"
 
   aws_sg_ids = [
     "${var.aws_sg_cvltclient_id}",
@@ -175,16 +175,16 @@ module "workfolders" {
 }
 
 module "simpana" {
-  source                 = "./simpana"
-  aws_amis               = "${var.aws_amis_win2016}"
+  source                  = "./simpana"
+  aws_amis                = "${var.aws_amis_win2016}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_simpana}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_mgmt_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
-  cidr                   = "${var.cidr_back}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_simpana}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  cidr                    = "${var.cidr_back}"
 
   aws_sg_ids = [
     "${var.aws_sg_rdp_id}",
@@ -193,15 +193,15 @@ module "simpana" {
 }
 
 module "jumpbox" {
-  source                 = "./jumpbox"
-  aws_amis               = "${var.aws_amis_jumpbox}"
+  source                  = "./jumpbox"
+  aws_amis                = "${var.aws_amis_jumpbox}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id   = "${var.aws_key_pair_auth_id}"
-  aws_number             = "${var.aws_number_jumpbox}"
-  aws_region             = "${var.aws_region}"
-  aws_subnet_id          = "${var.aws_subnet_mgmt_id}"
-  aws_vpc_id             = "${var.aws_vpc_id}"
-  azs                    = "${var.azs}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${var.aws_number_jumpbox}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
 
   aws_sg_ids = [
     "${var.aws_sg_cvltclient_id}",

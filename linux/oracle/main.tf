@@ -1,5 +1,3 @@
-
-
 resource "aws_instance" "oracle" {
   instance_type          = "m4.xlarge"
   count                  = "${var.aws_number}"
@@ -35,6 +33,7 @@ resource "aws_ebs_volume" "oracle_u01" {
   type              = "gp2"
   size              = "${var.aws_size_oracle_u01}"
 }
+
 resource "aws_security_group" "oracle" {
   name        = "terraform_evlab_oracle"
   description = "Used in the terraform"

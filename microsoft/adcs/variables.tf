@@ -5,6 +5,7 @@ variable "aws_number_pki_ica" {}
 variable "aws_number_pki_rca" {}
 variable "aws_region" {}
 variable "aws_vpc_id" {}
+
 variable "cidr" {
   type = "list"
 }
@@ -17,7 +18,9 @@ variable "aws_amis" {
   type = "map"
 }
 
-variable "aws_subnet_id" {}
+variable "aws_subnet_id" {
+  type = "list"
+}
 
 variable "azs" {
   type = "list"

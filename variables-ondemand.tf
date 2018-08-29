@@ -4,7 +4,7 @@ variable "aws_number_bsd" {
 
 # Number of Direct Access instances
 variable "aws_number_da" {
-  default = 0
+  default = 1
 }
 
 # Number of Active Directory instances

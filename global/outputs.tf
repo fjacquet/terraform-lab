@@ -45,4 +45,3 @@ output "cidr_mgmt" {
 output "cidr_web" {
   value = "${var.cidr_web}"
 }
-

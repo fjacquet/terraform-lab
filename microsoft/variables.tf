@@ -16,10 +16,23 @@ variable "aws_region" {}
 variable "aws_sg_cvltclient_id" {}
 variable "aws_sg_nbuclient_id" {}
 variable "aws_sg_rdp_id" {}
-variable "aws_subnet_back_id" {}
-variable "aws_subnet_exch_id" {}
-variable "aws_subnet_mgmt_id" {}
-variable "aws_subnet_web_id" {}
+
+variable "aws_subnet_back_id" {
+  type = "list"
+}
+
+variable "aws_subnet_exch_id" {
+  type = "list"
+}
+
+variable "aws_subnet_mgmt_id" {
+  type = "list"
+}
+
+variable "aws_subnet_web_id" {
+  type = "list"
+}
+
 variable "aws_vpc_id" {}
 
 variable "cidr_back" {

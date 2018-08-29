@@ -1,4 +1,3 @@
-
 # Create a VPC to launch our instances into
 resource "aws_vpc" "evlab" {
   cidr_block           = "${var.cidr_vpc}"

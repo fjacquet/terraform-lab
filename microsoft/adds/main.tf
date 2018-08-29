@@ -3,7 +3,7 @@ resource "aws_instance" "dc" {
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
-  aws_subnet_id        = "${var.aws_subnet_id}"
+  subnet_id            = "${var.aws_subnet_id}"
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
   key_name             = "${var.aws_key_pair_auth_id}"
   user_data            = "${file("user_data/config-dc.ps1")}"

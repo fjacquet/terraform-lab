@@ -1,3 +1,9 @@
+provider "aws" {
+  access_key = "${var.access_key}"
+  region     = "${var.aws_region}"
+  secret_key = "${var.secret_key}"
+}
+
 module "global" {
   source     = "./global"
   access_key = "${var.access_key}"
@@ -58,18 +64,8 @@ module "linux" {
 }
 
 module "microsoft" {
-  source                  = "./microsoft"
-  # aws_sg_da_id            = "${module.microsoft.aws_sg_da_id}"
-  # aws_sg_dc_id            = "${module.microsoft.aws_sg_dc_id}"
-  # aws_sg_dhcp_id          = "${module.microsoft.aws_sg_dhcp_id}"
-  # aws_sg_exch_id          = "${module.microsoft.aws_sg_exch_id}"
-  # aws_sg_ipam_id          = "${module.microsoft.aws_sg_ipam_id}"
-  # aws_sg_pki_crl_id       = "${module.microsoft.aws_sg_pki_crl_id}"
-  # aws_sg_pki_ica_id       = "${module.microsoft.aws_sg_pki_ica_id}"
-  # aws_sg_pki_rca_id       = "${module.microsoft.aws_sg_pki_rca_id}"
-  # aws_sg_sharepoint_id    = "${module.microsoft.aws_sg_sharepoint_id}"
-  # aws_sg_simpana_id       = "${module.microsoft.aws_sg_simpana_id}"
-  # aws_sg_sql_id           = "${module.microsoft.aws_sg_sql_id}"
+  source = "./microsoft"
+
   aws_amis_jumpbox        = "${var.aws_amis_win2016}"
   aws_amis_sharepoint     = "${var.aws_amis_sharepoint}"
   aws_amis_sql            = "${var.aws_amis_sql}"

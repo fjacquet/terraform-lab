@@ -1,9 +1,4 @@
 # Amazon access
-provider "aws" {
-  access_key = "${var.access_key}"
-  region     = "${var.aws_region}"
-  secret_key = "${var.secret_key}"
-}
 
 # backend to store lock file
 terraform {

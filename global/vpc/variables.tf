@@ -1,19 +1,24 @@
-
 variable "access_key" {}
 variable "aws_region" {}
+
 variable "azs" {
-    type="list"
+  type = "list"
 }
+
 variable "cidr_back" {
-    type="list"
+  type = "list"
 }
+
 variable "cidr_exch" {
-    type="list"
+  type = "list"
 }
+
 variable "cidr_gw" {}
 variable "cidr_mgmt" {}
 variable "cidr_vpc" {}
+
 variable "cidr_web" {
-    type="list"
+  type = "list"
 }
+
 variable "secret_key" {}

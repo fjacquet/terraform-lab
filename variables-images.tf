@@ -1,4 +1,3 @@
-
 #  BSD Amazon instance
 variable "aws_amis_bsd" {
   default = {
