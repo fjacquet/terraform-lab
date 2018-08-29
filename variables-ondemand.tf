@@ -9,7 +9,7 @@ variable "aws_number_da" {
 
 # Number of Active Directory instances
 variable "aws_number_dc" {
-  default = 1
+  default = 2
 }
 
 # Number of DHCP instances

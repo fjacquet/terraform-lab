@@ -25,7 +25,7 @@ resource "aws_instance" "pki-ica" {
 
 # A security group for basic windows box
 resource "aws_security_group" "pki_ica" {
-  name        = "terraform_evlab_windows_pki"
+  name        = "terraform_evlab_pki_ica"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

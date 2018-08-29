@@ -21,8 +21,3 @@ resource "aws_instance" "jumpbox" {
     "${var.aws_sg_ids}",
   ]
 }
-
-resource "aws_eip" "jumpbox" {
-  vpc      = true
-  instance = "${aws_instance.jumpbox.id}"
-}

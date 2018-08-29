@@ -21,11 +21,6 @@ resource "aws_instance" "guacamole" {
   }
 }
 
-resource "aws_eip" "guacamole" {
-  vpc      = true
-  instance = "${aws_instance.guacamole.id}"
-}
-
 resource "aws_security_group" "guacamole" {
   name        = "terraform_evlab_guacamole"
   description = "Used in the terraform"
