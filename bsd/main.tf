@@ -5,7 +5,7 @@ resource "aws_instance" "bsd" {
   ami                    = "${lookup(var.aws_amis, var.aws_region)}"
   subnet_id              = "${var.aws_subnet_id}"
   key_name               = "${var.aws_key_pair_auth_id}"
-  vpc_security_group_ids = "${var.aws_sg_id}"
+  vpc_security_group_ids = "${var.aws_sg_ids}"
 
   tags {
     Name = "bsd-${count.index}"

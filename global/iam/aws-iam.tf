@@ -10,23 +10,24 @@ resource "aws_iam_policy" "ec2ro" {
   policy      = "${file("./iam_json/iam-policy-ec2ro.json")}"
 }
 
-resource "aws_iam_policy_attachment" "assumeRole-ec2ro-attach" {
-  name       = "assumeRole-ec2ro-attach"
-  roles      = ["${aws_iam_role.assumeRole.name}"]
+resource "aws_iam_policy_attachment" "assumerole-ec2ro-attach" {
+  name       = "assumerole-ec2ro-attach"
+  roles      = ["${aws_iam_role.assumerole.name}"]
   policy_arn = "${aws_iam_policy.ec2ro.arn}"
 }
 
-resource "aws_iam_policy_attachment" "assumeRole-ec2s3access-attach" {
-  name       = "assumeRole-ec2s3access-attach"
-  roles      = ["${aws_iam_role.assumeRole.name}"]
+resource "aws_iam_policy_attachment" "assumerole-ec2s3access-attach" {
+  name       = "assumerole-ec2s3access-attach"
+  roles      = ["${aws_iam_role.assumerole.name}"]
   policy_arn = "${aws_iam_policy.ec2s3access.arn}"
 }
-resource "aws_iam_instance_profile" "assumeRole-profile" {
-  name  = "assumeRole-profile"
-  role = "${aws_iam_role.assumeRole.name}"
+
+resource "aws_iam_instance_profile" "aws_iip_assumerole" {
+  name = "aws_iip_aws_iip_assumerole"
+  role = "${aws_iam_role.assumerole.name}"
 }
 
-resource "aws_iam_role" "assumeRole" {
-  name               = "assumeRole"
+resource "aws_iam_role" "assumerole" {
+  name               = "assumerole"
   assume_role_policy = "${file("./iam_json/iam-role-assure-role.json")}"
 }

@@ -3,15 +3,14 @@ resource "aws_instance" "simpana" {
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
-  iam_instance_profile = "${var.aws_ip_assumeRole_name}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
   key_name             = "${var.aws_key_pair_auth_id}"
   ebs_optimized        = "true"
   user_data            = "${file("user_data/config-win.ps1")}"
   subnet_id            = "${var.aws_subnet_id}"
 
   vpc_security_group_ids = [
-    "${var.aws_sg_simpana_id}",
-    "${aws_security_group.simpana.id}",
+    "${var.aws_sg_ids}",
   ]
 
   root_block_device = {
@@ -29,14 +28,14 @@ resource "aws_instance" "simpana" {
 
 resource "aws_volume_attachment" "ebs_simpana_d" {
   device_name       = "/dev/xvdb"
-  count             = "${var.aws_simpana_number}"
+  count             = "${var.aws_number}"
   availability_zone = "${element(var.azs, count.index)}"
   volume_id         = "${element(aws_ebs_volume.simpana_d.*.id, count.index)}"
   instance_id       = "${element(aws_instance.simpana.*.id, count.index)}"
 }
 
 resource "aws_ebs_volume" "simpana_d" {
-  count             = "${var.aws_simpana_number}"
+  count             = "${var.aws_number}"
   availability_zone = "${element(var.azs, count.index)}"
   size              = 100
   type              = "gp2"

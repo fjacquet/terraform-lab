@@ -1,14 +1,17 @@
 resource "aws_instance" "nbumaster" {
-  instance_type          = "m4.xlarge"
-  count                  = "${var.aws_number}"
-  availability_zone      = "${element(var.azs, count.index)}"
-  ami                    = "${lookup(var.aws_amis, var.aws_region)}"
-  key_name               = "${var.aws_key_pair_auth_id}"
-  ebs_optimized          = "true"
-  subnet_id              = "${var.aws_subnet_id}"
-  user_data              = "${file("user_data/config-nbu.sh")}"
-  iam_instance_profile   = "${var.aws_ip_assumeRole_name}"
-  vpc_security_group_ids = ["${var.aws_sg_id}","${aws_security_group.nbumaster.id}"]
+  instance_type        = "m4.xlarge"
+  count                = "${var.aws_number}"
+  availability_zone    = "${element(var.azs, count.index)}"
+  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
+  key_name             = "${var.aws_key_pair_auth_id}"
+  ebs_optimized        = "true"
+  subnet_id            = "${var.aws_subnet_id}"
+  user_data            = "${file("user_data/config-nbu.sh")}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
+
+  vpc_security_group_ids = [
+    "${var.aws_sg_ids}",
+  ]
 
   root_block_device = {
     volume_size = 80
@@ -25,27 +28,27 @@ resource "aws_instance" "nbumaster" {
 
 resource "aws_volume_attachment" "ebs_openv" {
   device_name = "/dev/xvdb"
-  count       = "${var.aws_number_nbumaster}"
+  count       = "${var.aws_number}"
   volume_id   = "${element(aws_ebs_volume.openv.*.id, count.index)}"
   instance_id = "${element(aws_instance.nbumaster.*.id, count.index)}"
 }
 
 resource "aws_ebs_volume" "openv" {
   availability_zone = "${element(var.azs, count.index)}"
-  count             = "${var.aws_number_nbumaster}"
+  count             = "${var.aws_number}"
   type              = "gp2"
-  size              = "${var.aws_number_nbu_openv}"
+  size              = "${var.aws_size_nbu_openv}"
 }
 
 resource "aws_volume_attachment" "ebs_backups" {
   device_name = "/dev/xvdc"
-  count       = "${var.aws_number_nbumaster}"
+  count       = "${var.aws_number}"
   volume_id   = "${element(aws_ebs_volume.backups.*.id, count.index)}"
   instance_id = "${element(aws_instance.nbumaster.*.id, count.index)}"
 }
 
 resource "aws_ebs_volume" "backups" {
-  count             = "${var.aws_number_nbumaster}"
+  count             = "${var.aws_number}"
   availability_zone = "${element(var.azs, count.index)}"
   type              = "gp2"
   size              = "${var.aws_size_nbu_backups}"

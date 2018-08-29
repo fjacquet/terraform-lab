@@ -48,7 +48,7 @@ variable "aws_amis_sharepoint" {
 }
 
 #  SQL 2016
-variable "aws_amis_sql2016" {
+variable "aws_amis_sql" {
   default = {
     eu-west-1 = "ami-05b9370efd1cefcf4"
   }

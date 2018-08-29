@@ -3,10 +3,10 @@ resource "aws_instance" "guacamole" {
   count                  = "${var.aws_number}"
   subnet_id              = "${var.aws_subnet_id}"
   user_data              = "${file("user_data/config-guacamole.sh")}"
-  iam_instance_profile   = "${var.aws_ip_assumeRole_name}"
+  iam_instance_profile   = "${var.aws_iip_assumerole_name}"
   ami                    = "${lookup(var.aws_amis, var.aws_region)}"
   key_name               = "${var.aws_key_pair_auth_id}"
-  vpc_security_group_ids = ["${var.aws_sg_id}","${aws_security_group.guacamole.id}"]
+  vpc_security_group_ids = ["${var.aws_sg_ids}"]
 
   root_block_device = {
     volume_size = 80

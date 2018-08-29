@@ -2,7 +2,7 @@ resource "aws_instance" "pki-ica" {
   instance_type        = "t2.medium"
   count                = "${var.aws_number_pki_ica}"
   availability_zone    = "${element(var.azs, count.index)}"
-  iam_instance_profile = "${var.aws_ip_assumeRole_name}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
   user_data            = "${file("user_data/config-pki.ps1")}"
@@ -18,7 +18,7 @@ resource "aws_instance" "pki-ica" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
-    "${var.aws_sg_id}",
+    "${var.aws_sg_ids}",
     "${aws_security_group.pki_ica.id}",
   ]
 }

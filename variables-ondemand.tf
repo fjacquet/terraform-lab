@@ -33,7 +33,7 @@ variable "aws_number_ipam" {
 }
 
 # Number of mgmt server instances
-variable "aws_number_mgmt" {
+variable "aws_number_jumpbox" {
   default = 1
 }
 

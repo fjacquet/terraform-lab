@@ -1,8 +1,8 @@
 resource "aws_instance" "dc" {
   instance_type        = "t2.medium"
-  count                = "${var.aws_dc_number}"
+  count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
-  iam_instance_profile = "${var.aws_ip_assumeRole_name}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
   aws_subnet_id        = "${var.aws_subnet_id}"
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
   key_name             = "${var.aws_key_pair_auth_id}"
@@ -18,8 +18,7 @@ resource "aws_instance" "dc" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
-    "${var.aws_sg_id}",
-    "${aws_security_group.dc.id}",
+    "${var.aws_sg_ids}",
   ]
 }
 

@@ -7,16 +7,12 @@ variable "aws_vpc_id" {}
 variable "cidr" {
   type = "list"
 }
-
 variable "aws_sg_ids" {
   type = "list"
 }
-
-
-variable "aws_amis" {
-  type = "map"
-}
-
 variable "azs" {
-  type = "list"
+    type="list"
+}
+variable "aws_amis" {
+     type="map"
 }

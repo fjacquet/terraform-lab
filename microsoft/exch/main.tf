@@ -1,23 +1,23 @@
 ###########################################################################
 # A test exchange 
 ###########################################################################
-resource "aws_instance" "exchange" {
+resource "aws_instance" "exch" {
   instance_type        = "m4.large"
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
-  user_data            = "${file("user_data/config-exchange.ps1")}"
+  user_data            = "${file("user_data/config-exch.ps1")}"
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   key_name             = "${var.aws_key_pair_auth_id}"
   ebs_optimized        = "true"
-  iam_instance_profile = "${var.aws_ip_assumeRole_name}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
 
   root_block_device = {
     volume_size = 100
   }
 
   tags {
-    Name = "exchange-${count.index}"
+    Name = "exch-${count.index}"
   }
 
   lifecycle {
@@ -26,15 +26,14 @@ resource "aws_instance" "exchange" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
-    "${var.aws_sg_id}",
-    "${aws_security_group.exch.id}"
+    "${var.aws_sg_ids}",
   ]
 }
 
 resource "aws_security_group" "exch" {
   name        = "terraform_evlab_windows_exch"
   description = "Used in the terraform"
-  vpc_id      = "${module.global.aws_vpc_id}"
+  vpc_id      = "${var.aws_vpc_id}"
 
   # LDAP 
   ingress {

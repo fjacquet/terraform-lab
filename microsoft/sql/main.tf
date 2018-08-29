@@ -2,7 +2,7 @@ resource "aws_instance" "sql" {
   instance_type        = "m4.large"
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
-  iam_instance_profile = "${var.aws_ip_assumeRole_name}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
   subnet_id            = "${var.aws_subnet_id}"
   key_name             = "${var.aws_key_pair_auth_id}"
@@ -19,15 +19,14 @@ resource "aws_instance" "sql" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
-    "${var.aws_sg_id}",
-    "${var.aws_sg_sql_id}"
+    "${var.aws_sg_ids}",
   ]
 }
 
 resource "aws_security_group" "sql" {
   name        = "terraform_evlab_sql"
   description = "Used in the terraform"
-  vpc_id      = "${module.global.aws_vpc_id}"
+  vpc_id      = "${var.aws_vpc_id}"
 
   # HTTP access from anywhere
   ingress {

@@ -25,6 +25,14 @@ variable "aws_region" {
   default = "eu-west-1"
 }
 
+variable "aws_size_nbu_backups" {
+  default = 100
+}
+
+variable "aws_size_nbu_openv" {
+  default = 20
+}
+
 variable "access_key" {
   default = ""
 }
@@ -73,12 +81,4 @@ variable "cidr_web" {
     "10.0.2.0/24",
     "10.0.3.0/24",
   ]
-}
-
-variable "aws_size_nbu_backups" {
-  default = 100
-}
-
-variable "aws_size_nbu_openv" {
-  default = 20
 }

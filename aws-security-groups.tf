@@ -1,48 +1,3 @@
-resource "aws_security_group" "ssh" {
-  name        = "terraform_evlab_lssh"
-  description = "Used in the terraform"
-  vpc_id      = "${module.global.aws_vpc_id}"
-
-  # SSH access from anywhere
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-# A security group for basic windows box
-resource "aws_security_group" "rdp" {
-  name        = "terraform_evlab_rdp"
-  description = "Used in the terraform"
-  vpc_id      = "${module.global.aws_vpc_id}"
-
-  # HTTP access from anywhere
-  ingress {
-    from_port   = 3389
-    to_port     = 3389
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_security_group" "cvltclient" {
   name        = "terraform_evlab_cvltclient"
   description = "Used in the terraform"
@@ -91,7 +46,51 @@ resource "aws_security_group" "nbuclient" {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
-    security_groups = ["${aws_security_group.nbumaster.id}"]
+    security_groups = ["${module.linux.aws_sg_nbumaster_id}"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "rdp" {
+  name        = "terraform_evlab_rdp"
+  description = "Used in the terraform"
+  vpc_id      = "${module.global.aws_vpc_id}"
+
+  # HTTP access from anywhere
+  ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "ssh" {
+  name        = "terraform_evlab_lssh"
+  description = "Used in the terraform"
+  vpc_id      = "${module.global.aws_vpc_id}"
+
+  # SSH access from anywhere
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   # outbound internet access

@@ -1,3 +1,12 @@
+module "providers" {
+  source     = "./providers/"
+  access_key = "${var.access_key}"
+  aws_region = "${var.aws_region}"
+  secret_key = "${var.secret_key}"
+  key_name   = "${var.key_name}"
+  public_key = "${var.public_key}"
+}
+
 module "iam" {
   source = "./iam/"
 }
@@ -26,7 +35,7 @@ module "vpc" {
   cidr_exch  = "${var.cidr_exch}"
   cidr_gw    = "${var.cidr_gw}"
   cidr_mgmt  = "${var.cidr_mgmt}"
-  cidr_web  = "${var.cidr_web}"
+  cidr_web   = "${var.cidr_web}"
 }
 
 module "dynamodb" {

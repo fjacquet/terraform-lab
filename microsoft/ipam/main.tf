@@ -6,7 +6,7 @@ resource "aws_instance" "ipam" {
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
   user_data            = "${file("user_data/config-ipam.ps1")}"
   key_name             = "${var.aws_key_pair_auth_id}"
-  iam_instance_profile = "${var.aws_ip_assumeRole_name}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
 
   tags {
     Name = "ipam-${count.index}"
@@ -18,8 +18,7 @@ resource "aws_instance" "ipam" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
-    "${var.aws_sg_id}",
-    "${aws_security_group.ipam.id}"
+    "${var.aws_sg_ids}",
   ]
 }
 

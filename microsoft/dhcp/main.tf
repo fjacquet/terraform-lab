@@ -2,7 +2,7 @@ resource "aws_instance" "dhcp" {
   instance_type        = "t2.medium"
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
-  iam_instance_profile = "${var.aws_ip_assumeRole_name}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
   aws_subnet_id        = "${var.aws_subnet_id}"
   user_data            = "${file("user_data/config-dhcp.ps1")}"
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
@@ -18,8 +18,7 @@ resource "aws_instance" "dhcp" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
-    "${var.aws_sg_id}",
-    "${aws_security_group.dhcp.id}",
+    "${var.aws_sg_ids}",
   ]
 }
 

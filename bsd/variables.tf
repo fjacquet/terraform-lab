@@ -7,7 +7,7 @@ variable "aws_subnet_id" {}
 variable "aws_amis" {
      type="map"
 }
-variable "aws_sg_id" {
+variable "aws_sg_ids" {
     type="list"
 }
 variable "azs" {
