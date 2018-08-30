@@ -6,7 +6,7 @@ resource "aws_instance" "da" {
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
   key_name             = "${var.aws_key_pair_auth_id}"
   user_data            = "${file("user_data/config-da.ps1")}"
-  subnet_id            = "${var.aws_subnet_id}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
 
   tags {
     Name = "da-${count.index}"

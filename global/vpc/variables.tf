@@ -14,7 +14,11 @@ variable "cidr_exch" {
 }
 
 variable "cidr_gw" {}
-variable "cidr_mgmt" {}
+
+variable "cidr_mgmt" {
+  type = "list"
+}
+
 variable "cidr_vpc" {}
 
 variable "cidr_web" {

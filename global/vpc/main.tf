@@ -52,7 +52,7 @@ resource "aws_subnet" "back" {
 # Create a subnet to launch our instances into
 resource "aws_subnet" "mgmt" {
   vpc_id                  = "${aws_vpc.evlab.id}"
-  cidr_block              = "${var.cidr_mgmt}"
+  cidr_block              = "${element(var.cidr_mgmt, count.index)}"
   availability_zone       = "${element(var.azs, 0)}"
   map_public_ip_on_launch = true
 }

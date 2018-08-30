@@ -1,6 +1,6 @@
 output "dc_private_ip" {
   description = "description"
-  value       = "[${aws_instance.dc.*.private_ip}"]
+  value       = ["${aws_instance.dc.*.private_ip}"]
 }
 
 output "aws_sg_dc_id" {

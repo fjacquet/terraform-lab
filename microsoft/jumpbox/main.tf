@@ -6,7 +6,7 @@ resource "aws_instance" "jumpbox" {
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
   user_data            = "${file("user_data/config-win.ps1")}"
   ami                  = "${lookup(var.aws_amis, var.aws_region)}"
-  subnet_id            = "${var.aws_subnet_id}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
 
   tags {
     Name = "mgmt-${count.index}"
