@@ -8,7 +8,8 @@ module "providers" {
 }
 
 module "iam" {
-  source = "./iam/"
+  source     = "./iam/"
+  aws_vpc_id = "${module.vpc.aws_vpc_id}"
 }
 
 module "route53" {
@@ -46,6 +47,12 @@ module "vpc" {
     "${lookup(var.cidr, "exch1.${var.aws_region}")}",
     "${lookup(var.cidr, "exch2.${var.aws_region}")}",
     "${lookup(var.cidr, "exch3.${var.aws_region}")}",
+  ]
+
+  subnet_gw = [
+    "${lookup(var.cidr, "gw1.${var.aws_region}")}",
+    "${lookup(var.cidr, "gw2.${var.aws_region}")}",
+    "${lookup(var.cidr, "gw3.${var.aws_region}")}",
   ]
 
   subnet_mgmt = [

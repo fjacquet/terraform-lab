@@ -23,7 +23,7 @@ resource "aws_instance" "dc" {
 }
 
 resource "aws_security_group" "dc" {
-  name        = "terraform_evlab_dc"
+  name        = "tf_evlab_dc"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

@@ -31,3 +31,7 @@ variable "subnet_sql" {
 variable "subnet_web" {
   type = "list"
 }
+
+variable "subnet_gw" {
+  type = "list"
+}

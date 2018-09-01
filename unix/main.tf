@@ -77,7 +77,7 @@ module "oracle" {
 }
 
 resource "aws_security_group" "ssh" {
-  name        = "terraform_evlab_lssh"
+  name        = "tf_evlab_lssh"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

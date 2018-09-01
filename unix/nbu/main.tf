@@ -55,7 +55,7 @@ resource "aws_ebs_volume" "backups" {
 }
 
 resource "aws_security_group" "master" {
-  name        = "terraform_evlab_master"
+  name        = "tf_evlab_master"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
@@ -173,7 +173,7 @@ resource "aws_security_group" "master" {
 }
 
 resource "aws_security_group" "client" {
-  name        = "terraform_evlab_client"
+  name        = "tf_evlab_client"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

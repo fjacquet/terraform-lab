@@ -24,7 +24,7 @@ resource "aws_instance" "sql" {
 }
 
 resource "aws_security_group" "sql" {
-  name        = "terraform_evlab_sql"
+  name        = "tf_evlab_sql"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

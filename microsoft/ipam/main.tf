@@ -23,7 +23,7 @@ resource "aws_instance" "ipam" {
 }
 
 resource "aws_security_group" "ipam" {
-  name        = "terraform_evlab_ipam"
+  name        = "tf_evlab_ipam"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

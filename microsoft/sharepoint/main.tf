@@ -24,7 +24,7 @@ resource "aws_instance" "sharepoint" {
 }
 
 resource "aws_security_group" "sharepoint" {
-  name        = "terraform_evlab_sharepoint"
+  name        = "tf_evlab_sharepoint"
   description = "Access to Sharepoint"
   vpc_id      = "${var.aws_vpc_id}"
 

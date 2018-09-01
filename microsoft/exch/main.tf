@@ -31,7 +31,7 @@ resource "aws_instance" "exch" {
 }
 
 resource "aws_security_group" "exch" {
-  name        = "terraform_evlab_windows_exch"
+  name        = "tf_evlab_windows_exch"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

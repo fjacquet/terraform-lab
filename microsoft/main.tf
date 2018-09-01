@@ -255,7 +255,7 @@ module "jumpbox" {
 }
 
 resource "aws_security_group" "rdp" {
-  name        = "terraform_evlab_rdp"
+  name        = "tf_evlab_rdp"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
