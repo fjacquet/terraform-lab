@@ -1,13 +1,13 @@
 resource "aws_instance" "simpana" {
-  instance_type        = "m4.xlarge"
-  count                = "${var.aws_number}"
+  ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
-  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
-  iam_instance_profile = "${var.aws_iip_assumerole_name}"
-  key_name             = "${var.aws_key_pair_auth_id}"
+  count                = "${var.aws_number}"
   ebs_optimized        = "true"
-  user_data            = "${file("user_data/config-win.ps1")}"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
+  instance_type        = "m4.xlarge"
+  key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${var.aws_subnet_id}"
+  user_data            = "${file("user_data/config-dhcp.ps1")}"
 
   vpc_security_group_ids = [
     "${var.aws_sg_ids}",
@@ -41,8 +41,8 @@ resource "aws_ebs_volume" "simpana_d" {
   type              = "gp2"
 }
 
-resource "aws_security_group" "simpana" {
-  name        = "terraform_evlab_simpana"
+resource "aws_security_group" "master" {
+  name        = "terraform_evlab_simpana_master"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
@@ -67,6 +67,44 @@ resource "aws_security_group" "simpana" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
+    cidr_blocks = ["${element(var.cidr, count.index)}"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "client" {
+  name        = "terraform_evlab_simpanaclient"
+  description = "Used in the terraform"
+  vpc_id      = "${var.aws_vpc_id}"
+
+  # HTTP access from anywhere
+  ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # netbios access from subnet
+  ingress {
+    from_port   = 137
+    to_port     = 137
+    protocol    = "tcp"
+    cidr_blocks = ["${element(var.cidr, count.index)}"]
+  }
+
+  # Simpana access from subnet
+  ingress {
+    from_port   = 8400
+    to_port     = 8403
+    protocol    = "tcp"
     cidr_blocks = ["${element(var.cidr, count.index)}"]
   }
 

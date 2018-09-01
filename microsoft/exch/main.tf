@@ -2,15 +2,15 @@
 # A test exchange 
 ###########################################################################
 resource "aws_instance" "exch" {
-  instance_type        = "m4.large"
-  count                = "${var.aws_number}"
+  ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
-  user_data            = "${file("user_data/config-exch.ps1")}"
-  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
-  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  key_name             = "${var.aws_key_pair_auth_id}"
+  count                = "${var.aws_number}"
   ebs_optimized        = "true"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
+  instance_type        = "m4.large"
+  key_name             = "${var.aws_key_pair_auth_id}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
+  user_data            = "${file("user_data/config-exch.ps1")}"
 
   root_block_device = {
     volume_size = 100

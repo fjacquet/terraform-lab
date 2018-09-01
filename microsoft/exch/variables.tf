@@ -12,9 +12,7 @@ variable "aws_sg_ids" {
   type = "list"
 }
 
-variable "aws_amis" {
-  type = "map"
-}
+variable "aws_ami" {}
 
 variable "azs" {
   type = "list"

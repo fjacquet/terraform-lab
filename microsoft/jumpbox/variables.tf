@@ -12,9 +12,7 @@ variable "azs" {
   type = "list"
 }
 
-variable "aws_amis" {
-  type = "map"
-}
+variable "aws_ami" {}
 
 variable "aws_key_pair_auth_id" {}
 

@@ -39,8 +39,16 @@ output "aws_sg_sharepoint_id" {
   value = "${module.sharepoint.aws_sg_sharepoint_id}"
 }
 
-output "aws_sg_simpana_id" {
-  value = "${module.simpana.aws_sg_simpana_id}"
+output "aws_sg_simpanamaster_id" {
+  value = "${module.simpana.aws_sg_master_id}"
+}
+
+output "aws_sg_simpanaclient_id" {
+  value = "${module.simpana.aws_sg_client_id}"
+}
+
+output "aws_sg_rdp_id" {
+  value = "${aws_security_group.rdp.id}"
 }
 
 output "aws_sg_sql_id" {

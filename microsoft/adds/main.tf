@@ -1,11 +1,11 @@
 resource "aws_instance" "dc" {
-  instance_type        = "t2.medium"
-  count                = "${var.aws_number}"
+  ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
+  count                = "${var.aws_number}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
-  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
+  instance_type        = "t2.medium"
   key_name             = "${var.aws_key_pair_auth_id}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   user_data            = "${file("user_data/config-dc.ps1")}"
 
   tags {

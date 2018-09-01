@@ -1,12 +1,12 @@
 resource "aws_instance" "sql" {
-  instance_type        = "m4.large"
-  count                = "${var.aws_number}"
+  ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
-  iam_instance_profile = "${var.aws_iip_assumerole_name}"
-  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
-  subnet_id            = "${var.aws_subnet_id}"
-  key_name             = "${var.aws_key_pair_auth_id}"
+  count                = "${var.aws_number}"
   ebs_optimized        = "true"
+  iam_instance_profile = "${var.aws_iip_assumerole_name}"
+  instance_type        = "m4.large"
+  key_name             = "${var.aws_key_pair_auth_id}"
+  subnet_id            = "${var.aws_subnet_id}"
   user_data            = "${file("user_data/config-sql.ps1")}"
 
   lifecycle {

@@ -1,12 +1,12 @@
 resource "aws_instance" "pki-crl" {
-  instance_type        = "t2.medium"
-  count                = "${var.aws_number_pki_crl}"
+  ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
+  count                = "${var.aws_number_pki_crl}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
-  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
-  user_data            = "${file("user_data/config-pki.ps1")}"
+  instance_type        = "t2.medium"
   key_name             = "${var.aws_key_pair_auth_id}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
+  user_data            = "${file("user_data/config-pki.ps1")}"
 
   tags {
     Name = "pki-crl-${count.index}"

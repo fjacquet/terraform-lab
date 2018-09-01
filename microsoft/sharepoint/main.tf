@@ -1,13 +1,13 @@
 resource "aws_instance" "sharepoint" {
-  instance_type        = "m4.xlarge"
-  count                = "${var.aws_number}"
+  ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
+  count                = "${var.aws_number}"
+  ebs_optimized        = "true"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
-  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
+  instance_type        = "m4.xlarge"
+  key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${var.aws_subnet_id}"
   user_data            = "${file("user_data/config-sharepoint.ps1")}"
-  key_name             = "${var.aws_key_pair_auth_id}"
-  ebs_optimized        = "true"
 
   # Our Security group to allow Sharepoint access
   vpc_security_group_ids = [

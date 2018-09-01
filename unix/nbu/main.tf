@@ -2,7 +2,7 @@ resource "aws_instance" "nbumaster" {
   instance_type        = "m4.xlarge"
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
-  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
+  ami                  = "${var.aws_ami}"
   key_name             = "${var.aws_key_pair_auth_id}"
   ebs_optimized        = "true"
   subnet_id            = "${var.aws_subnet_id}"
@@ -54,8 +54,8 @@ resource "aws_ebs_volume" "backups" {
   size              = "${var.aws_size_nbu_backups}"
 }
 
-resource "aws_security_group" "nbumaster" {
-  name        = "terraform_evlab_nbumaster"
+resource "aws_security_group" "master" {
+  name        = "terraform_evlab_master"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
@@ -161,6 +161,28 @@ resource "aws_security_group" "nbumaster" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["${element(var.cidr, count.index)}"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "client" {
+  name        = "terraform_evlab_client"
+  description = "Used in the terraform"
+  vpc_id      = "${var.aws_vpc_id}"
+
+  # access from media/master
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = ["${aws_security_group.master.id}"]
   }
 
   # outbound internet access

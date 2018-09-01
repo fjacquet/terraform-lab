@@ -1,28 +1,33 @@
-variable "access_key" {}
-variable "aws_region" {}
-
 variable "azs" {
   type = "list"
 }
 
-variable "cidr_back" {
+variable "cidr" {
+  type = "map"
+}
+
+variable "aws_region" {}
+
+variable "subnet_back" {
   type = "list"
 }
 
-variable "cidr_exch" {
+variable "subnet_backup" {
   type = "list"
 }
 
-variable "cidr_gw" {}
-
-variable "cidr_mgmt" {
+variable "subnet_exch" {
   type = "list"
 }
 
-variable "cidr_vpc" {}
-
-variable "cidr_web" {
+variable "subnet_mgmt" {
   type = "list"
 }
 
-variable "secret_key" {}
+variable "subnet_sql" {
+  type = "list"
+}
+
+variable "subnet_web" {
+  type = "list"
+}

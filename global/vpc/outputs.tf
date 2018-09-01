@@ -6,6 +6,10 @@ output "aws_subnet_back_id" {
   value = "${aws_subnet.back.*.id}"
 }
 
+output "aws_subnet_backup_id" {
+  value = "${aws_subnet.backup.*.id}"
+}
+
 output "aws_subnet_web_id" {
   value = "${aws_subnet.web.*.id}"
 }

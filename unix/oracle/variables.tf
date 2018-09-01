@@ -6,7 +6,7 @@ variable "cidr" {
 }
 
 variable "aws_number" {}
-variable "aws_region" {}
+
 variable "aws_vpc_id" {}
 
 variable "aws_subnet_id" {
@@ -17,9 +17,7 @@ variable "aws_sg_ids" {
   type = "list"
 }
 
-variable "aws_amis" {
-  type = "map"
-}
+variable "aws_ami" {}
 
 variable "azs" {
   type = "list"

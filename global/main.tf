@@ -26,16 +26,45 @@ module "demand" {
 
 module "vpc" {
   source     = "./vpc"
-  access_key = "${var.access_key}"
   azs        = "${var.azs}"
-  secret_key = "${var.secret_key}"
+  cidr       = "${var.cidr}"
   aws_region = "${var.aws_region}"
-  cidr_vpc   = "${var.cidr_vpc}"
-  cidr_back  = "${var.cidr_back}"
-  cidr_exch  = "${var.cidr_exch}"
-  cidr_gw    = "${var.cidr_gw}"
-  cidr_mgmt  = "${var.cidr_mgmt}"
-  cidr_web   = "${var.cidr_web}"
+
+  subnet_back = [
+    "${lookup(var.cidr, "back1.${var.aws_region}")}",
+    "${lookup(var.cidr, "back2.${var.aws_region}")}",
+    "${lookup(var.cidr, "back3.${var.aws_region}")}",
+  ]
+
+  subnet_backup = [
+    "${lookup(var.cidr, "backup1.${var.aws_region}")}",
+    "${lookup(var.cidr, "backup2.${var.aws_region}")}",
+    "${lookup(var.cidr, "backup3.${var.aws_region}")}",
+  ]
+
+  subnet_exch = [
+    "${lookup(var.cidr, "exch1.${var.aws_region}")}",
+    "${lookup(var.cidr, "exch2.${var.aws_region}")}",
+    "${lookup(var.cidr, "exch3.${var.aws_region}")}",
+  ]
+
+  subnet_mgmt = [
+    "${lookup(var.cidr, "mgmt1.${var.aws_region}")}",
+    "${lookup(var.cidr, "mgmt2.${var.aws_region}")}",
+    "${lookup(var.cidr, "mgmt3.${var.aws_region}")}",
+  ]
+
+  subnet_sql = [
+    "${lookup(var.cidr, "sql1.${var.aws_region}")}",
+    "${lookup(var.cidr, "sql2.${var.aws_region}")}",
+    "${lookup(var.cidr, "sql3.${var.aws_region}")}",
+  ]
+
+  subnet_web = [
+    "${lookup(var.cidr, "web1.${var.aws_region}")}",
+    "${lookup(var.cidr, "web2.${var.aws_region}")}",
+    "${lookup(var.cidr, "web3.${var.aws_region}")}",
+  ]
 }
 
 module "dynamodb" {

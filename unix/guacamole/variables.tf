@@ -1,6 +1,4 @@
-variable "aws_amis" {
-  type = "map"
-}
+variable "aws_ami" {}
 
 variable "azs" {
   type = "list"
@@ -11,7 +9,6 @@ variable "aws_sg_ids" {
 }
 
 variable "aws_number" {}
-variable "aws_region" {}
 variable "aws_key_pair_auth_id" {}
 variable "aws_iip_assumerole_name" {}
 

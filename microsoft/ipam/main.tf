@@ -3,7 +3,7 @@ resource "aws_instance" "ipam" {
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
   subnet_id            = "${var.aws_subnet_id}"
-  ami                  = "${lookup(var.aws_amis, var.aws_region)}"
+  ami                  = "${var.aws_ami}"
   user_data            = "${file("user_data/config-ipam.ps1")}"
   key_name             = "${var.aws_key_pair_auth_id}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"

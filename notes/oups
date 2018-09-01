@@ -1,0 +1,4 @@
+  ami                    = "${lookup(var.aws_amis, var.aws_region)}"
+subnet  = "${lookup(var.cidr, var.back)}"
+
+subnet  = "${lookup(var.aws_number, "pki_crl")}"
