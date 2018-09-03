@@ -26,7 +26,7 @@ $langList = New-WinUserLanguageList fr-CH
 Set-WinUserLanguageList $langList -force
 Set-ExecutionPolicy unrestricted -force #DevSkim: ignore DS113853 
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) #DevSkim: ignore DS104456 
-$values = ('notepadplusplus','googlechrome','jre8','7zip.install','baretail','windirstat','curl','bginfo','putty','mobaxterm','rdmfree')
+$values = ('notepadplusplus','googlechrome','jre8','7zip.install','keepass.install','baretail','windirstat','curl','bginfo','putty','mobaxterm','rdmfree')
 foreach ($value in $values ){
     choco install $value -y
 }

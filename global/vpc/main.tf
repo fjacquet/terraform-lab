@@ -134,7 +134,7 @@ resource "aws_subnet" "web" {
   count                   = "${length(var.azs)}"
   cidr_block              = "${element(var.subnet_web, count.index)}"
   availability_zone       = "${element(var.azs, count.index)}"
-  map_public_ip_on_launch = false
+  map_public_ip_on_launch = true
 }
 
 resource "aws_subnet" "gw" {
