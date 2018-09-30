@@ -27,14 +27,135 @@ resource "aws_security_group" "dc" {
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    self        = true
-    cidr_blocks = ["${element(var.cidr, count.index)}"]
-  }
+  # DNS (53/tcp and 53/udp)
+  # Kerberos-Sec (TCP) (88/tcp)
+  # Kerberos-Sec (UDP) (88/udp)
+  # LDAP (389/tcp)
+  # LDAP (UDP) (389/udp)
+  # LDAPS (636/tcp)
+  # LDAP GC (Global Catalog) (3268/tcp)
+  # LDAPS GC (Global Catalog) (3269/tcp)
+  # Microsoft CIFS (TCP) (445/tcp)
+  # Microsoft CIFS (UDP) (445/udp)
+  # NetBios Datagram (138/udp)
+  # NetBios Name Service (137/udp)
+  # NetBios Session (139/tcp)
+  # NTP (UDP) (123/udp)
+  # PING (ICMP Type 8)
+  # RPC (all interfaces) (135/tcp)
 
+  ingress {
+    description = "ping"
+    from_port   = 8
+    to_port     = 8
+    protocol    = "icmp"
+    self        = true
+  }
+  ingress {
+    description = "ntp"
+    from_port   = 123
+    to_port     = 123
+    protocol    = "udp"
+    self        = true
+  }
+  ingress {
+    description = "NetBios Session"
+    from_port   = 139
+    to_port     = 139
+    protocol    = "tcp"
+    self        = true
+  }
+  ingress {
+    description = "NetBios"
+    from_port   = 137
+    to_port     = 138
+    protocol    = "udp"
+    self        = true
+  }
+  ingress {
+    description = "SMB"
+    from_port   = 445
+    to_port     = 445
+    protocol    = "tcp"
+    self        = true
+  }
+  ingress {
+    description = "SMB"
+    from_port   = 445
+    to_port     = 445
+    protocol    = "udp"
+    self        = true
+  }
+  ingress {
+    description = "LDAP GC"
+    from_port   = 3268
+    to_port     = 3269
+    protocol    = "tcp"
+    self        = true
+  }
+  ingress {
+    description = "LDAPS"
+    from_port   = 636
+    to_port     = 636
+    protocol    = "tcp"
+    self        = true
+  }
+  ingress {
+    description = "LDAPS"
+    from_port   = 636
+    to_port     = 636
+    protocol    = "udp"
+    self        = true
+  }
+  ingress {
+    description = "LDAP"
+    from_port   = 389
+    to_port     = 389
+    protocol    = "tcp"
+    self        = true
+  }
+  ingress {
+    description = "LDAP"
+    from_port   = 389
+    to_port     = 389
+    protocol    = "udp"
+    self        = true
+  }
+  ingress {
+    description = "kerberos"
+    from_port   = 88
+    to_port     = 88
+    protocol    = "tcp"
+    self        = true
+  }
+  ingress {
+    description = "kerberos"
+    from_port   = 88
+    to_port     = 88
+    protocol    = "udp"
+    self        = true
+  }
+  ingress {
+    description = "dns"
+    from_port   = 53
+    to_port     = 53
+    protocol    = "tcp"
+    self        = true
+  }
+  ingress {
+    description = "dns"
+    from_port   = 53
+    to_port     = 53
+    protocol    = "udp"
+    self        = true
+  }
+  ingress {
+    description = "RPC"
+    from_port   = 135
+    to_port     = 135
+    protocol    = "tcp"
+    self        = true
+  }
   # outbound internet access
   egress {
     from_port   = 0

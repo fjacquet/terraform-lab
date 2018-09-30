@@ -81,9 +81,10 @@ variable "aws_number" {
     dhcp       = 2
     exch       = 2
     guacamole  = 1
-    ipam       = 0
+    ipam       = 1
     jumpbox    = 1
     nbu        = 0
+    nps        = 2
     opscenter  = 0
     oracle     = 0
     pki_crl    = 0

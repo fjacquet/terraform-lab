@@ -2,7 +2,7 @@ resource "aws_instance" "ipam" {
   instance_type        = "t2.medium"
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
-  subnet_id            = "${var.aws_subnet_id}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   ami                  = "${var.aws_ami}"
   user_data            = "${file("user_data/config-ipam.ps1")}"
   key_name             = "${var.aws_key_pair_auth_id}"
@@ -32,7 +32,6 @@ resource "aws_security_group" "ipam" {
     to_port     = 0
     protocol    = "-1"
     self        = true
-    cidr_blocks = ["${element(var.cidr, count.index)}"]
   }
 
   # outbound internet access

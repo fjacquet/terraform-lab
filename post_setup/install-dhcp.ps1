@@ -3,8 +3,7 @@
 # Rename-Computer -Name DHCP1
 # Restart-Computer
 
-Add-Computer "EVLAB"
-Restart-Computer
+Add-Computer -DomainName "EVLAB" -Restart
 
 Install-WindowsFeature DHCP -IncludeManagementTools
 netsh dhcp add securitygroups

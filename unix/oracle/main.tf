@@ -44,7 +44,7 @@ resource "aws_security_group" "oracle" {
     from_port   = 1521
     to_port     = 1521
     protocol    = "tcp"
-    cidr_blocks = ["${element(var.cidr, count.index)}"]
+    self = "true"
   }
 
   # outbound internet access

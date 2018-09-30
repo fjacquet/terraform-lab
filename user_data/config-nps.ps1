@@ -13,10 +13,10 @@ Stop-Process -Name Explorer
 # Disable antivirus
 Set-MpPreference -DisableRealtimeMonitoring $true
 # Disable firewall
-Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled False
 # Install basic
-install-windowsfeature DSC-Service,FS-NFS-Service,NFS-Client,GPMC,Multipath-IO,RSAT,SNMP-Service,Storage-Services
-Install-WindowsFeature ipam -IncludeAllSubFeature -IncludeManagementTools
+install-windowsfeature DSC-Service, FS-NFS-Service, NFS-Client, GPMC, Multipath-IO, RSAT, SNMP-Service, Storage-Services
+Install-WindowsFeature NPAS -IncludeManagementTools
 # Set NFS on manual
 Set-Service NfsClnt -startuptype "manual"
 Set-Service NfsService -startuptype "manual"
@@ -27,8 +27,8 @@ $langList = New-WinUserLanguageList fr-CH
 Set-WinUserLanguageList $langList -force
 Set-ExecutionPolicy unrestricted -force #DevSkim: ignore DS113853 
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) #DevSkim: ignore DS104456 
-$values = ('notepadplusplus','googlechrome','jre8','7zip.install','baretail','windirstat','curl','bginfo')
-foreach ($value in $values ){
+$values = ('notepadplusplus', 'googlechrome', 'jre8', '7zip.install', 'baretail', 'windirstat', 'curl', 'bginfo')
+foreach ($value in $values ) {
     choco install $value -y
 }
 # download needed for this server

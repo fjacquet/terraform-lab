@@ -34,7 +34,8 @@ foreach ($value in $values ){
 }
 # download needed for this server
 mkdir C:\installers\
-curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/NetBackup_8.1.2Beta5_Win.zip -o C:\installers\NetBackup_8.1.2Beta5_Win.zip 
+msiexec /q /i C:\installers\LAPS.x64.msi
+# curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/NetBackup_8.1.2Beta5_Win.zip -o C:\installers\NetBackup_8.1.2Beta5_Win.zip 
 # reboot to finish setup
 Initialize-AWSDefaults
 $instanceId = Invoke-RestMethod -uri http://169.254.169.254/latest/meta-data/instance-id #DevSkim: ignore DS104456 

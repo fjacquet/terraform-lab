@@ -1,4 +1,4 @@
-resource "aws_instance" "dhcp" {
+resource "aws_instance" "nps" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
   count                = "${var.aws_number}"
@@ -6,10 +6,10 @@ resource "aws_instance" "dhcp" {
   instance_type        = "t2.medium"
   key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  user_data            = "${file("user_data/config-dhcp.ps1")}"
+  user_data            = "${file("user_data/config-nps.ps1")}"
 
   tags {
-    Name = "dhcp-${count.index}"
+    Name = "nps-${count.index}"
   }
 
   lifecycle {
@@ -22,32 +22,24 @@ resource "aws_instance" "dhcp" {
   ]
 }
 
-resource "aws_security_group" "dhcp" {
-  name        = "tf_evlab_dhcp"
+resource "aws_security_group" "nps" {
+  name        = "tf_evlab_nps"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
   ingress {
-    description = "DHCP Server"
-    from_port   = 67
-    to_port     = 67
+    description = "Radius legacy Server"
+    from_port   = 1645
+    to_port     = 1646
     protocol    = "udp"
     self        = true
   }
 
   ingress {
-    description = "MADCAP"
-    from_port   = 2535
-    to_port     = 2535
+    description = "Radius  Server"
+    from_port   = 1812
+    to_port     = 1813
     protocol    = "udp"
-    self        = true
-  }
-
-  ingress {
-    description = "DHCP Failover"
-    from_port   = 647
-    to_port     = 647
-    protocol    = "tcp"
     self        = true
   }
 
