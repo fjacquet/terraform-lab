@@ -8,8 +8,11 @@ Get-Disk | Where-Object partitionstyle -eq 'raw' `
     -UseLargeFRS  `
     -Confirm:$false
 
-new-Partition -PartitionNumber 2  -DriveLetter D  | Format-Volume  -FileSystem NTFS   -Force:$true   -Compress   -UseLargeFRS  -Confirm:$false
+    Enable-DedupVolume D:
+Start-DedupJob -Type Optimization -Volume d:
 
+# new-Partition -PartitionNumber 2  -DriveLetter D  | Format-Volume  -FileSystem NTFS   -Force:$true   -Compress   -UseLargeFRS  -Confirm:$false
+mkdir D:\samples
 New-SmbShare `
     -Description "Sample file share" `
     -FolderEnumerationMode AccessBased `
@@ -17,5 +20,3 @@ New-SmbShare `
     -Path D:\samples -name samples `
     -EncryptData $true
 
-Enable-DedupVolume D:
-Start-DedupJob -Type Optimization -Volume d:

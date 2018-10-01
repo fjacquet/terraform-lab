@@ -76,25 +76,25 @@ variable "aws_number" {
 
   default = {
     bsd        = 0
-    da         = 1
+    da         = 0
     dc         = 2
     dhcp       = 2
-    exch       = 2
+    exch       = 0
     fs         = 2
-    guacamole  = 1
+    guacamole  = 0
     ipam       = 1
     jumpbox    = 1
     nbu        = 0
     nps        = 2
     opscenter  = 0
     oracle     = 0
-    pki_crl    = 0
-    pki_ica    = 0
-    pki_rca    = 0
+    pki_crl    = 1
+    pki_ica    = 1
+    pki_rca    = 1
     sharepoint = 0
     simpana    = 0
     sql        = 0
-    symv       = 0
+    symv       = 2
     wsus       = 1
   }
 }
