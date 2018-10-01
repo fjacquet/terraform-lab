@@ -11,7 +11,8 @@ Set-MpPreference -DisableRealtimeMonitoring $true
 # Disable firewall
 Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
 # Install basic
-install-windowsfeature AD-Domain-Services,DSC-Service,FS-NFS-Service,NFS-Client,GPMC,Multipath-IO,RSAT,SNMP-Service
+install-windowsfeature DSC-Service,GPMC,Multipath-IO,RSAT,SNMP-Service
+install-windowsfeature File-Services,FS-Data-Deduplication,FS-NFS-Service,NFS-Client,FS-Resource-Manager
 # Set NFS on manual
 Set-Service NfsClnt -startuptype "manual"
 Set-Service NfsService -startuptype "manual"

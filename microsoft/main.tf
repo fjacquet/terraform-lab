@@ -58,9 +58,9 @@ module "adfs" {
   source = "./adfs"
 }
 
-module "dfs" {
-  source = "./dfs"
-}
+# module "dfs" {
+#   source = "./dfs"
+# }
 
 module "dhcp" {
   source                  = "./dhcp"
@@ -140,6 +140,34 @@ module "exch" {
   ]
 }
 
+module "fs" {
+  source                  = "./fs"
+  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
+  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${lookup(var.aws_number, "fs")}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_back_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+
+  cidr = [
+    "${lookup(var.cidr, "back1.${var.aws_region}")}",
+    "${lookup(var.cidr, "back2.${var.aws_region}")}",
+    "${lookup(var.cidr, "back3.${var.aws_region}")}",
+  ]
+
+  aws_sg_ids = [
+    "${aws_security_group.rdp.id}",
+    "${module.fs.aws_sg_fs_id}",
+    "${aws_security_group.domain-member.id}",
+    "${module.simpana.aws_sg_client_id}",
+    "${var.aws_sg_nbuclient_id}",
+  ]
+
+  aws_sg_domain_members = "${aws_security_group.domain-member.id}"
+}
+
 module "ipam" {
   source                  = "./ipam/"
   aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
@@ -191,8 +219,6 @@ module "nps" {
     "${var.aws_sg_nbuclient_id}",
   ]
 }
-
-
 
 module "sharepoint" {
   source                  = "./sharepoint"
@@ -286,8 +312,35 @@ module "jumpbox" {
 
   aws_sg_ids = [
     "${aws_security_group.rdp.id}",
+    "${aws_security_group.domain-member.id}",
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
+  ]
+}
+
+module "wsus" {
+  source                  = "./wsus"
+  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
+  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${lookup(var.aws_number, "wsus")}"
+  aws_region              = "${var.aws_region}"
+  aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+
+  aws_sg_ids = [
+    "${aws_security_group.rdp.id}",
+    "${aws_security_group.domain-member.id}",
+    "${module.simpana.aws_sg_client_id}",
+    "${module.wsus.aws_sg_wsus_id}",
+    "${var.aws_sg_nbuclient_id}",
+  ]
+
+  cidr = [
+    "${lookup(var.cidr, "backup1.${var.aws_region}")}",
+    "${lookup(var.cidr, "backup2.${var.aws_region}")}",
+    "${lookup(var.cidr, "backup3.${var.aws_region}")}",
   ]
 }
 
@@ -436,7 +489,7 @@ resource "aws_security_group" "domain-member" {
     protocol    = "udp"
     self        = true
   }
-    ingress {
+  ingress {
     description = "random"
     from_port   = 49152
     to_port     = 65535

@@ -80,6 +80,7 @@ variable "aws_number" {
     dc         = 2
     dhcp       = 2
     exch       = 2
+    fs         = 2
     guacamole  = 1
     ipam       = 1
     jumpbox    = 1
@@ -94,6 +95,7 @@ variable "aws_number" {
     simpana    = 0
     sql        = 0
     symv       = 0
+    wsus       = 1
   }
 }
 
@@ -111,5 +113,6 @@ variable "aws_amis" {
     sql        = "ami-05b9370efd1cefcf4"
     win2012r2  = "ami-04191f05759452cfa"
     win2016    = "ami-088f9db67b4afec52"
+    wsus       = "ami-088f9db67b4afec52"
   }
 }

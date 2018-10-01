@@ -1,15 +1,15 @@
-resource "aws_instance" "ipam" {
+resource "aws_instance" "wsus" {
   instance_type        = "t2.medium"
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   ami                  = "${var.aws_ami}"
-  user_data            = "${file("user_data/config-ipam.ps1")}"
+  user_data            = "${file("user_data/config-win.ps1")}"
   key_name             = "${var.aws_key_pair_auth_id}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
 
   tags {
-    Name = "ipam-${count.index}"
+    Name = "wsus-${count.index}"
   }
 
   lifecycle {
@@ -22,8 +22,8 @@ resource "aws_instance" "ipam" {
   ]
 }
 
-resource "aws_security_group" "ipam" {
-  name        = "tf_evlab_ipam"
+resource "aws_security_group" "wsus" {
+  name        = "tf_evlab_wsus"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
@@ -42,9 +42,9 @@ resource "aws_security_group" "ipam" {
   }
 
   ingress {
-    from_port = 3702
-    to_port   = 3702
-    protocol  = "udp"
+    from_port = 8530
+    to_port   = 8531
+    protocol  = "tcp"
     self      = true
   }
 

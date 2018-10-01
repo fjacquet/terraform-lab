@@ -19,6 +19,10 @@ output "aws_sg_exch_id" {
   value = "${module.exch.aws_sg_exch_id}"
 }
 
+output "aws_sg_fs_id" {
+  value = "${module.fs.aws_sg_fs_id}"
+}
+
 output "aws_sg_ipam_id" {
   value = "${module.ipam.aws_sg_ipam_id}"
 }
