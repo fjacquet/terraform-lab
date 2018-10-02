@@ -1,3 +1,21 @@
+resource "aws_route53_record" "nbumaster" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "nbu-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.nbumaster.*.id}"]
+}
+
+resource "aws_route53_record" "nbumaster-v6" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "nbu-${count.index}.evlab.ch"
+  type    = "AAAA"
+  ttl     = "300"
+  records = ["${aws_instance.nbumaster.*.ipv6_addresses}"]
+}
+
 resource "aws_instance" "nbumaster" {
   instance_type        = "m4.xlarge"
   ipv6_address_count   = 1

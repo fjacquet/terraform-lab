@@ -1,6 +1,21 @@
-###########################################################################
-# A test exchange 
-###########################################################################
+resource "aws_route53_record" "exch" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "exch-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.exch.*.id}"]
+}
+
+resource "aws_route53_record" "exch-v6" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "exch-${count.index}.evlab.ch"
+  type    = "AAAA"
+  ttl     = "300"
+  records = ["${aws_instance.exch.*.ipv6_addresses}"]
+}
+
 resource "aws_instance" "exch" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"

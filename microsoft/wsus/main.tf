@@ -1,3 +1,21 @@
+resource "aws_route53_record" "wsus" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "wsus-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.wsus.*.id}"]
+}
+
+resource "aws_route53_record" "wsus-v6" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "wsus-${count.index}.evlab.ch"
+  type    = "AAAA"
+  ttl     = "300"
+  records = ["${aws_instance.wsus.*.ipv6_addresses}"]
+}
+
 resource "aws_instance" "wsus" {
   instance_type        = "t2.medium"
   count                = "${var.aws_number}"

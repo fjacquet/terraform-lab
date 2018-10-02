@@ -1,3 +1,21 @@
+resource "aws_route53_record" "pki-ica" {
+  count   = "${var.aws_number_pki_ica}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "pki-ica-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.pki-ica.*.id}", "${aws_instance.pki-ica.*.ipv6_addresses}"]
+}
+
+resource "aws_route53_record" "pki-ica-v6" {
+  count   = "${var.aws_number_pki_ica}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "pki-ica-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.pki-ica.*.id}", "${aws_instance.pki-ica.*.ipv6_addresses}"]
+}
+
 resource "aws_instance" "pki-ica" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"

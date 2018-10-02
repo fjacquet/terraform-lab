@@ -9,6 +9,7 @@ module "adcs" {
   aws_region              = "${var.aws_region}"
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
+  dns_zone_id             = "${var.dns_zone_id}"
   azs                     = "${var.azs}"
 
   cidr = [
@@ -38,6 +39,7 @@ module "adds" {
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
@@ -72,6 +74,7 @@ module "dhcp" {
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
@@ -98,6 +101,7 @@ module "da" {
   aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web1.${var.aws_region}"))}",
@@ -124,6 +128,7 @@ module "exch" {
   aws_subnet_id           = "${var.aws_subnet_exch_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exch1.${var.aws_region}"))}",
@@ -150,6 +155,7 @@ module "fs" {
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
@@ -178,6 +184,7 @@ module "ipam" {
   aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
@@ -204,6 +211,7 @@ module "nps" {
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
@@ -230,6 +238,7 @@ module "sharepoint" {
   aws_subnet_id           = "${var.aws_subnet_web_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web1.${var.aws_region}"))}",
@@ -256,6 +265,7 @@ module "sql" {
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "sql1.${var.aws_region}"))}",
@@ -286,6 +296,7 @@ module "simpana" {
   aws_subnet_id           = "${var.aws_subnet_backup_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup1.${var.aws_region}"))}",
@@ -309,6 +320,7 @@ module "jumpbox" {
   aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   aws_sg_ids = [
     "${aws_security_group.rdp.id}",
@@ -328,6 +340,7 @@ module "wsus" {
   aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
 
   aws_sg_ids = [
     "${aws_security_group.rdp.id}",

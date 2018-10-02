@@ -27,3 +27,5 @@ variable "azs" {
 variable "aws_size_oracle_u01" {
   default = 100
 }
+
+variable "dns_zone_id" {}

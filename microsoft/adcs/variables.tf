@@ -5,6 +5,7 @@ variable "aws_number_pki_ica" {}
 variable "aws_number_pki_rca" {}
 variable "aws_region" {}
 variable "aws_vpc_id" {}
+variable "dns_zone_id" {}
 
 variable "cidr" {
   type = "list"

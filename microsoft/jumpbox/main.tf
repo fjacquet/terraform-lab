@@ -1,3 +1,21 @@
+resource "aws_route53_record" "jumpbox" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "jumpbox-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.jumpbox.*.id}"]
+}
+
+resource "aws_route53_record" "jumpbox-v6" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "jumpbox-${count.index}.evlab.ch"
+  type    = "AAAA"
+  ttl     = "300"
+  records = ["${aws_instance.jumpbox.*.ipv6_addresses}"]
+}
+
 resource "aws_instance" "jumpbox" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"

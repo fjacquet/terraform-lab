@@ -1,6 +1,7 @@
 variable "aws_iip_assumerole_name" {}
 variable "aws_key_pair_auth_id" {}
 variable "aws_region" {}
+variable "dns_zone_id" {}
 
 variable "aws_number" {
   type = "map"

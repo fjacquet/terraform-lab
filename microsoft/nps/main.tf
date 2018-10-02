@@ -1,3 +1,21 @@
+resource "aws_route53_record" "nps" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "nps-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.nps.*.id}"]
+}
+
+resource "aws_route53_record" "nps-v6" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "nps-${count.index}.evlab.ch"
+  type    = "AAAA"
+  ttl     = "300"
+  records = ["${aws_instance.nps.*.ipv6_addresses}"]
+}
+
 resource "aws_instance" "nps" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"

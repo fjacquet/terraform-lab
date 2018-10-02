@@ -1,3 +1,21 @@
+resource "aws_route53_record" "ipam" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "ipam-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.ipam.*.id}"]
+}
+
+resource "aws_route53_record" "ipam-v6" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "ipam-${count.index}.evlab.ch"
+  type    = "AAAA"
+  ttl     = "300"
+  records = ["${aws_instance.ipam.*.ipv6_addresses}"]
+}
+
 resource "aws_instance" "ipam" {
   instance_type        = "t2.medium"
   count                = "${var.aws_number}"

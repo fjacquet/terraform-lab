@@ -12,3 +12,21 @@ resource "aws_instance" "bsd" {
     Name = "bsd-${count.index}"
   }
 }
+
+resource "aws_route53_record" "bsd" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "bsd-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.bsd.*.id}"]
+}
+
+resource "aws_route53_record" "bsd-v6" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "bsd-${count.index}.evlab.ch"
+  type    = "AAAA"
+  ttl     = "300"
+  records = ["${aws_instance.bsd.*.ipv6_addresses}"]
+}

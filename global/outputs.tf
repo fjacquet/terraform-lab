@@ -10,6 +10,10 @@ output "vpc_cidr" {
   value = "${module.vpc.vpc_cidr}"
 }
 
+output "dns_zone_id" {
+  value = "${module.route53.dns_zone_id}"
+}
+
 output "aws_subnet_back_id" {
   value = "${module.vpc.aws_subnet_back_id}"
 }

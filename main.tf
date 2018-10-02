@@ -29,6 +29,7 @@ module "unix" {
   aws_subnet_web_id       = "${module.global.aws_subnet_web_id}"
   aws_vpc_id              = "${module.global.aws_vpc_id}"
   vpc_cidr                = "${module.global.vpc_cidr}"
+  dns_zone_id             = "${module.global.dns_zone_id}"
   azs                     = "${var.azs}"
   cidrbyte                = "${var.cidrbyte}"
 }
@@ -50,6 +51,7 @@ module "microsoft" {
   azs                     = "${var.azs}"
   vpc_cidr                = "${module.global.vpc_cidr}"
   cidrbyte                = "${var.cidrbyte}"
+  dns_zone_id             = "${module.global.dns_zone_id}"
 }
 
 resource "aws_vpc_dhcp_options" "dns_resolver" {

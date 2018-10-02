@@ -58,3 +58,21 @@ resource "aws_security_group" "guacamole" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
+
+resource "aws_route53_record" "guacamole" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "guacamole-${count.index}.evlab.ch"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.guacamole.*.id}"]
+}
+
+resource "aws_route53_record" "guacamole-v6" {
+  count   = "${var.aws_number}"
+  zone_id = "${var.dns_zone_id}"
+  name    = "guacamole-${count.index}.evlab.ch"
+  type    = "AAAA"
+  ttl     = "300"
+  records = ["${aws_instance.guacamole.*.ipv6_addresses}"]
+}

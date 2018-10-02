@@ -8,6 +8,7 @@ variable "aws_subnet_id" {
 }
 
 variable "aws_vpc_id" {}
+variable "dns_zone_id" {}
 
 variable "cidr" {
   type = "list"
