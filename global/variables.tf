@@ -9,9 +9,9 @@ variable "azs" {
   type = "list"
 }
 
-variable "cidr" {
-  type = "map"
-}
+# variable "cidr" {
+#   type = "map"
+# }
 
 variable "cidrbyte" {
   type = "map"

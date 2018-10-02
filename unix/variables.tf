@@ -26,7 +26,9 @@ variable "aws_subnet_backup_id" {
 
 variable "aws_vpc_id" {}
 
-variable "cidr" {
+variable "vpc_cidr" {}
+
+variable "cidrbyte" {
   type = "map"
 }
 

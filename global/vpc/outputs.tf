@@ -2,6 +2,10 @@ output "aws_vpc_id" {
   value = "${aws_vpc.evlab.id}"
 }
 
+output "vpc_cidr" {
+  value = "${aws_vpc.evlab.cidr_block}"
+}
+
 output "aws_subnet_back_id" {
   value = "${aws_subnet.back.*.id}"
 }

@@ -1,6 +1,6 @@
 # Create a VPC to launch our instances into
 resource "aws_vpc" "evlab" {
-  cidr_block                       = "${lookup(var.cidr, "vpc.${var.aws_region}")}"
+  cidr_block                       = "10.0.0.0/16"
   enable_dns_hostnames             = "true"
   enable_dns_support               = "true"
   assign_generated_ipv6_cidr_block = true
@@ -13,14 +13,14 @@ resource "aws_vpc_endpoint" "private-s3" {
 
   policy = <<POLICY
 {
-    "Statement": [
-        {
-            "Action": "*",
-            "Effect": "Allow",
-            "Resource": "*",
-            "Principal": "*"
-        }
-    ]
+  "Statement": [
+    {
+        "Action": "*",
+        "Effect": "Allow",
+        "Resource": "*",
+        "Principal": "*"
+    }
+  ]
 }
 POLICY
 }
@@ -38,9 +38,9 @@ resource "aws_route" "internet_access" {
 }
 
 resource "aws_route" "internet_access_v6" {
-  route_table_id         = "${aws_vpc.evlab.main_route_table_id}"
-  destination_cidr_block = "::/0"
-  gateway_id             = "${aws_internet_gateway.gw.id}"
+  route_table_id              = "${aws_vpc.evlab.main_route_table_id}"
+  destination_ipv6_cidr_block = "::/0"
+  gateway_id                  = "${aws_internet_gateway.gw.id}"
 }
 
 resource "aws_eip" "nat_eip" {
@@ -113,59 +113,59 @@ resource "aws_route_table_association" "private_backup_association" {
 resource "aws_subnet" "back" {
   vpc_id                          = "${aws_vpc.evlab.id}"
   count                           = "${length(var.azs)}"
-  cidr_block                      = "${element(var.subnet_back, count.index)}"
+  cidr_block                      = "${cidrsubnet(aws_vpc.evlab.cidr_block,8,element(var.cidrbyte_back, count.index))}"
   availability_zone               = "${element(var.azs, count.index)}"
   map_public_ip_on_launch         = false
-  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block, 8, 1)}"
+  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block,8,element(var.cidrbyte_back, count.index))}"
   assign_ipv6_address_on_creation = true
 }
 
 resource "aws_subnet" "backup" {
   vpc_id                          = "${aws_vpc.evlab.id}"
   count                           = "${length(var.azs)}"
-  cidr_block                      = "${element(var.subnet_backup, count.index)}"
+  cidr_block                      = "${cidrsubnet(aws_vpc.evlab.cidr_block,8,element(var.cidrbyte_backup, count.index))}"
   availability_zone               = "${element(var.azs, count.index)}"
   map_public_ip_on_launch         = false
-  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block, 8, 1)}"
+  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block,8,element(var.cidrbyte_backup, count.index))}"
   assign_ipv6_address_on_creation = true
 }
 
 # Create a subnet to launch our instances into
 resource "aws_subnet" "mgmt" {
   vpc_id                          = "${aws_vpc.evlab.id}"
-  cidr_block                      = "${element(var.subnet_mgmt, count.index)}"
+  cidr_block                      = "${cidrsubnet(aws_vpc.evlab.cidr_block,8,element(var.cidrbyte_mgmt, count.index))}"
   availability_zone               = "${element(var.azs, count.index)}"
   map_public_ip_on_launch         = true
-  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block, 8, 1)}"
+  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block,8,element(var.cidrbyte_mgmt, count.index))}"
   assign_ipv6_address_on_creation = true
 }
 
 resource "aws_subnet" "exch" {
   vpc_id                          = "${aws_vpc.evlab.id}"
   count                           = "${length(var.azs)}"
-  cidr_block                      = "${element(var.subnet_exch, count.index)}"
+  cidr_block                      = "${cidrsubnet(aws_vpc.evlab.cidr_block,8,element(var.cidrbyte_exch, count.index))}"
   availability_zone               = "${element(var.azs, count.index)}"
   map_public_ip_on_launch         = false
-  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block, 8, 1)}"
+  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block,8,element(var.cidrbyte_exch, count.index))}"
   assign_ipv6_address_on_creation = true
 }
 
 resource "aws_subnet" "web" {
   vpc_id                          = "${aws_vpc.evlab.id}"
   count                           = "${length(var.azs)}"
-  cidr_block                      = "${element(var.subnet_web, count.index)}"
+  cidr_block                      = "${cidrsubnet(aws_vpc.evlab.cidr_block,8,element(var.cidrbyte_web, count.index))}"
   availability_zone               = "${element(var.azs, count.index)}"
   map_public_ip_on_launch         = true
-  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block, 8, 1)}"
+  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block,8,element(var.cidrbyte_web, count.index))}"
   assign_ipv6_address_on_creation = true
 }
 
 resource "aws_subnet" "gw" {
   vpc_id                          = "${aws_vpc.evlab.id}"
   count                           = "${length(var.azs)}"
-  cidr_block                      = "${element(var.subnet_gw, count.index)}"
+  cidr_block                      = "${cidrsubnet(aws_vpc.evlab.cidr_block,8,element(var.cidrbyte_gw, count.index))}"
   availability_zone               = "${element(var.azs, count.index)}"
   map_public_ip_on_launch         = false
-  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block, 8, 1)}"
+  ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block,8,element(var.cidrbyte_gw, count.index))}"
   assign_ipv6_address_on_creation = true
 }

@@ -42,34 +42,34 @@ variable "secret_key" {
   default = ""
 }
 
-variable "cidr" {
-  type = "map"
+# variable "cidr" {
+#   type = "map"
 
-  default = {
-    back1.eu-west-1   = "10.0.51.0/24"
-    back2.eu-west-1   = "10.0.52.0/24"
-    back3.eu-west-1   = "10.0.53.0/24"
-    backup1.eu-west-1 = "10.0.41.0/24"
-    backup2.eu-west-1 = "10.0.42.0/24"
-    backup3.eu-west-1 = "10.0.43.0/24"
-    exch1.eu-west-1   = "10.0.31.0/24"
-    exch2.eu-west-1   = "10.0.32.0/24"
-    exch3.eu-west-1   = "10.0.33.0/24"
-    gw1.eu-west-1     = "10.0.100.0/24"
-    gw2.eu-west-1     = "10.0.101.0/24"
-    gw3.eu-west-1     = "10.0.102.0/24"
-    mgmt1.eu-west-1   = "10.0.11.0/24"
-    mgmt2.eu-west-1   = "10.0.12.0/24"
-    mgmt3.eu-west-1   = "10.0.13.0/24"
-    sql1.eu-west-1    = "10.0.61.0/24"
-    sql2.eu-west-1    = "10.0.62.0/24"
-    sql3.eu-west-1    = "10.0.63.0/24"
-    vpc.eu-west-1     = "10.0.0.0/16"
-    web1.eu-west-1    = "10.0.1.0/24"
-    web2.eu-west-1    = "10.0.2.0/24"
-    web3.eu-west-1    = "10.0.3.0/24"
-  }
-}
+#   default = {
+#     back1.eu-west-1   = "10.0.51.0/24"
+#     back2.eu-west-1   = "10.0.52.0/24"
+#     back3.eu-west-1   = "10.0.53.0/24"
+#     backup1.eu-west-1 = "10.0.41.0/24"
+#     backup2.eu-west-1 = "10.0.42.0/24"
+#     backup3.eu-west-1 = "10.0.43.0/24"
+#     exch1.eu-west-1   = "10.0.31.0/24"
+#     exch2.eu-west-1   = "10.0.32.0/24"
+#     exch3.eu-west-1   = "10.0.33.0/24"
+#     gw1.eu-west-1     = "10.0.100.0/24"
+#     gw2.eu-west-1     = "10.0.101.0/24"
+#     gw3.eu-west-1     = "10.0.102.0/24"
+#     mgmt1.eu-west-1   = "10.0.11.0/24"
+#     mgmt2.eu-west-1   = "10.0.12.0/24"
+#     mgmt3.eu-west-1   = "10.0.13.0/24"
+#     sql1.eu-west-1    = "10.0.61.0/24"
+#     sql2.eu-west-1    = "10.0.62.0/24"
+#     sql3.eu-west-1    = "10.0.63.0/24"
+#     vpc.eu-west-1     = "10.0.0.0/16"
+#     web1.eu-west-1    = "10.0.1.0/24"
+#     web2.eu-west-1    = "10.0.2.0/24"
+#     web3.eu-west-1    = "10.0.3.0/24"
+#   }
+# }
 
 variable "cidrbyte" {
   type = "map"
@@ -84,9 +84,9 @@ variable "cidrbyte" {
     exch1.eu-west-1   = "31"
     exch2.eu-west-1   = "32"
     exch3.eu-west-1   = "33"
-    gw1.eu-west-1     = "100"
-    gw2.eu-west-1     = "101"
-    gw3.eu-west-1     = "102"
+    gw1.eu-west-1     = "101"
+    gw2.eu-west-1     = "102"
+    gw3.eu-west-1     = "103"
     mgmt1.eu-west-1   = "11"
     mgmt2.eu-west-1   = "12"
     mgmt3.eu-west-1   = "13"

@@ -2,9 +2,9 @@ variable "azs" {
   type = "list"
 }
 
-variable "cidr" {
-  type = "map"
-}
+# variable "cidr" {
+#   type = "map"
+# }
 
 variable "cidrbyte" {
   type = "map"
@@ -12,30 +12,30 @@ variable "cidrbyte" {
 
 variable "aws_region" {}
 
-variable "subnet_back" {
+variable "cidrbyte_back" {
   type = "list"
 }
 
-variable "subnet_backup" {
+variable "cidrbyte_backup" {
   type = "list"
 }
 
-variable "subnet_exch" {
+variable "cidrbyte_exch" {
   type = "list"
 }
 
-variable "subnet_mgmt" {
+variable "cidrbyte_mgmt" {
   type = "list"
 }
 
-variable "subnet_sql" {
+variable "cidrbyte_sql" {
   type = "list"
 }
 
-variable "subnet_web" {
+variable "cidrbyte_web" {
   type = "list"
 }
 
-variable "subnet_gw" {
+variable "cidrbyte_gw" {
   type = "list"
 }

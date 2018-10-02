@@ -29,9 +29,15 @@ variable "aws_subnet_web_id" {
 
 variable "aws_vpc_id" {}
 
-variable "cidr" {
+variable "vpc_cidr" {}
+
+variable "cidrbyte" {
   type = "map"
 }
+
+# variable "cidr" {
+#   type = "map"
+# }
 
 variable "aws_amis" {
   type = "map"

@@ -6,6 +6,10 @@ output "aws_vpc_id" {
   value = "${module.vpc.aws_vpc_id}"
 }
 
+output "vpc_cidr" {
+  value = "${module.vpc.vpc_cidr}"
+}
+
 output "aws_subnet_back_id" {
   value = "${module.vpc.aws_subnet_back_id}"
 }
@@ -30,6 +34,7 @@ output "aws_key_pair_auth_id" {
   value = "${module.providers.aws_key_pair_auth_id}"
 }
 
-output "cidr" {
-  value = "${var.cidr}"
-}
+# output "cidr" {
+#   value = "${var.cidr}"
+# }
+

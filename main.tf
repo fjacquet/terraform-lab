@@ -9,7 +9,6 @@ module "global" {
   access_key = "${var.access_key}"
   aws_region = "${var.aws_region}"
   azs        = "${var.azs}"
-  cidr       = "${var.cidr}"
   cidrbyte   = "${var.cidrbyte}"
   key_name   = "${var.key_name}"
   public_key = "${var.public_key}"
@@ -29,8 +28,9 @@ module "unix" {
   aws_subnet_backup_id    = "${module.global.aws_subnet_backup_id}"
   aws_subnet_web_id       = "${module.global.aws_subnet_web_id}"
   aws_vpc_id              = "${module.global.aws_vpc_id}"
+  vpc_cidr                = "${module.global.vpc_cidr}"
   azs                     = "${var.azs}"
-  cidr                    = "${var.cidr}"
+  cidrbyte                = "${var.cidrbyte}"
 }
 
 module "microsoft" {
@@ -48,13 +48,13 @@ module "microsoft" {
   aws_subnet_web_id       = "${module.global.aws_subnet_web_id}"
   aws_vpc_id              = "${module.global.aws_vpc_id}"
   azs                     = "${var.azs}"
-  cidr                    = "${var.cidr}"
+  vpc_cidr                = "${module.global.vpc_cidr}"
+  cidrbyte                = "${var.cidrbyte}"
 }
 
 resource "aws_vpc_dhcp_options" "dns_resolver" {
   domain_name_servers = [
     "${module.microsoft.dc_private_ip}",
-    "10.0.0.2",
     "8.8.8.8",
   ]
 }
