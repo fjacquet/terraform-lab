@@ -1,5 +1,6 @@
 resource "aws_instance" "nbumaster" {
   instance_type        = "m4.xlarge"
+  ipv6_address_count   = 1
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
   ami                  = "${var.aws_ami}"

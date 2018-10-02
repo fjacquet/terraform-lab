@@ -71,6 +71,35 @@ variable "cidr" {
   }
 }
 
+variable "cidrbyte" {
+  type = "map"
+
+  default = {
+    back1.eu-west-1   = "51"
+    back2.eu-west-1   = "52"
+    back3.eu-west-1   = "53"
+    backup1.eu-west-1 = "41"
+    backup2.eu-west-1 = "42"
+    backup3.eu-west-1 = "43"
+    exch1.eu-west-1   = "31"
+    exch2.eu-west-1   = "32"
+    exch3.eu-west-1   = "33"
+    gw1.eu-west-1     = "100"
+    gw2.eu-west-1     = "101"
+    gw3.eu-west-1     = "102"
+    mgmt1.eu-west-1   = "11"
+    mgmt2.eu-west-1   = "12"
+    mgmt3.eu-west-1   = "13"
+    sql1.eu-west-1    = "61"
+    sql2.eu-west-1    = "62"
+    sql3.eu-west-1    = "63"
+    vpc.eu-west-1     = "0"
+    web1.eu-west-1    = "1"
+    web2.eu-west-1    = "2"
+    web3.eu-west-1    = "3"
+  }
+}
+
 variable "aws_number" {
   type = "map"
 

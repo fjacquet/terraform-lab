@@ -10,6 +10,7 @@ module "global" {
   aws_region = "${var.aws_region}"
   azs        = "${var.azs}"
   cidr       = "${var.cidr}"
+  cidrbyte   = "${var.cidrbyte}"
   key_name   = "${var.key_name}"
   public_key = "${var.public_key}"
   secret_key = "${var.secret_key}"

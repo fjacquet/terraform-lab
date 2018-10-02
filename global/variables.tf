@@ -12,3 +12,7 @@ variable "azs" {
 variable "cidr" {
   type = "map"
 }
+
+variable "cidrbyte" {
+  type = "map"
+}

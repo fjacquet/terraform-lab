@@ -5,6 +5,7 @@ resource "aws_instance" "sql" {
   ebs_optimized        = "true"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
   instance_type        = "m4.large"
+  ipv6_address_count   = 1
   key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${var.aws_subnet_id}"
   user_data            = "${file("user_data/config-sql.ps1")}"

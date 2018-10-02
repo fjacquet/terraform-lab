@@ -8,6 +8,7 @@ resource "aws_instance" "exch" {
   ebs_optimized        = "true"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
   instance_type        = "m4.large"
+  ipv6_address_count   = 1
   key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   user_data            = "${file("user_data/config-exch.ps1")}"

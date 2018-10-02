@@ -6,6 +6,10 @@ variable "cidr" {
   type = "map"
 }
 
+variable "cidrbyte" {
+  type = "map"
+}
+
 variable "aws_region" {}
 
 variable "subnet_back" {

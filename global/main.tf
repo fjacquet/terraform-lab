@@ -29,6 +29,7 @@ module "vpc" {
   source     = "./vpc"
   azs        = "${var.azs}"
   cidr       = "${var.cidr}"
+  cidrbyte   = "${var.cidrbyte}"
   aws_region = "${var.aws_region}"
 
   subnet_back = [

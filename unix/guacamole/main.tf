@@ -5,6 +5,7 @@ resource "aws_instance" "guacamole" {
   user_data              = "${file("user_data/config-guacamole.sh")}"
   iam_instance_profile   = "${var.aws_iip_assumerole_name}"
   ami                    = "${var.aws_ami}"
+  ipv6_address_count     = 1
   key_name               = "${var.aws_key_pair_auth_id}"
   vpc_security_group_ids = ["${var.aws_sg_ids}"]
 

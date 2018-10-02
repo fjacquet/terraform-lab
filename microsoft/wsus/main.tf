@@ -4,6 +4,7 @@ resource "aws_instance" "wsus" {
   availability_zone    = "${element(var.azs, count.index)}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   ami                  = "${var.aws_ami}"
+  ipv6_address_count   = 1
   user_data            = "${file("user_data/config-wsus.ps1")}"
   key_name             = "${var.aws_key_pair_auth_id}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
@@ -21,7 +22,6 @@ resource "aws_instance" "wsus" {
     "${var.aws_sg_ids}",
   ]
 }
-
 
 resource "aws_volume_attachment" "ebs_wsus" {
   device_name = "/dev/xvdb"
@@ -43,23 +43,23 @@ resource "aws_security_group" "wsus" {
   vpc_id      = "${var.aws_vpc_id}"
 
   ingress {
-    from_port = 80
-    to_port   = 80
-    protocol  = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/16"]
   }
 
   ingress {
-    from_port = 443
-    to_port   = 443
-    protocol  = "tcp"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/16"]
   }
 
   ingress {
-    from_port = 8530
-    to_port   = 8531
-    protocol  = "tcp"
+    from_port   = 8530
+    to_port     = 8531
+    protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/16"]
   }
 

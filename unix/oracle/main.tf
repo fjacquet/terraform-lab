@@ -1,5 +1,6 @@
 resource "aws_instance" "oracle" {
   instance_type          = "m4.xlarge"
+  ipv6_address_count     = 1
   count                  = "${var.aws_number}"
   availability_zone      = "${element(var.azs, count.index)}"
   iam_instance_profile   = "${var.aws_iip_assumerole_name}"
