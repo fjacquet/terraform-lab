@@ -51,7 +51,7 @@ resource "aws_volume_attachment" "ebs_wsus" {
 resource "aws_ebs_volume" "wsus_d" {
   count             = "${var.aws_number}"
   availability_zone = "${element(var.azs, count.index)}"
-  size              = 1500
+  size              = 500
   type              = "st1"
 }
 
