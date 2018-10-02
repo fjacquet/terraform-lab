@@ -65,14 +65,15 @@ resource "aws_route53_record" "guacamole" {
   name    = "guacamole-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.guacamole.*.id}"]
+  records = ["${element(aws_instance.guacamole.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "guacamole-v6" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "guacamole-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.guacamole.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "guacamole-v6" {
+#   count   = "${var.aws_number}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "guacamole-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.guacamole.*.ipv6_addresses}"]
+# }
+

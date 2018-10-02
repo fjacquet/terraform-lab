@@ -4,17 +4,17 @@ resource "aws_route53_record" "pki-rca" {
   name    = "pki-rca-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.pki-rca.*.id}"]
+  records = ["${element(aws_instance.pki-rca.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "pki-rca-v6" {
-  count   = "${var.aws_number_pki_rca}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "pki-rca-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.pki-rca.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "pki-rca-v6" {
+#   count   = "${var.aws_number_pki_rca}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "pki-rca-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.pki-rca.*.ipv6_addresses}"]
+# }
 
 resource "aws_instance" "pki-rca" {
   ami                  = "${var.aws_ami}"

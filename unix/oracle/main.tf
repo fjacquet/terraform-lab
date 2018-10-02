@@ -4,17 +4,17 @@ resource "aws_route53_record" "oracle" {
   name    = "oracle-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.oracle.*.id}"]
+  records = ["${element(aws_instance.oracle.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "oracle-v6" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "oracle-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.oracle.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "oracle-v6" {
+#   count   = "${var.aws_number}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "oracle-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.oracle.*.ipv6_addresses}"]
+# }
 
 resource "aws_instance" "oracle" {
   instance_type          = "m4.xlarge"

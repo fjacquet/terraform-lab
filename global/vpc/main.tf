@@ -48,31 +48,31 @@ resource "aws_eip" "nat_eip" {
   depends_on = ["aws_internet_gateway.gw"]
 }
 
-resource "aws_nat_gateway" "nat" {
-  allocation_id = "${aws_eip.nat_eip.id}"
-  subnet_id     = "${element(aws_subnet.gw.*.id, 0)}"
-  depends_on    = ["aws_internet_gateway.gw"]
-}
+# resource "aws_nat_gateway" "nat" {
+#   allocation_id = "${aws_eip.nat_eip.id}"
+#   subnet_id     = "${element(aws_subnet.gw.*.id, 0)}"
+#   depends_on    = ["aws_internet_gateway.gw"]
+# }
 
-resource "aws_route_table" "private_route_table" {
-  vpc_id = "${aws_vpc.evlab.id}"
+# resource "aws_route_table" "private_route_table" {
+#   vpc_id = "${aws_vpc.evlab.id}"
 
-  tags {
-    Name = "Private route table"
-  }
-}
+#   tags {
+#     Name = "Private route table"
+#   }
+# }
 
-resource "aws_route" "private_route" {
-  route_table_id         = "${aws_route_table.private_route_table.id}"
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = "${aws_nat_gateway.nat.id}"
-}
+# resource "aws_route" "private_route" {
+#   route_table_id         = "${aws_route_table.private_route_table.id}"
+#   destination_cidr_block = "0.0.0.0/0"
+#   nat_gateway_id         = "${aws_nat_gateway.nat.id}"
+# }
 
-resource "aws_route" "private_route_v6" {
-  route_table_id         = "${aws_route_table.private_route_table.id}"
-  destination_cidr_block = "::/0"
-  nat_gateway_id         = "${aws_nat_gateway.nat.id}"
-}
+# resource "aws_route" "private_route_v6" {
+#   route_table_id         = "${aws_route_table.private_route_table.id}"
+#   destination_cidr_block = "::/0"
+#   nat_gateway_id         = "${aws_nat_gateway.nat.id}"
+# }
 
 # Associate subnet public_subnet_eu_west_1a to public route table
 resource "aws_route_table_association" "public_subnet_web_association" {
@@ -87,22 +87,22 @@ resource "aws_route_table_association" "public_subnet_mgmt_association" {
   route_table_id = "${aws_vpc.evlab.main_route_table_id}"
 }
 
-resource "aws_route_table_association" "private_back_association" {
+resource "aws_route_table_association" "public_back_association" {
   count          = "${length(var.azs)}"
   subnet_id      = "${element(aws_subnet.back.*.id, count.index)}"
-  route_table_id = "${aws_route_table.private_route_table.id}"
+  route_table_id = "${aws_vpc.evlab.main_route_table_id}"
 }
 
-resource "aws_route_table_association" "private_exch_association" {
+resource "aws_route_table_association" "public_exch_association" {
   count          = "${length(var.azs)}"
   subnet_id      = "${element(aws_subnet.exch.*.id, count.index)}"
-  route_table_id = "${aws_route_table.private_route_table.id}"
+  route_table_id = "${aws_vpc.evlab.main_route_table_id}"
 }
 
-resource "aws_route_table_association" "private_backup_association" {
+resource "aws_route_table_association" "public_backup_association" {
   count          = "${length(var.azs)}"
   subnet_id      = "${element(aws_subnet.backup.*.id, count.index)}"
-  route_table_id = "${aws_route_table.private_route_table.id}"
+  route_table_id = "${aws_vpc.evlab.main_route_table_id}"
 }
 
 ###########################################################################

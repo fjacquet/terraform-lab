@@ -107,23 +107,24 @@ variable "aws_number" {
     bsd        = 0
     da         = 0
     dc         = 2
-    dhcp       = 2
+    dhcp       = 0
     exch       = 0
     fs         = 2
     guacamole  = 0
-    ipam       = 1
+    ipam       = 0
     jumpbox    = 1
     nbu        = 0
-    nps        = 2
+    nps        = 0
     opscenter  = 0
     oracle     = 0
-    pki_crl    = 1
-    pki_ica    = 1
+    pki_crl    = 0
+    pki_ica    = 0
     pki_rca    = 1
+    s2d        = 2
     sharepoint = 0
     simpana    = 0
     sql        = 0
-    symv       = 2
+    symv       = 0
     wsus       = 1
   }
 }

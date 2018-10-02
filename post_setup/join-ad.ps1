@@ -1,4 +1,4 @@
 Install-ADDSDomainController `
     -InstallDns `
-    -Credential (Get-Credential "EVLAB\Administrator") `
+    -Credential (Get-Credential "EVLAB\fjacquet") `
     -DomainName "evlab.ch"

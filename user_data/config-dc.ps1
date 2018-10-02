@@ -17,14 +17,14 @@ Set-Service NfsClnt -startuptype "manual"
 Set-Service NfsService -startuptype "manual"
 Update-Help
 # Disable IPv6 Transition Technologies
-netsh int teredo set state disabled
-netsh int 6to4 set state disabled
-netsh int isatap set state disabled
-netsh interface tcp set global autotuninglevel=disabled
+# netsh int teredo set state disabled
+# netsh int 6to4 set state disabled
+# netsh int isatap set state disabled
+# netsh interface tcp set global autotuninglevel=disabled
 # change to swiss keyboard
 Set-WinSystemLocale fr-CH
-Set-ExecutionPolicy unrestricted -force #DevSkim: ignore DS113853 
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) #DevSkim: ignore DS104456 
+Set-ExecutionPolicy unrestricted -force #DevSkim: ignore DS113853
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) #DevSkim: ignore DS104456
 $values = ('notepadplusplus','googlechrome','jre8','7zip.install','baretail','windirstat','curl','bginfo')
 foreach ($value in $values ){
     choco install $value -y
@@ -32,12 +32,12 @@ foreach ($value in $values ){
 
 # download needed for this server
 mkdir C:\installers\
-curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/LAPS.x64.msi -o C:\installers\LAPS.x64.msi
+Copy-S3Object -BucketName installers-fja -Key LAPS.x64.msi -LocalFile C:\installers\LAPS.x64.msi
 
-# curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/NetBackup_8.1.2Beta5_Win.zip1Beta5_Win.zip -o C:\installers\NetBackup_8.1.2Beta5_Win.zip 
+# curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/NetBackup_8.1.2Beta5_Win.zip1Beta5_Win.zip -o C:\installers\NetBackup_8.1.2Beta5_Win.zip
 # reboot to finish setup
 Initialize-AWSDefaults
-$instanceId = Invoke-RestMethod -uri http://169.254.169.254/latest/meta-data/instance-id #DevSkim: ignore DS104456 
+$instanceId = Invoke-RestMethod -uri http://169.254.169.254/latest/meta-data/instance-id #DevSkim: ignore DS104456
 $instance = (Get-EC2Instance -InstanceId $instanceId).Instances[0]
 $instanceName = ($instance.Tags | Where-Object { $_.Key -eq "Name"} | Select-Object -expand Value)
 Rename-computer -newName $instanceName

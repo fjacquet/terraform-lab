@@ -22,12 +22,12 @@ install-windowsfeature DSC-Service, FS-NFS-Service, NFS-Client, GPMC, Multipath-
 Set-Service NfsClnt -startuptype "manual"
 Set-Service NfsService -startuptype "manual"
 Update-Help
-# Disable IPv6 Transition Technologies
-netsh int teredo set state disabled
-netsh int 6to4 set state disabled
-netsh int isatap set state disabled
-netsh interface tcp set global autotuninglevel=disabled
-# change to swiss keyboard
+# # Disable IPv6 Transition Technologies
+# netsh int teredo set state disabled
+# netsh int 6to4 set state disabled
+# netsh int isatap set state disabled
+# netsh interface tcp set global autotuninglevel=disabled
+# # change to swiss keyboard
 Set-WinSystemLocale fr-CH
 $langList = New-WinUserLanguageList fr-CH
 Set-WinUserLanguageList $langList -force
@@ -37,7 +37,7 @@ chocoInstall
 
 # download needed for this server
 mkdir C:\installers\
-curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/LAPS.x64.msi -o C:\installers\LAPS.x64.msi
+Copy-S3Object -BucketName installers-fja -Key LAPS.x64.msi -LocalFile C:\installers\LAPS.x64.msi
 msiexec /q /i C:\installers\LAPS.x64.msi
  
 # curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/NetBackup_8.1.2Beta5_Win.zip -o C:\installers\NetBackup_8.1.2Beta5_Win.zip 

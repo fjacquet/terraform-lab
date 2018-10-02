@@ -30,17 +30,17 @@ resource "aws_route53_record" "pki-crl" {
   name    = "pki-crl-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.pki-crl.*.id}"]
+  records = ["${element(aws_instance.pki-crl.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "pki-crl-v6" {
-  count   = "${var.aws_number_pki_crl}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "pki-crl-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.pki-crl.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "pki-crl-v6" {
+#   count   = "${var.aws_number_pki_crl}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "pki-crl-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.pki-crl.*.ipv6_addresses}"]
+# }
 
 # A security group for basic windows box
 resource "aws_security_group" "pki_crl" {

@@ -4,17 +4,17 @@ resource "aws_route53_record" "simpana" {
   name    = "simpana-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.simpana.*.id}"]
+  records = ["${element(aws_instance.simpana.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "simpana-v6" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "simpana-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.simpana.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "simpana-v6" {
+#   count   = "${var.aws_number}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "simpana-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.simpana.*.ipv6_addresses}"]
+# }
 
 resource "aws_instance" "simpana" {
   ami                  = "${var.aws_ami}"

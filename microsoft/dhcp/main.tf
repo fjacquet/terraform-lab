@@ -4,17 +4,17 @@ resource "aws_route53_record" "dhcp" {
   name    = "dhcp-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.dhcp.*.id}"]
+  records = ["${element(aws_instance.dhcp.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "dhcp-v6" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "dhcp-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.dhcp.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "dhcp-v6" {
+#   count   = "${var.aws_number}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "dhcp-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.dhcp.*.ipv6_addresses}"]
+# }
 
 resource "aws_instance" "dhcp" {
   ami                  = "${var.aws_ami}"

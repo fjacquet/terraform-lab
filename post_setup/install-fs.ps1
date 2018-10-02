@@ -8,7 +8,7 @@ Get-Disk | Where-Object partitionstyle -eq 'raw' `
     -UseLargeFRS  `
     -Confirm:$false
 
-    Enable-DedupVolume D:
+Enable-DedupVolume D:
 Start-DedupJob -Type Optimization -Volume d:
 
 # new-Partition -PartitionNumber 2  -DriveLetter D  | Format-Volume  -FileSystem NTFS   -Force:$true   -Compress   -UseLargeFRS  -Confirm:$false

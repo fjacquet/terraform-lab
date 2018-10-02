@@ -1,9 +1,9 @@
 <powershell>
 # Disable IPv6 Transition Technologies
-netsh int teredo set state disabled
-netsh int 6to4 set state disabled
-netsh int isatap set state disabled
-netsh interface tcp set global autotuninglevel=disabled
+# netsh int teredo set state disabled
+# netsh int 6to4 set state disabled
+# netsh int isatap set state disabled
+# netsh interface tcp set global autotuninglevel=disabled
 # Disable-InternetExplorerESC
 $AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"
 $UserKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}"
@@ -34,6 +34,7 @@ foreach ($value in $values ){
 }
 # download needed for this server
 mkdir C:\installers\
+Copy-S3Object -BucketName installers-fja -Key LAPS.x64.msi -LocalFile C:\installers\LAPS.x64.msi
 msiexec /q /i C:\installers\LAPS.x64.msi
 # curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/NetBackup_8.1.2Beta5_Win.zip -o C:\installers\NetBackup_8.1.2Beta5_Win.zip 
 # reboot to finish setup

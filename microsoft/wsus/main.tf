@@ -4,17 +4,17 @@ resource "aws_route53_record" "wsus" {
   name    = "wsus-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.wsus.*.id}"]
+  records = ["${element(aws_instance.wsus.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "wsus-v6" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "wsus-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.wsus.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "wsus-v6" {
+#   count   = "${var.aws_number}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "wsus-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.wsus.*.ipv6_addresses}"]
+# }
 
 resource "aws_instance" "wsus" {
   instance_type        = "t2.medium"
@@ -51,8 +51,8 @@ resource "aws_volume_attachment" "ebs_wsus" {
 resource "aws_ebs_volume" "wsus_d" {
   count             = "${var.aws_number}"
   availability_zone = "${element(var.azs, count.index)}"
-  size              = 250
-  type              = "gp2"
+  size              = 1500
+  type              = "st1"
 }
 
 resource "aws_security_group" "wsus" {

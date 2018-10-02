@@ -1,10 +1,10 @@
-resource "aws_route53_record" "fs" {
+resource "aws_route53_record" "s2d" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "fs-${count.index}.evlab.ch"
+  name    = "s2d-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${element(aws_instance.fs.*.private_ip, count.index)}"]
+  records = ["${element(aws_instance.s2d.*.private_ip, count.index)}"]
 }
 
 # resource "aws_route53_record" "fs-v6" {
@@ -16,7 +16,7 @@ resource "aws_route53_record" "fs" {
 #   records = ["${aws_instance.fs.*.ipv6_addresses}"]
 # }
 
-resource "aws_instance" "fs" {
+resource "aws_instance" "s2d" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
   count                = "${var.aws_number}"
@@ -25,10 +25,10 @@ resource "aws_instance" "fs" {
   ipv6_address_count   = 1
   key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  user_data            = "${file("user_data/config-fs.ps1")}"
+  user_data            = "${file("user_data/config-s2d.ps1")}"
 
   tags {
-    Name = "fs-${count.index}"
+    Name = "s2d-${count.index}"
   }
 
   lifecycle {
@@ -41,22 +41,50 @@ resource "aws_instance" "fs" {
   ]
 }
 
-resource "aws_volume_attachment" "ebs_fs_d" {
+resource "aws_volume_attachment" "ebs_s2d_cache" {
   device_name = "/dev/xvdb"
   count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.fs_d.*.id, count.index)}"
-  instance_id = "${element(aws_instance.fs.*.id, count.index)}"
+  volume_id   = "${element(aws_ebs_volume.ssd.*.id, count.index)}"
+  instance_id = "${element(aws_instance.s2d.*.id, count.index)}"
 }
 
-resource "aws_ebs_volume" "fs_d" {
+resource "aws_ebs_volume" "ssd" {
   count             = "${var.aws_number}"
   availability_zone = "${element(var.azs, count.index)}"
   size              = 100
   type              = "gp2"
 }
 
-resource "aws_security_group" "fs" {
-  name        = "fs"
+resource "aws_volume_attachment" "ebs_s2d_data1" {
+  device_name = "/dev/xvdc"
+  count       = "${var.aws_number}"
+  volume_id   = "${element(aws_ebs_volume.hdd1.*.id, count.index)}"
+  instance_id = "${element(aws_instance.s2d.*.id, count.index)}"
+}
+
+resource "aws_ebs_volume" "hdd1" {
+  count             = "${var.aws_number}"
+  availability_zone = "${element(var.azs, count.index)}"
+  size              = 500
+  type              = "st1"
+}
+
+resource "aws_volume_attachment" "ebs_s2d_data2" {
+  device_name = "/dev/xvdd"
+  count       = "${var.aws_number}"
+  volume_id   = "${element(aws_ebs_volume.hdd2.*.id, count.index)}"
+  instance_id = "${element(aws_instance.s2d.*.id, count.index)}"
+}
+
+resource "aws_ebs_volume" "hdd2" {
+  count             = "${var.aws_number}"
+  availability_zone = "${element(var.azs, count.index)}"
+  size              = 500
+  type              = "st1"
+}
+
+resource "aws_security_group" "s2d" {
+  name        = "s2d"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

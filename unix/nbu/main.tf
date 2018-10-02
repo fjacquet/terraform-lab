@@ -4,17 +4,17 @@ resource "aws_route53_record" "nbumaster" {
   name    = "nbu-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.nbumaster.*.id}"]
+  records = ["${element(aws_instance.nbumaster.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "nbumaster-v6" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "nbu-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.nbumaster.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "nbumaster-v6" {
+#   count   = "${var.aws_number}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "nbu-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.nbumaster.*.ipv6_addresses}"]
+# }
 
 resource "aws_instance" "nbumaster" {
   instance_type        = "m4.xlarge"

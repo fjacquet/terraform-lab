@@ -19,14 +19,15 @@ resource "aws_route53_record" "bsd" {
   name    = "bsd-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.bsd.*.id}"]
+  records = ["${element(aws_instance.bsd.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "bsd-v6" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "bsd-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.bsd.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "bsd-v6" {
+#   count   = "${var.aws_number}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "bsd-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.bsd.*.ipv6_addresses}"]
+# }
+

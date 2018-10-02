@@ -4,17 +4,17 @@ resource "aws_route53_record" "dc" {
   name    = "dc-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.dc.*.id}"]
+  records = ["${element(aws_instance.dc.*.private_ip, count.index)}"]
 }
 
-resource "aws_route53_record" "dc-v6" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
-  name    = "dc-${count.index}.evlab.ch"
-  type    = "AAAA"
-  ttl     = "300"
-  records = ["${aws_instance.dc.*.ipv6_addresses}"]
-}
+# resource "aws_route53_record" "dc-v6" {
+#   count   = "${var.aws_number}"
+#   zone_id = "${var.dns_zone_id}"
+#   name    = "dc-${count.index}.evlab.ch"
+#   type    = "AAAA"
+#   ttl     = "300"
+#   records = ["${aws_instance.dc.*.ipv6_addresses}"]
+# }
 
 resource "aws_instance" "dc" {
   ami                  = "${var.aws_ami}"
