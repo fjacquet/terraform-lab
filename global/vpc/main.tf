@@ -3,6 +3,7 @@ resource "aws_vpc" "evlab" {
   cidr_block           = "${lookup(var.cidr, "vpc.${var.aws_region}")}"
   enable_dns_hostnames = "true"
   enable_dns_support   = "true"
+  assign_generated_ipv6_cidr_block = true
 }
 
 # Declare the data source
