@@ -1,41 +1,30 @@
 <powershell>
-# Disable IPv6 Transition Technologies
-# netsh int teredo set state disabled
-# netsh int 6to4 set state disabled
-# netsh int isatap set state disabled
-# netsh interface tcp set global autotuninglevel=disabled
-# Disable-InternetExplorerESC
-$AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"
-$UserKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}"
-Set-ItemProperty -Path $AdminKey -Name "IsInstalled" -Value 0
-Set-ItemProperty -Path $UserKey  -Name "IsInstalled" -Value 0
-Stop-Process -Name Explorer
+Set-ExecutionPolicy unrestricted -force #DevSkim: ignore DS113853 
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://github.com/fjacquet/terraform-lab/disable-ipv6.ps1') #DevSkim: ignore DS104456 
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://github.com/fjacquet/terraform-lab/disable-ieesc.ps1') #DevSkim: ignore DS104456 
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://github.com/fjacquet/terraform-lab/install-mslaps.ps1') #DevSkim: ignore DS104456 
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://github.com/fjacquet/terraform-lab/install-chocolateys.ps1') #DevSkim: ignore DS104456 
+
+
+
 # Disable antivirus
 Set-MpPreference -DisableRealtimeMonitoring $true
 # Disable firewall
 Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
 # Install basic
-install-windowsfeature DSC-Service,FS-NFS-Service,NFS-Client,GPMC,Multipath-IO,RSAT,SNMP-Service,Storage-Services
 Add-WindowsFeature –Name DirectAccess-VPN –IncludeManagementTools
 # Install-RemoteAccess -DAInstallType FullInstall -ConnectToAddress DA.DIRECTACCESSLAB.FR -ClientGPOName « DirectAccesslab.Lan\DirectAccess Clients GPO » -ServerGPOName « DirectAccesslab.Lan\DirectAccess Server GPO »-InternalInterface LAN -InternetInterface INTERNET -NLSURL https://nls.directaccesslab.lan -Force
-# Set NFS on manual
-Set-Service NfsClnt -startuptype "manual"
-Set-Service NfsService -startuptype "manual"
+
 Update-Help
 # change to swiss keyboard
 Set-WinSystemLocale fr-CH
 $langList = New-WinUserLanguageList fr-CH
 Set-WinUserLanguageList $langList -force
-Set-ExecutionPolicy unrestricted -force #DevSkim: ignore DS113853 
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) #DevSkim: ignore DS104456 
-$values = ('notepadplusplus','googlechrome','jre8','7zip.install','baretail','windirstat','curl','bginfo')
-foreach ($value in $values ){
-    choco install $value -y
-}
+
+
 # download needed for this server
 mkdir C:\installers\
-Copy-S3Object -BucketName installers-fja -Key LAPS.x64.msi -LocalFile C:\installers\LAPS.x64.msi
-msiexec /q /i C:\installers\LAPS.x64.msi
+
 # curl.exe -k https://s3-eu-west-1.amazonaws.com/installers-fja/NetBackup_8.1.2Beta5_Win.zip -o C:\installers\NetBackup_8.1.2Beta5_Win.zip 
 # reboot to finish setup
 Initialize-AWSDefaults
