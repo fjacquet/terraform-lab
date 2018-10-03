@@ -106,6 +106,13 @@ resource "aws_security_group" "dc" {
     self        = true
   }
   ingress {
+    description     = "PKI Kerberos"
+    from_port       = 464
+    to_port         = 464
+    protocol        = "tcp"
+    security_groups = ["${var.aws_sg_domain_member}"]
+  }
+  ingress {
     description = "LDAP GC"
     from_port   = 3268
     to_port     = 3269

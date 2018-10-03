@@ -120,6 +120,7 @@ variable "aws_number" {
     pki_crl    = 0
     pki_ica    = 0
     pki_rca    = 1
+    pki_nde    = 1
     s2d        = 2
     sharepoint = 0
     simpana    = 0

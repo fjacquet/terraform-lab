@@ -8,6 +8,7 @@ variable "aws_sg_ids" {
 }
 
 variable "dns_zone_id" {}
+variable "aws_sg_domain_member" {}
 
 variable "aws_subnet_id" {
   type = "list"

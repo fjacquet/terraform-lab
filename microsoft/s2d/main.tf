@@ -48,13 +48,12 @@ resource "aws_volume_attachment" "ebs_s2d_cache" {
   instance_id = "${element(aws_instance.s2d.*.id, count.index)}"
 }
 
-
 resource "aws_ebs_volume" "ssd" {
   count             = "${var.aws_number}"
   availability_zone = "${element(var.azs, count.index)}"
-  
-  size              = 100
-  type              = "gp2"
+
+  size = 100
+  type = "gp2"
 }
 
 resource "aws_volume_attachment" "ebs_s2d_data1" {

@@ -25,7 +25,7 @@ resource "aws_instance" "pki-ica" {
   ipv6_address_count   = 1
   key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  user_data            = "${file("user_data/config-pki.ps1")}"
+  user_data            = "${file("user_data/config-pki-ica.ps1")}"
 
   tags {
     Name = "pki-ica-${count.index}"

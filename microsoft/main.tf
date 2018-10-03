@@ -6,7 +6,7 @@ module "adcs" {
   aws_number_pki_crl      = "${lookup(var.aws_number, "pki_crl")}"
   aws_number_pki_ica      = "${lookup(var.aws_number, "pki_ica")}"
   aws_number_pki_rca      = "${lookup(var.aws_number, "pki_rca")}"
-  aws_region              = "${var.aws_region}"
+  aws_number_pki_nde      = "${lookup(var.aws_number, "pki_nde")}"
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   dns_zone_id             = "${var.dns_zone_id}"
@@ -27,6 +27,8 @@ module "adcs" {
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
   ]
+
+  
 }
 
 module "adds" {
@@ -54,6 +56,7 @@ module "adds" {
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
   ]
+  aws_sg_domain_member = "${aws_security_group.domain-member.id}"
 }
 
 module "adfs" {

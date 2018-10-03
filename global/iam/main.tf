@@ -4,11 +4,12 @@ resource "aws_iam_policy" "ec2s3access" {
   policy      = "${file("./iam_json/iam-policy-s3access.json")}"
 }
 
-resource "aws_iam_policy" "ec2s3getsecretccess" {
+resource "aws_iam_policy" "ec2getsecret" {
   name        = "getsecret-${var.aws_vpc_id}"
   description = "ec2 can access secretes"
   policy      = "${file("./iam_json/iam-policy-getsecret.json")}"
 }
+
 resource "aws_iam_policy" "ec2ro" {
   name        = "ec2ro-${var.aws_vpc_id}"
   description = "ec2 can access ec2 read only"
@@ -20,10 +21,11 @@ resource "aws_iam_policy_attachment" "assumerole-ec2ro-attach" {
   roles      = ["${aws_iam_role.assumerole.name}"]
   policy_arn = "${aws_iam_policy.ec2ro.arn}"
 }
+
 resource "aws_iam_policy_attachment" "assumerole-getsecret-attach" {
   name       = "assumerole-getsecret-attach"
   roles      = ["${aws_iam_role.assumerole.name}"]
-  policy_arn = "${aws_iam_policy.getsecret.arn}"
+  policy_arn = "${aws_iam_policy.ec2getsecret.arn}"
 }
 
 resource "aws_iam_policy_attachment" "assumerole-ec2s3access-attach" {
