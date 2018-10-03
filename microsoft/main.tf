@@ -27,8 +27,6 @@ module "adcs" {
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
   ]
-
-  
 }
 
 module "adds" {
@@ -56,6 +54,7 @@ module "adds" {
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
   ]
+
   aws_sg_domain_member = "${aws_security_group.domain-member.id}"
 }
 

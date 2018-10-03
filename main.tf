@@ -56,7 +56,7 @@ module "microsoft" {
 
 resource "aws_vpc_dhcp_options" "dns_resolver" {
   domain_name_servers = [
-    "${module.microsoft.dc_private_ip}",
+    ["${module.microsoft.dc_private_ip}"],
     "8.8.8.8",
   ]
 }

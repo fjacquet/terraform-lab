@@ -1,5 +1,5 @@
 output "dc_private_ip" {
-  description = "description"
+  description = "DC DNS IPs"
   value       = "${module.adds.dc_private_ip}"
 }
 
