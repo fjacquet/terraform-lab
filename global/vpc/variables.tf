@@ -6,6 +6,8 @@ variable "azs" {
 #   type = "map"
 # }
 
+variable "dhcpops" {}
+
 variable "cidrbyte" {
   type = "map"
 }
@@ -20,7 +22,7 @@ variable "cidrbyte_backup" {
   type = "list"
 }
 
-variable "cidrbyte_exch" {
+variable "cidrbyte_exchange" {
   type = "list"
 }
 

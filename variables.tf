@@ -52,9 +52,9 @@ variable "secret_key" {
 #     backup1.eu-west-1 = "10.0.41.0/24"
 #     backup2.eu-west-1 = "10.0.42.0/24"
 #     backup3.eu-west-1 = "10.0.43.0/24"
-#     exch1.eu-west-1   = "10.0.31.0/24"
-#     exch2.eu-west-1   = "10.0.32.0/24"
-#     exch3.eu-west-1   = "10.0.33.0/24"
+#     exchange1.eu-west-1   = "10.0.31.0/24"
+#     exchange2.eu-west-1   = "10.0.32.0/24"
+#     exchange3.eu-west-1   = "10.0.33.0/24"
 #     gw1.eu-west-1     = "10.0.100.0/24"
 #     gw2.eu-west-1     = "10.0.101.0/24"
 #     gw3.eu-west-1     = "10.0.102.0/24"
@@ -75,28 +75,28 @@ variable "cidrbyte" {
   type = "map"
 
   default = {
-    back1.eu-west-1   = "51"
-    back2.eu-west-1   = "52"
-    back3.eu-west-1   = "53"
-    backup1.eu-west-1 = "41"
-    backup2.eu-west-1 = "42"
-    backup3.eu-west-1 = "43"
-    exch1.eu-west-1   = "31"
-    exch2.eu-west-1   = "32"
-    exch3.eu-west-1   = "33"
-    gw1.eu-west-1     = "101"
-    gw2.eu-west-1     = "102"
-    gw3.eu-west-1     = "103"
-    mgmt1.eu-west-1   = "11"
-    mgmt2.eu-west-1   = "12"
-    mgmt3.eu-west-1   = "13"
-    sql1.eu-west-1    = "61"
-    sql2.eu-west-1    = "62"
-    sql3.eu-west-1    = "63"
-    vpc.eu-west-1     = "0"
-    web1.eu-west-1    = "1"
-    web2.eu-west-1    = "2"
-    web3.eu-west-1    = "3"
+    back1.eu-west-1     = "51"
+    back2.eu-west-1     = "52"
+    back3.eu-west-1     = "53"
+    backup1.eu-west-1   = "41"
+    backup2.eu-west-1   = "42"
+    backup3.eu-west-1   = "43"
+    exchange1.eu-west-1 = "31"
+    exchange2.eu-west-1 = "32"
+    exchange3.eu-west-1 = "33"
+    gw1.eu-west-1       = "101"
+    gw2.eu-west-1       = "102"
+    gw3.eu-west-1       = "103"
+    mgmt1.eu-west-1     = "11"
+    mgmt2.eu-west-1     = "12"
+    mgmt3.eu-west-1     = "13"
+    sql1.eu-west-1      = "61"
+    sql2.eu-west-1      = "62"
+    sql3.eu-west-1      = "63"
+    vpc.eu-west-1       = "0"
+    web1.eu-west-1      = "1"
+    web2.eu-west-1      = "2"
+    web3.eu-west-1      = "3"
   }
 }
 
@@ -106,11 +106,11 @@ variable "aws_number" {
   default = {
     bsd        = 0
     da         = 0
-    dc         = 2
+    dc         = 0
     dhcp       = 0
-    exch       = 0
-    fs         = 2
-    guacamole  = 0
+    exchange   = 0
+    fs         = 1
+    guacamole  = 1
     ipam       = 0
     jumpbox    = 1
     nbu        = 0
@@ -119,14 +119,14 @@ variable "aws_number" {
     oracle     = 0
     pki_crl    = 0
     pki_ica    = 0
-    pki_rca    = 1
+    pki_rca    = 0
     pki_nde    = 0
-    s2d        = 2
+    s2d        = 0
     sharepoint = 0
     simpana    = 0
     sql        = 0
     symv       = 0
-    wsus       = 1
+    wsus       = 0
   }
 }
 

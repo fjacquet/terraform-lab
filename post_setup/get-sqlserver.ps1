@@ -1,6 +1,3 @@
+$bin = "SQL Server 2016 Enterprise 64bit English.ISO"
+Copy-S3Object -BucketName installers-fja -Key $bin -LocalFile C:\installers\$bin
 
-$binaries=('SQLServer2016-x64.exe')
-foreach ($bin in $binaries)
-{
-    Copy-S3Object -BucketName installers-fja -Key $bin -LocalFile C:\installers\$bin
-}

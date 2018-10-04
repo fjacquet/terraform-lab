@@ -15,8 +15,8 @@ output "aws_sg_dhcp_id" {
   value = "${module.dhcp.aws_sg_dhcp_id}"
 }
 
-output "aws_sg_exch_id" {
-  value = "${module.exch.aws_sg_exch_id}"
+output "aws_sg_exchange_id" {
+  value = "${module.exchange.aws_sg_exchange_id}"
 }
 
 output "aws_sg_fs_id" {

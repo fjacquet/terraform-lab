@@ -16,7 +16,7 @@ variable "aws_subnet_backup_id" {
   type = "list"
 }
 
-variable "aws_subnet_exch_id" {
+variable "aws_subnet_exchange_id" {
   type = "list"
 }
 

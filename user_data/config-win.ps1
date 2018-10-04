@@ -12,7 +12,7 @@ foreach ($script in $scripts){
 # Install basic
 
 
-$scripts = ('get-sqlserver','initialize-hostname')
+$scripts = ('initialize-hostname')
 foreach ($script in $scripts){
     $url = "$($gitroot)$($script).ps1"
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 

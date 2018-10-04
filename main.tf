@@ -13,6 +13,7 @@ module "global" {
   key_name   = "${var.key_name}"
   public_key = "${var.public_key}"
   secret_key = "${var.secret_key}"
+  dhcpops    = "${aws_vpc_dhcp_options.dns_resolver.id}"
 }
 
 module "unix" {
@@ -44,7 +45,7 @@ module "microsoft" {
   aws_sg_nbuclient_id     = "${module.unix.aws_sg_nbuclient_id}"
   aws_subnet_back_id      = "${module.global.aws_subnet_back_id}"
   aws_subnet_backup_id    = "${module.global.aws_subnet_backup_id}"
-  aws_subnet_exch_id      = "${module.global.aws_subnet_exch_id}"
+  aws_subnet_exchange_id  = "${module.global.aws_subnet_exchange_id}"
   aws_subnet_mgmt_id      = "${module.global.aws_subnet_mgmt_id}"
   aws_subnet_web_id       = "${module.global.aws_subnet_web_id}"
   aws_vpc_id              = "${module.global.aws_vpc_id}"
@@ -55,6 +56,11 @@ module "microsoft" {
 }
 
 resource "aws_vpc_dhcp_options" "dns_resolver" {
+  ntp_servers          = ["${module.microsoft.dc_private_ip}"]
+  netbios_name_servers = ["${module.microsoft.dc_private_ip}"]
+  netbios_node_type    = 2
+  domain_name          = "evlab.ch"
+
   domain_name_servers = [
     ["${module.microsoft.dc_private_ip}"],
     "8.8.8.8",

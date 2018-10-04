@@ -16,3 +16,5 @@ variable "azs" {
 variable "cidrbyte" {
   type = "map"
 }
+
+variable "dhcpops" {}

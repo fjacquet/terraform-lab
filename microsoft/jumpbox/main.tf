@@ -16,6 +16,12 @@ resource "aws_route53_record" "jumpbox" {
 #   records = ["${aws_instance.jumpbox.*.ipv6_addresses}"]
 # }
 
+resource "aws_eip" "jumpbox-public" {
+  count    = "${var.aws_number}"
+  instance = "${element(aws_instance.jumpbox.*.id, count.index)}"
+  vpc      = true
+}
+
 resource "aws_instance" "jumpbox" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"

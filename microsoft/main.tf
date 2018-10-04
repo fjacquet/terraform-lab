@@ -120,28 +120,28 @@ module "da" {
   ]
 }
 
-module "exch" {
-  source                  = "./exch"
+module "exchange" {
+  source                  = "./exchange"
   aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
   aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "exch")}"
+  aws_number              = "${lookup(var.aws_number, "exchange")}"
   aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_exch_id}"
+  aws_subnet_id           = "${var.aws_subnet_exchange_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
   dns_zone_id             = "${var.dns_zone_id}"
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exch1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exch2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exch3.${var.aws_region}"))}",
+    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exchange1.${var.aws_region}"))}",
+    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exchange2.${var.aws_region}"))}",
+    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exchange3.${var.aws_region}"))}",
   ]
 
   aws_sg_ids = [
     "${aws_security_group.rdp.id}",
     "${aws_security_group.domain-member.id}",
-    "${module.exch.aws_sg_exch_id}",
+    "${module.exchange.aws_sg_exchange_id}",
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
   ]

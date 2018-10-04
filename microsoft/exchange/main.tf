@@ -1,22 +1,22 @@
-resource "aws_route53_record" "exch" {
+resource "aws_route53_record" "exchange" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "exch-${count.index}.evlab.ch"
+  name    = "exchange-${count.index}.evlab.ch"
   type    = "A"
   ttl     = "300"
-  records = ["${element(aws_instance.exch.*.private_ip, count.index)}"]
+  records = ["${element(aws_instance.exchange.*.private_ip, count.index)}"]
 }
 
-# resource "aws_route53_record" "exch-v6" {
+# resource "aws_route53_record" "exchange-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "exch-${count.index}.evlab.ch"
+#   name    = "exchange-${count.index}.evlab.ch"
 #   type    = "AAAA"
 #   ttl     = "300"
-#   records = ["${aws_instance.exch.*.ipv6_addresses}"]
+#   records = ["${aws_instance.exchange.*.ipv6_addresses}"]
 # }
 
-resource "aws_instance" "exch" {
+resource "aws_instance" "exchange" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
   count                = "${var.aws_number}"
@@ -26,14 +26,14 @@ resource "aws_instance" "exch" {
   ipv6_address_count   = 1
   key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  user_data            = "${file("user_data/config-exch.ps1")}"
+  user_data            = "${file("user_data/config-exchange.ps1")}"
 
   root_block_device = {
     volume_size = 100
   }
 
   tags {
-    Name = "exch-${count.index}"
+    Name = "exchange-${count.index}"
   }
 
   lifecycle {
@@ -46,8 +46,8 @@ resource "aws_instance" "exch" {
   ]
 }
 
-resource "aws_security_group" "exch" {
-  name        = "tf_evlab_windows_exch"
+resource "aws_security_group" "exchange" {
+  name        = "tf_evlab_windows_exchange"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

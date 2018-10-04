@@ -12,12 +12,12 @@ foreach ($script in $scripts){
 # Install basic
 add-windowsfeature -Name File-Services, FS-DFS-Replication, FS-Data-Deduplication, FS-NFS-Service, NFS-Client, FS-Resource-Manager, FS-SyncShareService –IncludeManagementTools
 
-$scripts = ('format-datadisk,'initialize-hostname')
+$scripts = ('format-datadisk','initialize-hostname')
 foreach ($script in $scripts){
     $url = "$($gitroot)$($script).ps1"
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
 }
 
 # reboot to finish setup
-restart-computer
+restart-computer -force 
 </powershell>

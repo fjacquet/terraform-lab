@@ -26,8 +26,8 @@ output "aws_subnet_web_id" {
   value = "${module.vpc.aws_subnet_web_id}"
 }
 
-output "aws_subnet_exch_id" {
-  value = "${module.vpc.aws_subnet_exch_id}"
+output "aws_subnet_exchange_id" {
+  value = "${module.vpc.aws_subnet_exchange_id}"
 }
 
 output "aws_subnet_mgmt_id" {

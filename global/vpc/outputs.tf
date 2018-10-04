@@ -18,8 +18,8 @@ output "aws_subnet_web_id" {
   value = "${aws_subnet.web.*.id}"
 }
 
-output "aws_subnet_exch_id" {
-  value = "${aws_subnet.exch.*.id}"
+output "aws_subnet_exchange_id" {
+  value = "${aws_subnet.exchange.*.id}"
 }
 
 output "aws_subnet_mgmt_id" {

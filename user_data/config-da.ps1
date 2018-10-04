@@ -20,5 +20,5 @@ foreach ($script in $scripts) {
 }
 
 # reboot to finish setup
-restart-computer
+restart-computer -force 
 </powershell>
