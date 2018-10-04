@@ -105,11 +105,12 @@ variable "aws_number" {
 
   default = {
     bsd        = 0
+    csv        = 0
     da         = 0
-    dc         = 0
+    dc         = 2
     dhcp       = 0
     exchange   = 0
-    fs         = 1
+    fs         = 2
     guacamole  = 1
     ipam       = 0
     jumpbox    = 1
@@ -119,9 +120,9 @@ variable "aws_number" {
     oracle     = 0
     pki_crl    = 0
     pki_ica    = 0
-    pki_rca    = 0
+    pki_rca    = 1
     pki_nde    = 0
-    s2d        = 0
+    csv        = 0
     sharepoint = 0
     simpana    = 0
     sql        = 0

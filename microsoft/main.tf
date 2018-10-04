@@ -257,12 +257,12 @@ module "sharepoint" {
   ]
 }
 
-module "s2d" {
-  source                  = "./s2d"
+module "csv" {
+  source                  = "./csv"
   aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
   aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "s2d")}"
+  aws_number              = "${lookup(var.aws_number, "csv")}"
   aws_region              = "${var.aws_region}"
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
@@ -277,7 +277,7 @@ module "s2d" {
 
   aws_sg_ids = [
     "${aws_security_group.rdp.id}",
-    "${module.s2d.aws_sg_s2d_id}",
+    "${module.csv.aws_sg_csv_id}",
     "${aws_security_group.domain-member.id}",
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
