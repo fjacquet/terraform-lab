@@ -27,6 +27,7 @@ module "unix" {
   aws_sg_simpanaclient_id = "${module.microsoft.aws_sg_simpanaclient_id}"
   aws_subnet_back_id      = "${module.global.aws_subnet_back_id}"
   aws_subnet_backup_id    = "${module.global.aws_subnet_backup_id}"
+  aws_subnet_mgmt_id      = "${module.global.aws_subnet_mgmt_id}"
   aws_subnet_web_id       = "${module.global.aws_subnet_web_id}"
   aws_vpc_id              = "${module.global.aws_vpc_id}"
   vpc_cidr                = "${module.global.vpc_cidr}"

@@ -20,7 +20,7 @@ module "guacamole" {
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
   aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
   aws_number              = "${lookup(var.aws_number, "guacamole")}"
-  aws_subnet_id           = "${var.aws_subnet_web_id}"
+  aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
   dns_zone_id             = "${var.dns_zone_id}"
