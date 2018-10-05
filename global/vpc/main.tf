@@ -45,14 +45,13 @@ resource "aws_route_table" "public-rt" {
   vpc_id = "${aws_vpc.evlab.id}"
 
   route {
-    ipv6_cidr_block = "::/0"
+    ipv6_cidr_block        = "::/0"
     egress_only_gateway_id = "${aws_egress_only_internet_gateway.egw6.id}"
-    
   }
 
   route {
-    cidr_block             = "0.0.0.0/0"
-    gateway_id      = "${aws_internet_gateway.gw.id}"
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.gw.id}"
   }
 
   tags {

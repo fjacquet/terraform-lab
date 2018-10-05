@@ -24,6 +24,7 @@ variable "aws_subnet_back_id" {
 variable "aws_subnet_backup_id" {
   type = "list"
 }
+
 variable "aws_subnet_mgmt_id" {
   type = "list"
 }

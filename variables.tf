@@ -107,7 +107,7 @@ variable "aws_number" {
     bsd        = 0
     csv        = 0
     da         = 0
-    dc         = 2
+    dc         = 1
     dhcp       = 0
     exchange   = 0
     fs         = 0
@@ -127,6 +127,7 @@ variable "aws_number" {
     simpana    = 0
     sql        = 0
     symv       = 0
+    wds        = 1
     wsus       = 0
   }
 }
