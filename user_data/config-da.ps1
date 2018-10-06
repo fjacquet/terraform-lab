@@ -1,24 +1,24 @@
-<powershell>
+﻿< powershell>
 # download needed for this server
 mkdir C:\installers\
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
-Set-ExecutionPolicy unrestricted -force #DevSkim: ignore DS113853 
-$scripts = ('disable-av', 'disable-ieesc', 'initialize-env', 'install-nbugrp', 'install-chocolateys', 'install-mslaps', 'install-features')
+Set-ExecutionPolicy unrestricted -Force #DevSkim: ignore DS113853 
+$scripts = ('disable-av','disable-ieesc','initialize-env','install-nbugrp','install-chocolateys','install-mslaps','install-features')
 foreach ($script in $scripts) {
-    $url = "$($gitroot)$($script).ps1"
-    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
+  $url = "$($gitroot)$($script).ps1"
+  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
 }
 
 # Install basic
-Add-WindowsFeature –Name DirectAccess-VPN –IncludeManagementTools
+add-windowsfeature –Name DirectAccess-VPN –IncludeManagementTools
 # Install-RemoteAccess -DAInstallType FullInstall -ConnectToAddress DA.DIRECTACCESSLAB.FR -ClientGPOName « DirectAccesslab.Lan\DirectAccess Clients GPO » -ServerGPOName « DirectAccesslab.Lan\DirectAccess Server GPO »-InternalInterface LAN -InternetInterface INTERNET -NLSURL https://nls.directaccesslab.lan -Force
 
 $scripts = ('initialize-hostname')
 foreach ($script in $scripts) {
-    $url = "$($gitroot)$($script).ps1"
-    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
+  $url = "$($gitroot)$($script).ps1"
+  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
 }
 
 # reboot to finish setup
-restart-computer -force 
-</powershell>
+restart-computer -Force
+< /powershell>

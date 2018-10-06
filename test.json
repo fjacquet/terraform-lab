@@ -1,0 +1,10 @@
+{
+    "ARN": "arn:aws:secretsmanager:eu-west-1:240388846865:secret:evlab/ad/joinuser-26tJjK",
+    "Name": "evlab/ad/joinuser",
+    "VersionId": "a83ac178-9bf5-4d3e-bb9e-fd916606aaec",
+    "SecretString": "{\"joinuser\":\"Alib4b4-2016!\"}",
+    "VersionStages": [
+        "AWSCURRENT"
+    ],
+    "CreatedDate": 1538514786.83
+}

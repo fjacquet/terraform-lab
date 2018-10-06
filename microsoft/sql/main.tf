@@ -54,6 +54,13 @@ resource "aws_security_group" "sql" {
     protocol    = "tcp"
     cidr_blocks = ["${element(var.cidr, count.index)}"]
   }
+    ingress {
+    from_port   = 5022
+    to_port     = 5022
+    protocol    = "tcp"
+    cidr_blocks = ["${element(var.cidr, count.index)}"]
+  }
+
 
   # outbound internet access
   egress {
