@@ -33,6 +33,8 @@ Need to create some aws secrets :
 * evlab/ad/fjacquet
 * evlab/guacamole/mysqlroot
 * evlab/guacamole/mysqluser
+* evlab/glpi/mysqlroot
+* evlab/glpi/mysqluser
 * evlab/guacamole/keystore
 * evlab/guacamole/mail
 * evlab/sharepoint/sp_farm
