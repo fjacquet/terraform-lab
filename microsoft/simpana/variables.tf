@@ -21,3 +21,5 @@ variable "aws_sg_ids" {
 variable "azs" {
   type = "list"
 }
+
+variable "dns_suffix" {}

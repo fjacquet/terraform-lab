@@ -1,7 +1,7 @@
 resource "aws_route53_record" "da" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "da-${count.index}.evlab.ch"
+  name    = "da-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.da.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "da" {
 # resource "aws_route53_record" "da-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "da-${count.index}.evlab.ch"
+#   name    = "da-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.da.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "da" {
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
 
   tags {
-    Name = "da-${count.index}"
+    Name        = "da-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

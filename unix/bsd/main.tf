@@ -9,14 +9,15 @@ resource "aws_instance" "bsd" {
   vpc_security_group_ids = "${var.aws_sg_ids}"
 
   tags {
-    Name = "bsd-${count.index}"
+    Name        = "bsd-${count.index}"
+    Environment = "lab"
   }
 }
 
 resource "aws_route53_record" "bsd" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "bsd-${count.index}.evlab.ch"
+  name    = "bsd-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.bsd.*.private_ip, count.index)}"]
@@ -25,7 +26,7 @@ resource "aws_route53_record" "bsd" {
 # resource "aws_route53_record" "bsd-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "bsd-${count.index}.evlab.ch"
+#   name    = "bsd-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.bsd.*.ipv6_addresses}"]

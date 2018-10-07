@@ -1,7 +1,7 @@
 resource "aws_route53_record" "simpana" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "simpana-${count.index}.evlab.ch"
+  name    = "simpana-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.simpana.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "simpana" {
 # resource "aws_route53_record" "simpana-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "simpana-${count.index}.evlab.ch"
+#   name    = "simpana-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.simpana.*.ipv6_addresses}"]
@@ -37,7 +37,8 @@ resource "aws_instance" "simpana" {
   }
 
   tags {
-    Name = "simpana-${count.index}"
+    Name        = "simpana-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

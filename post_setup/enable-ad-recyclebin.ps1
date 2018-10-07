@@ -1,2 +1,4 @@
 Import-Module ActiveDirectory
-Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target "evlab.ch" -confirm:$false
+# Get the distinguished name of the Active Directory domain
+$Domain = (Get-ADDomain).DistinguishedName
+Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target $Domain  -confirm:$false

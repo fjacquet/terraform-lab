@@ -1,7 +1,7 @@
 resource "aws_route53_record" "nbumaster" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "nbu-${count.index}.evlab.ch"
+  name    = "nbu-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.nbumaster.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "nbumaster" {
 # resource "aws_route53_record" "nbumaster-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "nbu-${count.index}.evlab.ch"
+#   name    = "nbu-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.nbumaster.*.ipv6_addresses}"]
@@ -37,7 +37,8 @@ resource "aws_instance" "nbumaster" {
   }
 
   tags {
-    Name = "nbu-${count.index}"
+    Name        = "nbu-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

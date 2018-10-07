@@ -6,6 +6,7 @@ module "bsd" {
   aws_subnet_id        = "${var.aws_subnet_back_id}"
   azs                  = "${var.azs}"
   dns_zone_id          = "${var.dns_zone_id}"
+  dns_suffix           = "${var.dns_suffix}"
 
   aws_sg_ids = [
     "${module.nbu.aws_sg_client_id}",
@@ -24,6 +25,7 @@ module "guacamole" {
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
   dns_zone_id             = "${var.dns_zone_id}"
+  dns_suffix              = "${var.dns_suffix}"
 
   aws_sg_ids = [
     "${aws_security_group.ssh.id}",
@@ -43,6 +45,7 @@ module "nbu" {
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
   dns_zone_id             = "${var.dns_zone_id}"
+  dns_suffix              = "${var.dns_suffix}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup1.${var.aws_region}"))}",
@@ -65,6 +68,7 @@ module "oracle" {
   aws_vpc_id              = "${var.aws_vpc_id}"
   azs                     = "${var.azs}"
   dns_zone_id             = "${var.dns_zone_id}"
+  dns_suffix              = "${var.dns_suffix}"
 
   cidr = [
     "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",

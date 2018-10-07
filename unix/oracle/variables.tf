@@ -5,6 +5,7 @@ variable "cidr" {
   type = "list"
 }
 
+variable "dns_suffix" {}
 variable "aws_number" {}
 
 variable "aws_vpc_id" {}

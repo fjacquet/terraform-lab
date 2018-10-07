@@ -2,6 +2,7 @@ variable "azs" {
   type = "list"
 }
 
+variable "dns_suffix" {}
 variable "aws_ami" {}
 
 # Size of Netbackup backups disks

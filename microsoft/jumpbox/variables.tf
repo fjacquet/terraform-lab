@@ -20,3 +20,5 @@ variable "aws_key_pair_auth_id" {}
 variable "aws_sg_ids" {
   type = "list"
 }
+
+variable "dns_suffix" {}

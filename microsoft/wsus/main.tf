@@ -1,7 +1,7 @@
 resource "aws_route53_record" "wsus" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "wsus-${count.index}.evlab.ch"
+  name    = "wsus-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.wsus.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "wsus" {
 # resource "aws_route53_record" "wsus-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "wsus-${count.index}.evlab.ch"
+#   name    = "wsus-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.wsus.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "wsus" {
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
 
   tags {
-    Name = "wsus-${count.index}"
+    Name        = "wsus-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

@@ -1,7 +1,7 @@
 resource "aws_route53_record" "pki-nde" {
   count   = "${var.aws_number_pki_nde}"
   zone_id = "${var.dns_zone_id}"
-  name    = "pki-nde-${count.index}.evlab.ch"
+  name    = "pki-nde-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.pki-nde.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "pki-nde" {
 # resource "aws_route53_record" "pki-nde-v6" {
 #   count   = "${var.aws_number_pki_nde}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "pki-nde-${count.index}.evlab.ch"
+#   name    = "pki-nde-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.pki-nde.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "pki-nde" {
   user_data            = "${file("user_data/config-pki-nde.ps1")}"
 
   tags {
-    Name = "pki-nde-${count.index}"
+    Name        = "pki-nde-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

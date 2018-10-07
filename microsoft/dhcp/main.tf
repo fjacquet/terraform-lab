@@ -1,7 +1,7 @@
 resource "aws_route53_record" "dhcp" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "dhcp-${count.index}.evlab.ch"
+  name    = "dhcp-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.dhcp.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "dhcp" {
 # resource "aws_route53_record" "dhcp-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "dhcp-${count.index}.evlab.ch"
+#   name    = "dhcp-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.dhcp.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "dhcp" {
   user_data            = "${file("user_data/config-dhcp.ps1")}"
 
   tags {
-    Name = "dhcp-${count.index}"
+    Name        = "dhcp-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

@@ -33,7 +33,8 @@ resource "aws_nat_gateway" "natgw" {
   depends_on = ["aws_internet_gateway.gw"]
 
   tags {
-    Name = "natgw-${count.index}"
+    Name        = "natgw-${count.index}"
+    Environment = "lab"
   }
 }
 
@@ -55,7 +56,8 @@ resource "aws_route_table" "public-rt" {
   }
 
   tags {
-    Name = "public-rt"
+    Name        = "public-rt"
+    Environment = "lab"
   }
 }
 
@@ -69,7 +71,8 @@ resource "aws_subnet" "gw" {
   assign_ipv6_address_on_creation = true
 
   tags {
-    Name = "subnet-gw-${count.index}"
+    Name        = "subnet-gw-${count.index}"
+    Environment = "lab"
   }
 }
 
@@ -83,7 +86,8 @@ resource "aws_subnet" "mgmt" {
   assign_ipv6_address_on_creation = true
 
   tags {
-    Name = "subnet-mgmt-${count.index}"
+    Name        = "subnet-mgmt-${count.index}"
+    Environment = "lab"
   }
 }
 
@@ -114,7 +118,8 @@ resource "aws_subnet" "back" {
   assign_ipv6_address_on_creation = true
 
   tags {
-    Name = "subnet-back-${count.index}"
+    Name        = "subnet-back-${count.index}"
+    Environment = "lab"
   }
 }
 
@@ -128,7 +133,8 @@ resource "aws_subnet" "backup" {
   assign_ipv6_address_on_creation = true
 
   tags {
-    Name = "subnet-backup-${count.index}"
+    Name        = "subnet-backup-${count.index}"
+    Environment = "lab"
   }
 }
 
@@ -142,7 +148,8 @@ resource "aws_subnet" "exchange" {
   assign_ipv6_address_on_creation = true
 
   tags {
-    Name = "subnet-exchange-${count.index}"
+    Name        = "subnet-exchange-${count.index}"
+    Environment = "lab"
   }
 }
 
@@ -156,7 +163,8 @@ resource "aws_subnet" "web" {
   assign_ipv6_address_on_creation = true
 
   tags {
-    Name = "subnet-web-${count.index}"
+    Name        = "subnet-web-${count.index}"
+    Environment = "lab"
   }
 }
 
@@ -165,7 +173,8 @@ resource "aws_route_table" "private-rt" {
   vpc_id = "${aws_vpc.evlab.id}"
 
   tags {
-    Name = "private-rt-${count.index}"
+    Name        = "private-rt-${count.index}"
+    Environment = "lab"
   }
 }
 

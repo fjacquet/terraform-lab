@@ -32,6 +32,7 @@ variable "aws_subnet_mgmt_id" {
 variable "aws_vpc_id" {}
 
 variable "vpc_cidr" {}
+variable "dns_suffix" {}
 
 variable "cidrbyte" {
   type = "map"

@@ -10,7 +10,8 @@ resource "aws_instance" "pki-crl" {
   user_data            = "${file("user_data/config-pki-crl.ps1")}"
 
   tags {
-    Name = "pki-crl-${count.index}"
+    Name        = "pki-crl-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {
@@ -27,7 +28,7 @@ resource "aws_instance" "pki-crl" {
 resource "aws_route53_record" "pki-crl" {
   count   = "${var.aws_number_pki_crl}"
   zone_id = "${var.dns_zone_id}"
-  name    = "pki-crl-${count.index}.evlab.ch"
+  name    = "pki-crl-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.pki-crl.*.private_ip, count.index)}"]
@@ -36,7 +37,7 @@ resource "aws_route53_record" "pki-crl" {
 # resource "aws_route53_record" "pki-crl-v6" {
 #   count   = "${var.aws_number_pki_crl}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "pki-crl-${count.index}.evlab.ch"
+#   name    = "pki-crl-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.pki-crl.*.ipv6_addresses}"]

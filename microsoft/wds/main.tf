@@ -1,7 +1,7 @@
 resource "aws_route53_record" "wds" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "wds-${count.index}.evlab.ch"
+  name    = "wds-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.wds.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "wds" {
 # resource "aws_route53_record" "wds-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "wds-${count.index}.evlab.ch"
+#   name    = "wds-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.wds.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "wds" {
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
 
   tags {
-    Name = "wds-${count.index}"
+    Name        = "wds-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

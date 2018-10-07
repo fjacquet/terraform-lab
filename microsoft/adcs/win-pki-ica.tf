@@ -1,7 +1,7 @@
 resource "aws_route53_record" "pki-ica" {
   count   = "${var.aws_number_pki_ica}"
   zone_id = "${var.dns_zone_id}"
-  name    = "pki-ica-${count.index}.evlab.ch"
+  name    = "pki-ica-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.pki-ica.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "pki-ica" {
 # resource "aws_route53_record" "pki-ica-v6" {
 #   count   = "${var.aws_number_pki_ica}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "pki-ica-${count.index}.evlab.ch"
+#   name    = "pki-ica-${count.index}.${var.dns_suffix}"
 #   type    = "A"
 #   ttl     = "300"
 #   records = ["${aws_instance.pki-ica.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "pki-ica" {
   user_data            = "${file("user_data/config-pki-ica.ps1")}"
 
   tags {
-    Name = "pki-ica-${count.index}"
+    Name        = "pki-ica-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

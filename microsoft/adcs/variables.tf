@@ -25,3 +25,5 @@ variable "aws_subnet_id" {
 variable "azs" {
   type = "list"
 }
+
+variable "dns_suffix" {}

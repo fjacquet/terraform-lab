@@ -1,7 +1,7 @@
 resource "aws_route53_record" "exchange" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "exchange-${count.index}.evlab.ch"
+  name    = "exchange-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.exchange.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "exchange" {
 # resource "aws_route53_record" "exchange-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "exchange-${count.index}.evlab.ch"
+#   name    = "exchange-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.exchange.*.ipv6_addresses}"]
@@ -33,7 +33,8 @@ resource "aws_instance" "exchange" {
   }
 
   tags {
-    Name = "exchange-${count.index}"
+    Name        = "exchange-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

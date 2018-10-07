@@ -14,6 +14,7 @@ module "global" {
   public_key = "${var.public_key}"
   secret_key = "${var.secret_key}"
   dhcpops    = "${aws_vpc_dhcp_options.dns_resolver.id}"
+  dns_suffix = "${var.dns_suffix}"
 }
 
 module "unix" {
@@ -34,6 +35,7 @@ module "unix" {
   dns_zone_id             = "${module.global.dns_zone_id}"
   azs                     = "${var.azs}"
   cidrbyte                = "${var.cidrbyte}"
+  dns_suffix              = "${var.dns_suffix}"
 }
 
 module "microsoft" {
@@ -54,13 +56,14 @@ module "microsoft" {
   vpc_cidr                = "${module.global.vpc_cidr}"
   cidrbyte                = "${var.cidrbyte}"
   dns_zone_id             = "${module.global.dns_zone_id}"
+  dns_suffix              = "${var.dns_suffix}"
 }
 
 resource "aws_vpc_dhcp_options" "dns_resolver" {
   ntp_servers          = ["${module.microsoft.dc_private_ip}"]
   netbios_name_servers = ["${module.microsoft.dc_private_ip}"]
   netbios_node_type    = 2
-  domain_name          = "evlab.ch"
+  domain_name          = "${var.dns_suffix}"
 
   domain_name_servers = [
     ["${module.microsoft.dc_private_ip}"],

@@ -1,7 +1,7 @@
 resource "aws_route53_record" "oracle" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "oracle-${count.index}.evlab.ch"
+  name    = "oracle-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.oracle.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "oracle" {
 # resource "aws_route53_record" "oracle-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "oracle-${count.index}.evlab.ch"
+#   name    = "oracle-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.oracle.*.ipv6_addresses}"]
@@ -34,7 +34,8 @@ resource "aws_instance" "oracle" {
   }
 
   tags {
-    Name = "oracle-${count.index}"
+    Name        = "oracle-${count.index}"
+    Environment = "lab"
   }
 }
 

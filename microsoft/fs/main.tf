@@ -1,7 +1,7 @@
 resource "aws_route53_record" "fs" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "fs-${count.index}.evlab.ch"
+  name    = "fs-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.fs.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "fs" {
 # resource "aws_route53_record" "fs-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "fs-${count.index}.evlab.ch"
+#   name    = "fs-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.fs.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "fs" {
   user_data            = "${file("user_data/config-fs.ps1")}"
 
   tags {
-    Name = "fs-${count.index}"
+    Name        = "fs-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

@@ -1,7 +1,7 @@
 resource "aws_route53_record" "jumpbox" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "jumpbox-${count.index}.evlab.ch"
+  name    = "jumpbox-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.jumpbox.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "jumpbox" {
 # resource "aws_route53_record" "jumpbox-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "jumpbox-${count.index}.evlab.ch"
+#   name    = "jumpbox-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.jumpbox.*.ipv6_addresses}"]
@@ -34,7 +34,8 @@ resource "aws_instance" "jumpbox" {
   user_data            = "${file("user_data/config-win.ps1")}"
 
   tags {
-    Name = "mgmt-${count.index}"
+    Name        = "mgmt-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

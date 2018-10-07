@@ -8,6 +8,7 @@ variable "aws_sg_ids" {
   type = "list"
 }
 
+variable "dns_suffix" {}
 variable "aws_number" {}
 variable "aws_key_pair_auth_id" {}
 variable "aws_iip_assumerole_name" {}

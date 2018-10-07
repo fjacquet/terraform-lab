@@ -1,7 +1,7 @@
 resource "aws_route53_record" "sql" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "sql-${count.index}.evlab.ch"
+  name    = "sql-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.sql.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "sql" {
 # resource "aws_route53_record" "sql-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "sql-${count.index}.evlab.ch"
+#   name    = "sql-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.sql.*.ipv6_addresses}"]
@@ -33,7 +33,8 @@ resource "aws_instance" "sql" {
   }
 
   tags {
-    Name = "sql-${count.index}"
+    Name        = "sql-${count.index}"
+    Environment = "lab"
   }
 
   # Our Security group to allow RDP access
@@ -54,13 +55,13 @@ resource "aws_security_group" "sql" {
     protocol    = "tcp"
     cidr_blocks = ["${element(var.cidr, count.index)}"]
   }
-    ingress {
+
+  ingress {
     from_port   = 5022
     to_port     = 5022
     protocol    = "tcp"
     cidr_blocks = ["${element(var.cidr, count.index)}"]
   }
-
 
   # outbound internet access
   egress {

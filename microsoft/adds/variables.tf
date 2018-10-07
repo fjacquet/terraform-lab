@@ -25,3 +25,5 @@ variable "aws_ami" {}
 variable "azs" {
   type = "list"
 }
+
+variable "dns_suffix" {}

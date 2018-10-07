@@ -1,7 +1,7 @@
 resource "aws_route53_record" "dc" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "dc-${count.index}.evlab.ch"
+  name    = "dc-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.dc.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "dc" {
 # resource "aws_route53_record" "dc-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "dc-${count.index}.evlab.ch"
+#   name    = "dc-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.dc.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "dc" {
   user_data            = "${file("user_data/config-dc.ps1")}"
 
   tags {
-    Name = "dc-${count.index}"
+    Name        = "dc-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

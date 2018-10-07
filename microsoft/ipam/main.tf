@@ -1,7 +1,7 @@
 resource "aws_route53_record" "ipam" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "ipam-${count.index}.evlab.ch"
+  name    = "ipam-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.ipam.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "ipam" {
 # resource "aws_route53_record" "ipam-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "ipam-${count.index}.evlab.ch"
+#   name    = "ipam-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.ipam.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "ipam" {
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
 
   tags {
-    Name = "ipam-${count.index}"
+    Name        = "ipam-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {

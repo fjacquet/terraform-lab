@@ -14,7 +14,8 @@ resource "aws_instance" "guacamole" {
   }
 
   tags {
-    Name = "guacamole-${count.index}"
+    Name        = "guacamole-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {
@@ -62,7 +63,7 @@ resource "aws_security_group" "guacamole" {
 resource "aws_route53_record" "guacamole" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "guacamole-${count.index}.evlab.ch"
+  name    = "guacamole-${count.index}.{var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.guacamole.*.private_ip, count.index)}"]
@@ -71,7 +72,7 @@ resource "aws_route53_record" "guacamole" {
 # resource "aws_route53_record" "guacamole-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "guacamole-${count.index}.evlab.ch"
+#   name    = "guacamole-${count.index}.{var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.guacamole.*.ipv6_addresses}"]

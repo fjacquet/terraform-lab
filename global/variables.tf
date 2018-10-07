@@ -18,3 +18,5 @@ variable "cidrbyte" {
 }
 
 variable "dhcpops" {}
+
+variable "dns_suffix" {}

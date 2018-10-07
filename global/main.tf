@@ -15,6 +15,7 @@ module "iam" {
 module "route53" {
   source     = "./route53"
   aws_vpc_id = "${module.vpc.aws_vpc_id}"
+  dns_suffix = "${var.dns_suffix}"
 }
 
 module "s3" {

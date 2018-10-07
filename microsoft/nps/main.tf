@@ -1,7 +1,7 @@
 resource "aws_route53_record" "nps" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "nps-${count.index}.evlab.ch"
+  name    = "nps-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.nps.*.private_ip, count.index)}"]
@@ -10,7 +10,7 @@ resource "aws_route53_record" "nps" {
 # resource "aws_route53_record" "nps-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
-#   name    = "nps-${count.index}.evlab.ch"
+#   name    = "nps-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
 #   records = ["${aws_instance.nps.*.ipv6_addresses}"]
@@ -28,7 +28,8 @@ resource "aws_instance" "nps" {
   user_data            = "${file("user_data/config-nps.ps1")}"
 
   tags {
-    Name = "nps-${count.index}"
+    Name        = "nps-${count.index}"
+    Environment = "lab"
   }
 
   lifecycle {
