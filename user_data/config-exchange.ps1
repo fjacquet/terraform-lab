@@ -10,7 +10,9 @@ foreach ($script in $scripts) {
 }
 
 # Install basic
-add-windowsfeature -Name 'DHCP' –IncludeManagementTools
+add-windowsfeature -Name 'RSAT-ADDS' –IncludeManagementTools
+
+
 
 $scripts = ('initialize-hostname')
 foreach ($script in $scripts) {
