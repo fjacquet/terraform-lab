@@ -55,3 +55,19 @@ $params = @{
 
 New-ADUser @params
 
+
+$username =  'svc-ndes'
+$secret = (Get-SECSecretValue -SecretId "evlab/pki/$($username)").SecretString | ConvertFrom-Json
+$params = @{
+  Name = $username
+  AccountPassword = (ConvertTo-SecureString -AsPlainText $secret -Force)
+  CannotChangePassword = $true
+  PasswordNeverExpires = $false
+  Enabled = $true
+  ChangePasswordAtLogon = $false
+  DisplayName = "SVC NDES"
+  EmailAddress = "$($username)@$($Domain)" `
+
+}
+
+New-ADUser @params

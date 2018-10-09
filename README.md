@@ -45,3 +45,4 @@ Need to create some aws secrets :
 * evlab/sharepoint/sp_cacheSuperUser
 * evlab/sharepoint/sp_cacheSuperReader
 * evlab/sql/svc-sql
+* evlab/pki/svc-ndes
