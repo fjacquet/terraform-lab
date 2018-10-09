@@ -34,6 +34,14 @@ resource "aws_route53_record" "pki-crl" {
   records = ["${element(aws_instance.pki-crl.*.private_ip, count.index)}"]
 }
 
+resource "aws_route53_record" "pki" {
+  zone_id = "${var.dns_zone_id}"
+  name    = "pki.${var.dns_suffix}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["${element(aws_instance.pki-crl.*.private_ip, 1)}"]
+}
+
 # resource "aws_route53_record" "pki-crl-v6" {
 #   count   = "${var.aws_number_pki_crl}"
 #   zone_id = "${var.dns_zone_id}"
