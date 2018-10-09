@@ -25,4 +25,3 @@ variable "azs" {
 }
 
 variable "dns_suffix" {}
-

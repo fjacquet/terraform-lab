@@ -12,6 +12,17 @@ foreach ($script in $scripts) {
 # Install basic
 add-windowsfeature -Name ADCS-Device-Enrollment -IncludeManagementTools
 
+Install-AdcsNetworkDeviceEnrollmentService `
+    -ServiceAccountName MyDomain\AccountName `
+    -ServiceAccountPassword (read-host "Set user password" -assecurestring) `
+    -CAConfig "CAComputerName\CAName" `
+    -RAName "Contoso-NDES-RA" `
+    -RACountry "US" -RACompany "Contoso" `
+    -SigningProviderName "Microsoft Strong Cryptographic Provider" `
+    -SigningKeyLength 4096 `
+    -EncryptionProviderName "Microsoft Strong Cryptographic Provider" `
+    -EncryptionKeyLength 4096
+
 $scripts = ('initialize-hostname')
 foreach ($script in $scripts) {
   $url = "$($gitroot)$($script).ps1"
@@ -19,5 +30,5 @@ foreach ($script in $scripts) {
 }
 
 # reboot to finish setup
-restart-computer -Force
+restart-computer -force:$true -Confirm:$false
 < /powershell>

@@ -80,6 +80,8 @@ variable "aws_number" {
   type = "map"
 
   default = {
+    
+    adfs        = 0
     bsd        = 0
     csv        = 0
     da         = 0
@@ -103,6 +105,7 @@ variable "aws_number" {
     simpana    = 0
     sql        = 0
     symv       = 0
+    wac        = 1
     wds        = 1
     wsus       = 0
   }

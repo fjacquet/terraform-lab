@@ -47,7 +47,6 @@ resource "aws_security_group" "dadfsc" {
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
-
   ingress {
     description = "https"
     from_port   = 443
@@ -55,13 +54,15 @@ resource "aws_security_group" "dadfsc" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-    ingress {
+
+  ingress {
     description = "https"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["::/0"]
   }
+
   # outbound internet access
   egress {
     from_port   = 0
@@ -69,6 +70,7 @@ resource "aws_security_group" "dadfsc" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   egress {
     from_port        = 0
     to_port          = 0

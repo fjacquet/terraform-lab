@@ -11,4 +11,4 @@ Install-ADDSForest `
    -SysvolPath "C:\Windows\SYSVOL" `
    -Force:$true
 
-restart-computer -Force:$true
+restart-computer -force:$true -Confirm:$false:$true
