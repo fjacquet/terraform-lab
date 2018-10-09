@@ -61,8 +61,8 @@ module "adds" {
 }
 
 module "adfs" {
-  source = "./adfs"
-    aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
+  source                  = "./adfs"
+  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
   aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
   aws_number              = "${lookup(var.aws_number, "adfs")}"
@@ -86,7 +86,6 @@ module "adfs" {
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
   ]
-
 }
 
 # module "dfs" {
@@ -634,6 +633,12 @@ resource "aws_security_group" "domain-member" {
     to_port     = 53
     protocol    = "udp"
     self        = true
+  }
+  ingress {
+    from_port = 5985
+    to_port   = 5986
+    protocol  = "tcp"
+    self      = true
   }
   ingress {
     description = "random"

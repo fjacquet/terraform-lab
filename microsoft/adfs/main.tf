@@ -42,7 +42,7 @@ resource "aws_instance" "adfs" {
   ]
 }
 
-resource "aws_security_group" "dadfsc" {
+resource "aws_security_group" "adfs" {
   name        = "tf_evlab_adfs"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
@@ -56,11 +56,11 @@ resource "aws_security_group" "dadfsc" {
   }
 
   ingress {
-    description = "https"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["::/0"]
+    description      = "https"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   # outbound internet access

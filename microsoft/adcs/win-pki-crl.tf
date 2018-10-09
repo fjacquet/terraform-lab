@@ -35,7 +35,7 @@ resource "aws_route53_record" "pki-crl" {
 }
 
 resource "aws_route53_record" "pki" {
-   count   = "${var.aws_number_pki_crl}"
+  count   = "${var.aws_number_pki_crl}"
   zone_id = "${var.dns_zone_id}"
   name    = "pki.${var.dns_suffix}"
   type    = "CNAME"
