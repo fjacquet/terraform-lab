@@ -1,5 +1,5 @@
 resource "aws_route53_record" "pki-rca" {
-  count   = "${var.aws_number_pki_rca}"
+  count   = "${var.aws_number_pki-rca}"
   zone_id = "${var.dns_zone_id}"
   name    = "pki-rca-${count.index}.${var.dns_suffix}"
   type    = "A"
@@ -10,7 +10,7 @@ resource "aws_route53_record" "pki-rca" {
 resource "aws_instance" "pki-rca" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
-  count                = "${var.aws_number_pki_rca}"
+  count                = "${var.aws_number_pki-rca}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
   instance_type        = "t2.medium"
   ipv6_address_count   = 1
@@ -30,13 +30,13 @@ resource "aws_instance" "pki-rca" {
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
     "${var.aws_sg_ids}",
-    "${aws_security_group.pki_rca.id}",
+    "${aws_security_group.pki-rca.id}",
   ]
 }
 
 # A security group for basic windows box
-resource "aws_security_group" "pki_rca" {
-  name        = "tf_evlab_pki_rca"
+resource "aws_security_group" "pki-rca" {
+  name        = "tf_evlab_pki-rca"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

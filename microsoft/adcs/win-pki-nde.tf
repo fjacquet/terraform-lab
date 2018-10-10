@@ -1,5 +1,5 @@
 resource "aws_route53_record" "pki-nde" {
-  count   = "${var.aws_number_pki_nde}"
+  count   = "${var.aws_number_pki-ndes}"
   zone_id = "${var.dns_zone_id}"
   name    = "pki-nde-${count.index}.${var.dns_suffix}"
   type    = "A"
@@ -8,7 +8,7 @@ resource "aws_route53_record" "pki-nde" {
 }
 
 # resource "aws_route53_record" "pki-nde-v6" {
-#   count   = "${var.aws_number_pki_nde}"
+#   count   = "${var.aws_number_pki-ndes}"
 #   zone_id = "${var.dns_zone_id}"
 #   name    = "pki-nde-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
@@ -19,7 +19,7 @@ resource "aws_route53_record" "pki-nde" {
 resource "aws_instance" "pki-nde" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
-  count                = "${var.aws_number_pki_nde}"
+  count                = "${var.aws_number_pki-ndes}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
   instance_type        = "t2.medium"
   ipv6_address_count   = 1
@@ -39,13 +39,13 @@ resource "aws_instance" "pki-nde" {
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
     "${var.aws_sg_ids}",
-    "${aws_security_group.pki_nde.id}",
+    "${aws_security_group.pki-ndes.id}",
   ]
 }
 
 # A security group for basic windows box
-resource "aws_security_group" "pki_nde" {
-  name        = "tf_evlab_pki_nde"
+resource "aws_security_group" "pki-ndes" {
+  name        = "tf_evlab_pki-ndes"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

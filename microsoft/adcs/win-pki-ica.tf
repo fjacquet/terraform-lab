@@ -1,5 +1,5 @@
 resource "aws_route53_record" "pki-ica" {
-  count   = "${var.aws_number_pki_ica}"
+  count   = "${var.aws_number_pki-ica}"
   zone_id = "${var.dns_zone_id}"
   name    = "pki-ica-${count.index}.${var.dns_suffix}"
   type    = "A"
@@ -8,7 +8,7 @@ resource "aws_route53_record" "pki-ica" {
 }
 
 # resource "aws_route53_record" "pki-ica-v6" {
-#   count   = "${var.aws_number_pki_ica}"
+#   count   = "${var.aws_number_pki-ica}"
 #   zone_id = "${var.dns_zone_id}"
 #   name    = "pki-ica-${count.index}.${var.dns_suffix}"
 #   type    = "A"
@@ -19,7 +19,7 @@ resource "aws_route53_record" "pki-ica" {
 resource "aws_instance" "pki-ica" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
-  count                = "${var.aws_number_pki_ica}"
+  count                = "${var.aws_number_pki-ica}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
   instance_type        = "t2.medium"
   ipv6_address_count   = 1
@@ -39,13 +39,13 @@ resource "aws_instance" "pki-ica" {
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
     "${var.aws_sg_ids}",
-    "${aws_security_group.pki_ica.id}",
+    "${aws_security_group.pki-ica.id}",
   ]
 }
 
 # A security group for basic windows box
-resource "aws_security_group" "pki_ica" {
-  name        = "tf_evlab_pki_ica"
+resource "aws_security_group" "pki-ica" {
+  name        = "tf_evlab_pki-ica"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

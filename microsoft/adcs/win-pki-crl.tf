@@ -1,7 +1,7 @@
 resource "aws_instance" "pki-crl" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
-  count                = "${var.aws_number_pki_crl}"
+  count                = "${var.aws_number_pki-crl}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
   instance_type        = "t2.medium"
   ipv6_address_count   = 1
@@ -21,12 +21,12 @@ resource "aws_instance" "pki-crl" {
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
     "${var.aws_sg_ids}",
-    "${aws_security_group.pki_crl.id}",
+    "${aws_security_group.pki-crl.id}",
   ]
 }
 
 resource "aws_route53_record" "pki-crl" {
-  count   = "${var.aws_number_pki_crl}"
+  count   = "${var.aws_number_pki-crl}"
   zone_id = "${var.dns_zone_id}"
   name    = "pki-crl-${count.index}.${var.dns_suffix}"
   type    = "A"
@@ -35,7 +35,7 @@ resource "aws_route53_record" "pki-crl" {
 }
 
 resource "aws_route53_record" "pki" {
-  count   = "${var.aws_number_pki_crl}"
+  count   = "${var.aws_number_pki-crl}"
   zone_id = "${var.dns_zone_id}"
   name    = "pki.${var.dns_suffix}"
   type    = "CNAME"
@@ -44,7 +44,7 @@ resource "aws_route53_record" "pki" {
 }
 
 # resource "aws_route53_record" "pki-crl-v6" {
-#   count   = "${var.aws_number_pki_crl}"
+#   count   = "${var.aws_number_pki-crl}"
 #   zone_id = "${var.dns_zone_id}"
 #   name    = "pki-crl-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
@@ -53,8 +53,8 @@ resource "aws_route53_record" "pki" {
 # }
 
 # A security group for basic windows box
-resource "aws_security_group" "pki_crl" {
-  name        = "tf_evlab_pki_crl"
+resource "aws_security_group" "pki-crl" {
+  name        = "tf_evlab_pki-crl"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 

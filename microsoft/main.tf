@@ -3,10 +3,10 @@ module "adcs" {
   aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
   aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
   aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number_pki_crl      = "${lookup(var.aws_number, "pki_crl")}"
-  aws_number_pki_ica      = "${lookup(var.aws_number, "pki_ica")}"
-  aws_number_pki_rca      = "${lookup(var.aws_number, "pki_rca")}"
-  aws_number_pki_nde      = "${lookup(var.aws_number, "pki_nde")}"
+  aws_number_pki-crl      = "${lookup(var.aws_number, "pki-crl")}"
+  aws_number_pki-ica      = "${lookup(var.aws_number, "pki-ica")}"
+  aws_number_pki-rca      = "${lookup(var.aws_number, "pki-rca")}"
+  aws_number_pki-ndes     = "${lookup(var.aws_number, "pki-ndes")}"
   aws_subnet_id           = "${var.aws_subnet_back_id}"
   aws_vpc_id              = "${var.aws_vpc_id}"
   dns_zone_id             = "${var.dns_zone_id}"
@@ -22,9 +22,9 @@ module "adcs" {
   aws_sg_ids = [
     "${aws_security_group.rdp.id}",
     "${aws_security_group.domain-member.id}",
-    "${module.adcs.aws_sg_pki_crl_id}",
-    "${module.adcs.aws_sg_pki_ica_id}",
-    "${module.adcs.aws_sg_pki_rca_id}",
+    "${module.adcs.aws_sg_pki-crl_id}",
+    "${module.adcs.aws_sg_pki-ica_id}",
+    "${module.adcs.aws_sg_pki-rca_id}",
     "${module.simpana.aws_sg_client_id}",
     "${var.aws_sg_nbuclient_id}",
   ]

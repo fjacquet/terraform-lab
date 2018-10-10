@@ -95,10 +95,10 @@ variable "aws_number" {
     nps        = 0
     opscenter  = 0
     oracle     = 0
-    pki_crl    = 0
-    pki_ica    = 0
-    pki_rca    = 1
-    pki_nde    = 0
+    pki-crl    = 0
+    pki-ica    = 0
+    pki-rca    = 1
+    pki-ndes   = 0
     csv        = 0
     sharepoint = 0
     simpana    = 0

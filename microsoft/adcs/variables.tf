@@ -1,9 +1,9 @@
 variable "aws_iip_assumerole_name" {}
 variable "aws_key_pair_auth_id" {}
-variable "aws_number_pki_crl" {}
-variable "aws_number_pki_ica" {}
-variable "aws_number_pki_rca" {}
-variable "aws_number_pki_nde" {}
+variable "aws_number_pki-crl" {}
+variable "aws_number_pki-ica" {}
+variable "aws_number_pki-rca" {}
+variable "aws_number_pki-ndes" {}
 
 variable "aws_vpc_id" {}
 variable "dns_zone_id" {}
