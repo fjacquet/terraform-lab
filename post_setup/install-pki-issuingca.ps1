@@ -11,7 +11,7 @@ $cacrt = 'C:\root-ca.crt'
 
 Install-Module -Name PSPKI
 
-$url = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/config_files/$($file)'
+$url = "https://raw.githubusercontent.com/fjacquet/terraform-lab/master/config_files/$($file)"
 
 # Get the right polica file
 Invoke-WebRequest -Uri $url -OutFile $file #DevSkim: ignore DS104456 
