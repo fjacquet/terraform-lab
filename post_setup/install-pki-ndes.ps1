@@ -8,13 +8,13 @@ $caname = "evlab Root Certificate Authority"
 $raname = "evlab Enterprise Certificate Authority"
 
 Install-AdcsNetworkDeviceEnrollmentService `
-    -ServiceAccountName $domain\$user `
-    -ServiceAccountPassword (ConvertTo-SecureString -AsPlainText $secret -Force) `
-    -CAConfig $caname
-    -RAName $raname `
-    -RACountry "CH" `
-    -RACompany $domain  `
-    -SigningProviderName "Microsoft Strong Cryptographic Provider" `
-    -SigningKeyLength 4096 `
-    -EncryptionProviderName "Microsoft Strong Cryptographic Provider" `
-    -EncryptionKeyLength 4096
+   -ServiceAccountName $domain\$user `
+   -ServiceAccountPassword (ConvertTo-SecureString -AsPlainText $secret -Force) `
+   -CAConfig $caname
+-RAName $raname `
+   -RACountry "CH" `
+   -RACompany $domain `
+   -SigningProviderName "Microsoft Strong Cryptographic Provider" `
+   -SigningKeyLength 4096 `
+   -EncryptionProviderName "Microsoft Strong Cryptographic Provider" `
+   -EncryptionKeyLength 4096

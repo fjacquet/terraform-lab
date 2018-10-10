@@ -9,4 +9,4 @@ Get-Disk | Where-Object partitionstyle -EQ 'raw' `
    -confirm:$false
 
 Enable-DedupVolume D:
-Start-DedupJob -Type Optimization -Volume d:
+Start-DedupJob -Type Optimization -Volume D:

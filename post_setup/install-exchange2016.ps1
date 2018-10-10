@@ -2,4 +2,4 @@
 setup.exe /PrepareSchema /IAcceptExchangeServerLicenseTerms
 setup.exe /PrepareAD /OrganizationName:"evLab" /IAcceptExchangeServerLicenseTerms
 # Install mailbox role 
-setup.exe  /Mode:Install /Role:Mailbox /IAcceptExchangeServerLicenseTerms
+setup.exe /Mode:Install /Role:Mailbox /IAcceptExchangeServerLicenseTerms

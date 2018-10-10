@@ -1,4 +1,4 @@
-install-windowsfeature FS-NFS-Service, NFS-Client
+Install-WindowsFeature FS-NFS-Service,NFS-Client
 # Set NFS on manual
-Set-Service NfsClnt -startuptype "manual"
-Set-Service NfsService -startuptype "manual"
+Set-Service NfsClnt -StartupType "manual"
+Set-Service NfsService -StartupType "manual"

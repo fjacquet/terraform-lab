@@ -209,7 +209,7 @@ foreach ($disk in $OfflineDisks)
   #Note: property "SCSIPort" actually equals SCSI card in WMI, and "SCSITargetId" equals the SCSI port for the card
 
 
-  $WMIDiskInformation = get-wmiobject -Class win32_diskdrive | Where-Object { $_.DeviceID -like "*$($disk.number)" }
+  $WMIDiskInformation = Get-WmiObject -Class win32_diskdrive | Where-Object { $_.DeviceID -like "*$($disk.number)" }
 
 
   if ($WMIDiskInformation.SCSIPort -eq 2 -and $WMIDiskInformation.SCSITargetId -eq 1)
@@ -518,7 +518,7 @@ Invoke-Sqlcmd -Database Master -Query "EXEC  sp_configure'min server memory (MB)
 #----------------------------------------------------------------------------------------------------
 #Install Cluster feature
 
-install-windowsfeature -Name Failover-Clustering ?IncludeManagementTools
+Install-WindowsFeature -Name Failover-Clustering ?IncludeManagementTools
 
 #END Install Cluster feature
 #----------------------------------------------------------------------------------------------------
@@ -928,7 +928,7 @@ foreach ($disk in $OfflineDisks)
   #Note: property "SCSIPort" actually equals SCSI card in WMI, and "SCSITargetId" equals the SCSI port for the card
 
 
-  $WMIDiskInformation = get-wmiobject -Class win32_diskdrive | Where-Object { $_.DeviceID -like "*$($disk.number)" }
+  $WMIDiskInformation = Get-WmiObject -Class win32_diskdrive | Where-Object { $_.DeviceID -like "*$($disk.number)" }
 
 
   if ($WMIDiskInformation.SCSIPort -eq 2 -and $WMIDiskInformation.SCSITargetId -eq 1)
@@ -1237,7 +1237,7 @@ Invoke-Sqlcmd -Database Master -Query "EXEC  sp_configure'min server memory (MB)
 #----------------------------------------------------------------------------------------------------
 #Install Cluster feature
 
-install-windowsfeature -Name Failover-Clustering ?IncludeManagementTools
+Install-WindowsFeature -Name Failover-Clustering ?IncludeManagementTools
 
 #END Install Cluster feature
 #----------------------------------------------------------------------------------------------------

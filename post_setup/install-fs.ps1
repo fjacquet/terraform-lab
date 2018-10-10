@@ -15,7 +15,7 @@ Set-DedupSchedule –Name "OffHoursScrub" –Type Scrubbing –Start 23:00 –St
 Set-DedupSchedule –Name "DailyOptimization" –Type Optimization –Days Monday,Tuesday,Wednesday,Thursday,Friday –Start 08:00 –DurationHours 9
 
 
-Start-DedupJob -Type Optimization -Volume d:
+Start-DedupJob -Type Optimization -Volume D:
 
 # new-Partition -PartitionNumber 2  -DriveLetter D  | Format-Volume  -FileSystem NTFS   -Force:$true   -Compress   -UseLargeFRS  -Confirm:$false
 mkdir D:\samples

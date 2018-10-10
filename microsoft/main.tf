@@ -635,6 +635,7 @@ resource "aws_security_group" "domain-member" {
     self        = true
   }
   ingress {
+    description = "winrm"
     from_port = 5985
     to_port   = 5986
     protocol  = "tcp"

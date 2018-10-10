@@ -4,10 +4,10 @@
 # Restart-Computer
 
 netsh dhcp add securitygroups
-Restart-service dhcpserver
+Restart-Service dhcpserver
 
-Add-DhcpServerInDC -DnsName DHCP-0.evlab.ch -IpAddress 10.0.0.3
-Add-DhcpServerInDC -DnsName DHCP-1.evlab.ch -IpAddress 10.0.0.3
+Add-DhcpServerInDC -DnsName DHCP-0.evlab.ch -IPAddress 10.0.0.3
+Add-DhcpServerInDC -DnsName DHCP-1.evlab.ch -IPAddress 10.0.0.3
 Get-DhcpServerInDC
 Set-ItemProperty –Path registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\Roles\12 –Name ConfigurationState –Value 2
 

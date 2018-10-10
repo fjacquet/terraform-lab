@@ -1,4 +1,4 @@
-Initialize-AWSDefaults
+﻿Initialize-AWSDefaults
 
 $s3bucket = "installers-fja"
 $root = "EVLAB-ROOT"
@@ -9,29 +9,29 @@ $entcrl = '$($pkiroot)\ent-ca.crl'
 $entcrt = '$($pkiroot)\ent-ca.crt'
 
 # Get the right polica file
-add-windowsfeature -name IIS
-mkdir $pkiroot 
-Install-Module -name PSPKI
+add-windowsfeature -Name IIS
+mkdir $pkiroot
+Install-Module -Name PSPKI
 
 
 Set-Location "%windir%\system32\inetsrv\"
-Appcmd set config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
+Appcmd Set-Variable config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
 
 # Get the root CA 
-Copy-S3Object  `
-    -BucketName $s3bucket  `
-    -Key 'root-ca.crt' `
-    -LocalFile $cacrt
 Copy-S3Object `
-    -BucketName $s3bucket  `
-    -Key 'root-ca.crl' `
-    -LocalFile $cacrl 
+   -BucketName $s3bucket `
+   -Key 'root-ca.crt' `
+   -LocalFile $cacrt
+Copy-S3Object `
+   -BucketName $s3bucket `
+   -Key 'root-ca.crl' `
+   -LocalFile $cacrl
 
-Copy-S3Object  `
-    -BucketName $s3bucket  `
-    -Key 'ent-ca.crt' `
-    -LocalFile $entcrt
 Copy-S3Object `
-    -BucketName $s3bucket  `
-    -Key 'ent-ca.crl' `
-    -LocalFile $entcrl 
+   -BucketName $s3bucket `
+   -Key 'ent-ca.crt' `
+   -LocalFile $entcrt
+Copy-S3Object `
+   -BucketName $s3bucket `
+   -Key 'ent-ca.crl' `
+   -LocalFile $entcrl
