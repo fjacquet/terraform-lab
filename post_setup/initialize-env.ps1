@@ -5,5 +5,5 @@ Set-WinUserLanguageList $langList -Force
 # Allow WinRM
 Configure-SMremoting.exe -enable
 # Remove SMBv1
-Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol
+Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol -NoRestart
 Install-Module -Name AWSPowerShell 

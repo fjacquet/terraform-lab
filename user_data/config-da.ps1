@@ -1,4 +1,4 @@
-﻿< powershell>
+﻿<powershell>
 # download needed for this server
 mkdir C:\installers\
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
@@ -21,4 +21,4 @@ foreach ($script in $scripts) {
 
 # reboot to finish setup
 restart-computer -force:$true -Confirm:$false
-< /powershell>
+</powershell>
