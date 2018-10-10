@@ -40,7 +40,7 @@ Install-AdcsCertificationAuthority `
    -CAType EnterpriseSubordinateCA `
    -CACommonName $caname `
    -KeyLength 4096 `
-   -HashAlgorithm SHA256 `
+   -HashAlgorithm SHA512 `
    -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" `
    -Force
 

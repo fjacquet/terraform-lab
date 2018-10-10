@@ -3,19 +3,19 @@
 $s3bucket = "installers-fja"
 $root = "EVLAB-ROOT"
 $pkiroot = "C:\pki"
-$cacrl = '$($pkiroot)\root-ca.crl'
-$cacrt = '$($pkiroot)\root-ca.crt'
-$entcrl = '$($pkiroot)\ent-ca.crl'
-$entcrt = '$($pkiroot)\ent-ca.crt'
+$cacrl = "$($pkiroot)\root-ca.crl"
+$cacrt = "$($pkiroot)\root-ca.crt"
+$entcrl = "$($pkiroot)\ent-ca.crl"
+$entcrt = "$($pkiroot)\ent-ca.crt"
 
 # Get the right polica file
-add-windowsfeature -Name IIS
+add-windowsfeature -Name Web-server
 mkdir $pkiroot
 Install-Module -Name PSPKI
 
 
-Set-Location "%windir%\system32\inetsrv\"
-Appcmd Set-Variable config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
+Set-Location "inetsrv\"
+.\Appcmd Set config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
 
 # Get the root CA 
 Copy-S3Object `
