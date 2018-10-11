@@ -106,6 +106,13 @@ resource "aws_security_group" "csv" {
     self        = true
   }
 
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    self      = true
+  }
+
   # outbound internet access
   egress {
     from_port   = 0
