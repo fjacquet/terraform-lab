@@ -95,8 +95,8 @@ variable "aws_number" {
     nps        = 0
     opscenter  = 0
     oracle     = 0
-    pki-crl    = 1
-    pki-ica    = 1
+    pki-crl    = 0
+    pki-ica    = 0
     pki-rca    = 1
     pki-ndes   = 0
     csv        = 0
@@ -105,7 +105,7 @@ variable "aws_number" {
     sql        = 0
     symv       = 0
     wac        = 0
-    wds        = 1
+    wds        = 0
     wsus       = 0
   }
 }

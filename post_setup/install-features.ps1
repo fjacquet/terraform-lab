@@ -1,5 +1,5 @@
-﻿# Install basic
-Install-WindowsFeature DSC-Service,GPMC,SNMP-Service,Bitlocker
+﻿# Install windows features
+Add-WindowsFeature -Name DSC-Service, GPMC, SNMP-Service, Bitlocker
 # Enable Remoting
 winrm qc
 Enable-PSRemoting –Force

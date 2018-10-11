@@ -1,24 +1,24 @@
 <powershell>
 # download needed for this server
 mkdir C:\installers\
-$gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
-Set-ExecutionPolicy unrestricted -Force #DevSkim: ignore DS113853 
-$scripts = ('disable-av','disable-ieesc','initialize-env','install-nbugrp','install-chocolateys','install-mslaps','install-features')
-foreach ($script in $scripts) {
-  $url = "$($gitroot)$($script).ps1"
-  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
-}
 
-# Install basic
+# Install windows features
 add-windowsfeature -Name ADCS-Device-Enrollment -IncludeManagementTools
 
 
-$scripts = ('initialize-hostname')
+$gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
+Set-ExecutionPolicy unrestricted -Force #DevSkim: ignore DS113853 
+$scripts = ('disable-av', 
+    'disable-ieesc',
+    'initialize-env',
+    'install-nbugrp',
+    'install-chocolateys', 
+    'install-mslaps', 
+    'install-features', 
+    'initialize-hostname', 
+    'join-domain-member')
 foreach ($script in $scripts) {
-  $url = "$($gitroot)$($script).ps1"
-  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
+    $url = "$($gitroot)$($script).ps1"
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
 }
-
-# reboot to finish setup
-restart-computer -force:$true -Confirm:$false
 </powershell>
