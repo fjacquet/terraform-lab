@@ -366,9 +366,9 @@ module "simpana" {
   dns_suffix              = "${var.dns_suffix}"
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup3.${var.aws_region}"))}",
+    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
+    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
+    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
   ]
 
   aws_sg_ids = [
