@@ -7,15 +7,6 @@ resource "aws_route53_record" "simpana" {
   records = ["${element(aws_instance.simpana.*.private_ip, count.index)}"]
 }
 
-# resource "aws_route53_record" "simpana-v6" {
-#   count   = "${var.aws_number}"
-#   zone_id = "${var.dns_zone_id}"
-#   name    = "simpana-${count.index}.${var.dns_suffix}"
-#   type    = "AAAA"
-#   ttl     = "300"
-#   records = ["${aws_instance.simpana.*.ipv6_addresses}"]
-# }
-
 resource "aws_instance" "simpana" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
@@ -25,8 +16,8 @@ resource "aws_instance" "simpana" {
   instance_type        = "m4.xlarge"
   ipv6_address_count   = 1
   key_name             = "${var.aws_key_pair_auth_id}"
-  subnet_id            = "${var.aws_subnet_id}"
-  user_data            = "${file("user_data/config-dhcp.ps1")}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
+  user_data            = "${file("user_data/config-simpana.ps1")}"
 
   vpc_security_group_ids = [
     "${var.aws_sg_ids}",
@@ -47,11 +38,10 @@ resource "aws_instance" "simpana" {
 }
 
 resource "aws_volume_attachment" "ebs_simpana_d" {
-  device_name       = "/dev/xvdb"
-  count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
-  volume_id         = "${element(aws_ebs_volume.simpana_d.*.id, count.index)}"
-  instance_id       = "${element(aws_instance.simpana.*.id, count.index)}"
+  device_name = "/dev/xvdb"
+  count       = "${var.aws_number}"
+  volume_id   = "${element(aws_ebs_volume.simpana_d.*.id, count.index)}"
+  instance_id = "${element(aws_instance.simpana.*.id, count.index)}"
 }
 
 resource "aws_ebs_volume" "simpana_d" {

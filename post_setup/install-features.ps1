@@ -1,8 +1,8 @@
 ﻿# Install windows features
 Add-WindowsFeature -Name DSC-Service, GPMC, SNMP-Service, Bitlocker
-# Enable Remoting
-winrm qc
-Enable-PSRemoting –Force
+# # Enable Remoting
+# winrm qc
+# Enable-PSRemoting –Force
 
 
 # WinRM service is already running on this machine.
