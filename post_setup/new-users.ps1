@@ -27,6 +27,7 @@ New-ADUser `
    
 
    $secrets = ('evlab/ad/joinuser',
+        'evlab/ad/adbackups',
        'evlab/guacamole/mysqlroot',
        'evlab/guacamole/mysqluser',
        'evlab/glpi/mysqlroot',

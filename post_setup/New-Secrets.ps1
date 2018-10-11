@@ -5,6 +5,7 @@ $region = 'eu-west-1'
 # Create secrets for the lab
 
 $secrets = ('evlab/ad/joinuser',
+    'evlab/ad/adbackups',
     'evlab/guacamole/mysqlroot',
     'evlab/guacamole/mysqluser',
     'evlab/glpi/mysqlroot',
