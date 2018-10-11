@@ -5,7 +5,7 @@ mkdir C:\installers\
 add-windowsfeature -Name File-Services, FS-DFS-Replication, FS-Data-Deduplication, FS-NFS-Service, NFS-Client, FS-Resource-Manager, FS-SyncShareService –IncludeManagementTools
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
-Set-ExecutionPolicy unrestricted -Force #DevSkim: ignore DS113853 
+Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
 $scripts = ('disable-av', 
     'disable-ieesc',
     'initialize-env',

@@ -4,7 +4,7 @@ mkdir C:\installers\
 # Install windows features
 add-windowsfeature -Name File-Services, Failover-Clustering -IncludeManagementTools
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
-Set-ExecutionPolicy unrestricted -Force #DevSkim: ignore DS113853 
+Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
 $scripts = ('disable-av', 
     'disable-ieesc',
     'initialize-env',

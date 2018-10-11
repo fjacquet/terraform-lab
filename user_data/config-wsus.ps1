@@ -1,12 +1,12 @@
-<powershell>
+# <powershell>
 # download needed for this server
 mkdir C:\installers\
 # Install windows features
-add-windowsfeature -Name FS-Data-Deduplication,UpdateServices,UpdateServices-WidDB,UpdateServices-Services,UpdateServices-RSAT,UpdateServices-API,UpdateServices-UI -IncludeManagementTools
+add-windowsfeature -Name FS-Data-Deduplication, UpdateServices, UpdateServices-WidDB, UpdateServices-Services, UpdateServices-RSAT, UpdateServices-API, UpdateServices-UI -IncludeManagementTools
 
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
-Set-ExecutionPolicy unrestricted -Force #DevSkim: ignore DS113853 
+Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
 $scripts = ('disable-av', 
     'disable-ieesc',
     'initialize-env',
@@ -22,4 +22,4 @@ foreach ($script in $scripts) {
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
 }
 
-</powershell>
+# </powershell>

@@ -6,7 +6,7 @@ mkdir C:\installers\
 add-windowsfeature -Name FS-Data-Deduplication,WDS -IncludeManagementTools
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
-Set-ExecutionPolicy unrestricted -Force #DevSkim: ignore DS113853 
+Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
 $scripts = ('disable-av','disable-ieesc','initialize-env','install-nbugrp','install-chocolateys','install-mslaps','install-features')
 foreach ($script in $scripts) {
   $url = "$($gitroot)$($script).ps1"
@@ -18,7 +18,7 @@ $scripts = ('get-msadk','get-msap','get-msmdt','format-datadisk','initialize-hos
 
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
-Set-ExecutionPolicy unrestricted -Force #DevSkim: ignore DS113853 
+Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
 $scripts = ('disable-av', 
     'disable-ieesc',
     'initialize-env',

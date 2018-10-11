@@ -49,5 +49,5 @@ MAIL=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mail" --
 sudo hostnamectl  set-hostname $HOSTNAME.evlab.ch
 curl https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/install-guacamole.sh -o install-guacamole.sh
 chmod 755 install-guacamole.sh
-sudo ./install-guacamole.sh -a $MYSQLROOT -b $MYSQLDB -c $MYSQLUSER -d $MYSQLPASS -e $KEYSTORE -l "evlab.ch:$MAIL" -s -p yes
+#sudo ./install-guacamole.sh -a $MYSQLROOT -b $MYSQLDB -c $MYSQLUSER -d $MYSQLPASS -e $KEYSTORE -l "evlab.ch:$MAIL" -s -p yes
 sudo reboot
