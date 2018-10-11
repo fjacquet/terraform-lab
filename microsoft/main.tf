@@ -373,6 +373,7 @@ module "simpana" {
 
   aws_sg_ids = [
     "${aws_security_group.rdp.id}",
+    "${aws_security_group.domain-member.id}",
     "${module.simpana.aws_sg_client_id}",
   ]
 }

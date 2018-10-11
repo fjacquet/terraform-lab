@@ -8,5 +8,6 @@ Get-Disk | Where-Object partitionstyle -EQ 'raw' `
    -UseLargeFRS `
    -confirm:$false
 
-Enable-DedupVolume D:
+Import-Module -name Deduplication
+Enable-DedupVolume D: 
 Start-DedupJob -Type Optimization -Volume D:
