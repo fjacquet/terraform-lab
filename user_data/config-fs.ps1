@@ -2,7 +2,7 @@
 # download needed for this server
 mkdir C:\installers\
 # Install windows features
-add-windowsfeature -Name File-Services, FS-DFS-Replication, FS-Data-Deduplication, FS-NFS-Service, NFS-Client, FS-Resource-Manager, FS-SyncShareService –IncludeManagementTools
+add-windowsfeature -Name File-Services, FS-DFS-Replication, FS-Data-Deduplication, FS-Resource-Manager, FS-SyncShareService –IncludeManagementTools
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
 Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
