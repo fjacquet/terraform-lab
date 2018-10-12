@@ -82,7 +82,7 @@ variable "aws_number" {
   default = {
     adfs       = 0
     bsd        = 0
-    csv        = 2
+    csv        = 0
     da         = 0
     dc         = 1
     dhcp       = 0
@@ -103,7 +103,7 @@ variable "aws_number" {
     simpana    = 0
     sql        = 0
     symv       = 0
-    wac        = 0
+    wac        = 1
     wds        = 0
     wsus       = 1
   }

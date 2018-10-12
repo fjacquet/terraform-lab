@@ -1,2 +1,7 @@
-Copy-S3Object -BucketName installers-fja -Key LAPS.x64.msi -LocalFile C:\installers\LAPS.x64.msi
-msiexec /q /i C:\installers\LAPS.x64.msi
+Write-Output 'MS-LAPS'
+$s3bucket = 'installers-fja'
+$install = 'C:\installers'
+$file = 'LAPS.x64.msi'
+$localfile  = Join-Path -Path $install -ChildPath $file 
+Copy-S3Object -BucketName $s3bucket -Key $file -LocalFile $file 
+msiexec /q /i $localfile

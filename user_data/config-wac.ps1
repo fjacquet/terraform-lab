@@ -1,6 +1,6 @@
 <powershell>
 mkdir C:\installers\
-
+Write-Output "installing RSAT"
 # Install windows features
 add-windowsfeature -Name RSAT
 
@@ -17,6 +17,7 @@ $scripts = ('disable-av',
     'join-domain-member')
 foreach ($script in $scripts) {
     $url = "$($gitroot)$($script).ps1"
+    Write-Output "running $($url)"
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
 }
 </powershell>
