@@ -18,7 +18,7 @@ A valid account must exist for terraform
 
 ## EC2 
 
-Normally I use t2.medium except if application needs more
+Normally I use t3.medium except if application needs more
 
 ## S3
 

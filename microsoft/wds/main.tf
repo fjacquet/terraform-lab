@@ -17,7 +17,7 @@ resource "aws_route53_record" "wds" {
 # }
 
 resource "aws_instance" "wds" {
-  instance_type        = "t2.medium"
+  instance_type        = "t3.medium"
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"

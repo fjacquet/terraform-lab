@@ -17,7 +17,7 @@ resource "aws_route53_record" "nbumaster" {
 # }
 
 resource "aws_instance" "nbumaster" {
-  instance_type        = "m4.xlarge"
+  instance_type        = "m5.xlarge"
   ipv6_address_count   = 1
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"

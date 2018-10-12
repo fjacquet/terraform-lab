@@ -13,7 +13,7 @@ resource "aws_instance" "simpana" {
   count                = "${var.aws_number}"
   ebs_optimized        = "true"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
-  instance_type        = "m4.xlarge"
+  instance_type        = "m5.xlarge"
   ipv6_address_count   = 1
   key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"

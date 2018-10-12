@@ -17,7 +17,7 @@ resource "aws_route53_record" "da" {
 # }
 
 resource "aws_instance" "da" {
-  instance_type        = "t2.medium"
+  instance_type        = "t3.medium"
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"

@@ -1,5 +1,5 @@
 resource "aws_instance" "guacamole" {
-  instance_type          = "t2.medium"
+  instance_type          = "t3.medium"
   count                  = "${var.aws_number}"
   subnet_id              = "${element(var.aws_subnet_id, count.index)}"
   user_data              = "${file("user_data/config-guacamole.sh")}"
