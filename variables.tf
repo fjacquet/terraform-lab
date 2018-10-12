@@ -85,11 +85,11 @@ variable "aws_number" {
     csv        = 0
     da         = 0
     dc         = 1
-    dhcp       = 0
+    dhcp       = 2
     exchange   = 0
     fs         = 0
     guacamole  = 0
-    ipam       = 0
+    ipam       = 1
     jumpbox    = 1
     nbu        = 0
     nps        = 0

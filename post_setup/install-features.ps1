@@ -3,7 +3,7 @@ Write-Output 'add DSC'
 Add-WindowsFeature -Name DSC-Service, GPMC, SNMP-Service, Bitlocker
 # # Enable Remoting
 Write-Output 'Enable winrm'
-winrm qc
+winrm qc -quiet
 Write-Output 'Enable remoting'
 Enable-PSRemoting –Force 
 

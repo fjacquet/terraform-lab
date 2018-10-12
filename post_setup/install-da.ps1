@@ -1,10 +1,10 @@
 
 Install-RemoteAccess `
     -DAInstallType FullInstall `
-    -ConnectToAddress DA.DIRECTACCESSLAB.FR `
-    -ClientGPOName "DirectAccesslab.Lan\DirectAccess Clients GPO" `
-    -ServerGPOName "DirectAccesslab.Lan\DirectAccess Server GPO" `
+    -ConnectToAddress da.evlab.ch `
+    -ClientGPOName "evlab.ch\DirectAccess Clients GPO" `
+    -ServerGPOName "evlab.ch\DirectAccess Server GPO" `
     -InternalInterface LAN `
     -InternetInterface INTERNET `
-    -NLSURL https://nls.directaccesslab.lan `
+    -NLSURL https://nls.evlab.ch `
     -Force
