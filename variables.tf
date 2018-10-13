@@ -88,6 +88,7 @@ variable "aws_number" {
     dhcp       = 2
     exchange   = 0
     fs         = 0
+    glpi       = 1
     guacamole  = 0
     ipam       = 1
     jumpbox    = 1
@@ -114,6 +115,7 @@ variable "aws_amis" {
 
   default = {
     bsd        = "ami-048e0d77"
+    glpi       = "ami-7c491f05"
     guacamole  = "ami-7c491f05"
     jumpbox    = "ami-088f9db67b4afec52"
     lnx        = "ami-7c491f05"

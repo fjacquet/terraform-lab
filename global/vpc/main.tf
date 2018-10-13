@@ -81,7 +81,7 @@ resource "aws_subnet" "mgmt" {
   vpc_id                          = "${aws_vpc.evlab.id}"
   cidr_block                      = "${cidrsubnet(aws_vpc.evlab.cidr_block,8,element(var.cidrbyte_mgmt, count.index))}"
   availability_zone               = "${element(var.azs, count.index)}"
-  map_public_ip_on_launch         = false
+  map_public_ip_on_launch         = true
   ipv6_cidr_block                 = "${cidrsubnet(aws_vpc.evlab.ipv6_cidr_block,8,element(var.cidrbyte_mgmt, count.index))}"
   assign_ipv6_address_on_creation = true
 
@@ -100,7 +100,7 @@ resource "aws_route_table_association" "public_gw_association" {
 resource "aws_route_table_association" "public_subnet_mgmt_association" {
   count          = "${length(var.azs)}"
   subnet_id      = "${element(aws_subnet.mgmt.*.id, count.index)}"
-  route_table_id = "${element(aws_route_table.public-rt.*.id, count.index)}"
+  route_table_id = "${aws_route_table.public-rt.id}"
 }
 
 #-----------------------------------------------------------------------------

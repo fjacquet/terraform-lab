@@ -15,6 +15,24 @@ module "bsd" {
   ]
 }
 
+module "glpi" {
+  source                  = "./glpi"
+  aws_ami                 = "${lookup(var.aws_amis , "glpi")}"
+  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${lookup(var.aws_number, "glpi")}"
+  aws_subnet_id           = "${var.aws_subnet_back_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
+  dns_suffix              = "${var.dns_suffix}"
+
+  aws_sg_ids = [
+    "${aws_security_group.ssh.id}",
+    "${module.glpi.aws_sg_glpi_id}",
+  ]
+}
+
 module "guacamole" {
   source                  = "./guacamole"
   aws_ami                 = "${lookup(var.aws_amis , "guacamole")}"
