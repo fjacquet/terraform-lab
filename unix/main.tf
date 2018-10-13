@@ -102,6 +102,24 @@ module "oracle" {
   ]
 }
 
+module "redis" {
+  source                  = "./redis"
+  aws_ami                 = "${lookup(var.aws_amis , "redis")}"
+  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
+  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
+  aws_number              = "${lookup(var.aws_number, "redis")}"
+  aws_subnet_id           = "${var.aws_subnet_back_id}"
+  aws_vpc_id              = "${var.aws_vpc_id}"
+  azs                     = "${var.azs}"
+  dns_zone_id             = "${var.dns_zone_id}"
+  dns_suffix              = "${var.dns_suffix}"
+
+  aws_sg_ids = [
+    "${aws_security_group.ssh.id}",
+    "${module.redis.aws_sg_redis_id}",
+  ]
+}
+
 resource "aws_security_group" "ssh" {
   name        = "tf_evlab_lssh"
   description = "Used in the terraform"

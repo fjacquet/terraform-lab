@@ -13,6 +13,7 @@ $secrets = ('evlab/ad/joinuser',
     'evlab/guacamole/keystore',
     'evlab/guacamole/mail',
     'evlab/sharepoint/sp_farm',
+    'evlab/redis/root',
     'evlab/sharepoint/sp_services',
     'evlab/sharepoint/sp_portalAppPool',
     'evlab/sharepoint/sp_profilesAppPool',
@@ -23,10 +24,11 @@ $secrets = ('evlab/ad/joinuser',
     'evlab/sql/svc-sql-sccm',
     'evlab/pki/svc-ndes')
 
+
 foreach ($secret in $secrets) {
     $secvalue = Get-SECRandomPassword -Region $region -ExcludePunctuation $true -IncludeSpace $false
     New-SECSecret `
-        -SecretString  $secvalue `
+        -SecretString $secvalue `
         -Name $secret `
         -Region $region
 }

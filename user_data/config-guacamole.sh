@@ -38,16 +38,16 @@
 
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) #DevSkim: ignore DS137138
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138
-HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text |awk '{print $5}')
-MYSQLROOT=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mysqlroot" --output json|jq -r '.SecretString'|jq -r '.mysqlroot')
+HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text|grep Name |awk '{print $5}')
+MYSQLROOT=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mysqlroot" --output json|jq -r '.SecretString')
 MYSQLDB=evguacamole
 MYSQLUSER=evguacamole
-MYSQLPASS=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mysqluser" --output json |jq -r '.SecretString'|jq -r '.mysqluser')
-KEYSTORE=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/keystore" --output json |jq -r '.SecretString'|jq -r '.keystore')
-MAIL=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mail" --output json|jq -r '.SecretString'|jq -r '.mail')
+MYSQLPASS=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mysqluser" --output json |jq -r '.SecretString')
+KEYSTORE=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/keystore" --output json |jq -r '.SecretString')
+MAIL=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mail" --output json|jq -r '.SecretString')
 
-sudo hostnamectl  set-hostname $HOSTNAME.evlab.ch
+hostnamectl  set-hostname "$HOSTNAME.evlab.ch"
 curl https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/install-guacamole.sh -o install-guacamole.sh
 chmod 755 install-guacamole.sh
-#sudo ./install-guacamole.sh -a $MYSQLROOT -b $MYSQLDB -c $MYSQLUSER -d $MYSQLPASS -e $KEYSTORE -l "evlab.ch:$MAIL" -s -p yes
-sudo reboot
+echo  "./install-guacamole.sh -a $MYSQLROOT -b $MYSQLDB -c $MYSQLUSER -d $MYSQLPASS -e $KEYSTORE -l evlab.ch:$MAIL -s -p yes " > /install.sh
+reboot

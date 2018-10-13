@@ -25,7 +25,7 @@ resource "aws_instance" "oracle" {
   ami                    = "${var.aws_ami}"
   key_name               = "${var.aws_key_pair_auth_id}"
   ebs_optimized          = "true"
-  subnet_id              = "${var.aws_subnet_id}"
+  subnet_id              = "${element(var.aws_subnet_id, count.index)}"
   user_data              = "${file("user_data/config-ora.sh")}"
   vpc_security_group_ids = ["${var.aws_sg_ids}"]
 
@@ -42,7 +42,6 @@ resource "aws_instance" "oracle" {
 resource "aws_volume_attachment" "ebs_u01" {
   device_name       = "/dev/xvdb"
   count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
   volume_id         = "${element(aws_ebs_volume.oracle_u01.*.id, count.index)}"
   instance_id       = "${element(aws_instance.oracle.*.id, count.index)}"
 }
