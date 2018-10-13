@@ -26,9 +26,7 @@ $scripts = ('disable-av',
     'install-chocolateys', 
     'install-mslaps', 
     'install-features', 
-    'get-msadk',
-    'get-msap',
-    'get-msmdt',
+    'install-fusioninventory',
     'format-datadisk'
     'initialize-hostname', 
     'join-domain-member')

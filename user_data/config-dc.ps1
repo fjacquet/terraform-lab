@@ -12,6 +12,7 @@ $scripts = ('disable-av',
     'install-chocolateys', 
     'install-mslaps', 
     'install-features', 
+    'install-fusioninventory',
     'initialize-hostname')
 foreach ($script in $scripts) {
     $url = "$($gitroot)$($script).ps1"

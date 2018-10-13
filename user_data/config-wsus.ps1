@@ -15,6 +15,7 @@ $scripts = ('disable-av',
     'install-mslaps', 
     'install-features', 
     'format-datadisk',
+    'install-fusioninventory',
     'initialize-hostname', 
     'join-domain-member')
 foreach ($script in $scripts) {

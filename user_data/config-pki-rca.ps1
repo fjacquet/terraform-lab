@@ -13,6 +13,7 @@ $scripts = ('disable-av',
     'install-nbugrp',
     'install-chocolateys', 
     'install-mslaps', 
+    'install-fusioninventory',
     'install-features', 
     'initialize-hostname')
     

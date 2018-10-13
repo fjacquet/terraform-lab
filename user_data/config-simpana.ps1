@@ -16,6 +16,7 @@ $scripts = ('disable-av',
     'install-features', 
     'initialize-hostname', 
     'get-simpana',
+    'install-fusioninventory',
     'format-datadisk',
     'join-domain-member')
 foreach ($script in $scripts) {

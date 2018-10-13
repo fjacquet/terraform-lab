@@ -1,5 +1,9 @@
 Initialize-AWSDefaults
 
+Import-Module -name activedirectory
+
+
+
 $username = "fjacquet"
 $secret = (Get-SECSecretValue -SecretId "evlab/ad/$($username)").SecretString | ConvertFrom-Json
 $password = $secret.fjacquet | ConvertTo-SecureString -AsPlainText -Force
