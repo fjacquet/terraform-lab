@@ -24,7 +24,7 @@ $secrets = ('evlab/ad/joinuser',
     'evlab/pki/svc-ndes')
 
 foreach ($secret in $secrets) {
-    $secvalue = Get-SECRandomPassword -Region $region
+    $secvalue = Get-SECRandomPassword -Region $region -ExcludePunctuation $true -IncludeSpace $false
     New-SECSecret `
         -SecretString  $secvalue `
         -Name $secret `
