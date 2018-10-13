@@ -61,7 +61,7 @@ resource "aws_security_group" "glpi" {
 resource "aws_route53_record" "glpi" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "glpi-${count.index}.{var.dns_suffix}"
+  name    = "glpi-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
   records = ["${element(aws_instance.glpi.*.private_ip, count.index)}"]
