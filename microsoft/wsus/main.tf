@@ -82,27 +82,26 @@ resource "aws_security_group" "wsus" {
     cidr_blocks = ["10.0.0.0/16"]
   }
 
-    ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+  ingress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
     ipv6_cidr_blocks = ["::/0"]
   }
 
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-   ipv6_cidr_blocks = ["::/0"]
-  }
-
-  ingress {
-    from_port   = 8530
-    to_port     = 8531
-    protocol    = "tcp"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  ingress {
+    from_port        = 8530
+    to_port          = 8531
+    protocol         = "tcp"
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   # outbound internet access
   egress {

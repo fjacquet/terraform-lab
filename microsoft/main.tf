@@ -649,6 +649,20 @@ resource "aws_security_group" "domain-member" {
     protocol    = "tcp"
     self        = true
   }
+  ingress {
+    description = "fusion-inventory"
+    from_port   = 62354
+    to_port     = 62354
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+  ingress {
+    description      = "fusion-inventory"
+    from_port        = 62354
+    to_port          = 62354
+    protocol         = "tcp"
+    ipv6_cidr_blocks = ["::/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
