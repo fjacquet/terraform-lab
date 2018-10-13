@@ -40,10 +40,10 @@ resource "aws_instance" "oracle" {
 }
 
 resource "aws_volume_attachment" "ebs_u01" {
-  device_name       = "/dev/xvdb"
-  count             = "${var.aws_number}"
-  volume_id         = "${element(aws_ebs_volume.oracle_u01.*.id, count.index)}"
-  instance_id       = "${element(aws_instance.oracle.*.id, count.index)}"
+  device_name = "/dev/xvdb"
+  count       = "${var.aws_number}"
+  volume_id   = "${element(aws_ebs_volume.oracle_u01.*.id, count.index)}"
+  instance_id = "${element(aws_instance.oracle.*.id, count.index)}"
 }
 
 resource "aws_ebs_volume" "oracle_u01" {

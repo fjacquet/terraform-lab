@@ -89,7 +89,7 @@ variable "aws_number" {
     exchange   = 0
     fs         = 0
     glpi       = 0
-    guacamole  = 1
+    guacamole  = 0
     ipam       = 0
     jumpbox    = 1
     nbu        = 0
@@ -100,7 +100,7 @@ variable "aws_number" {
     pki-ica    = 0
     pki-rca    = 1
     pki-ndes   = 0
-    redis      = 1
+    redis      = 0
     sharepoint = 0
     simpana    = 0
     sql        = 0
@@ -122,7 +122,7 @@ variable "aws_amis" {
     lnx        = "ami-7c491f05"
     nbu        = "ami-7c491f05"
     oracle     = "ami-7c491f05"
-    redis       = "ami-7c491f05"
+    redis      = "ami-7c491f05"
     sharepoint = "ami-056d4676"
     sql        = "ami-05b9370efd1cefcf4"
     win2012r2  = "ami-04191f05759452cfa"
