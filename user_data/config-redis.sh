@@ -23,24 +23,20 @@ PASSWD=$(aws secretsmanager get-secret-value --secret-id "evlab/redis/root" --ou
 FQDN="$HOSTNAME.evlab.ch"
 hostnamectl set-hostname $FQDN
 
-systemctl start redis.service
-systemctl enable redis
-
-redis-cli ping
+re
 
 SECURE=$(echo $PASSWD | sha256sum)
 
-sed -i "s/# requirepass foobared/$SECURE/" /etc/redis.conf
+sed -i "s/# requirepass foobared/requirepass $SECURE/" /etc/redis.conf
 cat >> /etc/redis.conf << EOF
 rename-command FLUSHDB ""
 rename-command FLUSHALL ""
 rename-command DEBUG ""
 rename-command CONFIG ""
 rename-command SHUTDOWN SHUTDOWN_MENOT
-rename-command CONFIG ASC12_CONFIG
 EOF
 systemctl restart redis.service
-
+systemctl enable redis
 chmod 770 /var/lib/redis
 chown redis:redis /etc/redis.conf
 chmod 660 /etc/redis.conf

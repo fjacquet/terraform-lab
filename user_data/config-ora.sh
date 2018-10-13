@@ -27,18 +27,18 @@ yum -y install smartmontools compat-libcap1
 
 yum -y install rlwrap
 yum -y install cockpit cockpit-storaged
-cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old
 
-sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
-sed -i "s/#PermitRootLogin yes/PermitRootLogin yes/" /etc/ssh/sshd_config
-sed -i "s/#X11DisplayOffset 10/X11DisplayOffset 10/" /etc/ssh/sshd_config
-sed -i "s/#X11UseLocalhost yes/X11UseLocalhost yes/" /etc/ssh/sshd_config
+# cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old
+# sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
+# sed -i "s/#PermitRootLogin yes/PermitRootLogin yes/" /etc/ssh/sshd_config
+# sed -i "s/#X11DisplayOffset 10/X11DisplayOffset 10/" /etc/ssh/sshd_config
+# sed -i "s/#X11UseLocalhost yes/X11UseLocalhost yes/" /etc/ssh/sshd_config
 
 sed -i "s/SELINUX=enforcing/SELINUX=permissive/" /etc/selinux/config
 
-systemctl restart sshd
-systemctl disable firewalld
-systemctl stop firewalld
+# systemctl restart sshd
+# systemctl disable firewalld
+# systemctl stop firewalld
 
 groupadd -g 54321 oinstall
 groupadd -g 54322 dba
