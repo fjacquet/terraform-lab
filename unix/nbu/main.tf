@@ -7,14 +7,6 @@ resource "aws_route53_record" "nbumaster" {
   records = ["${element(aws_instance.nbumaster.*.private_ip, count.index)}"]
 }
 
-# resource "aws_route53_record" "nbumaster-v6" {
-#   count   = "${var.aws_number}"
-#   zone_id = "${var.dns_zone_id}"
-#   name    = "nbu-${count.index}.${var.dns_suffix}"
-#   type    = "AAAA"
-#   ttl     = "300"
-#   records = ["${aws_instance.nbumaster.*.ipv6_addresses}"]
-# }
 
 resource "aws_instance" "nbumaster" {
   instance_type        = "m5.xlarge"
@@ -24,7 +16,7 @@ resource "aws_instance" "nbumaster" {
   ami                  = "${var.aws_ami}"
   key_name             = "${var.aws_key_pair_auth_id}"
   ebs_optimized        = "true"
-  subnet_id            = "${var.aws_subnet_id}"
+  subnet_id            =  "${element(var.aws_subnet_id, count.index)}"
   user_data            = "${file("user_data/config-nbu.sh")}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
 

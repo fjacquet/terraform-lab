@@ -18,8 +18,11 @@ groupadd nbwebgrp
 useradd -g nbwebgrp -c 'NetBackup Web Services account' -d /usr/openv/wmc nbwebsvc
 mkfs.xfs /dev/xvdb
 mkfs.xfs /dev/xvdc
-sudo -- sh -c 'echo ≤"/dev/xvdb		/usr/openv				xfs     defaults        0 0" >> /etc/fstab'
-sudo -- sh -c 'echo "/dev/xvdc		/backups				xfs     defaults        0 0" >> /etc/fstab'
+cat >> /etc/fstab << EOF 
+/dev/nvme2n1		/usr/openv				xfs     defaults        0 0
+/dev/nvme1n1		/backups				xfs     defaults        0 0
+EOF
+
 sudo mkdir -p /usr/openv
 sudo mkdir -p /backups
 
@@ -28,16 +31,21 @@ mkdir -p /backups/dr
 mkdir -p /backups/msdp
 mkdir -p /backups/simple
 cd /backups
-sudo wget https://s3-eu-west-1.amazonaws.com/installers-fja/NNetBackup_8.1.2Beta5_LinuxR_x86_64.tar.gz
-tar xzf NNetBackup_8.1.2Beta5_LinuxR_x86_64.tar.gz
+rm -rf .aws/credentials
+
+for i in NetBackup_8.1.2Beta5_LinuxR_x86_64.tar.gz NetBackup_8.1.2Beta5_CLIENTS1.tar.gz NetBackup_8.1.2Beta5_CLIENTS2.tar.gz
+do
+aws s3 cp s3://installers-fja/$i   /backups/$i
+tar xzf /backups/$i
+done
 
 echo "kernel.sem=300  307200  32  1024" >> /etc/sysctl.conf
 sysctl -p
 cat >> /etc/security/limits.conf << EOF
-*               soft    core            0" >> /etc/security/limits.conf
-*               hard    core            0" >> /etc/security/limits.conf
-*               soft    nofile            20480" >> /etc/security/limits.conf
-*               hard    nofile            20480" >> /etc/security/limits.conf
+*               soft    core            0
+*               hard    core            0
+*               soft    nofile            20480
+*               hard    nofile            20480
 EOF
  yum install python
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"

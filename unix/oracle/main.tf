@@ -66,13 +66,12 @@ resource "aws_security_group" "oracle" {
     self      = "true"
   }
 
-    ingress {
+  ingress {
     from_port = 5500
     to_port   = 5500
     protocol  = "tcp"
     self      = "true"
   }
-
 
   # outbound internet access
   egress {

@@ -92,7 +92,7 @@ variable "aws_number" {
     guacamole  = 0
     ipam       = 0
     jumpbox    = 1
-    nbu        = 0
+    nbu        = 1
     nps        = 0
     opscenter  = 0
     oracle     = 1
