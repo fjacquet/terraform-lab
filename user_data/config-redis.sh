@@ -2,8 +2,7 @@
 yum upgrade -y 
 yum install wget httpd -y
 
-wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-rpm -Uvh epel-release-latest-7.noarch.rpm
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 yum-config-manager –-enable --save epel
 yum upgrade -y 
