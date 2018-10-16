@@ -7,7 +7,6 @@ resource "aws_route53_record" "nbumaster" {
   records = ["${element(aws_instance.nbumaster.*.private_ip, count.index)}"]
 }
 
-
 resource "aws_instance" "nbumaster" {
   instance_type        = "m5.xlarge"
   ipv6_address_count   = 1
@@ -16,7 +15,7 @@ resource "aws_instance" "nbumaster" {
   ami                  = "${var.aws_ami}"
   key_name             = "${var.aws_key_pair_auth_id}"
   ebs_optimized        = "true"
-  subnet_id            =  "${element(var.aws_subnet_id, count.index)}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   user_data            = "${file("user_data/config-nbu.sh")}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
 
@@ -39,7 +38,7 @@ resource "aws_instance" "nbumaster" {
 }
 
 resource "aws_volume_attachment" "ebs_openv" {
-  device_name = "/dev/xvdb"
+  device_name = "openv"
   count       = "${var.aws_number}"
   volume_id   = "${element(aws_ebs_volume.openv.*.id, count.index)}"
   instance_id = "${element(aws_instance.nbumaster.*.id, count.index)}"
@@ -53,7 +52,7 @@ resource "aws_ebs_volume" "openv" {
 }
 
 resource "aws_volume_attachment" "ebs_backups" {
-  device_name = "/dev/xvdc"
+  device_name = "backups"
   count       = "${var.aws_number}"
   volume_id   = "${element(aws_ebs_volume.backups.*.id, count.index)}"
   instance_id = "${element(aws_instance.nbumaster.*.id, count.index)}"
@@ -62,7 +61,7 @@ resource "aws_volume_attachment" "ebs_backups" {
 resource "aws_ebs_volume" "backups" {
   count             = "${var.aws_number}"
   availability_zone = "${element(var.azs, count.index)}"
-  type              = "gp2"
+  type              = "sc1"
   size              = "${var.aws_size_nbu_backups}"
 }
 
@@ -93,13 +92,13 @@ resource "aws_security_group" "master" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   ingress {
     from_port   = 8443
     to_port     = 8443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
 
   # vnetd
   ingress {
