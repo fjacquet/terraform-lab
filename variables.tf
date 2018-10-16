@@ -35,7 +35,7 @@ variable "aws_disks_size" {
 
   default = {
     nbu_backups = 100
-    nbu_openv   = 20
+    nbu_openv   = 30
   }
 }
 

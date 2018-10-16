@@ -6,13 +6,9 @@ variable "dns_suffix" {}
 variable "aws_ami" {}
 
 # Size of Netbackup backups disks
-variable "aws_size_nbu_backups" {
-  default = 100
-}
+variable "aws_size_nbu_backups" {}
 
-variable "aws_size_nbu_openv" {
-  default = 20
-}
+variable "aws_size_nbu_openv" {}
 
 variable "aws_sg_ids" {
   type = "list"
