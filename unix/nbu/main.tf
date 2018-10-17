@@ -8,7 +8,7 @@ resource "aws_route53_record" "nbumaster" {
 }
 
 resource "aws_instance" "nbumaster" {
-  instance_type        = "m5.xlarge"
+  instance_type        = "m4.xlarge"
   ipv6_address_count   = 1
   count                = "${var.aws_number}"
   availability_zone    = "${element(var.azs, count.index)}"
@@ -38,7 +38,7 @@ resource "aws_instance" "nbumaster" {
 }
 
 resource "aws_volume_attachment" "ebs_openv" {
-  device_name = "/dev/nvme2n1"
+  device_name = "/dev/xvdb"
   count       = "${var.aws_number}"
   volume_id   = "${element(aws_ebs_volume.openv.*.id, count.index)}"
   instance_id = "${element(aws_instance.nbumaster.*.id, count.index)}"
@@ -52,7 +52,7 @@ resource "aws_ebs_volume" "openv" {
 }
 
 resource "aws_volume_attachment" "ebs_backups" {
-  device_name = "/dev/nvme1n1"
+  device_name = "/dev/xvdc"
   count       = "${var.aws_number}"
   volume_id   = "${element(aws_ebs_volume.backups.*.id, count.index)}"
   instance_id = "${element(aws_instance.nbumaster.*.id, count.index)}"

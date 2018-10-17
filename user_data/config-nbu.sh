@@ -15,11 +15,11 @@ systemctl disable firewalld
 systemctl stop firewalld
 groupadd nbwebgrp
 useradd -g nbwebgrp -c 'NetBackup Web Services account' -d /usr/openv/wmc nbwebsvc
-mkfs.xfs /dev/nvme2n1
-mkfs.xfs /dev/nvme1n1
+mkfs.xfs /dev/xvdb
+mkfs.xfs /dev/xvdc
 cat >> /etc/fstab << EOF 
-/dev/nvme2n1		/usr/openv				xfs     defaults        0 0
-/dev/nvme1n1		/backups				xfs     defaults        0 0
+/dev/xvdb		/usr/openv				xfs     defaults        0 0
+/dev/xvdc		/backups				xfs     defaults        0 0
 EOF
 
 sudo mkdir -p /usr/openv
