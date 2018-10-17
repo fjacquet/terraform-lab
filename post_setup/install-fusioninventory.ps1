@@ -6,7 +6,7 @@ $localfile = Join-Path -Path $install -ChildPath $file
 Write-Output 'Download'
 Invoke-WebRequest -Uri $url -OutFile $localfile  #DevSkim: ignore DS104456 
 Write-Output 'install'
-$server = 'glpi-0.evlab.ch'
+$server = '"https://glpi-0.evlab.ch/glpi"'
 $args = ('/acceptlicense',
     '/add-firewall-exception' ,
     '/execmode=Service',

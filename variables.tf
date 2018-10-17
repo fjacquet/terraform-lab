@@ -102,7 +102,7 @@ variable "aws_number" {
     pki-ndes   = 0
     redis      = 0
     sharepoint = 0
-    simpana    = 0
+    simpana    = 1
     sql        = 0
     symv       = 0
     wac        = 1
