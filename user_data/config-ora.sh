@@ -132,4 +132,7 @@ chown -R oracle:dba /u01
 
 cp -r /home/ec2-user/.ssh/ /home/oracle/
 chown -R oracle:dba /home/oracle/.ssh/
+
+ systemctl start cockpit
+ systemctl enable cockpit
 reboot

@@ -60,17 +60,24 @@ resource "aws_security_group" "oracle" {
 
   # listener for clients
   ingress {
-    from_port = 1521
-    to_port   = 1521
-    protocol  = "tcp"
-    self      = "true"
+    from_port   = 1521
+    to_port     = 1521
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   ingress {
-    from_port = 5500
-    to_port   = 5500
-    protocol  = "tcp"
-    self      = "true"
+    from_port   = 5500
+    to_port     = 5500
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  ingress {
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   # outbound internet access

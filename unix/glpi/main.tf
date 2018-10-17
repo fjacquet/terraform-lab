@@ -42,6 +42,13 @@ resource "aws_security_group" "glpi" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
   # outbound internet access
   egress {
     from_port   = 0

@@ -7,7 +7,7 @@ rpm -Uvh epel-release-latest-7.noarch.rpm
 
 yum-config-manager –-enable --save epel
 yum upgrade -y 
-yum install python2-pip.noarch python34-pip.noarch -y
+yum install python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged -y
 yum-config-manager –-disable --save epel
 yum clean all 
 
@@ -53,8 +53,8 @@ sed -i 's/Allow from 127.0.0.1/Allow from 10.0.*.*/' /etc/httpd/conf.d/glpi.conf
 sed -i 's/Allow from ::1//' /etc/httpd/conf.d/glpi.conf
 setenforce 0
 
-systemctl start httpd mariadb
-systemctl enable httpd mariadb
+systemctl start httpd mariadb cockpit
+systemctl enable httpd mariadb cockpit
 systemctl is-enabled httpd mariadb
 
 reboot

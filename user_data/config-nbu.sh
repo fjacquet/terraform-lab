@@ -1,7 +1,7 @@
 #!/bin/bash
 yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum -y upgrade
-yum -y install wget libaio numactl atop htop nfs-utils xorg-x11-xauth libXtst nfs-utils cockpit cockpit-storaged
+yum -y install wget libaio numactl atop htop nfs-utils xorg-x11-xauth libXtst nfs-utils cockpit cockpit-storaged xclock xauth firefox
 
 cat >> /etc/profile.d/nbu.sh << EOF
 #!/bin/bash
@@ -55,6 +55,10 @@ do
 aws s3 cp s3://installers-fja/$i   /backups/$i
 tar xzf /backups/$i
 done
+
+ systemctl start cockpit
+ systemctl enable cockpit
+
 # sudo hostnamectl  set-hostname nbu-0.evlab.ch
 #sudo sed -i "s/127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4/127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 /" /etc/hosts
 

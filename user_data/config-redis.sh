@@ -6,7 +6,7 @@ yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.r
 
 yum-config-manager –-enable --save epel
 yum upgrade -y 
-yum install python2-pip.noarch python34-pip.noarch -y
+yum install python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged -y
 yum install redis -y
 
 yum-config-manager –-disable --save epel
@@ -34,8 +34,8 @@ rename-command DEBUG ""
 rename-command CONFIG ""
 rename-command SHUTDOWN SHUTDOWN_MENOT
 EOF
-systemctl restart redis.service
-systemctl enable redis
+systemctl restart redis.service cockpit
+systemctl enable redis cockpit
 chmod 770 /var/lib/redis
 chown redis:redis /etc/redis.conf
 chmod 660 /etc/redis.conf
