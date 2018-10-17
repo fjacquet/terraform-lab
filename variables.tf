@@ -85,7 +85,7 @@ variable "aws_number" {
     csv        = 0
     da         = 0
     dc         = 1
-    dhcp       = 2
+    dhcp       = 0
     exchange   = 0
     fs         = 0
     glpi       = 0
@@ -95,19 +95,19 @@ variable "aws_number" {
     nbu        = 1
     nps        = 0
     opscenter  = 0
-    oracle     = 1
-    pki-crl    = 1
+    oracle     = 0
+    pki-crl    = 0
     pki-ica    = 0
-    pki-rca    = 1
+    pki-rca    = 0
     pki-ndes   = 0
     redis      = 0
     sharepoint = 0
-    simpana    = 1
+    simpana    = 0
     sql        = 0
     symv       = 0
-    wac        = 1
-    wds        = 1
-    wsus       = 1
+    wac        = 0
+    wds        = 0
+    wsus       = 0
   }
 }
 
