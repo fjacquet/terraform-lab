@@ -17,15 +17,15 @@ resource "aws_route53_record" "wsus" {
 # }
 
 resource "aws_instance" "wsus" {
-  instance_type        = "t3.large"
-  count                = "${var.aws_number}"
-  availability_zone    = "${element(var.azs, count.index)}"
-  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
   ami                  = "${var.aws_ami}"
-  ipv6_address_count   = 1
-  user_data            = "${file("user_data/config-wsus.ps1")}"
-  key_name             = "${var.aws_key_pair_auth_id}"
+  availability_zone    = "${element(var.azs, count.index)}"
+  count                = "${var.aws_number}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
+  instance_type        = "m5.xlarge"
+  ipv6_address_count   = 1
+  key_name             = "${var.aws_key_pair_auth_id}"
+  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
+  user_data            = "${file("user_data/config-wsus.ps1")}"
 
   tags {
     Name        = "wsus-${count.index}"

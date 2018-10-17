@@ -27,6 +27,10 @@ resource "aws_instance" "wds" {
   key_name             = "${var.aws_key_pair_auth_id}"
   iam_instance_profile = "${var.aws_iip_assumerole_name}"
 
+  root_block_device = {
+    volume_size = 250
+  }
+
   tags {
     Name        = "wds-${count.index}"
     Environment = "lab"
@@ -40,20 +44,6 @@ resource "aws_instance" "wds" {
   vpc_security_group_ids = [
     "${var.aws_sg_ids}",
   ]
-}
-
-resource "aws_volume_attachment" "ebs_wds" {
-  device_name = "/dev/xvdb"
-  count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.wds_d.*.id, count.index)}"
-  instance_id = "${element(aws_instance.wds.*.id, count.index)}"
-}
-
-resource "aws_ebs_volume" "wds_d" {
-  count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
-  size              = 500
-  type              = "st1"
 }
 
 resource "aws_security_group" "wds" {

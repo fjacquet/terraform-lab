@@ -106,7 +106,7 @@ variable "aws_number" {
     sql        = 0
     symv       = 0
     wac        = 1
-    wds        = 0
+    wds        = 1
     wsus       = 1
   }
 }
