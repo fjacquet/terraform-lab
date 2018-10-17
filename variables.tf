@@ -34,8 +34,8 @@ variable "aws_disks_size" {
   type = "map"
 
   default = {
-    nbu_backups = 100
-    nbu_openv   = 30
+    nbu_backups = 500
+    nbu_openv   = 50
   }
 }
 

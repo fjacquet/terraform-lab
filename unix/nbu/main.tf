@@ -38,7 +38,7 @@ resource "aws_instance" "nbumaster" {
 }
 
 resource "aws_volume_attachment" "ebs_openv" {
-  device_name = "openv"
+  device_name = "/dev/nvme2n1"
   count       = "${var.aws_number}"
   volume_id   = "${element(aws_ebs_volume.openv.*.id, count.index)}"
   instance_id = "${element(aws_instance.nbumaster.*.id, count.index)}"
@@ -52,7 +52,7 @@ resource "aws_ebs_volume" "openv" {
 }
 
 resource "aws_volume_attachment" "ebs_backups" {
-  device_name = "backups"
+  device_name = "/dev/nvme1n1"
   count       = "${var.aws_number}"
   volume_id   = "${element(aws_ebs_volume.backups.*.id, count.index)}"
   instance_id = "${element(aws_instance.nbumaster.*.id, count.index)}"
@@ -140,13 +140,7 @@ resource "aws_security_group" "master" {
     cidr_blocks = ["${element(var.cidr, count.index)}"]
   }
 
-  # spa port
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["${element(var.cidr, count.index)}"]
-  }
+
 
   # portmapper nfs port
   ingress {
