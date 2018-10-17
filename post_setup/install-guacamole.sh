@@ -49,7 +49,7 @@ GUACA_JDBC="guacamole-auth-jdbc-${GUACA_VER}" #Extension
 LIBJPEG_URL="http://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_VER}/"
 #LIBJPEG_TURBO="libjpeg-turbo-${LIBJPEG_VER}" #Dependency source
 LIBJPEG_TURBO="libjpeg-turbo-official-${LIBJPEG_VER}" #Dependency rpm
-CENTOS_VER=$(rpm -qi --whatprovides /etc/redhat-release | awk '/Version/ {print $3}|cut -f1 -d.')
+CENTOS_VER=$(rpm -qi --whatprovides /etc/redhat-release | awk '/Version/ {print $3}'|cut -f1 -d.)
 if [ $CENTOS_VER -ge 7 ]; then
 	MySQL_Packages="mariadb mariadb-server"
 	Menu_SQL="MariaDB"
@@ -323,7 +323,7 @@ reposinstall() {
 	else
 		sleep 1 | echo -e "\nIs necessary to install the EPEL repositories\nInstalling..."
 		echo -e "\nIs necessary to install the EPEL repositories\nInstalling..." >>$logfile 2>&1
-		rpm -Uvh http://dl.fedoraproject.org/pub/epel/epel-release-latest-${CENTOS_VER}.noarch.rpm | tee -a $logfile || exit 1
+		rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-${CENTOS_VER}.noarch.rpm | tee -a $logfile || exit 1
 	fi
 
 	sleep 1 | echo -e "\nSearching for RPMFusion Repository..."
