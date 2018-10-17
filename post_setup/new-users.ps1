@@ -32,6 +32,10 @@ New-ADUser `
 
    $secrets = ('evlab/ad/joinuser',
         'evlab/ad/adbackups',
+        'evlab/ad/simpana-install',
+        'evlab/ad/simpana-ad',
+        'evlab/ad/simpana-sql',
+        'evlab/ad/simpana-push',
        'evlab/guacamole/mysqlroot',
        'evlab/guacamole/mysqluser',
        'evlab/glpi/mysqlroot',
