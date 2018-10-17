@@ -49,7 +49,7 @@ GUACA_JDBC="guacamole-auth-jdbc-${GUACA_VER}" #Extension
 LIBJPEG_URL="http://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_VER}/"
 #LIBJPEG_TURBO="libjpeg-turbo-${LIBJPEG_VER}" #Dependency source
 LIBJPEG_TURBO="libjpeg-turbo-official-${LIBJPEG_VER}" #Dependency rpm
-CENTOS_VER=$(rpm -qi --whatprovides /etc/redhat-release | awk '/Version/ {print $3}')
+CENTOS_VER=$(rpm -qi --whatprovides /etc/redhat-release | awk '/Version/ {print $3}|cut -f1 -d.')
 if [ $CENTOS_VER -ge 7 ]; then
 	MySQL_Packages="mariadb mariadb-server"
 	Menu_SQL="MariaDB"
@@ -343,6 +343,7 @@ reposinstall() {
 yumupdate() {
 	sleep 1 | echo -e "\nUpdating CentOS...\n"
 	echo -e "\nUpdating CentOS...\n" >>$logfile 2>&1
+	yum install -y pv deltarpm vim  | tee -a $logfile
 	yum update -y | tee -a $logfile
 }
 

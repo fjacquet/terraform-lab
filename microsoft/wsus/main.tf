@@ -31,7 +31,9 @@ resource "aws_instance" "wsus" {
     Name        = "wsus-${count.index}"
     Environment = "lab"
   }
-
+  root_block_device = {
+    volume_size = 100
+  }
   lifecycle {
     ignore_changes = ["user_data"]
   }
