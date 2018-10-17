@@ -2,12 +2,11 @@
 yum upgrade -y 
 yum install wget httpd -y
 
-wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-rpm -Uvh epel-release-latest-7.noarch.rpm
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 yum-config-manager –-enable --save epel
 yum upgrade -y 
-yum install python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged -y
+yum install python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged jq -y
 yum-config-manager –-disable --save epel
 yum clean all 
 
@@ -20,8 +19,8 @@ HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID
 FQDN="$HOSTNAME.evlab.ch"
 hostnamectl set-hostname $FQDN
 
-wget https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-rpm -Uvh remi-release-7.rpm 
+yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
 
 yum-config-manager –-enable --save remi-php73 remi-glpi93 remi 
 yum upgrade -y 
