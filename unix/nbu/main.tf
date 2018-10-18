@@ -72,10 +72,13 @@ resource "aws_security_group" "master" {
 
   # pbx for clients
   ingress {
-    from_port   = 1556
-    to_port     = 1556
-    protocol    = "tcp"
-    cidr_blocks = ["${element(var.cidr, count.index)}"]
+    from_port = 1556
+    to_port   = 1556
+    protocol  = "tcp"
+
+    security_groups = [
+      "${aws_security_group.client.id}",
+    ]
   }
 
   # novnc
@@ -210,10 +213,10 @@ resource "aws_security_group" "client" {
 
   # access from media/master
   ingress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    security_groups = ["${aws_security_group.master.id}"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["${element(var.cidr, count.index)}"]
   }
 
   # outbound internet access

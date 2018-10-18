@@ -2,8 +2,6 @@ Initialize-AWSDefaults
 
 Import-Module -name activedirectory
 
-
-
 $username = "fjacquet"
 $secret = (Get-SECSecretValue -SecretId "evlab/ad/$($username)").SecretString | ConvertFrom-Json
 $password = $secret.fjacquet | ConvertTo-SecureString -AsPlainText -Force
@@ -33,29 +31,30 @@ New-ADUser `
     -UserPrincipalName "$($username)@$($Domain)"
    
 
-$secrets = ('evlab/ad/joinuser',
-    'evlab/ad/adbackups',
-    'evlab/ad/simpana-install',
-    'evlab/ad/simpana-ad',
-    'evlab/ad/simpana-sql',
-    'evlab/ad/simpana-push',
-    'evlab/ad/dns-admin',
-    'evlab/guacamole/mysqlroot',
-    'evlab/guacamole/mysqluser',
-    'evlab/glpi/mysqlroot',
-    'evlab/glpi/mysqluser',
-    'evlab/guacamole/keystore',
-    'evlab/guacamole/mail',
-    'evlab/sharepoint/sp_farm',
-    'evlab/sharepoint/sp_services',
-    'evlab/sharepoint/sp_portalAppPool',
-    'evlab/sharepoint/sp_profilesAppPool',
-    'evlab/sharepoint/sp_searchService',
-    'evlab/sharepoint/sp_cacheSuperUser',
-    'evlab/sharepoint/sp_cacheSuperReader',
-    'evlab/sql/svc-sql',
-    'evlab/pki/svc-ndes')
-foreach ($secret in $secrets) {
+   $secrets = ('evlab/ad/joinuser',
+        'evlab/ad/adbackups',
+        'evlab/ad/simpana-install',
+        'evlab/ad/simpana-ad',
+        'evlab/ad/simpana-sql',
+        'evlab/ad/simpana-push',
+        'evlab/ad/dns-admin',
+       'evlab/guacamole/mysqlroot',
+       'evlab/guacamole/mysqluser',
+       'evlab/glpi/mysqlroot',
+       'evlab/glpi/mysqluser',
+       'evlab/guacamole/keystore',
+       'evlab/guacamole/mail',
+       'evlab/sharepoint/sp_farm',
+       'evlab/sharepoint/sp_services',
+       'evlab/sharepoint/sp_portalAppPool',
+       'evlab/sharepoint/sp_profilesAppPool',
+       'evlab/sharepoint/sp_searchService',
+       'evlab/sharepoint/sp_cacheSuperUser',
+       'evlab/sharepoint/sp_cacheSuperReader',
+       'evlab/sql/svc-sql',
+       'evlab/sql/svc-sql-sccm',
+       'evlab/pki/svc-ndes')
+   foreach ($secret in $secrets) {
      
     $username = $secret.Split("/")[2]
     write-host $username
