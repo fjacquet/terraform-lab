@@ -1,6 +1,6 @@
 ﻿Initialize-AWSDefaults
 $region = 'eu-west-1'
-$secret = (Get-SECSecretValue -SecretId "evlab/ad/joinuser" -region $regiob).SecretString 
+$secret = (Get-SECSecretValue -SecretId "evlab.ch/ad/joinuser" -region $regiob).SecretString 
 $username = "joinuser"
 $password = ConvertTo-SecureString -AsPlainText -Force $secret
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password

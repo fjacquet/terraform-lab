@@ -6,7 +6,7 @@ $Domain = $env:USERDNSDOMAIN
 # Install-WindowsFeature ipam -IncludeAllSubFeature -IncludeManagementTools
 
 Initialize-AWSDefaults
-$secret = (Get-SECSecretValue -SecretId "evlab/ad/fjacquet" -region eu-west-1).SecretString 
+$secret = (Get-SECSecretValue -SecretId "evlab.ch/ad/fjacquet" -region eu-west-1).SecretString 
 $username = "fjacquet@evlab.ch"
 $password = ConvertTo-SecureString -AsPlainText -Force $secret
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password

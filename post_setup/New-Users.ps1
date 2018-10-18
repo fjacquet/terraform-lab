@@ -3,7 +3,7 @@ Initialize-AWSDefaults
 Import-Module -name activedirectory
 
 $username = "fjacquet"
-$secret = (Get-SECSecretValue -SecretId "evlab/ad/$($username)").SecretString | ConvertFrom-Json
+$secret = (Get-SECSecretValue -SecretId "evlab.ch/ad/$($username)").SecretString | ConvertFrom-Json
 $password = $secret.fjacquet | ConvertTo-SecureString -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
 

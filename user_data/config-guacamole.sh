@@ -12,12 +12,12 @@ pip install awscli
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) #DevSkim: ignore DS137138
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138
 HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text|grep Name |awk '{print $5}')
-MYSQLROOT=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mysqlroot" --region=$REGION --output json|jq -r '.SecretString')
+MYSQLROOT=$(aws secretsmanager get-secret-value --secret-id "evlab.ch/guacamole/mysqlroot" --region=$REGION --output json|jq -r '.SecretString')
 MYSQLDB=evguacamole
 MYSQLUSER=evguacamole
-MYSQLPASS=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mysqluser" --region=$REGION  --output json |jq -r '.SecretString')
-KEYSTORE=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/keystore" --region=$REGION  --output json |jq -r '.SecretString')
-MAIL=$(aws secretsmanager get-secret-value --secret-id "evlab/guacamole/mail" --region=$REGION  --output json|jq -r '.SecretString')
+MYSQLPASS=$(aws secretsmanager get-secret-value --secret-id "evlab.ch/guacamole/mysqluser" --region=$REGION  --output json |jq -r '.SecretString')
+KEYSTORE=$(aws secretsmanager get-secret-value --secret-id "evlab.ch/guacamole/keystore" --region=$REGION  --output json |jq -r '.SecretString')
+MAIL=$(aws secretsmanager get-secret-value --secret-id "evlab.ch/guacamole/mail" --region=$REGION  --output json|jq -r '.SecretString')
 
 hostnamectl  set-hostname "$HOSTNAME.evlab.ch"
 curl https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/install-guacamole.sh -o /install-guacamole.sh

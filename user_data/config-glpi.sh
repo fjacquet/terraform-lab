@@ -43,8 +43,8 @@ yum install MariaDB-server MariaDB-client -y
 
 
 
-# MYSQLROOT=$(aws secretsmanager get-secret-value --secret-id "evlab/glpi/mysqlroot" --region=$REGION  --output json|jq -r '.SecretString')
-# MYSQLUSER=$(aws secretsmanager get-secret-value --secret-id "evlab/glpi/mysqluser" --region=$REGION  --output json|jq -r '.SecretString')
+# MYSQLROOT=$(aws secretsmanager get-secret-value --secret-id "evlab.ch/glpi/mysqlroot" --region=$REGION  --output json|jq -r '.SecretString')
+# MYSQLUSER=$(aws secretsmanager get-secret-value --secret-id "evlab.ch/glpi/mysqluser" --region=$REGION  --output json|jq -r '.SecretString')
 # MYSQLDB=glpidb
 
 sed -i "s/SELINUX=enforcing/SELINUX=permissive/" /etc/selinux/config

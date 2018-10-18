@@ -1,6 +1,6 @@
 
 Initialize-AWSDefaults
-$svcsecret = (Get-SECSecretValue -SecretId "evlab/sql/svc-sql").SecretString | ConvertFrom-Json
+$svcsecret = (Get-SECSecretValue -SecretId "evlab.ch/sql/svc-sql").SecretString | ConvertFrom-Json
 
 $domain = "evlab"
 $svcuser = "svc-sql"

@@ -1,5 +1,5 @@
 Initialize-AWSDefaults
-$secret = (Get-SECSecretValue -SecretId "evlab/ad/joinuser").SecretString | ConvertFrom-Json
+$secret = (Get-SECSecretValue -SecretId "evlab.ch/ad/joinuser").SecretString | ConvertFrom-Json
 $username = "joinuser"
 $password = $secret.password | ConvertTo-SecureString -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
