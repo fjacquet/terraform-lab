@@ -84,11 +84,11 @@ variable "aws_number" {
     bsd        = 0
     csv        = 0
     da         = 0
-    dc         = 1
+    dc         = 2
     dhcp       = 0
     exchange   = 0
-    fs         = 0
-    glpi       = 0
+    fs         = 2
+    glpi       = 1
     guacamole  = 1
     ipam       = 0
     jumpbox    = 1
@@ -102,12 +102,12 @@ variable "aws_number" {
     pki-ndes   = 0
     redis      = 0
     sharepoint = 0
-    simpana    = 0
+    simpana    = 1
     sql        = 0
     symv       = 0
     wac        = 0
     wds        = 0
-    wsus       = 0
+    wsus       = 1
   }
 }
 

@@ -54,7 +54,7 @@ resource "aws_ebs_volume" "simpana_d" {
 resource "aws_volume_attachment" "ebs_simpana_e" {
   device_name = "/dev/xvdc"
   count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.simpana_d.*.id, count.index)}"
+  volume_id   = "${element(aws_ebs_volume.simpana_e.*.id, count.index)}"
   instance_id = "${element(aws_instance.simpana.*.id, count.index)}"
 }
 
