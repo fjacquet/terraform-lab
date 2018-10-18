@@ -20,7 +20,8 @@ KEYSTORE=$(aws secretsmanager get-secret-value --secret-id "evlab.ch/guacamole/k
 MAIL=$(aws secretsmanager get-secret-value --secret-id "evlab.ch/guacamole/mail" --region=$REGION  --output json|jq -r '.SecretString')
 
 hostnamectl  set-hostname "$HOSTNAME.evlab.ch"
-curl https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/install-guacamole.sh -o /install-guacamole.sh
+curl https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/Install-guacamole.sh -o /install-guacamole.sh
 chmod 755 /install-guacamole.sh
 echo  "/install-guacamole.sh -a $MYSQLROOT -b $MYSQLDB -c $MYSQLUSER -d $MYSQLPASS -e $KEYSTORE -l evlab.ch:$MAIL -s -p yes " > /install.sh
+chmod 755 /install.sh
 reboot

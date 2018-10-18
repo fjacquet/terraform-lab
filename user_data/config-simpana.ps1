@@ -7,17 +7,19 @@ add-windowsfeature -Name FS-Data-Deduplication
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
 Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
-$scripts = ('disable-av', 
-    'disable-ieesc',
-    'initialize-env',
-    'install-nbugrp',
-    'install-chocolateys', 
-    'install-mslaps', 
-    'install-features', 
-    'initialize-hostname', 
-    'get-simpana',
-    'install-fusioninventory',
-    'join-domain-member')
+$scripts = (
+    'Disable-av', 
+    'Disable-ieesc',
+    'Initialize-env',
+    'Install-nbugrp',
+    'Install-chocolateys', 
+    'Install-mslaps', 
+    'Install-features', 
+    'Install-fusioninventory',
+    'Initialize-hostname', 
+    'Get-simpana',
+    'Join-domain-member'
+)
 foreach ($script in $scripts) {
     $url = "$($gitroot)$($script).ps1"
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456 
