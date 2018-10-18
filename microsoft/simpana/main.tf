@@ -74,10 +74,10 @@ resource "aws_security_group" "master" {
 
   # Simpana access from subnet
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["10.0.0.0/16"]
+    from_port       = 8400
+    to_port         = 8403
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.client.id}"]
   }
 
   # outbound internet access

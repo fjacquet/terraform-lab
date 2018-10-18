@@ -2,8 +2,6 @@ Initialize-AWSDefaults
 
 Import-Module -name activedirectory
 
-
-
 $username = "fjacquet"
 $secret = (Get-SECSecretValue -SecretId "evlab/ad/$($username)").SecretString | ConvertFrom-Json
 $password = $secret.fjacquet | ConvertTo-SecureString -AsPlainText -Force
@@ -46,6 +44,7 @@ New-ADUser `
        'evlab/sharepoint/sp_cacheSuperUser',
        'evlab/sharepoint/sp_cacheSuperReader',
        'evlab/sql/svc-sql',
+       'evlab/sql/svc-sql-sccm',
        'evlab/pki/svc-ndes')
    foreach ($secret in $secrets) {
      
