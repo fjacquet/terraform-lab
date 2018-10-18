@@ -7,7 +7,7 @@ $Credential = New-Object -TypeName System.Management.Automation.PSCredential -Ar
 $domain = 'evlab.ch'
 Write-Output 'set DNS'
 Get-NetAdapter -Physical | Set-DnsClientServerAddress -ServerAddresses (
-    "10.0.51.110",
+    "10.0.51.85",
     "10.0.52.158")
 Write-Output 'Set suffix'
 Set-DnsClientGlobalSetting -SuffixSearchList (

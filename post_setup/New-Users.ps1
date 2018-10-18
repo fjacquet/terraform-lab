@@ -1,16 +1,16 @@
 Initialize-AWSDefaults
 
 Import-Module -name activedirectory
-
+$ad = get-addomain
+$DomainDN = $ad.DistinguishedName               
+$Domain = $ad.DNSRoot 
 $username = "fjacquet"
-$secret = (Get-SECSecretValue -SecretId "evlab.ch/ad/$($username)").SecretString | ConvertFrom-Json
-$password = $secret.fjacquet | ConvertTo-SecureString -AsPlainText -Force
+$secret = (Get-SECSecretValue -SecretId "$($domain)/ad/$($username)").SecretString
+$password = $secret | ConvertTo-SecureString -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
 
 
-$ad = get-addomain
-$DomainDN = $ad.DistinguishedName               
-$Domain = $ad.DNSRoot                        
+                       
 New-ADUser `
     -ChangePasswordAtLogon $false `
     -City "Montreux" `
@@ -27,34 +27,36 @@ New-ADUser `
     -State "VD" `
     -Surname "Jacquet" `
     -Title "Mr" `
-    -AccountPassword $sec `
+    -AccountPassword $password `
     -UserPrincipalName "$($username)@$($Domain)"
    
 
-   $secrets = ('evlab/ad/joinuser',
-        'evlab/ad/adbackups',
-        'evlab/ad/simpana-install',
-        'evlab/ad/simpana-ad',
-        'evlab/ad/simpana-sql',
-        'evlab/ad/simpana-push',
-        'evlab/ad/dns-admin',
-       'evlab/guacamole/mysqlroot',
-       'evlab/guacamole/mysqluser',
-       'evlab/glpi/mysqlroot',
-       'evlab/glpi/mysqluser',
-       'evlab/guacamole/keystore',
-       'evlab/guacamole/mail',
-       'evlab/sharepoint/sp_farm',
-       'evlab/sharepoint/sp_services',
-       'evlab/sharepoint/sp_portalAppPool',
-       'evlab/sharepoint/sp_profilesAppPool',
-       'evlab/sharepoint/sp_searchService',
-       'evlab/sharepoint/sp_cacheSuperUser',
-       'evlab/sharepoint/sp_cacheSuperReader',
-       'evlab/sql/svc-sql',
-       'evlab/sql/svc-sql-sccm',
-       'evlab/pki/svc-ndes')
-   foreach ($secret in $secrets) {
+$secrets = (
+    "$($Domain)/ad/joinuser",
+    "$($Domain)/ad/adbackups",
+    "$($Domain)/ad/simpana-install",
+    "$($Domain)/ad/simpana-ad",
+    "$($Domain)/ad/simpana-sql",
+    "$($Domain)/ad/simpana-push",
+    "$($Domain)/ad/dns-admin",
+    "$($Domain)/guacamole/mysqlroot",
+    "$($Domain)/guacamole/mysqluser",
+    "$($Domain)/glpi/mysqlroot",
+    "$($Domain)/glpi/mysqluser",
+    "$($Domain)/guacamole/keystore",
+    "$($Domain)/guacamole/mail",
+    "$($Domain)/sharepoint/sp_farm",
+    "$($Domain)/sharepoint/sp_services",
+    "$($Domain)/sharepoint/sp_portalAppPool",
+    "$($Domain)/sharepoint/sp_profilesAppPool",
+    "$($Domain)/sharepoint/sp_searchService",
+    "$($Domain)/sharepoint/sp_cacheSuperUser",
+    "$($Domain)/sharepoint/sp_cacheSuperReader",
+    "$($Domain)/sql/svc-sql",
+    "$($Domain)/sql/svc-sql-sccm",
+    "$($Domain)/pki/svc-ndes"
+)
+foreach ($secret in $secrets) {
      
     $username = $secret.Split("/")[2]
     write-host $username
@@ -76,23 +78,24 @@ New-ADUser `
 
 Add-ADPrincipalGroupMembership `
     -Identity `
-    "CN=DNSADMIN,CN=Users,$($domaindn)" `
+    "CN=DNS-ADMIN,CN=Users,$($DomainDN)" `
     -MemberOf `
-    "CN=Enterprise Admins,CN=Users,$($domaindn)", `
-    "CN=Domain Admins,CN=Users,$($domaindn)"
+    "CN=Enterprise Admins,CN=Users,$($DomainDN)", `
+    "CN=Domain Admins,CN=Users,$($DomainDN)"
 
 Add-ADPrincipalGroupMembership `
     -Identity `
-    "CN=Frederic Jacquet,CN=Users,$($domaindn)" `
+    "CN=fjacquet,CN=Users,$($DomainDN)" `
     -MemberOf `
-    "CN=Enterprise Admins,CN=Users,$($domaindn)", `
-    "CN=Domain Admins,CN=Users,$($domaindn)"
+    "CN=Enterprise Admins,CN=Users,$($DomainDN)", `
+    "CN=Domain Admins,CN=Users,$($DomainDN)"
 
-Add-DnsServerPrimaryZone
--Name '0.10.in-addr.arpa' `
+Add-DnsServerPrimaryZone `
+    -Name '0.10.in-addr.arpa' `
     -ReplicationScope Forest `
     -DynamicUpdate Secure `
-    -ResponsiblePerson 'DNSADMIN.evlab.ch.'
+    -ResponsiblePerson "DNS-ADMIN.$($Domain)."
+
 Set-DNSServerEDns -CacheTimeout '0:30:00' `
     -Computername "DC-0" `
     -EnableProbes $true `

@@ -87,9 +87,9 @@ variable "aws_number" {
     dc         = 2
     dhcp       = 0
     exchange   = 0
-    fs         = 2
+    fs         = 0
     glpi       = 1
-    guacamole  = 1
+    guacamole  = 0
     ipam       = 0
     jumpbox    = 1
     nbu        = 1
@@ -107,7 +107,7 @@ variable "aws_number" {
     symv       = 0
     wac        = 0
     wds        = 0
-    wsus       = 1
+    wsus       = 0
   }
 }
 
