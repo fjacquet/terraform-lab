@@ -547,12 +547,13 @@ selinuxchanges() {
 nginxinstall() {
 	sleep 1 | echo -e "\nInstalling Nginx repository..."
 	echo -e "\nInstalling Nginx repository..." >>$logfile 2>&1
-	echo '[nginx]
+cat >>/etc/yum.repos.d/nginx.repo << EOF
+[nginx]
 name=nginx repo
-baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+baseurl=http://nginx.org/packages/centos/$CENTOS_VER/$basearch/
 gpgcheck=0
-enabled=1' >/etc/yum.repos.d/nginx.repo
-
+enabled=1'
+EOF
 	sleep 1 | echo -e "\nInstalling Nginx..."
 	echo -e "\nInstalling Nginx..." >>$logfile 2>&1
 	yum install -y nginx pv | tee -a $logfile

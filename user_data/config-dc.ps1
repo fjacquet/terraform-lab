@@ -10,12 +10,10 @@ $scripts = (
     'Disable-ieesc',
     'Initialize-env',
     'Install-nbugrp',
-    'Install-chocolateys', 
-    'Install-mslaps', 
+    'Install-chocolateys',  
     'Install-features', 
     'Install-fusioninventory',
-    'Initialize-hostname', 
-    'Join-domain-member'
+    'Initialize-hostname'
 )
 foreach ($script in $scripts) {
     $url = "$($gitroot)$($script).ps1"
