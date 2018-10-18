@@ -8,7 +8,7 @@ $domain = 'evlab.ch'
 Write-Output 'set DNS'
 Get-NetAdapter -Physical | Set-DnsClientServerAddress -ServerAddresses (
     "10.0.51.85",
-    "10.0.52.158")
+    "10.0.52.144")
 Write-Output 'Set suffix'
 Set-DnsClientGlobalSetting -SuffixSearchList (
     $domain,

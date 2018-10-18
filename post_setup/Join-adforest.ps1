@@ -7,7 +7,7 @@ $Credential = New-Object -TypeName System.Management.Automation.PSCredential -Ar
 
 Get-NetAdapter -Name ethernet | Set-DnsClientServerAddress -ServerAddresses (
     "10.0.51.85",
-    "10.0.52.158"
+    "10.0.52.144"
 )
 Set-DnsClientGlobalSetting -SuffixSearchList (
     $($domain), 
