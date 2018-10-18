@@ -51,6 +51,20 @@ resource "aws_ebs_volume" "simpana_d" {
   type              = "gp2"
 }
 
+resource "aws_volume_attachment" "ebs_simpana_e" {
+  device_name = "/dev/xvdc"
+  count       = "${var.aws_number}"
+  volume_id   = "${element(aws_ebs_volume.simpana_d.*.id, count.index)}"
+  instance_id = "${element(aws_instance.simpana.*.id, count.index)}"
+}
+
+resource "aws_ebs_volume" "simpana_e" {
+  count             = "${var.aws_number}"
+  availability_zone = "${element(var.azs, count.index)}"
+  size              = 500
+  type              = "st1"
+}
+
 resource "aws_security_group" "master" {
   name        = "tf_evlab_simpana_master"
   description = "Used in the terraform"

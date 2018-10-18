@@ -17,7 +17,6 @@ $scripts = ('disable-av',
     'initialize-hostname', 
     'get-simpana',
     'install-fusioninventory',
-    'format-datadisk',
     'join-domain-member')
 foreach ($script in $scripts) {
     $url = "$($gitroot)$($script).ps1"
