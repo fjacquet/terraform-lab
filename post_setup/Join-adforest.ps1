@@ -1,11 +1,11 @@
 Initialize-AWSDefaults
 $domain = "evlab.ch"
-$secret = (Get-SECSecretValue -SecretId "$($domain)/ad/joinuser").SecretString | ConvertFrom-Json
+$secret = (Get-SECSecretValue -SecretId "$($domain)/ad/joinuser").SecretString 
 $username = "joinuser"
-$password = $secret.password | ConvertTo-SecureString -AsPlainText -Force
+$password = $secret | ConvertTo-SecureString -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
 
-Get-NetAdapter -Name ethernet | Set-DnsClientServerAddress -ServerAddresses (
+Get-NetAdapter -Physical | Set-DnsClientServerAddress -ServerAddresses (
     "10.0.51.85",
     "10.0.52.144"
 )
