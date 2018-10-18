@@ -21,8 +21,7 @@ Set-SmbServerConfiguration -ServerHidden $true `
 Restart-Service -Name lanmanserver
 
 import-module -name DFSN
-$ad = get-addomain
-$DomainDN = $ad.DistinguishedName               
+$ad = get-addomain          
 $Domain = $ad.DNSRoot  
 
 
