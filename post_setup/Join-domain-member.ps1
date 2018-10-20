@@ -25,5 +25,5 @@ Set-DnsClientGlobalSetting -SuffixSearchList (
 Write-Output 'Join domain'
 Add-Computer –domainname $domain `
     -Credential $Credential `
-    -Restart `
+    -Restart:$false `
     –Force

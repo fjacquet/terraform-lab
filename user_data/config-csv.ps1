@@ -15,8 +15,8 @@ $scripts = (
     'Install-mslaps', 
     'Install-features', 
     'Install-fusioninventory',
-    'Initialize-hostname', 
-    'Join-domain-member'
+    'Join-domain-member',
+    'Initialize-hostname'
 )
 
 foreach ($script in $scripts) {
