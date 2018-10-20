@@ -82,7 +82,6 @@ variable "aws_number" {
   default = {
     adfs       = 0
     bsd        = 0
-    csv        = 0
     da         = 0
     dc         = 2
     dhcp       = 0
@@ -100,10 +99,12 @@ variable "aws_number" {
     pki-ica    = 0
     pki-rca    = 0
     pki-ndes   = 0
+    rdsh       = 1
     redis      = 0
     sharepoint = 0
     simpana    = 1
     sql        = 0
+    sofs       = 2
     symv       = 0
     wac        = 0
     wds        = 0

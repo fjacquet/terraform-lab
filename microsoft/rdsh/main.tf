@@ -1,10 +1,10 @@
-resource "aws_route53_record" "csv" {
+resource "aws_route53_record" "rdsh" {
   count   = "${var.aws_number}"
   zone_id = "${var.dns_zone_id}"
-  name    = "csv-${count.index}.${var.dns_suffix}"
+  name    = "rdsh-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
-  records = ["${element(aws_instance.csv.*.private_ip, count.index)}"]
+  records = ["${element(aws_instance.rdsh.*.private_ip, count.index)}"]
 }
 
 # resource "aws_route53_record" "fs-v6" {
@@ -16,7 +16,7 @@ resource "aws_route53_record" "csv" {
 #   records = ["${aws_instance.fs.*.ipv6_addresses}"]
 # }
 
-resource "aws_instance" "csv" {
+resource "aws_instance" "rdsh" {
   ami                  = "${var.aws_ami}"
   availability_zone    = "${element(var.azs, count.index)}"
   count                = "${var.aws_number}"
@@ -25,11 +25,15 @@ resource "aws_instance" "csv" {
   ipv6_address_count   = 1
   key_name             = "${var.aws_key_pair_auth_id}"
   subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  user_data            = "${file("user_data/config-csv.ps1")}"
+  user_data            = "${file("user_data/config-rdsh.ps1")}"
 
   tags {
-    Name        = "csv-${count.index}"
+    Name        = "rdsh-${count.index}"
     Environment = "lab"
+  }
+
+  root_block_device = {
+    volume_size = 250
   }
 
   lifecycle {
@@ -42,51 +46,8 @@ resource "aws_instance" "csv" {
   ]
 }
 
-resource "aws_volume_attachment" "ebs_csv_cache" {
-  device_name = "/dev/xvdb"
-  count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.ssd.*.id, count.index)}"
-  instance_id = "${element(aws_instance.csv.*.id, count.index)}"
-}
-
-resource "aws_ebs_volume" "ssd" {
-  count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
-
-  size = 100
-  type = "gp2"
-}
-
-resource "aws_volume_attachment" "ebs_csv_data1" {
-  device_name = "/dev/xvdc"
-  count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.hdd1.*.id, count.index)}"
-  instance_id = "${element(aws_instance.csv.*.id, count.index)}"
-}
-
-resource "aws_ebs_volume" "hdd1" {
-  count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
-  size              = 500
-  type              = "st1"
-}
-
-resource "aws_volume_attachment" "ebs_csv_data2" {
-  device_name = "/dev/xvdd"
-  count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.hdd2.*.id, count.index)}"
-  instance_id = "${element(aws_instance.csv.*.id, count.index)}"
-}
-
-resource "aws_ebs_volume" "hdd2" {
-  count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
-  size              = 500
-  type              = "st1"
-}
-
-resource "aws_security_group" "csv" {
-  name        = "csv"
+resource "aws_security_group" "rdsh" {
+  name        = "rdsh"
   description = "Used in the terraform"
   vpc_id      = "${var.aws_vpc_id}"
 
