@@ -1,6 +1,7 @@
 ﻿
 Initialize-AWSDefaults
-Import-Module -name activedirectory
+Import-Module -name ActiveDirectory
+
 $ad = get-addomain           
 $Domain = $ad.DNSRoot  
 $secret = (Get-SECSecretValue -SecretId "evlab.ch/ad/fjacquet" -region eu-west-1).SecretString 

@@ -10,3 +10,17 @@ Configure-SMremoting.exe -enable
 Write-Output "Disabling SMBv1"
 Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol -NoRestart
 # Install-Module -Name AWSPowerShell 
+add-windowsfeature -Name RSAT `
+    -IncludeManagementTools
+    
+# Disable LMHosts
+$disable = 2 
+$adapters = (gwmi win32_networkadapterconfiguration )
+Foreach ($adapter in $adapters) {
+    Write-Host $adapter
+    $adapter.settcpipnetbios($disable)
+}
+
+# Disable Netbios
+$nicClass = Get-WmiObject -list Win32_NetworkAdapterConfiguration
+$nicClass.enableWins($false, $false)

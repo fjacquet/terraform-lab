@@ -1,6 +1,6 @@
 Initialize-AWSDefaults
 
-Import-Module -name activedirectory
+Import-Module -name ActiveDirectory
 $ad = get-addomain
 $DomainDN = $ad.DistinguishedName               
 $Domain = $ad.DNSRoot 

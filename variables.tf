@@ -87,7 +87,7 @@ variable "aws_number" {
     dc         = 2
     dhcp       = 0
     exchange   = 0
-    fs         = 1
+    fs         = 2
     glpi       = 1
     guacamole  = 0
     ipam       = 0

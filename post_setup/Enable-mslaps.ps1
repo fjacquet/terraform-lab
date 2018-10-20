@@ -1,4 +1,4 @@
-Import-Module -name activedirectory
+Import-Module -name ActiveDirectory
 Import-Module -name admpwd.ps
 
 $ad = get-addomain
@@ -21,34 +21,34 @@ $group = New-ADGroup `
     -Path "CN=Users," `
     -Description "Members of this group are LAPS Administrators"
     
+
 $serversou = "servers"
 
 $User = Get-ADUser `
-    -Identity "CN=Frederic Jacquet,OU=Users,$($domain)" `
+    -Identity "fjacquet" `
     -Server $dc
+
 Add-ADGroupMember `
     -Identity $Group `
     -Members $User `
     -Server $dc 
+
 $User = Get-ADUser `
-    -Identity "CN=Administrator,OU=Users,$($domain)" `
+    -Identity "Administrator" `
     -Server $dc
+
 Add-ADGroupMember -Identity $Group `
     -Members $User `
     -Server $dc 
 
-Set-AdmPwdComputerSelfPermission `
-    –OrgUnit s$serversou 
-Set-AdmPwdReadPasswordPermission `
-    –orgunit $serversou  `
-    –AllowedPrincipals $group 
-Set-AdmPwdResetPasswordPermission `
-    -OrgUnit $serversou  `
-    -AllowedPrincipals $group 
 
-new-gpo -name TestGPO `
-    | new-gplink -target "ou=marketing,$domain" `
-    | set-gppermissions `
-    -permissionlevel gpoedit `
-    -targetname "Marketing Admins" `
-    -targettype group 
+Set-AdmPwdReadPasswordPermission `
+    -AllowedPrincipals $group.SamAccountName `
+    -Identity $serversou.name
+Set-AdmPwdResetPasswordPermission `
+    -AllowedPrincipals $group.SamAccountName `
+    -Identity $serversou.name
+Set-AdmPwdComputerSelfPermission `
+    -Identity $serversou.name
+
+

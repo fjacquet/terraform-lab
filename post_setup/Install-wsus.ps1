@@ -1,5 +1,5 @@
 
-add-windowsfeature -Name UpdateServices -IncludeManagementTools
+add-windowsfeature -Name UpdateServices,RSAT -IncludeManagementTools
 
 $WSUSContentDir = 'D:\WSUS'
 New-Item -Path $WSUSContentDir -ItemType Directory

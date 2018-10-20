@@ -18,9 +18,12 @@ Set-SmbServerConfiguration -ServerHidden $true `
     -Confirm:$false
 
 
-Restart-Service -Name lanmanserver
+Restart-Service -Name lanmanserver -Force:$true
 
 import-module -name DFSN
+Add-WindowsFeature -name RSAT-AD-PowerShell
+Import-Module -Name ActiveDirectory 
+
 $ad = get-addomain          
 $Domain = $ad.DNSRoot  
 
