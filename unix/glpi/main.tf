@@ -7,7 +7,7 @@ resource "aws_instance" "glpi" {
   ami                    = "${var.aws_ami}"
   ipv6_address_count     = 1
   key_name               = "${var.aws_key_pair_auth_id}"
-  vpc_security_group_ids = ["${var.aws_sg_ids}"]
+  vpc_security_group_ids = ["${var.aws_sg_ids}","${aws_security_group.glpi.id}"]
 
   root_block_device = {
     volume_size = 80

@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
-yum upgrade -y 
-yum install wget httpd -y
+yum upgrade -y
+yum install wget httpd fontconfig -y
 
 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
-yum-config-manager –-enable --save epel
-yum upgrade -y 
-yum install python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged jq -y
-yum-config-manager –-disable --save epel
-yum clean all 
+
+yum upgrade -y
+yum install  --enablerepo=epel python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged jq -y
+
 
 pip install --upgrade pip
 pip install awscli --upgrade --user
@@ -22,11 +21,11 @@ hostnamectl set-hostname $FQDN
 yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
 
-yum-config-manager –-enable --save remi-php73 remi-glpi93 remi 
-yum upgrade -y 
-yum install  jq glpi-* php php-gd php-mysql php-mcrypt php-apcu php-xmlrpc php-pecl-zendopcache php-ldap php-imap php-mbstring php-simplexml php-xml -y
-yum-config-manager –-disable --save remi-php73 remi-glpi93 remi 
+yum upgrade -y
+yum --enablerepo=remi,remi-glpi93,remi-php73,epel --disablerepo=amzn2-core install glpi jq glpi-* php php-gd php-mysql php-mcrypt php-apcu php-xmlrpc php-pecl-zendopcache php-ldap php-imap php-mbstring php-simplexml php-xml -y
+
 yum clean all
+rm -rf /var/cache/yum
 
 cat > /etc/yum.repos.d/mariadb.repo << EOF
 # MariaDB 10.3 RedHat repository list - created 2018-10-13 16:11 UTC
@@ -38,7 +37,7 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 enabled=1
 EOF
-yum upgrade -y 
+yum upgrade -y
 yum install MariaDB-server MariaDB-client -y
 
 
