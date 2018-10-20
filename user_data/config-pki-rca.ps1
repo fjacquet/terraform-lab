@@ -11,7 +11,7 @@ $scripts = (
     'Disable-av', 
     'Disable-ieesc',
     'Initialize-env',
-    'Install-nbugrp',
+    'Install-nbugrt',
     'Install-chocolateys', 
     'Install-mslaps', 
     'Install-features', 
