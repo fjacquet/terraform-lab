@@ -75,7 +75,7 @@ resource "aws_security_group" "master" {
     from_port   = 3389
     to_port     = 3389
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   # netbios access from subnet
@@ -120,7 +120,7 @@ resource "aws_security_group" "client" {
     from_port   = 3389
     to_port     = 3389
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   # netbios access from subnet

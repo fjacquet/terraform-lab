@@ -24,3 +24,21 @@ Foreach ($adapter in $adapters) {
 # Disable Netbios
 $nicClass = Get-WmiObject -list Win32_NetworkAdapterConfiguration
 $nicClass.enableWins($false, $false)
+
+Set-SmbServerConfiguration `
+    -EnableSMB1Protocol $false `
+    -Confirm:$false
+
+Set-SmbServerConfiguration `
+    -RequireSecuritySignature $true `
+    -EnableSecuritySignature $true `
+    -EncryptData $true `
+    -Confirm:$false
+
+Set-SmbServerConfiguration -AutoShareServer $false `
+    -AutoShareWorkstation $false `
+    -Confirm:$false
+
+Set-SmbServerConfiguration -ServerHidden $true `
+    -AnnounceServer $false `
+    -Confirm:$false
