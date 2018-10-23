@@ -119,8 +119,7 @@ yum -y install https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPack
 aws s3 cp s3://installers-fja/oracle-database-ee-18c-1.0-1.x86_64.rpm   /u01/oracle-database-ee-18c-1.0-1.x86_64.rpm
 
 # unzip /u01/linuxx64_12201_database.zip
-# chown -R oracle:dba /u01
-
+chown -R oracle:dba /u01
 cp -r /home/ec2-user/.ssh/ /home/oracle/
 chown -R oracle:dba /home/oracle/.ssh/
 
