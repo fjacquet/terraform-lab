@@ -26,7 +26,7 @@ resource "aws_instance" "oracle" {
   key_name               = "${var.aws_key_pair_auth_id}"
   ebs_optimized          = "true"
   subnet_id              = "${element(var.aws_subnet_id, count.index)}"
-  user_data              = "${file("user_data/config-ora.sh")}"
+  user_data              = "${file("user_data/config-ora18.sh")}"
   vpc_security_group_ids = ["${var.aws_sg_ids}"]
 
   lifecycle {
