@@ -33,6 +33,10 @@ resource "aws_instance" "oracle" {
     ignore_changes = ["user_data"]
   }
 
+  root_block_device = {
+    volume_size = 80
+  }
+
   tags {
     Name        = "oracle-${count.index}"
     Environment = "lab"

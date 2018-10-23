@@ -113,6 +113,8 @@ chmod 755  /etc/profile.d/oracle.sh
 
 cd /u01
 rm -rf .aws/credentials
+yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
+yum -y install https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm
 
 aws s3 cp s3://installers-fja/oracle-database-ee-18c-1.0-1.x86_64.rpm   /u01/oracle-database-ee-18c-1.0-1.x86_64.rpm
 
