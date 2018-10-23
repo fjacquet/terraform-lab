@@ -114,10 +114,10 @@ chmod 755  /etc/profile.d/oracle.sh
 cd /u01
 rm -rf .aws/credentials
 
-aws s3 cp s3://installers-fja/linuxx64_12201_database.zip   /u01/linuxx64_12201_database.zip
+aws s3 cp s3://installers-fja/oracle-database-ee-18c-1.0-1.x86_64.rpm   /u01/oracle-database-ee-18c-1.0-1.x86_64.rpm
 
-unzip /u01/linuxx64_12201_database.zip
-chown -R oracle:dba /u01
+# unzip /u01/linuxx64_12201_database.zip
+# chown -R oracle:dba /u01
 
 cp -r /home/ec2-user/.ssh/ /home/oracle/
 chown -R oracle:dba /home/oracle/.ssh/

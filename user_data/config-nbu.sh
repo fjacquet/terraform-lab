@@ -50,16 +50,14 @@ hostnamectl  set-hostname $HOSTNAME.evlab.ch
 cd /backups
 rm -rf .aws/credentials
 
-for i in NetBackup_8.1.2Beta5_LinuxR_x86_64.tar.gz NetBackup_8.1.2Beta5_CLIENTS1.tar.gz NetBackup_8.1.2Beta5_CLIENTS2.tar.gz
+for i in NetBackup_8.1.3Beta2_LinuxR_x86_64.tar.gz NetBackup_8.1.3Beta2_Win.zip
 do
 aws s3 cp s3://installers-fja/$i   /backups/$i
 tar xzf /backups/$i
 done
 
- systemctl start cockpit
- systemctl enable cockpit
+systemctl start cockpit
+systemctl enable cockpit
 
-# sudo hostnamectl  set-hostname nbu-0.evlab.ch
-#sudo sed -i "s/127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4/127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 /" /etc/hosts
 
 reboot
