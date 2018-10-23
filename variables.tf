@@ -94,7 +94,7 @@ variable "aws_number" {
     nbu        = 1
     nps        = 0
     opscenter  = 0
-    oracle     = 1
+    oracle     = 0
     pki-crl    = 1
     pki-ica    = 0
     pki-rca    = 1
@@ -108,7 +108,7 @@ variable "aws_number" {
     symv       = 0
     wac        = 0
     wds        = 0
-    wsus       = 1
+    wsus       = 0
   }
 }
 
