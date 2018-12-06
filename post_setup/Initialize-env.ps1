@@ -25,9 +25,9 @@ Foreach ($adapter in $adapters) {
 $nicClass = Get-WmiObject -list Win32_NetworkAdapterConfiguration
 $nicClass.enableWins($false, $false)
 
-Set-SmbServerConfiguration `
-    -EnableSMB1Protocol $false `
-    -Confirm:$false
+# Set-SmbServerConfiguration `
+#     -EnableSMB1Protocol $false `
+#     -Confirm:$false
 
 Set-SmbServerConfiguration `
     -RequireSecuritySignature $true `
