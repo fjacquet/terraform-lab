@@ -2,7 +2,7 @@
 # download needed for this server
 mkdir C:\installers\
 # Install windows features
-add-windowsfeature -Name ADCS-Online-Cert -IncludeManagementTools
+# add-windowsfeature -Name ADCS-Online-Cert -IncludeManagementTools
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
 Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
