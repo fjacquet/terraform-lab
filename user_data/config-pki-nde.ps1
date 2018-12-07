@@ -3,7 +3,7 @@
 mkdir C:\installers\
 
 # Install windows features
-add-windowsfeature -Name ADCS-Device-Enrollment -IncludeManagementTools
+# add-windowsfeature -Name ADCS-Device-Enrollment -IncludeManagementTools
 
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'

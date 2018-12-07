@@ -3,7 +3,7 @@
 mkdir C:\installers\
 
 # Install windows features
-add-windowsfeature -Name Adcs-Cert-Authority -IncludeManagementTools
+# add-windowsfeature -Name Adcs-Cert-Authority -IncludeManagementTools
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
 Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853 
