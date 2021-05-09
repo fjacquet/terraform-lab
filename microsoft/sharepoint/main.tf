@@ -25,11 +25,11 @@ resource "aws_instance" "sharepoint" {
   instance_type        = "m5.xlarge"
   ipv6_address_count   = 1
   key_name             = var.aws_key_pair_auth_id
-  subnet_id            = var.aws_subnet_id
+  subnet_id            = element(var.aws_subnet_id, count.index)
   user_data            = file("user_data/config-sharepoint.ps1")
 
   # Our Security group to allow Sharepoint access
-  vpc_security_group_ids = var.aws_sg_ids
+  # vpc_security_group_ids = var.aws_sg_ids
 
   lifecycle {
     ignore_changes = [user_data]

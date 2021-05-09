@@ -19,7 +19,7 @@ resource "aws_instance" "simpana" {
   subnet_id            = element(var.aws_subnet_id, count.index)
   user_data            = file("user_data/config-simpana.ps1")
 
-  vpc_security_group_ids = var.aws_sg_ids
+  # vpc_security_group_ids = var.aws_sg_ids
 
   root_block_device {
     volume_size = 80
@@ -63,117 +63,117 @@ resource "aws_ebs_volume" "simpana_e" {
   type              = "st1"
 }
 
-resource "aws_security_group" "master" {
-  name        = "tf_evlab_simpana_master"
-  description = "Used in the terraform"
-  vpc_id      = var.aws_vpc_id
+# resource "aws_security_group" "master" {
+#   name        = "tf_evlab_simpana_master"
+#   description = "Used in the terraform"
+#   vpc_id      = var.aws_vpc_id
 
-  # HTTP access from anywhere
-  ingress {
-    from_port   = 3389
-    to_port     = 3389
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
+#   # HTTP access from anywhere
+#   ingress {
+#     from_port   = 3389
+#     to_port     = 3389
+#     protocol    = "tcp"
+#     cidr_blocks = ["10.0.0.0/16"]
+#   }
 
-  # netbios access from subnet
-  ingress {
-    from_port = 137
-    to_port   = 137
-    protocol  = "tcp"
-    # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
-    # force an interpolation expression to be interpreted as a list by wrapping it
-    # in an extra set of list brackets. That form was supported for compatibility in
-    # v0.11, but is no longer supported in Terraform v0.12.
-    #
-    # If the expression in the following list itself returns a list, remove the
-    # brackets to avoid interpretation as a list of lists. If the expression
-    # returns a single list item then leave it as-is and remove this TODO comment.
-    cidr_blocks = [element(var.cidr, count.index)]
-  }
+#   # netbios access from subnet
+#   ingress {
+#     from_port = 137
+#     to_port   = 137
+#     protocol  = "tcp"
+#     # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+#     # force an interpolation expression to be interpreted as a list by wrapping it
+#     # in an extra set of list brackets. That form was supported for compatibility in
+#     # v0.11, but is no longer supported in Terraform v0.12.
+#     #
+#     # If the expression in the following list itself returns a list, remove the
+#     # brackets to avoid interpretation as a list of lists. If the expression
+#     # returns a single list item then leave it as-is and remove this TODO comment.
+#     cidr_blocks = [element(var.cidr, count.index)]
+#   }
 
-  # Simpana access from subnet
-  ingress {
-    from_port       = 8400
-    to_port         = 8403
-    protocol        = "tcp"
-    security_groups = [aws_security_group.client.id]
-  }
+#   # Simpana access from subnet
+#   ingress {
+#     from_port       = 8400
+#     to_port         = 8403
+#     protocol        = "tcp"
+#     security_groups = [aws_security_group.client.id]
+#   }
 
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#   # outbound internet access
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
+#   egress {
+#     from_port        = 0
+#     to_port          = 0
+#     protocol         = "-1"
+#     ipv6_cidr_blocks = ["::/0"]
+#   }
+# }
 
-resource "aws_security_group" "client" {
-  name        = "tf_evlab_simpanaclient"
-  description = "Used in the terraform"
-  vpc_id      = var.aws_vpc_id
+# resource "aws_security_group" "client" {
+#   name        = "tf_evlab_simpanaclient"
+#   description = "Used in the terraform"
+#   vpc_id      = var.aws_vpc_id
 
-  # HTTP access from anywhere
-  ingress {
-    from_port   = 3389
-    to_port     = 3389
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
+#   # HTTP access from anywhere
+#   ingress {
+#     from_port   = 3389
+#     to_port     = 3389
+#     protocol    = "tcp"
+#     cidr_blocks = ["10.0.0.0/16"]
+#   }
 
-  # netbios access from subnet
-  ingress {
-    from_port = 137
-    to_port   = 137
-    protocol  = "tcp"
-    # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
-    # force an interpolation expression to be interpreted as a list by wrapping it
-    # in an extra set of list brackets. That form was supported for compatibility in
-    # v0.11, but is no longer supported in Terraform v0.12.
-    #
-    # If the expression in the following list itself returns a list, remove the
-    # brackets to avoid interpretation as a list of lists. If the expression
-    # returns a single list item then leave it as-is and remove this TODO comment.
-    cidr_blocks = [element(var.cidr, count.index)]
-  }
+#   # netbios access from subnet
+#   ingress {
+#     from_port = 137
+#     to_port   = 137
+#     protocol  = "tcp"
+#     # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+#     # force an interpolation expression to be interpreted as a list by wrapping it
+#     # in an extra set of list brackets. That form was supported for compatibility in
+#     # v0.11, but is no longer supported in Terraform v0.12.
+#     #
+#     # If the expression in the following list itself returns a list, remove the
+#     # brackets to avoid interpretation as a list of lists. If the expression
+#     # returns a single list item then leave it as-is and remove this TODO comment.
+#     cidr_blocks = [element(var.cidr, count.index)]
+#   }
 
-  # Simpana access from subnet
-  ingress {
-    from_port = 8400
-    to_port   = 8403
-    protocol  = "tcp"
-    # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
-    # force an interpolation expression to be interpreted as a list by wrapping it
-    # in an extra set of list brackets. That form was supported for compatibility in
-    # v0.11, but is no longer supported in Terraform v0.12.
-    #
-    # If the expression in the following list itself returns a list, remove the
-    # brackets to avoid interpretation as a list of lists. If the expression
-    # returns a single list item then leave it as-is and remove this TODO comment.
-    cidr_blocks = [element(var.cidr, count.index)]
-  }
+#   # Simpana access from subnet
+#   ingress {
+#     from_port = 8400
+#     to_port   = 8403
+#     protocol  = "tcp"
+#     # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+#     # force an interpolation expression to be interpreted as a list by wrapping it
+#     # in an extra set of list brackets. That form was supported for compatibility in
+#     # v0.11, but is no longer supported in Terraform v0.12.
+#     #
+#     # If the expression in the following list itself returns a list, remove the
+#     # brackets to avoid interpretation as a list of lists. If the expression
+#     # returns a single list item then leave it as-is and remove this TODO comment.
+#     cidr_blocks = [element(var.cidr, count.index)]
+#   }
 
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#   # outbound internet access
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
+#   egress {
+#     from_port        = 0
+#     to_port          = 0
+#     protocol         = "-1"
+#     ipv6_cidr_blocks = ["::/0"]
+#   }
+# }
 

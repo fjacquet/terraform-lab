@@ -4,6 +4,5 @@ resource "aws_route53_zone" "evlab" {
 
   tags = {
     Environment = "lab"
-    //     Name        = "DNS Zone"
   }
 }

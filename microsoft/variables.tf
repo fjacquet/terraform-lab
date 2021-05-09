@@ -7,8 +7,8 @@ variable "aws_key_pair_auth_id" {
 variable "aws_region" {
 }
 
-variable "aws_sg_nbuclient_id" {
-}
+# variable "aws_sg_nbuclient_id" {
+# }
 
 variable "dns_zone_id" {
 }

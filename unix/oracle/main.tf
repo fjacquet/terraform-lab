@@ -17,17 +17,17 @@ resource "aws_route53_record" "oracle" {
 # }
 
 resource "aws_instance" "oracle" {
-  instance_type          = "m5.xlarge"
-  ipv6_address_count     = 1
-  count                  = var.aws_number
-  availability_zone      = element(var.azs, count.index)
-  iam_instance_profile   = var.aws_iip_assumerole_name
-  ami                    = var.aws_ami
-  key_name               = var.aws_key_pair_auth_id
-  ebs_optimized          = "true"
-  subnet_id              = element(var.aws_subnet_id, count.index)
-  user_data              = file("user_data/config-ora18.sh")
-  vpc_security_group_ids = var.aws_sg_ids
+  instance_type        = "m5.xlarge"
+  ipv6_address_count   = 1
+  count                = var.aws_number
+  availability_zone    = element(var.azs, count.index)
+  iam_instance_profile = var.aws_iip_assumerole_name
+  ami                  = var.aws_ami
+  key_name             = var.aws_key_pair_auth_id
+  ebs_optimized        = "true"
+  subnet_id            = element(var.aws_subnet_id, count.index)
+  user_data            = file("user_data/config-ora18.sh")
+  # vpc_security_group_ids = var.aws_sg_ids
 
   lifecycle {
     ignore_changes = [user_data]

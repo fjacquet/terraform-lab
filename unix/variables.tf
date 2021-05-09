@@ -14,8 +14,8 @@ variable "aws_number" {
   type = map(string)
 }
 
-variable "aws_sg_simpanaclient_id" {
-}
+# variable "aws_sg_simpanaclient_id" {
+# }
 
 variable "aws_disks_size" {
   type = map(string)
