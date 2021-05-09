@@ -1,66 +1,64 @@
 resource "aws_route53_record" "simpana" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
+  count   = var.aws_number
+  zone_id = var.dns_zone_id
   name    = "simpana-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
-  records = ["${element(aws_instance.simpana.*.private_ip, count.index)}"]
+  records = [element(aws_instance.simpana.*.private_ip, count.index)]
 }
 
 resource "aws_instance" "simpana" {
-  ami                  = "${var.aws_ami}"
-  availability_zone    = "${element(var.azs, count.index)}"
-  count                = "${var.aws_number}"
+  ami                  = var.aws_ami
+  availability_zone    = element(var.azs, count.index)
+  count                = var.aws_number
   ebs_optimized        = "true"
-  iam_instance_profile = "${var.aws_iip_assumerole_name}"
+  iam_instance_profile = var.aws_iip_assumerole_name
   instance_type        = "m5.xlarge"
   ipv6_address_count   = 1
-  key_name             = "${var.aws_key_pair_auth_id}"
-  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  user_data            = "${file("user_data/config-simpana.ps1")}"
+  key_name             = var.aws_key_pair_auth_id
+  subnet_id            = element(var.aws_subnet_id, count.index)
+  user_data            = file("user_data/config-simpana.ps1")
 
-  vpc_security_group_ids = [
-    "${var.aws_sg_ids}",
-  ]
+  vpc_security_group_ids = var.aws_sg_ids
 
-  root_block_device = {
+  root_block_device {
     volume_size = 80
   }
 
-  tags {
+  tags = {
     Name        = "simpana-${count.index}"
     Environment = "lab"
   }
 
   lifecycle {
-    ignore_changes = ["user_data"]
+    ignore_changes = [user_data]
   }
 }
 
 resource "aws_volume_attachment" "ebs_simpana_d" {
   device_name = "/dev/xvdb"
-  count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.simpana_d.*.id, count.index)}"
-  instance_id = "${element(aws_instance.simpana.*.id, count.index)}"
+  count       = var.aws_number
+  volume_id   = element(aws_ebs_volume.simpana_d.*.id, count.index)
+  instance_id = element(aws_instance.simpana.*.id, count.index)
 }
 
 resource "aws_ebs_volume" "simpana_d" {
-  count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
+  count             = var.aws_number
+  availability_zone = element(var.azs, count.index)
   size              = 100
   type              = "gp2"
 }
 
 resource "aws_volume_attachment" "ebs_simpana_e" {
   device_name = "/dev/xvdc"
-  count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.simpana_e.*.id, count.index)}"
-  instance_id = "${element(aws_instance.simpana.*.id, count.index)}"
+  count       = var.aws_number
+  volume_id   = element(aws_ebs_volume.simpana_e.*.id, count.index)
+  instance_id = element(aws_instance.simpana.*.id, count.index)
 }
 
 resource "aws_ebs_volume" "simpana_e" {
-  count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
+  count             = var.aws_number
+  availability_zone = element(var.azs, count.index)
   size              = 500
   type              = "st1"
 }
@@ -68,7 +66,7 @@ resource "aws_ebs_volume" "simpana_e" {
 resource "aws_security_group" "master" {
   name        = "tf_evlab_simpana_master"
   description = "Used in the terraform"
-  vpc_id      = "${var.aws_vpc_id}"
+  vpc_id      = var.aws_vpc_id
 
   # HTTP access from anywhere
   ingress {
@@ -80,10 +78,18 @@ resource "aws_security_group" "master" {
 
   # netbios access from subnet
   ingress {
-    from_port   = 137
-    to_port     = 137
-    protocol    = "tcp"
-    cidr_blocks = ["${element(var.cidr, count.index)}"]
+    from_port = 137
+    to_port   = 137
+    protocol  = "tcp"
+    # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+    # force an interpolation expression to be interpreted as a list by wrapping it
+    # in an extra set of list brackets. That form was supported for compatibility in
+    # v0.11, but is no longer supported in Terraform v0.12.
+    #
+    # If the expression in the following list itself returns a list, remove the
+    # brackets to avoid interpretation as a list of lists. If the expression
+    # returns a single list item then leave it as-is and remove this TODO comment.
+    cidr_blocks = [element(var.cidr, count.index)]
   }
 
   # Simpana access from subnet
@@ -91,7 +97,7 @@ resource "aws_security_group" "master" {
     from_port       = 8400
     to_port         = 8403
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.client.id}"]
+    security_groups = [aws_security_group.client.id]
   }
 
   # outbound internet access
@@ -113,7 +119,7 @@ resource "aws_security_group" "master" {
 resource "aws_security_group" "client" {
   name        = "tf_evlab_simpanaclient"
   description = "Used in the terraform"
-  vpc_id      = "${var.aws_vpc_id}"
+  vpc_id      = var.aws_vpc_id
 
   # HTTP access from anywhere
   ingress {
@@ -125,18 +131,34 @@ resource "aws_security_group" "client" {
 
   # netbios access from subnet
   ingress {
-    from_port   = 137
-    to_port     = 137
-    protocol    = "tcp"
-    cidr_blocks = ["${element(var.cidr, count.index)}"]
+    from_port = 137
+    to_port   = 137
+    protocol  = "tcp"
+    # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+    # force an interpolation expression to be interpreted as a list by wrapping it
+    # in an extra set of list brackets. That form was supported for compatibility in
+    # v0.11, but is no longer supported in Terraform v0.12.
+    #
+    # If the expression in the following list itself returns a list, remove the
+    # brackets to avoid interpretation as a list of lists. If the expression
+    # returns a single list item then leave it as-is and remove this TODO comment.
+    cidr_blocks = [element(var.cidr, count.index)]
   }
 
   # Simpana access from subnet
   ingress {
-    from_port   = 8400
-    to_port     = 8403
-    protocol    = "tcp"
-    cidr_blocks = ["${element(var.cidr, count.index)}"]
+    from_port = 8400
+    to_port   = 8403
+    protocol  = "tcp"
+    # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+    # force an interpolation expression to be interpreted as a list by wrapping it
+    # in an extra set of list brackets. That form was supported for compatibility in
+    # v0.11, but is no longer supported in Terraform v0.12.
+    #
+    # If the expression in the following list itself returns a list, remove the
+    # brackets to avoid interpretation as a list of lists. If the expression
+    # returns a single list item then leave it as-is and remove this TODO comment.
+    cidr_blocks = [element(var.cidr, count.index)]
   }
 
   # outbound internet access
@@ -154,3 +176,4 @@ resource "aws_security_group" "client" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
+

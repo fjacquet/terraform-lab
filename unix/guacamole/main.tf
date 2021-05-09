@@ -1,32 +1,32 @@
 resource "aws_instance" "guacamole" {
   instance_type          = "t3.medium"
-  count                  = "${var.aws_number}"
-  subnet_id              = "${element(var.aws_subnet_id, count.index)}"
-  user_data              = "${file("user_data/config-guacamole.sh")}"
-  iam_instance_profile   = "${var.aws_iip_assumerole_name}"
-  ami                    = "${var.aws_ami}"
+  count                  = var.aws_number
+  subnet_id              = element(var.aws_subnet_id, count.index)
+  user_data              = file("user_data/config-guacamole.sh")
+  iam_instance_profile   = var.aws_iip_assumerole_name
+  ami                    = var.aws_ami
   ipv6_address_count     = 1
-  key_name               = "${var.aws_key_pair_auth_id}"
-  vpc_security_group_ids = ["${var.aws_sg_ids}"]
+  key_name               = var.aws_key_pair_auth_id
+  vpc_security_group_ids = var.aws_sg_ids
 
-  root_block_device = {
+  root_block_device {
     volume_size = 80
   }
 
-  tags {
+  tags = {
     Name        = "guacamole-${count.index}"
     Environment = "lab"
   }
 
   lifecycle {
-    ignore_changes = ["user_data"]
+    ignore_changes = [user_data]
   }
 }
 
 resource "aws_security_group" "guacamole" {
   name        = "tf_evlab_guacamole"
   description = "Used in the terraform"
-  vpc_id      = "${var.aws_vpc_id}"
+  vpc_id      = var.aws_vpc_id
 
   # novnc
   ingress {
@@ -61,12 +61,12 @@ resource "aws_security_group" "guacamole" {
 }
 
 resource "aws_route53_record" "guacamole" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
+  count   = var.aws_number
+  zone_id = var.dns_zone_id
   name    = "guacamole-${count.index}.{var.dns_suffix}"
   type    = "A"
   ttl     = "300"
-  records = ["${element(aws_instance.guacamole.*.private_ip, count.index)}"]
+  records = [element(aws_instance.guacamole.*.private_ip, count.index)]
 }
 
 # resource "aws_route53_record" "guacamole-v6" {
@@ -77,4 +77,3 @@ resource "aws_route53_record" "guacamole" {
 #   ttl     = "300"
 #   records = ["${aws_instance.guacamole.*.ipv6_addresses}"]
 # }
-

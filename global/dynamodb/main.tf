@@ -9,8 +9,9 @@ resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
     type = "S"
   }
 
-  tags {
+  tags = {
     Name        = "DynamoDB Terraform State Lock Table"
     Environment = "lab"
   }
 }
+

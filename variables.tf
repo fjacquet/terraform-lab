@@ -15,7 +15,7 @@ variable "dns_suffix" {
 
 variable "azs" {
   description = "AWS availability zone to launch servers."
-  type        = "list"
+  // type        = list(string)
 
   default = [
     "eu-west-1a",
@@ -26,12 +26,12 @@ variable "azs" {
 
 # Region
 variable "aws_region" {
-  type    = "string"
+  // type    = string
   default = "eu-west-1"
 }
 
 variable "aws_disks_size" {
-  type = "map"
+  // type = map(string)
 
   default = {
     nbu_backups = 500
@@ -48,86 +48,86 @@ variable "secret_key" {
 }
 
 variable "cidrbyte" {
-  type = "map"
+  type = map(string)
 
   default = {
-    back1.eu-west-1     = "51"
-    back2.eu-west-1     = "52"
-    back3.eu-west-1     = "53"
-    backup1.eu-west-1   = "41"
-    backup2.eu-west-1   = "42"
-    backup3.eu-west-1   = "43"
-    exchange1.eu-west-1 = "31"
-    exchange2.eu-west-1 = "32"
-    exchange3.eu-west-1 = "33"
-    gw1.eu-west-1       = "101"
-    gw2.eu-west-1       = "102"
-    gw3.eu-west-1       = "103"
-    mgmt1.eu-west-1     = "11"
-    mgmt2.eu-west-1     = "12"
-    mgmt3.eu-west-1     = "13"
-    sql1.eu-west-1      = "61"
-    sql2.eu-west-1      = "62"
-    sql3.eu-west-1      = "63"
-    vpc.eu-west-1       = "0"
-    web1.eu-west-1      = "1"
-    web2.eu-west-1      = "2"
-    web3.eu-west-1      = "3"
+    "back1.eu-west-1"     = 51
+    "back2.eu-west-1"     = 52
+    "back3.eu-west-1"     = 53
+    "backup1.eu-west-1"   = 41
+    "backup2.eu-west-1"   = 42
+    "backup3.eu-west-1"   = 43
+    "exchange1.eu-west-1" = 31
+    "exchange2.eu-west-1" = 32
+    "exchange3.eu-west-1" = 33
+    "gw1.eu-west-1"       = 101
+    "gw2.eu-west-1"       = 102
+    "gw3.eu-west-1"       = 103
+    "mgmt1.eu-west-1"     = 11
+    "mgmt2.eu-west-1"     = 12
+    "mgmt3.eu-west-1"     = 13
+    "sql1.eu-west-1"      = 61
+    "sql2.eu-west-1"      = 62
+    "sql3.eu-west-1"      = 63
+    "vpc.eu-west-1"       = 0
+    "web1.eu-west-1"      = 1
+    "web2.eu-west-1"      = 2
+    "web3.eu-west-1"      = 3
   }
 }
 
 variable "aws_number" {
-  type = "map"
+  type = map(string)
 
   default = {
-    adfs       = 0
-    bsd        = 0
-    da         = 0
-    dc         = 2
-    dhcp       = 0
-    exchange   = 0
-    fs         = 0
-    glpi       = 0
-    guacamole  = 0
-    ipam       = 0
-    jumpbox    = 1
-    nbu        = 0
-    nps        = 0
-    opscenter  = 0
-    oracle     = 0
-    pki-crl    = 0
-    pki-ica    = 1
-    pki-rca    = 1
-    pki-ndes   = 0
-    rdsh       = 0
-    redis      = 0
-    sharepoint = 0
-    simpana    = 0
-    sql        = 0
-    sofs       = 0
-    symv       = 0
-    wac        = 0
-    wds        = 0
-    wsus       = 0
+    "adfs"       = 0
+    "bsd"        = 0
+    "da"         = 0
+    "dc"         = 1
+    "dhcp"       = 0
+    "exchange"   = 0
+    "fs"         = 0
+    "glpi"       = 0
+    "guacamole"  = 0
+    "ipam"       = 0
+    "jumpbox"    = 1
+    "nbu"        = 0
+    "nps"        = 0
+    "opscenter"  = 0
+    "oracle"     = 0
+    "pki-crl"    = 1
+    "pki-ica"    = 1
+    "pki-rca"    = 1
+    "pki-ndes"   = 1
+    "rdsh"       = 0
+    "redis"      = 0
+    "sharepoint" = 0
+    "simpana"    = 0
+    "sql"        = 0
+    "sofs"       = 0
+    "symv"       = 0
+    "wac"        = 0
+    "wds"        = 0
+    "wsus"       = 0
   }
 }
 
 variable "aws_amis" {
-  type = "map"
+  type = map(string)
 
   default = {
-    bsd        = "ami-048e0d77"
-    glpi       = "ami-0c21ae4a3bd190229"
-    guacamole  = "ami-0c21ae4a3bd190229"
-    jumpbox    = "ami-088f9db67b4afec52"
-    lnx        = "ami-7c491f05"
-    nbu        = "ami-7c491f05"
-    oracle     = "ami-7c491f05"
-    redis      = "ami-7c491f05"
-    sharepoint = "ami-056d4676"
-    sql        = "ami-05b9370efd1cefcf4"
-    win2012r2  = "ami-04191f05759452cfa"
-    win2016    = "ami-088f9db67b4afec52"
-    wsus       = "ami-088f9db67b4afec52"
+    "bsd"        = "ami-048e0d77"
+    "glpi"       = "ami-0c21ae4a3bd190229"
+    "guacamole"  = "ami-0c21ae4a3bd190229"
+    "jumpbox"    = "ami-088f9db67b4afec52"
+    "lnx"        = "ami-7c491f05"
+    "nbu"        = "ami-7c491f05"
+    "oracle"     = "ami-7c491f05"
+    "redis"      = "ami-7c491f05"
+    "sharepoint" = "ami-056d4676"
+    "sql"        = "ami-05b9370efd1cefcf4"
+    "win2012r2"  = "ami-04191f05759452cfa"
+    "win2016"    = "ami-088f9db67b4afec52"
+    "wsus"       = "ami-088f9db67b4afec52"
   }
 }

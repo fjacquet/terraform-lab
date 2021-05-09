@@ -1,32 +1,32 @@
 resource "aws_instance" "glpi" {
   instance_type          = "t3.medium"
-  count                  = "${var.aws_number}"
-  subnet_id              = "${element(var.aws_subnet_id, count.index)}"
-  user_data              = "${file("user_data/config-glpi.sh")}"
-  iam_instance_profile   = "${var.aws_iip_assumerole_name}"
-  ami                    = "${var.aws_ami}"
+  count                  = var.aws_number
+  subnet_id              = element(var.aws_subnet_id, count.index)
+  user_data              = file("user_data/config-glpi.sh")
+  iam_instance_profile   = var.aws_iip_assumerole_name
+  ami                    = var.aws_ami
   ipv6_address_count     = 1
-  key_name               = "${var.aws_key_pair_auth_id}"
-  vpc_security_group_ids = ["${var.aws_sg_ids}", "${aws_security_group.glpi.id}"]
+  key_name               = var.aws_key_pair_auth_id
+  vpc_security_group_ids = [var.aws_sg_ids, aws_security_group.glpi.id]
 
-  root_block_device = {
+  root_block_device {
     volume_size = 80
   }
 
-  tags {
+  tags = {
     Name        = "glpi-${count.index}"
     Environment = "lab"
   }
 
   lifecycle {
-    ignore_changes = ["user_data"]
+    ignore_changes = [user_data]
   }
 }
 
 resource "aws_security_group" "glpi" {
   name        = "tf_evlab_glpi"
   description = "Used in the terraform"
-  vpc_id      = "${var.aws_vpc_id}"
+  vpc_id      = var.aws_vpc_id
 
   ingress {
     from_port   = 80
@@ -66,12 +66,12 @@ resource "aws_security_group" "glpi" {
 }
 
 resource "aws_route53_record" "glpi" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
+  count   = var.aws_number
+  zone_id = var.dns_zone_id
   name    = "glpi-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
-  records = ["${element(aws_instance.glpi.*.private_ip, count.index)}"]
+  records = [element(aws_instance.glpi.*.private_ip, count.index)]
 }
 
 # resource "aws_route53_record" "glpi-v6" {
@@ -82,4 +82,3 @@ resource "aws_route53_record" "glpi" {
 #   ttl     = "300"
 #   records = ["${aws_instance.glpi.*.ipv6_addresses}"]
 # }
-

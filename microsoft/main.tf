@@ -1,90 +1,90 @@
 module "adcs" {
   source                  = "./adcs"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number_pki-crl      = "${lookup(var.aws_number, "pki-crl")}"
-  aws_number_pki-ica      = "${lookup(var.aws_number, "pki-ica")}"
-  aws_number_pki-rca      = "${lookup(var.aws_number, "pki-rca")}"
-  aws_number_pki-ndes     = "${lookup(var.aws_number, "pki-ndes")}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
-  azs                     = "${var.azs}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number_pki-crl      = var.aws_number["pki-crl"]
+  aws_number_pki-ica      = var.aws_number["pki-ica"]
+  aws_number_pki-rca      = var.aws_number["pki-rca"]
+  aws_number_pki-ndes     = var.aws_number["pki-ndes"]
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
+  azs                     = var.azs
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.adcs.aws_sg_pki-crl_id}",
-    "${module.adcs.aws_sg_pki-ica_id}",
-    "${module.adcs.aws_sg_pki-rca_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.adcs.aws_sg_pki-crl_id,
+    module.adcs.aws_sg_pki-ica_id,
+    module.adcs.aws_sg_pki-rca_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "adds" {
   source                  = "./adds"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "dc")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["dc"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.adds.aws_sg_dc_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.adds.aws_sg_dc_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 
-  aws_sg_domain_member = "${aws_security_group.domain-member.id}"
+  aws_sg_domain_member = aws_security_group.domain-member.id
 }
 
 module "adfs" {
   source                  = "./adfs"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "adfs")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_web_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["adfs"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_web_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.adds.aws_sg_dc_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.adds.aws_sg_dc_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
@@ -94,277 +94,277 @@ module "adfs" {
 
 module "dhcp" {
   source                  = "./dhcp"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "dhcp")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["dhcp"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${module.dhcp.aws_sg_dhcp_id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    module.dhcp.aws_sg_dhcp_id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "da" {
   source                  = "./da"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "da")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["da"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_mgmt_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.da.aws_sg_da_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.da.aws_sg_da_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "exchange" {
   source                  = "./exchange"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "exchange")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_exchange_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["exchange"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_exchange_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exchange1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exchange2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "exchange3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["exchange1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["exchange2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["exchange3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.exchange.aws_sg_exchange_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.exchange.aws_sg_exchange_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "fs" {
   source                  = "./fs"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "fs")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["fs"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${module.fs.aws_sg_fs_id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    module.fs.aws_sg_fs_id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 
-  aws_sg_domain_members = "${aws_security_group.domain-member.id}"
+  aws_sg_domain_members = aws_security_group.domain-member.id
 }
 
 module "ipam" {
   source                  = "./ipam/"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "ipam")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["ipam"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.ipam.aws_sg_ipam_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.ipam.aws_sg_ipam_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "jumpbox" {
   source                  = "./jumpbox"
-  aws_ami                 = "${lookup(var.aws_amis , "jumpbox")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "jumpbox")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_mgmt_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["jumpbox"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["jumpbox"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_mgmt_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "nps" {
   source                  = "./nps"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "nps")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["nps"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.nps.aws_sg_nps_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.nps.aws_sg_nps_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "rdsh" {
   source                  = "./rdsh"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "rdsh")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
-  aws_sg_domain_members   = "${aws_security_group.domain-member.id}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["rdsh"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
+  aws_sg_domain_members   = aws_security_group.domain-member.id
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.rdsh.aws_sg_rdsh_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.rdsh.aws_sg_rdsh_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "sharepoint" {
   source                  = "./sharepoint"
-  aws_ami                 = "${lookup(var.aws_amis , "sharepoint")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "sharepoint")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_web_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["sharepoint"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["sharepoint"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_web_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "web3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.sharepoint.aws_sg_sharepoint_id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.sharepoint.aws_sg_sharepoint_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "sql" {
   source                  = "./sql"
-  aws_ami                 = "${lookup(var.aws_amis , "sql")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "sql")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["sql"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["sql"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "sql1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "sql2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "sql3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["sql1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["sql2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["sql3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${module.sql.aws_sg_sql_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
+    module.sql.aws_sg_sql_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
@@ -374,148 +374,148 @@ module "workfolders" {
 
 module "simpana" {
   source                  = "./simpana"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "simpana")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_backup_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["simpana"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_backup_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
   ]
 }
 
 module "sofs" {
   source                  = "./sofs"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "sofs")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["sofs"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "back3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${module.sofs.aws_sg_sofs_id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    module.sofs.aws_sg_sofs_id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 
-  aws_sg_domain_members = "${aws_security_group.domain-member.id}"
+  aws_sg_domain_members = aws_security_group.domain-member.id
 }
 
 module "wac" {
   source                  = "./wac"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "wac")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["wac"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${module.wac.aws_sg_wac_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
+    module.wac.aws_sg_wac_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "mgmt1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "mgmt2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "mgmt3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["mgmt1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["mgmt2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["mgmt3.${var.aws_region}"]),
   ]
 }
 
 module "wds" {
   source                  = "./wds"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "wds")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["wds"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${module.wds.aws_sg_wds_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
+    module.wds.aws_sg_wds_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup3.${var.aws_region}"]),
   ]
 }
 
 module "wsus" {
   source                  = "./wsus"
-  aws_ami                 = "${lookup(var.aws_amis , "win2016")}"
-  aws_iip_assumerole_name = "${var.aws_iip_assumerole_name}"
-  aws_key_pair_auth_id    = "${var.aws_key_pair_auth_id}"
-  aws_number              = "${lookup(var.aws_number, "wsus")}"
-  aws_region              = "${var.aws_region}"
-  aws_subnet_id           = "${var.aws_subnet_back_id}"
-  aws_vpc_id              = "${var.aws_vpc_id}"
-  azs                     = "${var.azs}"
-  dns_zone_id             = "${var.dns_zone_id}"
-  dns_suffix              = "${var.dns_suffix}"
+  aws_ami                 = var.aws_amis["win2016"]
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["wsus"]
+  aws_region              = var.aws_region
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
 
   aws_sg_ids = [
-    "${aws_security_group.rdp.id}",
-    "${aws_security_group.domain-member.id}",
-    "${module.simpana.aws_sg_client_id}",
-    "${module.wsus.aws_sg_wsus_id}",
-    "${var.aws_sg_nbuclient_id}",
+    aws_security_group.rdp.id,
+    aws_security_group.domain-member.id,
+    module.simpana.aws_sg_client_id,
+    module.wsus.aws_sg_wsus_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   cidr = [
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup1.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup2.${var.aws_region}"))}",
-    "${cidrsubnet(var.vpc_cidr,8,lookup(var.cidrbyte, "backup3.${var.aws_region}"))}",
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup1.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup2.${var.aws_region}"]),
+    cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup3.${var.aws_region}"]),
   ]
 }
 
 resource "aws_security_group" "rdp" {
   name        = "tf_evlab_rdp"
   description = "Used in the terraform"
-  vpc_id      = "${var.aws_vpc_id}"
+  vpc_id      = var.aws_vpc_id
 
   # HTTP access from anywhere
   ingress {
@@ -544,7 +544,7 @@ resource "aws_security_group" "rdp" {
 resource "aws_security_group" "domain-member" {
   name        = "tf_evlab_domain_member"
   description = "Allow Domain membteer traffic"
-  vpc_id      = "${var.aws_vpc_id}"
+  vpc_id      = var.aws_vpc_id
 
   # DNS (53/tcp and 53/udp)
   # Kerberos-Adm (UDP) (749/udp)
@@ -705,3 +705,4 @@ resource "aws_security_group" "domain-member" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
+

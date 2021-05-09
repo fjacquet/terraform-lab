@@ -1,12 +1,20 @@
-variable "access_key" {}
-variable "aws_region" {}
-variable "secret_key" {}
-variable "public_key" {}
+variable "access_key" {
+}
 
-variable "key_name" {}
+variable "aws_region" {
+}
+
+variable "secret_key" {
+}
+
+variable "public_key" {
+}
+
+variable "key_name" {
+}
 
 variable "azs" {
-  type = "list"
+  type = list(string)
 }
 
 # variable "cidr" {
@@ -14,9 +22,12 @@ variable "azs" {
 # }
 
 variable "cidrbyte" {
-  type = "map"
+  type = map(string)
 }
 
-variable "dhcpops" {}
+variable "dhcpops" {
+}
 
-variable "dns_suffix" {}
+variable "dns_suffix" {
+}
+

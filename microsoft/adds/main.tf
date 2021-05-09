@@ -1,10 +1,10 @@
 resource "aws_route53_record" "dc" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
+  count   = var.aws_number
+  zone_id = var.dns_zone_id
   name    = "dc-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
-  records = ["${element(aws_instance.dc.*.private_ip, count.index)}"]
+  records = [element(aws_instance.dc.*.private_ip, count.index)]
 }
 
 # resource "aws_route53_record" "dc-v6" {
@@ -17,35 +17,33 @@ resource "aws_route53_record" "dc" {
 # }
 
 resource "aws_instance" "dc" {
-  ami                  = "${var.aws_ami}"
-  availability_zone    = "${element(var.azs, count.index)}"
-  count                = "${var.aws_number}"
-  iam_instance_profile = "${var.aws_iip_assumerole_name}"
+  ami                  = var.aws_ami
+  availability_zone    = element(var.azs, count.index)
+  count                = var.aws_number
+  iam_instance_profile = var.aws_iip_assumerole_name
   instance_type        = "t3.medium"
   ipv6_address_count   = 1
-  key_name             = "${var.aws_key_pair_auth_id}"
-  subnet_id            = "${element(var.aws_subnet_id, count.index)}"
-  user_data            = "${file("user_data/config-dc.ps1")}"
+  key_name             = var.aws_key_pair_auth_id
+  subnet_id            = element(var.aws_subnet_id, count.index)
+  user_data            = file("user_data/config-dc.ps1")
 
-  tags {
+  tags = {
     Name        = "dc-${count.index}"
     Environment = "lab"
   }
 
   lifecycle {
-    ignore_changes = ["user_data"]
+    ignore_changes = [user_data]
   }
 
   # Our Security group to allow RDP access
-  vpc_security_group_ids = [
-    "${var.aws_sg_ids}",
-  ]
+  vpc_security_group_ids = var.aws_sg_ids
 }
 
 resource "aws_security_group" "dc" {
   name        = "tf_evlab_dc"
   description = "Used in the terraform"
-  vpc_id      = "${var.aws_vpc_id}"
+  vpc_id      = var.aws_vpc_id
 
   # DNS (53/tcp and 53/udp)
   # Kerberos-Sec (TCP) (88/tcp)
@@ -111,7 +109,7 @@ resource "aws_security_group" "dc" {
     from_port       = 464
     to_port         = 464
     protocol        = "tcp"
-    security_groups = ["${var.aws_sg_domain_member}"]
+    security_groups = [var.aws_sg_domain_member]
   }
   ingress {
     description = "LDAP GC"
@@ -183,6 +181,7 @@ resource "aws_security_group" "dc" {
     protocol    = "tcp"
     self        = true
   }
+
   # outbound internet access
   egress {
     from_port   = 0
@@ -197,3 +196,4 @@ resource "aws_security_group" "dc" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
+

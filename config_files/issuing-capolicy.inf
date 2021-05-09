@@ -8,5 +8,5 @@ URL=http://crl.evlab.ch/pki/cps.html
 [Certsrv_Server]
 RenewalKeyLength=4096
 RenewalValidityPeriod=Years
-RenewalValidityPeriodUnits=10
-LoadDefaultTemplates=0 
+RenewalValidityPeriodUnits=2
+LoadDefaultTemplates=0

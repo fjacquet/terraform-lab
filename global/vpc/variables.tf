@@ -1,43 +1,46 @@
 variable "azs" {
-  type = "list"
+  type = list(string)
 }
 
 # variable "cidr" {
 #   type = "map"
 # }
 
-variable "dhcpops" {}
-
-variable "cidrbyte" {
-  type = "map"
+variable "dhcpops" {
 }
 
-variable "aws_region" {}
+variable "cidrbyte" {
+  type = map(string)
+}
+
+variable "aws_region" {
+}
 
 variable "cidrbyte_back" {
-  type = "list"
+  type = list(string)
 }
 
 variable "cidrbyte_backup" {
-  type = "list"
+  type = list(string)
 }
 
 variable "cidrbyte_exchange" {
-  type = "list"
+  type = list(string)
 }
 
 variable "cidrbyte_mgmt" {
-  type = "list"
+  type = list(string)
 }
 
 variable "cidrbyte_sql" {
-  type = "list"
+  type = list(string)
 }
 
 variable "cidrbyte_web" {
-  type = "list"
+  type = list(string)
 }
 
 variable "cidrbyte_gw" {
-  type = "list"
+  type = list(string)
 }
+

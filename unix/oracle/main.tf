@@ -1,10 +1,10 @@
 resource "aws_route53_record" "oracle" {
-  count   = "${var.aws_number}"
-  zone_id = "${var.dns_zone_id}"
+  count   = var.aws_number
+  zone_id = var.dns_zone_id
   name    = "oracle-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
-  records = ["${element(aws_instance.oracle.*.private_ip, count.index)}"]
+  records = [element(aws_instance.oracle.*.private_ip, count.index)]
 }
 
 # resource "aws_route53_record" "oracle-v6" {
@@ -19,25 +19,25 @@ resource "aws_route53_record" "oracle" {
 resource "aws_instance" "oracle" {
   instance_type          = "m5.xlarge"
   ipv6_address_count     = 1
-  count                  = "${var.aws_number}"
-  availability_zone      = "${element(var.azs, count.index)}"
-  iam_instance_profile   = "${var.aws_iip_assumerole_name}"
-  ami                    = "${var.aws_ami}"
-  key_name               = "${var.aws_key_pair_auth_id}"
+  count                  = var.aws_number
+  availability_zone      = element(var.azs, count.index)
+  iam_instance_profile   = var.aws_iip_assumerole_name
+  ami                    = var.aws_ami
+  key_name               = var.aws_key_pair_auth_id
   ebs_optimized          = "true"
-  subnet_id              = "${element(var.aws_subnet_id, count.index)}"
-  user_data              = "${file("user_data/config-ora18.sh")}"
-  vpc_security_group_ids = ["${var.aws_sg_ids}"]
+  subnet_id              = element(var.aws_subnet_id, count.index)
+  user_data              = file("user_data/config-ora18.sh")
+  vpc_security_group_ids = var.aws_sg_ids
 
   lifecycle {
-    ignore_changes = ["user_data"]
+    ignore_changes = [user_data]
   }
 
-  root_block_device = {
+  root_block_device {
     volume_size = 80
   }
 
-  tags {
+  tags = {
     Name        = "oracle-${count.index}"
     Environment = "lab"
   }
@@ -45,22 +45,22 @@ resource "aws_instance" "oracle" {
 
 resource "aws_volume_attachment" "ebs_u01" {
   device_name = "/dev/xvdb"
-  count       = "${var.aws_number}"
-  volume_id   = "${element(aws_ebs_volume.oracle_u01.*.id, count.index)}"
-  instance_id = "${element(aws_instance.oracle.*.id, count.index)}"
+  count       = var.aws_number
+  volume_id   = element(aws_ebs_volume.oracle_u01.*.id, count.index)
+  instance_id = element(aws_instance.oracle.*.id, count.index)
 }
 
 resource "aws_ebs_volume" "oracle_u01" {
-  count             = "${var.aws_number}"
-  availability_zone = "${element(var.azs, count.index)}"
+  count             = var.aws_number
+  availability_zone = element(var.azs, count.index)
   type              = "gp2"
-  size              = "${var.aws_size_oracle_u01}"
+  size              = var.aws_size_oracle_u01
 }
 
 resource "aws_security_group" "oracle" {
   name        = "tf_evlab_oracle"
   description = "Used in the terraform"
-  vpc_id      = "${var.aws_vpc_id}"
+  vpc_id      = var.aws_vpc_id
 
   # listener for clients
   ingress {
@@ -99,3 +99,4 @@ resource "aws_security_group" "oracle" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
+
