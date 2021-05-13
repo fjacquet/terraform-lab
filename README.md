@@ -2,32 +2,36 @@
 
 We all need to create a set of VM to perform some labs. Thanks to terraform, it can be very simple to automate.
 
-Some variable are still hard coded to simplify writing. Maybe will go in parameter later
+Some variables are still hardcoded to simplify writing. Maybe it will go in parameter later
 
 ## Github
 
 You should already know my github if you read this
 
-## SSH 
+## SonarCloud status
 
-An ssh key must be setup, public key should in variable public_key
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fjacquet_terraform-lab&metric=alert_status)](https://sonarcloud.io/dashboard?id=fjacquet_terraform-lab)
 
-## AWS
+## SSH
 
-A valid account must exist for terraform
+An ssh key must be set up, the public key should be declared in variable public_key
 
-## EC2 
+## AWS
 
-Normally I use t3.medium except if application needs more
+A valid account must exist for terraform usage
+
+## EC2
+
+Normally I use t3.medium except if the application needs more
 
 ## S3
 
-I use a S3 repository named installers-fja, private, remember to replace name in case of.
+I use an S3 repository named installers-fja, private. Remember to replace the name in your case.
 
 ## Secrets management
 
 We use AWS secrets manager to avoid password in scripts.
-Need to create some aws secrets : 
+Need to create some aws secrets :
 
 * evlab/ad/joinuser
 * evlab/ad/fjacquet
