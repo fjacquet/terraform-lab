@@ -17,7 +17,6 @@ Set-SmbServerConfiguration -ServerHidden $true `
     -AnnounceServer $false `
     -Confirm:$false
 
-
 Restart-Service -Name lanmanserver -Force:$true
 
 import-module -name DFSN
@@ -26,7 +25,6 @@ Import-Module -Name ActiveDirectory
 
 $ad = get-addomain          
 $Domain = $ad.DNSRoot  
-
 
 mkdir D:\samples
 New-SmbShare `
@@ -50,8 +48,6 @@ Grant-SmbShareAccess -Name samples -AccessRight Full `
 Grant-SmbShareAccess -Name samples -AccessRight Full `
     -AccountName 'CREATOR OWNER' `
     -Confirm:$false | Out-Null
-
-
 
 New-DfsnRoot -Path \\$($domain)\samples `
     -TargetPath \\$($env:computername).$($Domain)\samples `

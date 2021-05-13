@@ -9,10 +9,11 @@ Set-ExecutionPolicy Bypass -Scope Process -Force  #DevSkim: ignore DS113853
 $scripts = (
     'Disable-av', 
     'Disable-ieesc',
-    'Initialize-env',
+    'Initialize-env',    
+    'Initialize-winrm',  
     'Install-nbugrt',
     'Install-chocolateys', 
-    'Install-mslaps', 
+    'Install-mslaps',
     'Install-features', 
     'Install-fusioninventory',
     'Join-domain-member',

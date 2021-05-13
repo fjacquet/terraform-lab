@@ -1,12 +1,12 @@
 # terraform-lab
 
-We all need to create a set of VM to perform some labs. Thanks to terraform, it can be very simple to automate.
+We all need to create a set of VM to perform some labs. Thanks to terraforming, it can be very simple to automate.
 
 Some variables are still hardcoded to simplify writing. Maybe it will go in parameter later
 
 ## Github
 
-You should already know my github if you read this
+You should already know my Github if you read this
 
 ## SonarCloud status
 
@@ -22,7 +22,7 @@ A valid account must exist for terraform usage
 
 ## EC2
 
-Normally I use t3.medium except if the application needs more
+Normally, I use t3.medium except if the application needs more
 
 ## S3
 

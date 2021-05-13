@@ -1,6 +1,7 @@
 plugin: aws_ec2
-aws_access_key: <YOUR-AWS-ACCESS-KEY-HERE>
-aws_secret_key: <YOUR-AWS-SECRET-KEY-HERE>
+# Take from environment
+# aws_access_key: <YOUR-AWS-ACCESS-KEY-HERE>
+# aws_secret_key: <YOUR-AWS-SECRET-KEY-HERE>
 regions:
   - us-west-2
 keyed_groups:

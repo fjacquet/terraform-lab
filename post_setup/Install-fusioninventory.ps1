@@ -6,9 +6,9 @@ $localfile = Join-Path -Path $install -ChildPath $file
 Write-Output 'Download'
 Invoke-WebRequest -Uri $url -OutFile $localfile  #DevSkim: ignore DS104456 
 Write-Output 'install'
-$glpi=Resolve-DnsName glpi-0.evlab.ch -Type A
+$glpi = Resolve-DnsName glpi-0.evlab.ch -Type A
 $server = '"http://' + $glpi.ipaddress + '/glpi/plugins/fusioninventory/"'
-$args = ('/acceptlicense',
+$arg = ('/acceptlicense',
     '/add-firewall-exception' ,
     '/execmode=Service',
     '/installtasks=Default',
@@ -18,5 +18,5 @@ $args = ('/acceptlicense',
     '/scan-homedirs' ,
     '/scan-profiles' ,
     "/server=$($server)")
-Start-Process -filepath $localfile -ArgumentList  $args
+Start-Process -filepath $localfile -ArgumentList  $arg
 

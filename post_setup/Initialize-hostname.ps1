@@ -5,5 +5,4 @@ $instanceName = ($instance.Tags | Where-Object { $_.Key -eq "Name" } | Select-Ob
 Write-Output "running $($instanceName)"
 Rename-Computer -NewName $instanceName -force -confirm:$false 
 Write-Output "rename done" 
-restart-computer `
-    -force
+restart-computer -force

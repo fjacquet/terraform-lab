@@ -1,5 +1,4 @@
-﻿
-Initialize-AWSDefaults
+﻿Initialize-AWSDefaults
 Import-Module -name ActiveDirectory
 
 $ad = get-addomain           
@@ -8,8 +7,6 @@ $secret = (Get-SECSecretValue -SecretId "evlab.ch/ad/fjacquet" -region eu-west-1
 $username = "fjacquet@$(domain)"
 $password = ConvertTo-SecureString -AsPlainText -Force $secret
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
-
-   
 
 $dhcp0 = Resolve-DnsName -Name "dhcp-0.$(domain)" -Type a
 $dhcp1 = Resolve-DnsName -Name "dhcp-1.$(domain)" -Type a
