@@ -5,7 +5,7 @@ Add-WindowsFeature -Name DSC-Service, GPMC, SNMP-Service, Bitlocker
 Write-Output 'Enable winrm'
 winrm qc -quiet
 Write-Output 'Enable remoting'
-Enable-PSRemoting –Force 
+Enable-PSRemoting –Force
 
 # WinRM service is already running on this machine.
 # WinRM is not set up to allow remote access to this machine for management.

@@ -1,6 +1,6 @@
 Initialize-AWSDefaults
 $domain = "evlab.ch"
-$secret = (Get-SECSecretValue -SecretId "$($domain)/ad/joinuser").SecretString 
+$secret = (Get-SECSecretValue -SecretId "$($domain)/ad/joinuser").SecretString
 $username = "joinuser"
 $password = $secret | ConvertTo-SecureString -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password

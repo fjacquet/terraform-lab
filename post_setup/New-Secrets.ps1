@@ -1,7 +1,7 @@
 Import-module -name AWSPowerShell
 
 # Initialize-AWSDefaults
-$region = 'eu-west-1' 
+$region = 'eu-west-1'
 # Create secrets for the lab
 
 $secrets = (

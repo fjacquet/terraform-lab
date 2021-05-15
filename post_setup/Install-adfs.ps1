@@ -5,7 +5,7 @@ $s3bucket = "installers-fja"
 $domainName = "{{ windows_domain_info['dns_domain_name'] }}"
 $password = "{{ windows_domain_info['domain_admin_password'] }}"
 $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
-$fqdn = [System.Net.Dns]::GetHostByName(($env:computerName)) | format-list HostName | Out-String | %{ "{0}" -f $_.Split(':')[1].Trim() };
+$fqdn = [System.Net.Dns]::GetHostByName(($env:computerName)) | format-list HostName | Out-String | ForEach-Object { "{0}" -f $_.Split(':')[1].Trim() };
 $filename = "C:\$fdqn.pfx"
 $user = "{{ windows_domain_info['dns_domain_name'] }}\{{ windows_domain_info['domain_admin_user'] }}"
 $credential = New-Object `
@@ -22,13 +22,13 @@ Write-Host "Importing PSPKI into current environment"
 Import-Module -Name PSPKI
 
 Write-Host "Generating Certificate"
-Get-Certificate
-    -Url "https://afds-0.evlab.ch"
-    -Template "SSL"
-    -SubjectName <String>]
-    -DnsName "afds-0.evlab.ch"
-    -Credential <PkiCredential>
-    -CertStoreLocation <String>
+Get-Certificate `
+    -Url "https://afds-0.evlab.ch" `
+    -Template "SSL" `
+    -SubjectName <String>] `
+    -DnsName "afds-0.evlab.ch" `
+    -Credential <PkiCredential> `
+    -CertStoreLocation <String> `
     -Confirm:$false
 
 

@@ -1,0 +1,6 @@
+---
+# tasks file for wac
+- name: Install wac
+  win_chocolatey:
+    name: windows-admin-center
+    state: present

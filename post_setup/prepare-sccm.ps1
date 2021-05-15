@@ -47,7 +47,6 @@ $ACL.AddAccessRule($ACE)
 # Commit the new audit rule
 Set-Acl -AclObject $ACL -Path "AD:$Container"
 
-
 New-Item -ItemType Directory -Path C:\installers
 
 $params = @{

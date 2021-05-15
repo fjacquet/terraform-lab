@@ -9,9 +9,9 @@ $url = "https://raw.githubusercontent.com/fjacquet/terraform-lab/master/config_f
 
 Install-Module -Name PSPKI
 # Get the right polica file
-Invoke-WebRequest -Uri $url -OutFile $file #DevSkim: ignore DS104456 
+Invoke-WebRequest -Uri $url -OutFile $file #DevSkim: ignore DS104456
 Copy-Item -Path $file -Destination "C:\Windows\capolicy.inf"
-# startup configuration 
+# startup configuration
 Install-AdcsCertificationAuthority `
     -CAType StandaloneRootCA `
     -CACommonName $caname `
@@ -33,20 +33,24 @@ Add-CACRLDistributionPoint `
     -PublishToServer `
     -PublishDeltaToServer `
     -Force
+
 Add-CACRLDistributionPoint `
     -Uri http://pki.$($domain)/pki/$($root)%8%9.crl `
     -AddToCertificateCDP `
     -AddToFreshestCrl `
     -Force
-# Prepare AIA 
+
+# Prepare AIA
 Get-CAAuthorityInformationAccess `
     | Where-Object { $_.uri -like '*ldap*' -or $_.uri -like '*http*' -or $_.uri -like '*file*' } `
     | Remove-CAAuthorityInformationAccess `
     -Force
+
 Add-CAAuthorityInformationAccess `
     -AddToCertificateAia http://pki.$($domain)/pki/$($root)%3%4.crt `
     -Force
-# Configure 
+
+# Configure
 certutil.exe –setreg CA\CRLPeriodUnits 20
 certutil.exe –setreg CA\CRLPeriod “Years”
 certutil.exe –setreg CA\CRLOverlapPeriodUnits 3
@@ -54,9 +58,10 @@ certutil.exe –setreg CA\CRLOverlapPeriod “Weeks”
 certutil.exe –setreg CA\ValidityPeriodUnits 10
 certutil.exe –setreg CA\ValidityPeriod “Years”
 certutil.exe -setreg CA\AuditFilter 127
+
 # Restart ca
 Restart-Service -Name certsvc
-# publish 
+# publish
 certutil -crl
 
 # Copy to S3

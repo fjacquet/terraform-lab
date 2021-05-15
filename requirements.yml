@@ -1,5 +1,6 @@
 roles:
 
 collections:
+- ansible.windows
 - community.general
 - community.windows

@@ -9,12 +9,12 @@ Configure-SMremoting.exe -enable
 # Remove SMBv1
 Write-Output "Disabling SMBv1"
 Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol -NoRestart
-# Install-Module -Name AWSPowerShell 
+# Install-Module -Name AWSPowerShell
 add-windowsfeature -Name RSAT `
     -IncludeManagementTools
-    
+
 # Disable LMHosts
-$disable = 2 
+$disable = 2
 $adapters = (gwmi win32_networkadapterconfiguration )
 Foreach ($adapter in $adapters) {
     Write-Host $adapter

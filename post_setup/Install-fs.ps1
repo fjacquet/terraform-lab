@@ -21,10 +21,10 @@ Restart-Service -Name lanmanserver -Force:$true
 
 import-module -name DFSN
 Add-WindowsFeature -name RSAT-AD-PowerShell
-Import-Module -Name ActiveDirectory 
+Import-Module -Name ActiveDirectory
 
-$ad = get-addomain          
-$Domain = $ad.DNSRoot  
+$ad = get-addomain
+$Domain = $ad.DNSRoot
 
 mkdir D:\samples
 New-SmbShare `

@@ -17,11 +17,12 @@ Install-Module -Name PSPKI
 Set-Location "inetsrv\"
 .\Appcmd Set config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
 
-# Get the root CA 
+# Get the root CA
 Copy-S3Object `
    -BucketName $s3bucket `
    -Key 'root-ca.crt' `
    -LocalFile $cacrt
+
 Copy-S3Object `
    -BucketName $s3bucket `
    -Key 'root-ca.crl' `
@@ -31,6 +32,7 @@ Copy-S3Object `
    -BucketName $s3bucket `
    -Key 'ent-ca.crt' `
    -LocalFile $entcrt
+
 Copy-S3Object `
    -BucketName $s3bucket `
    -Key 'ent-ca.crl' `

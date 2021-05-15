@@ -22,18 +22,21 @@ Set-GPRegistryValue -Name $PolicyName `
     -Key $key `
     -ValueName 'UseWUServer' `
     -Type DWORD -Value 1
+
 $key = 'HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU'
 Set-GPRegistryValue -Name $PolicyName `
     -Key $key `
     -ValueName 'AUOptions' `
     -Type DWORD `
     -Value 2
+
 $key = 'HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate'
 Set-GPRegistryValue -Name $PolicyName `
     -Key $key `
     -ValueName 'WUServer' `
     -Type String `
     -Value $WSUSServerURL
+
 $key = 'HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate'
 Set-GPRegistryValue -Name $PolicyName `
     -Key $key `

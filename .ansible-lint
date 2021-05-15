@@ -1,0 +1,70 @@
+# .ansible-lint
+exclude_paths:
+  - .cache/ # implicit unless exclude_paths is defined in config
+  - .github/
+  - collections/
+# - roles/
+  - ../../.ansible/
+parseable: true
+# quiet: true
+# verbosity: 1
+
+# Enable checking of loop variable prefixes in roles
+loop_var_prefix: "{role}_"
+
+use_default_rules: true
+# Load custom rules from this specific folder
+# rulesdir:
+#   - ./rule/directory/
+
+# This makes linter to fully ignore rules/tags listed below
+skip_list:
+  - deprecated-local-action  # Do not use 'local_action', use 'delegate_to: localhost'
+  - empty-string-compare  # Don't compare to empty string
+  - git-latest
+  - meta-incorrect  # meta/main.yml default values should be changed
+  - meta-no-info  # meta/main.yml should contain relevant info
+  - meta-no-tags  # Tags must contain lowercase letters and digits only
+  - no-changed-when  # Commands should not change things if nothing needs doing
+  - no-handler  # Tasks that run when changed should likely be handlers
+  - no-loop-var-prefix  # Role loop_var should use configured prefix.: standard_host_
+  - no-same-owner  # Owner should not be kept between different hosts
+  - package-latest
+  - risky-file-permissions  # File permissions unset or incorrect
+  - role-name  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern
+  - skip_this_tag
+
+# Any rule that has the 'opt-in' tag will not be loaded unless its 'id' is
+# mentioned in the enable_list:
+enable_list:
+  - no-same-owner
+  # add yaml here if you want to avoid ignoring yaml checks when yamllint
+  # library is missing. Normally its absence just skips using that rule.
+  - yaml
+# Report only a subset of tags and fully ignore any others
+# tags:
+#   - var-spacing
+
+# This makes the linter display but not fail for rules/tags listed below:
+warn_list:
+  - experimetal # experimental is included in the implicit list
+  - git-latest
+  - skip_this_tag
+  # - role-name
+
+# Offline mode disables installation of requirements.yml
+offline: true
+
+# Uncomment to enforce action validation with tasks, usually is not
+# needed as Ansible syntax check also covers it.
+# skip_action_validation: false
+
+# List of additional kind:pattern to be added at the top of the default
+# match list, first match determines the file kind.
+kinds:
+  # - playbook: "**/playbooks/*.{yml,yaml}"
+  # - galaxy: "**/folder/galaxy.yml"
+  - tasks: "**/tasks/*.yml"
+  - vars: "**/vars/*.yml"
+  # - meta: "**/meta/main.yml"
+  # - yaml: "**/*.yaml-too"

@@ -37,5 +37,5 @@ Install-WindowsFeature Server-Media-Foundation, `
 setup.exe /PrepareSchema /IAcceptExchangeServerLicenseTerms
 Setup.exe /IAcceptExchangeServerLicenseTerms /PrepareAllDomains
 setup.exe /PrepareAD /OrganizationName:"evLab" /IAcceptExchangeServerLicenseTerms
-# Install mailbox role 
+# Install mailbox role
 setup.exe /Mode:Install /Role:Mailbox /IAcceptExchangeServerLicenseTerms

@@ -2,8 +2,8 @@
 #Script notes
 
 <#
-- This script is primarily for setting up AAG's, but *can* be used to acclerate the setup of traditional SQL clusters and standalone nodes.  
-- This script is not designed to do a bulk copy and run, it's designed to copy blocks and execute.  
+- This script is primarily for setting up AAG's, but *can* be used to acclerate the setup of traditional SQL clusters and standalone nodes.
+- This script is not designed to do a bulk copy and run, it's designed to copy blocks and execute.
 - Some sections only need to be run once for the whole cluster, some sections need to be run per node. I'll try to note when and where
 - Some sections can not be complete until all nodes are at the same step.  When in doubt, perform these steps on each node in lock step
 #>
@@ -17,7 +17,7 @@
 <#
 - Deploy SQL Servers
 - Deploy disks (but don't bring them online or format them).  We'll do that in this script.
-- Configure local administration 
+- Configure local administration
 - Add computer accounts the appropriate AD group that gives the computer accounts "manage computer" rights.
 - Move the computers to the correct OU
 - Reboot the computers twice after all the above is complete
@@ -28,8 +28,8 @@
 #Script notes
 
 <#
-- This script is primarily for setting up AAG's, but *can* be used to acclerate the setup of traditional SQL clusters and standalone nodes.  
-- This script is not designed to do a bulk copy and run, it's designed to copy blocks and execute.  
+- This script is primarily for setting up AAG's, but *can* be used to acclerate the setup of traditional SQL clusters and standalone nodes.
+- This script is not designed to do a bulk copy and run, it's designed to copy blocks and execute.
 - Some sections only need to be run once for the whole cluster, some sections need to be run per node. I'll try to note when and where
 - Some sections can not be complete until all nodes are at the same step.  When in doubt, perform these steps on each node in lock step
 #>
@@ -44,7 +44,7 @@
 <#
 - Deploy SQL Servers
 - Deploy disks (but don't bring them online or format them).  We'll do that in this script.
-- Configure local administration 
+- Configure local administration
 - Add computer accounts the appropriate AD group that gives the computer accounts "manage computer" rights.
 - Move the computers to the correct OU
 - Reboot the computers twice after all the above is complete
@@ -167,7 +167,7 @@ while ($sqlserviceuserpassword -eq $null -or $sqlserviceuserpassword -eq "")
   $sqlserviceuserpassword = Read-Host -Prompt "Enter your SQL Service Account Password Here"
 }
 
-#Temp Directory 
+#Temp Directory
 $TempDirectory = Get-ChildItem -Path env: | Where-Object { $_.Name -eq "Temp" } | Select-Object -ExpandProperty value
 $LocalGPOFunctionNameTempPath = $TempDirectory + "\" + $LocalGPOFunctionName
 
@@ -205,7 +205,7 @@ $OfflineDisks | Initialize-Disk -PartitionStyle GPT
 
 foreach ($disk in $OfflineDisks)
 {
-  #This will give us the view of which SCSI card and port we're in.  
+  #This will give us the view of which SCSI card and port we're in.
   #Note: property "SCSIPort" actually equals SCSI card in WMI, and "SCSITargetId" equals the SCSI port for the card
 
 
@@ -271,9 +271,9 @@ foreach ($disk in $OfflineDisks)
 #Setting up the folder paths and permissions
 
 # Note 1: If you have more than the standard F, J, K, N, V and W drives, you'll need to mananually setup the folder structure and permsissions
-# Note 2: As part of the SQL install, SQL will configure the modify permissions for the default DB, Log, TempLog and TempDB folders, which is why I don't configure them. 
+# Note 2: As part of the SQL install, SQL will configure the modify permissions for the default DB, Log, TempLog and TempDB folders, which is why I don't configure them.
 # NOte 3: Keep an eye on the folder permissions, you shouldn't see a lot of errors, if you do, something went wrong.
-# Note 4: These are based on default disk locations and default disk requests.  if you get a request for a G: drive for example, we don't have that scripted at the moment.  
+# Note 4: These are based on default disk locations and default disk requests.  if you get a request for a G: drive for example, we don't have that scripted at the moment.
 
 #Create Folder Stucture
 
@@ -445,7 +445,7 @@ Add-ECSLocalGPOUserRightAssignment -UserOrGroup $sqlagentuser -UserRightAssignme
 #----------------------------------------------------------------------------------------------------
 #Install SQL
 
-#Copy the ISO to 
+#Copy the ISO to
 Copy-Item -Path $ISOFileSource -Destination $ISOFileDestination -Force -confirm:$false
 
 #Copy the SQL config file
@@ -583,7 +583,7 @@ Get-Service -Name ClusSvc -ComputerName $node2 | Start-Service
 #----------------------------------------------------------------------------------------------------
 #Enable SQL AAG, AAG only
 
-#Enable SQL Always on (run on both nodes)  
+#Enable SQL Always on (run on both nodes)
 
 #NOTE: This may fail once, wait a minute, then try again.
 Enable-SqlAlwaysOn -ServerInstance $($env:ComputerName) -confirm:$false -NoServiceRestart:$false -Force:$true
@@ -886,7 +886,7 @@ while ($sqlserviceuserpassword -eq $null -or $sqlserviceuserpassword -eq "")
   $sqlserviceuserpassword = Read-Host -Prompt "Enter your SQL Service Account Password Here"
 }
 
-#Temp Directory 
+#Temp Directory
 $TempDirectory = Get-ChildItem -Path env: | Where-Object { $_.Name -eq "Temp" } | Select-Object -ExpandProperty value
 $LocalGPOFunctionNameTempPath = $TempDirectory + "\" + $LocalGPOFunctionName
 
@@ -924,7 +924,7 @@ $OfflineDisks | Initialize-Disk -PartitionStyle GPT
 
 foreach ($disk in $OfflineDisks)
 {
-  #This will give us the view of which SCSI card and port we're in.  
+  #This will give us the view of which SCSI card and port we're in.
   #Note: property "SCSIPort" actually equals SCSI card in WMI, and "SCSITargetId" equals the SCSI port for the card
 
 
@@ -990,9 +990,9 @@ foreach ($disk in $OfflineDisks)
 #Setting up the folder paths and permissions
 
 # Note 1: If you have more than the standard F, J, K, N, V and W drives, you'll need to mananually setup the folder structure and permsissions
-# Note 2: As part of the SQL install, SQL will configure the modify permissions for the default DB, Log, TempLog and TempDB folders, which is why I don't configure them. 
+# Note 2: As part of the SQL install, SQL will configure the modify permissions for the default DB, Log, TempLog and TempDB folders, which is why I don't configure them.
 # NOte 3: Keep an eye on the folder permissions, you shouldn't see a lot of errors, if you do, something went wrong.
-# Note 4: These are based on default disk locations and default disk requests.  if you get a request for a G: drive for example, we don't have that scripted at the moment.  
+# Note 4: These are based on default disk locations and default disk requests.  if you get a request for a G: drive for example, we don't have that scripted at the moment.
 
 #Create Folder Stucture
 
@@ -1164,7 +1164,7 @@ Add-ECSLocalGPOUserRightAssignment -UserOrGroup $sqlagentuser -UserRightAssignme
 #----------------------------------------------------------------------------------------------------
 #Install SQL
 
-#Copy the ISO to 
+#Copy the ISO to
 Copy-Item -Path $ISOFileSource -Destination $ISOFileDestination -Force -confirm:$false
 
 #Copy the SQL config file
@@ -1285,7 +1285,7 @@ Get-Service -Name ClusSvc -ComputerName $node2 | Start-Service
 #----------------------------------------------------------------------------------------------------
 #Enable SQL AAG, AAG only
 
-#Enable SQL Always on (run on both nodes)  
+#Enable SQL Always on (run on both nodes)
 
 #NOTE: This may fail once, wait a minute, then try again.
 Enable-SqlAlwaysOn -ServerInstance $($env:ComputerName) -confirm:$false -NoServiceRestart:$false -Force:$true

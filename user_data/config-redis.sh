@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-yum upgrade -y 
+yum upgrade -y
 yum install wget httpd -y
 
 yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 yum-config-manager –-enable --save epel
-yum upgrade -y 
+yum upgrade -y
 yum install python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged -y
 yum install redis -y
 
 yum-config-manager –-disable --save epel
-yum clean all 
+yum clean all
 
 pip install --upgrade pip
 pip install awscli --upgrade --user

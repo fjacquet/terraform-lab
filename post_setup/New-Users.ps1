@@ -2,15 +2,13 @@ Initialize-AWSDefaults
 
 Import-Module -name ActiveDirectory
 $ad = get-addomain
-$DomainDN = $ad.DistinguishedName               
-$Domain = $ad.DNSRoot 
+$DomainDN = $ad.DistinguishedName
+$Domain = $ad.DNSRoot
 $username = "fjacquet"
 $secret = (Get-SECSecretValue -SecretId "$($domain)/ad/$($username)").SecretString
 $password = $secret | ConvertTo-SecureString -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
 
-
-                       
 New-ADUser `
     -ChangePasswordAtLogon $false `
     -City "Montreux" `
@@ -29,7 +27,6 @@ New-ADUser `
     -Title "Mr" `
     -AccountPassword $password `
     -UserPrincipalName "$($username)@$($Domain)"
-   
 
 $secrets = (
     "$($Domain)/ad/joinuser",
@@ -57,10 +54,10 @@ $secrets = (
     "$($Domain)/pki/svc-ndes"
 )
 foreach ($secret in $secrets) {
-     
+
     $username = $secret.Split("/")[2]
     write-host $username
-    $secretstring = (Get-SECSecretValue -SecretId "$($secret)").SecretString 
+    $secretstring = (Get-SECSecretValue -SecretId "$($secret)").SecretString
     write-host $secretstring
     $params = @{
         Name                  = $username
@@ -71,7 +68,6 @@ foreach ($secret in $secrets) {
         ChangePasswordAtLogon = $false
         DisplayName           = $username
         EmailAddress          = "$($username)@$($Domain)" `
-   
     }
     New-ADUser @params
 }

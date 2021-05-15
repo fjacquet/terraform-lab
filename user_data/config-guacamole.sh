@@ -1,5 +1,5 @@
 #!/bin/bash
-yum -y install deltarpm 
+yum -y install deltarpm
 yum -y install https://dl.fedoraproject.org/pub/epel//epel-release-latest-7.noarch.rpm
 yum -y upgrade
 yum -y install wget libaio numactl atop htop nfs-utils xorg-x11-xauth  libXtst nfs-utils cockpit python jq

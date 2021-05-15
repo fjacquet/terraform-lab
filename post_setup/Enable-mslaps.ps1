@@ -7,7 +7,6 @@ $dns = $ad.DNSRoot
 
 Update-AdmPwdADSchema
 
-
 New-ADOrganizationalUnit -Name "eu-west-1" -Path $($domain)
 New-ADOrganizationalUnit -Name "servers" -Path "OU=eu-west-1,$($domain)"
 
@@ -20,7 +19,6 @@ $group = New-ADGroup `
     -DisplayName "LAPS Administrators" `
     -Path "CN=Users," `
     -Description "Members of this group are LAPS Administrators"
-    
 
 $serversou = "servers"
 
@@ -31,7 +29,7 @@ $User = Get-ADUser `
 Add-ADGroupMember `
     -Identity $Group `
     -Members $User `
-    -Server $dc 
+    -Server $dc
 
 $User = Get-ADUser `
     -Identity "Administrator" `
@@ -39,7 +37,7 @@ $User = Get-ADUser `
 
 Add-ADGroupMember -Identity $Group `
     -Members $User `
-    -Server $dc 
+    -Server $dc
 
 
 Set-AdmPwdReadPasswordPermission `
@@ -50,5 +48,3 @@ Set-AdmPwdResetPasswordPermission `
     -Identity $serversou.name
 Set-AdmPwdComputerSelfPermission `
     -Identity $serversou.name
-
-

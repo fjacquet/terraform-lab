@@ -14,14 +14,15 @@ Install-Module -Name PSPKI
 $url = "https://raw.githubusercontent.com/fjacquet/terraform-lab/master/config_files/$($file)"
 
 # Get the right polica file
-Invoke-WebRequest -Uri $url -OutFile $file #DevSkim: ignore DS104456 
+Invoke-WebRequest -Uri $url -OutFile $file #DevSkim: ignore DS104456
 Copy-Item -Path $file -Destination "C:\Windows\capolicy.inf"
 
-# Get the root CA 
+# Get the root CA
 Copy-S3Object `
    -BucketName $s3bucket `
    -Key 'root-ca.crt' `
    -LocalFile $cacrt
+
 Copy-S3Object `
    -BucketName $s3bucket `
    -Key 'root-ca.crl' `
@@ -29,13 +30,14 @@ Copy-S3Object `
 
 # Push to domain
 certutil.exe –dsPublish –f $cacrt RootCA
+
 certutil.exe -dsPublish -f $cacrl RootCA
 
 # Add to local store
 certutil.exe –addstore –f root $cacrt
 certutil.exe –addstore –f root cacrl
 
-# startup configuration 
+# startup configuration
 Install-AdcsCertificationAuthority `
    -CAType EnterpriseSubordinateCA `
    -CACommonName $caname `

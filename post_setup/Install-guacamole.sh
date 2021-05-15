@@ -36,17 +36,17 @@ PWD=$(pwd)
 filename="${PWD}/guacamole-${GUACA_VER}."$(date +"%d-%y-%b")""
 logfile="${filename}.log"
 fwbkpfile="${filename}.firewall.bkp"
-MYSQ_CONNECTOR_URL="http://dev.mysql.com/get/Downloads/Connector-J/"
+MYSQ_CONNECTOR_URL="https://dev.mysql.com/get/Downloads/Connector-J/"
 MYSQL_CONNECTOR="mysql-connector-java-${MYSQL_CONNECTOR_VER}"
 MYSQL_PORT="3306"
 GUACA_PORT="4822"
 GUACA_CONF="guacamole.properties"
-GUACA_URL="http://sourceforge.net/projects/guacamole/files/current/"
+GUACA_URL="https://sourceforge.net/projects/guacamole/files/current/"
 GUACA_SERVER="guacamole-server-${GUACA_VER}"  #Source
 #GUACA_CLIENT="guacamole-client-${GUACA_VER}" #Source
 GUACA_CLIENT="guacamole-${GUACA_VER}"         #Binary
 GUACA_JDBC="guacamole-auth-jdbc-${GUACA_VER}" #Extension
-LIBJPEG_URL="http://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_VER}/"
+LIBJPEG_URL="https://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_VER}/"
 #LIBJPEG_TURBO="libjpeg-turbo-${LIBJPEG_VER}" #Dependency source
 LIBJPEG_TURBO="libjpeg-turbo-official-${LIBJPEG_VER}" #Dependency rpm
 CENTOS_VER=$(rpm -qi --whatprovides /etc/redhat-release | awk '/Version/ {print $3}'|cut -f1 -d.)
@@ -173,30 +173,30 @@ done
 
 clear
 echo -e "
-                                                                 
-                                                                 
-                                                ${Yellow}'.'              
-                            ${Green}'.:///:-.....'     ${Yellow}-yyys/-           
-                     ${Green}.://///++++++++++++++/-  ${Yellow}.yhhhhhys/'        
-                  ${Green}'.:++++++++++++++++++++++: ${Yellow}'yhhhhhhhhy-        
-          ${White}.+y' ${Green}'://++++++++++++++++++++++++' ${Yellow}':yhhhhyo:'         
-        ${White}-yNd. ${Green}'/+++++++++++++++++++++++++++//' ${Yellow}.+yo:' ${White}'::        
-       ${White}oNMh' ${Green}./++++++++++++++++++++++++++++++/:' '''' ${White}'mMh.      
-      ${White}-MMM:  ${Green}/+++++++++++++++++++++++++++++++++-.:/+:  ${White}yMMs      
-      ${White}-MMMs  ${Green}./++++++++++++++++++++++++++++++++++++/' ${White}.mMMy      
-      ${White}'NMMMy. ${Green}'-/+++++++++++++++++++++++++++++++/:.  ${White}:dMMMo      
-       ${White}+MMMMNy:' ${Green}'.:///++++++++++++++++++++//:-.' ${White}./hMMMMN'      
-       ${White}-MMMMMMMmy+-.${Green}''''.---::::::::::--..''''${White}.:ohNMMMMMMy       
-        ${White}sNMMMMMMMMMmdhs+/:${Green}--..........--${White}:/oyhmNMMMMMMMMMd-       
-         ${White}.+dNMMMMMMMMMMMMMMNNmmmmmmmNNNMMMMMMMMMMMMMMmy:'        
-            ${White}./sdNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNmho:'           
-          ${White}'     .:+shmmNNMMMMMMMMMMMMMMMMNNmdyo/-'               
-          ${White}.o:.       '.-::/+ossssssso++/:-.'       '-/'          
-           ${White}.ymh+-.'                           ''./ydy.           
-             ${White}/dMMNdyo/-.''''         ''''.-:+shmMNh:             
-               ${White}:yNMMMMMMNmdhhyyyyyyyhhdmNNMMMMMNy:               
-                 ${White}':sdNNMMMMMMMMMMMMMMMMMMMNNds:'                 
-                     ${White}'-/+syhdmNNNNNNmdhyo/-'                     
+
+
+                                                ${Yellow}'.'
+                            ${Green}'.:///:-.....'     ${Yellow}-yyys/-
+                     ${Green}.://///++++++++++++++/-  ${Yellow}.yhhhhhys/'
+                  ${Green}'.:++++++++++++++++++++++: ${Yellow}'yhhhhhhhhy-
+          ${White}.+y' ${Green}'://++++++++++++++++++++++++' ${Yellow}':yhhhhyo:'
+        ${White}-yNd. ${Green}'/+++++++++++++++++++++++++++//' ${Yellow}.+yo:' ${White}'::
+       ${White}oNMh' ${Green}./++++++++++++++++++++++++++++++/:' '''' ${White}'mMh.
+      ${White}-MMM:  ${Green}/+++++++++++++++++++++++++++++++++-.:/+:  ${White}yMMs
+      ${White}-MMMs  ${Green}./++++++++++++++++++++++++++++++++++++/' ${White}.mMMy
+      ${White}'NMMMy. ${Green}'-/+++++++++++++++++++++++++++++++/:.  ${White}:dMMMo
+       ${White}+MMMMNy:' ${Green}'.:///++++++++++++++++++++//:-.' ${White}./hMMMMN'
+       ${White}-MMMMMMMmy+-.${Green}''''.---::::::::::--..''''${White}.:ohNMMMMMMy
+        ${White}sNMMMMMMMMMmdhs+/:${Green}--..........--${White}:/oyhmNMMMMMMMMMd-
+         ${White}.+dNMMMMMMMMMMMMMMNNmmmmmmmNNNMMMMMMMMMMMMMMmy:'
+            ${White}./sdNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNmho:'
+          ${White}'     .:+shmmNNMMMMMMMMMMMMMMMMNNmdyo/-'
+          ${White}.o:.       '.-::/+ossssssso++/:-.'       '-/'
+           ${White}.ymh+-.'                           ''./ydy.
+             ${White}/dMMNdyo/-.''''         ''''.-:+shmMNh:
+               ${White}:yNMMMMMMNmdhhyyyyyyyhhdmNNMMMMMNy:
+                 ${White}':sdNNMMMMMMMMMMMMMMMMMMMNNds:'
+                     ${White}'-/+syhdmNNNNNNmdhyo/-'
 "
 setenforce 0
 sed -i -e 's/^SELINUX=.*/SELINUX=disable/' /etc/sysconfig/selinux
@@ -586,10 +586,10 @@ EOF
 	echo 'server {
 	listen              443 ssl http2;
 	server_name         localhost;
-	ssl_certificate     guacamole.crt;
-	ssl_certificate_key guacamole.key;
-	ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-	ssl_ciphers         HIGH:!aNULL:!MD5;
+	ssl_certificate     guacamole.crt; 			#DevSkim: ignore DS440000
+	ssl_certificate_key guacamole.key;			#DevSkim: ignore DS440000
+	ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;	#DevSkim: ignore DS440000
+	ssl_ciphers         HIGH:!aNULL:!MD5;		#DevSkim: ignore DS440000
 
 	location /_new-path_/ {
 		proxy_pass http://_SERVER_HOSTNAME_:8080/guacamole/;
