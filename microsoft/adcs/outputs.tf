@@ -1,5 +1,5 @@
 output "aws_sg_pki-crl_id" {
-  value = aws_security_group.pki-crl[count.index]
+  value = aws_security_group.pki-crl
 }
 
 output "aws_sg_pki-ica_id" {
