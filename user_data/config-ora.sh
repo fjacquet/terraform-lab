@@ -1,5 +1,5 @@
-#!/bin/bash
-yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+#!/usr/bin/env bash
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
 yum -y upgrade
 yum -y install wget numactl  xorg-x11-xauth unzip  libXrender

@@ -272,4 +272,3 @@ resource "aws_vpc_endpoint" "private-s3" {
   service_name = "com.amazonaws.eu-west-1.s3"
   policy       = file("./policy_json/vpc-policy-s3endpoint.json")
 }
-

@@ -1,5 +1,5 @@
-#!/bin/bash
-yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+#!/usr/bin/env bash
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
 yum -y upgrade
 yum -y install https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm

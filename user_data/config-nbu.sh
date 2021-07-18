@@ -1,10 +1,10 @@
-#!/bin/bash
-yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+#!/usr/bin/env bash
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 yum -y upgrade
 yum -y install wget libaio numactl atop htop nfs-utils xorg-x11-xauth libXtst nfs-utils cockpit cockpit-storaged xclock xauth firefox
 
 cat >> /etc/profile.d/nbu.sh << EOF
-#!/bin/bash
+#!/usr/bin/env bash
 export PATH=\$PATH:/usr/openv/netbackup/bin:/usr/openv/netbackup/bin/admincmd:/usr/openv/netbackup/bin/goodies:/usr/openv/netbackup/bin/support:/usr/openv/netbackup/bin/driver:/usr/openv/pdde/pdcr/bin:/usr/openv/volmgr/bin/
 EOF
 chmod 755 /etc/profile.d/nbu.sh
@@ -38,7 +38,7 @@ cat >> /etc/security/limits.conf << EOF
 *               soft    nofile            20480
 *               hard    nofile            20480
 EOF
- yum install python
+yum install python
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 python get-pip.py
 pip install awscli
@@ -52,8 +52,8 @@ rm -rf .aws/credentials
 
 for i in NetBackup_8.1.3Beta2_LinuxR_x86_64.tar.gz NetBackup_8.1.3Beta2_Win.zip
 do
-aws s3 cp s3://installers-fja/$i   /backups/$i
-tar xzf /backups/$i
+  aws s3 cp s3://installers-fja/$i   /backups/$i
+  tar xzf /backups/$i
 done
 
 systemctl start cockpit

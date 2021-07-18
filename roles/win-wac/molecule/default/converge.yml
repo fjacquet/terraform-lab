@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include wac"
+    - name: "Include win-wac"
       include_role:
-        name: "wac"
+        name: "win-wac"

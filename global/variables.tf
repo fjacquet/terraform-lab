@@ -25,9 +25,8 @@ variable "cidrbyte" {
   type = map(string)
 }
 
-variable "dhcpops" {
-}
+# variable "dhcpops" {
+# }
 
 variable "dns_suffix" {
 }
-

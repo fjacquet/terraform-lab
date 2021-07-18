@@ -6,8 +6,8 @@ variable "azs" {
 #   type = "map"
 # }
 
-variable "dhcpops" {
-}
+# variable "dhcpops" {
+# }
 
 variable "cidrbyte" {
   type = map(string)
@@ -43,4 +43,3 @@ variable "cidrbyte_web" {
 variable "cidrbyte_gw" {
   type = list(string)
 }
-

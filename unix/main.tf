@@ -9,9 +9,9 @@ module "bsd" {
   dns_suffix           = var.dns_suffix
 
   aws_sg_ids = [
-    # module.nbu.aws_sg_client_id,
+    module.nbu.aws_sg_client_id,
     aws_security_group.ssh.id,
-    # var.aws_sg_simpanaclient_id,
+    var.aws_sg_simpanaclient_id,
   ]
 }
 
@@ -96,9 +96,9 @@ module "oracle" {
 
   aws_sg_ids = [
     aws_security_group.ssh.id,
-    # module.nbu.aws_sg_client_id,
+    module.nbu.aws_sg_client_id,
     module.oracle.aws_sg_oracle_id,
-    # var.aws_sg_simpanaclient_id,
+    var.aws_sg_simpanaclient_id,
   ]
 }
 
@@ -155,4 +155,3 @@ resource "aws_security_group" "ssh" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

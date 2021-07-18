@@ -1,6 +1,6 @@
 module "adcs" {
   source                  = "./adcs"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number_pki-crl      = var.aws_number["pki-crl"]
@@ -22,17 +22,17 @@ module "adcs" {
   aws_sg_ids = [
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
-    # module.adcs.aws_sg_pki-crl_id,
-    # module.adcs.aws_sg_pki-ica_id,
-    # module.adcs.aws_sg_pki-rca_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.adcs.aws_sg_pki-crl_id,
+    module.adcs.aws_sg_pki-ica_id,
+    module.adcs.aws_sg_pki-rca_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "adds" {
   source                  = "./adds"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["dc"]
@@ -53,8 +53,8 @@ module "adds" {
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.adds.aws_sg_dc_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   aws_sg_domain_member = aws_security_group.domain-member.id
@@ -62,7 +62,7 @@ module "adds" {
 
 module "adfs" {
   source                  = "./adfs"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["adfs"]
@@ -83,8 +83,8 @@ module "adfs" {
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.adds.aws_sg_dc_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
@@ -94,7 +94,7 @@ module "adfs" {
 
 module "dhcp" {
   source                  = "./dhcp"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["dhcp"]
@@ -115,14 +115,14 @@ module "dhcp" {
     aws_security_group.rdp.id,
     module.dhcp.aws_sg_dhcp_id,
     aws_security_group.domain-member.id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "da" {
   source                  = "./da"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["da"]
@@ -143,14 +143,14 @@ module "da" {
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.da.aws_sg_da_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "exchange" {
   source                  = "./exchange"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["exchange"]
@@ -170,15 +170,15 @@ module "exchange" {
   aws_sg_ids = [
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
-    # module.exchange.aws_sg_exchange_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.exchange.aws_sg_exchange_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "fs" {
   source                  = "./fs"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["fs"]
@@ -199,8 +199,8 @@ module "fs" {
     aws_security_group.rdp.id,
     module.fs.aws_sg_fs_id,
     aws_security_group.domain-member.id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   aws_sg_domain_members = aws_security_group.domain-member.id
@@ -208,7 +208,7 @@ module "fs" {
 
 module "ipam" {
   source                  = "./ipam/"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["ipam"]
@@ -229,8 +229,8 @@ module "ipam" {
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.ipam.aws_sg_ipam_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
@@ -250,14 +250,14 @@ module "jumpbox" {
   aws_sg_ids = [
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "nps" {
   source                  = "./nps"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["nps"]
@@ -278,14 +278,14 @@ module "nps" {
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.nps.aws_sg_nps_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
 module "rdsh" {
   source                  = "./rdsh"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["rdsh"]
@@ -307,8 +307,8 @@ module "rdsh" {
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.rdsh.aws_sg_rdsh_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
@@ -335,8 +335,8 @@ module "sharepoint" {
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.sharepoint.aws_sg_sharepoint_id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
@@ -362,9 +362,9 @@ module "sql" {
   aws_sg_ids = [
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
-    # module.simpana.aws_sg_client_id,
-    # module.sql.aws_sg_sql_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    module.sql.aws_sg_sql_id,
+    var.aws_sg_nbuclient_id,
   ]
 }
 
@@ -374,7 +374,7 @@ module "workfolders" {
 
 module "simpana" {
   source                  = "./simpana"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["simpana"]
@@ -400,7 +400,7 @@ module "simpana" {
 
 module "sofs" {
   source                  = "./sofs"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["sofs"]
@@ -421,8 +421,8 @@ module "sofs" {
     aws_security_group.rdp.id,
     module.sofs.aws_sg_sofs_id,
     aws_security_group.domain-member.id,
-    # module.simpana.aws_sg_client_id,
-    # var.aws_sg_nbuclient_id,
+    module.simpana.aws_sg_client_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   aws_sg_domain_members = aws_security_group.domain-member.id
@@ -430,7 +430,7 @@ module "sofs" {
 
 module "wac" {
   source                  = "./wac"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["wac"]
@@ -444,9 +444,9 @@ module "wac" {
   aws_sg_ids = [
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
-    # module.simpana.aws_sg_client_id,
+    module.simpana.aws_sg_client_id,
     module.wac.aws_sg_wac_id,
-    # var.aws_sg_nbuclient_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   cidr = [
@@ -458,7 +458,7 @@ module "wac" {
 
 module "wds" {
   source                  = "./wds"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["wds"]
@@ -472,9 +472,9 @@ module "wds" {
   aws_sg_ids = [
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
-    # module.simpana.aws_sg_client_id,
+    module.simpana.aws_sg_client_id,
     module.wds.aws_sg_wds_id,
-    # var.aws_sg_nbuclient_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   cidr = [
@@ -486,7 +486,7 @@ module "wds" {
 
 module "wsus" {
   source                  = "./wsus"
-  aws_ami                 = var.aws_amis["win2016"]
+  aws_ami                 = var.aws_amis["win2019"]
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["wsus"]
@@ -500,9 +500,9 @@ module "wsus" {
   aws_sg_ids = [
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
-    # module.simpana.aws_sg_client_id,
+    module.simpana.aws_sg_client_id,
     module.wsus.aws_sg_wsus_id,
-    # var.aws_sg_nbuclient_id,
+    var.aws_sg_nbuclient_id,
   ]
 
   cidr = [
@@ -705,4 +705,3 @@ resource "aws_security_group" "domain-member" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

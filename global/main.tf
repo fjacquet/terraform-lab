@@ -33,7 +33,7 @@ module "vpc" {
   # cidr       = "${var.cidr}"
   cidrbyte   = var.cidrbyte
   aws_region = var.aws_region
-  dhcpops    = var.dhcpops
+  # dhcpops    = var.dhcpops
 
   cidrbyte_back = [
     var.cidrbyte["back1.${var.aws_region}"],
@@ -81,4 +81,3 @@ module "vpc" {
 module "dynamodb" {
   source = "./dynamodb"
 }
-

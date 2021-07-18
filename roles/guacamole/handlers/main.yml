@@ -1,0 +1,9 @@
+---
+- name: restart guacamole_exporter
+  become: true
+  systemd:
+    daemon_reload: true
+    name: guacamole_exporter
+    state: restarted
+  when:
+    - not ansible_check_mode

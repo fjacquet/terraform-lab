@@ -1,0 +1,14 @@
+---
+# vars file for ansible-role-guacamole-exporter
+go_arch_map:
+  i386: '386'
+  x86_64: 'amd64'
+  aarch64: 'arm64'
+  armv7l: 'armv7'
+  armv6l: 'armv6'
+
+go_arch: "{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}"
+
+_guacamole_exporter_binary_install_dir: "/usr/local/bin"
+_guacamole_exporter_system_group: "guacamole-exp"
+_guacamole_exporter_system_user: "{{ _guacamole_exporter_system_group }}"

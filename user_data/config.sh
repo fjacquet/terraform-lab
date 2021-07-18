@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 yum -y upgrade
 yum -y install wget libaio numactl
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old

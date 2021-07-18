@@ -9,9 +9,9 @@ MYSQLDB=glpidb
 
 setenforce 0
 
-wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-wget https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+wget https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+rpm -Uvh remi-release-8.rpm epel-release-latest-8.noarch.rpm
 subscription-manager repos --enable=rhel-7-server-optional-rpms
 
 yum install  mariadb-server glpi

@@ -1,0 +1,39 @@
+---
+# tasks file for ansible-role-guacamole-exporter
+- import_tasks: preflight.yml
+  tags:
+    - guacamole_exporter_install
+    - guacamole_exporter_configure
+    - guacamole_exporter_run
+
+- import_tasks: install.yml
+  become: true
+  when:
+    ( not __guacamole_exporter_is_installed.stat.exists ) or
+    ( __guacamole_exporter_current_version_output.stderr_lines[0].split(" ")[2] != guacamole_exporter_version ) or
+    ( guacamole_exporter_binary_local_dir | length > 0 )
+  tags:
+    - guacamole_exporter_install
+
+- import_tasks: selinux.yml
+  become: true
+  when: ansible_selinux.status == "enabled"
+  tags:
+    - guacamole_exporter_configure
+
+- import_tasks: configure.yml
+  become: true
+  tags:
+    - guacamole_exporter_configure
+
+- name: Ensure Guacamole Exporter is enabled on boot
+  become: true
+  systemd:
+    daemon_reload: true
+    name: guacamole_exporter
+    enabled: true
+    state: started
+  when:
+    - not ansible_check_mode
+  tags:
+    - guacamole_exporter_run

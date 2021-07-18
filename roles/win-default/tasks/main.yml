@@ -5,13 +5,14 @@
   win_chocolatey:
     name: {{ item }}
     state: present
-  loop: 
-    -  '7zip.install'
-    -  'baretail'
-    -  'curl'
-    -  'git'
-    -  'googlechrome'
-    -  'notepadplusplus'
-    -  'reportviewer2012' 
-    -  'sysinternals'
-    -  'windirstat'
+  loop:
+    - '7zip.install'
+    - 'baretail'
+    - 'curl'
+    - 'git'
+    - 'googlechrome'
+    - 'laps'
+    - 'notepadplusplus'
+    - 'reportviewer2012'
+    - 'sysinternals'
+    - 'windirstat'

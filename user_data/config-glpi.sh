@@ -2,7 +2,7 @@
 yum upgrade -y
 yum install wget httpd fontconfig -y
 
-yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
 
 yum upgrade -y
@@ -18,7 +18,7 @@ HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID
 FQDN="$HOSTNAME.evlab.ch"
 hostnamectl set-hostname $FQDN
 
-yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 
 
 yum upgrade -y

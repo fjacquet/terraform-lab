@@ -1,0 +1,33 @@
+---
+name: Molecule Test
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # run at 2 AM UTC
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y libvirt-dev
+          python3 -m pip install --upgrade pip
+          python3 -m pip install docker molecule[ansible,docker,test,lint]
+      - name: Test with molecule
+        run: |
+          molecule test --all

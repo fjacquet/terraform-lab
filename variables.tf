@@ -1,11 +1,11 @@
 variable "public_key" {
-  description = "openssh macbookpro"
-  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDeLAdDOiIivLR7n8J6A/KdqizTmVoBgglm7cdA8XK1q1fTimIbz73jwiYkFIdggn//fhL5ijTS/mFEF3X+GJ61W7Fczdzq9gt+o8h/wcrCI/Zm1tDxDCxRSXN87EvclVOM57yKTYLOzMXPTlhrR2JfbJRSHWZljO5HLcZm7WJgG/IZg1BFJovDRD4T2hpvQ37emJSUpvCq8+aTy6XPxCiHp5IwakIGm92l0vdope7eYLXaiXTTAghC8wABGLv885KZqg+uc3ao9oZXpdRbJR+xuBiiwx3R8R+/t8TnIw2cFLqRtUuB3CI33BX7h1P1bUoCOA6senaSLkQOZ5xRnJR/ fjacquet@fj-mbp"
+  description = "openssh aws"
+  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+sBJl4PYrY+DEjXFU8QUR2wGrZruh/PETMkr585aIv/F06K7vcpR012J9cjh3Ib14Kx5PAHhrm2r/jAnMPLaBZinJIDJGGuc/Tv/m/3P39Yl/QvfTZ/A2Cjy0g6Igmc4C3Kd6T0WBRqxWRxM3yRJRuq2Iv9UDCAasQ/UFZ4RAWiPWkrQVWsJvkkEXcJ/TciV0+DBodXTaQQ1Af8a8tHuzD9m5ALkdgpmjqwnrNwrJCKy4R7Kn1ZcDMn0ajrVux/ejXrPch8APzC4iS2dlGel+hbHHpeAszkiFZpNMZ6SOH2u6Qq5viPffMKoAM00m7MvEfFziRx/EDSFul1Wk78pC599Q1QtVGaDIvQZwyRRZoOCOqWc+PaBnUa43AcETEOQt+7BylIpxczvi0NcIemyeisXtxCrfTZk6rZHF3r/NeSKHEUxadTXvPZHjkS2l4hzqHwGCfpEOIKNpBXRWchcm4cnMuXh6/ZUTda5BsYGZjX74KfTxrBkOxz0+J6HPUws= fjacquet@mm-fj.ljf.home"
 }
 
 variable "key_name" {
   description = "Desired name of AWS key pair"
-  default     = "alfred"
+  default     = "aws"
 }
 
 variable "dns_suffix" {
@@ -13,14 +13,24 @@ variable "dns_suffix" {
   default     = "evlab.ch"
 }
 
+# variable "azs" {
+#   description = "AWS availability zone to launch servers."
+#   // type        = list(string)
+
+#   default = [
+#     "eu-west-1a",
+#     "eu-west-1b",
+#     "eu-west-1c",
+#   ]
+# }
+
 variable "azs" {
   description = "AWS availability zone to launch servers."
   // type        = list(string)
 
   default = [
     "eu-west-1a",
-    "eu-west-1b",
-    "eu-west-1c",
+
   ]
 }
 
@@ -88,17 +98,17 @@ variable "aws_number" {
     "exchange"   = 0
     "fs"         = 0
     "glpi"       = 0
-    "guacamole"  = 0
+    "guacamole"  = 1
     "ipam"       = 0
     "jumpbox"    = 1
     "nbu"        = 0
     "nps"        = 0
     "opscenter"  = 0
     "oracle"     = 0
-    "pki-crl"    = 1
-    "pki-ica"    = 1
-    "pki-rca"    = 1
-    "pki-ndes"   = 1
+    "pki-crl"    = 0
+    "pki-ica"    = 0
+    "pki-rca"    = 0
+    "pki-ndes"   = 0
     "rdsh"       = 0
     "redis"      = 0
     "sharepoint" = 0
@@ -116,18 +126,17 @@ variable "aws_amis" {
   type = map(string)
 
   default = {
-    "bsd"        = "ami-048e0d77"
-    "glpi"       = "ami-0c21ae4a3bd190229"
-    "guacamole"  = "ami-0c21ae4a3bd190229"
-    "jumpbox"    = "ami-088f9db67b4afec52"
-    "lnx"        = "ami-7c491f05"
-    "nbu"        = "ami-7c491f05"
-    "oracle"     = "ami-7c491f05"
-    "redis"      = "ami-7c491f05"
-    "sharepoint" = "ami-056d4676"
-    "sql"        = "ami-05b9370efd1cefcf4"
-    "win2012r2"  = "ami-04191f05759452cfa"
-    "win2016"    = "ami-088f9db67b4afec52"
-    "wsus"       = "ami-088f9db67b4afec52"
+    "bsd"        = "ami-0ec23856b3bad62d3"
+    "glpi"       = "ami-0ec23856b3bad62d3"
+    "guacamole"  = "ami-0ec23856b3bad62d3"
+    "jumpbox"    = "ami-0acec5a529be6b35a"
+    "lnx"        = "ami-0ec23856b3bad62d3"
+    "nbu"        = "ami-0ec23856b3bad62d3"
+    "oracle"     = "ami-0ec23856b3bad62d3"
+    "redis"      = "ami-0ec23856b3bad62d"
+    "sharepoint" = "ami-0acec5a529be6b35a"
+    "sql"        = "ami-0b710fe222abdeb24"
+    "win2019"    = "ami-0acec5a529be6b35a"
+    "wsus"       = "ami-0acec5a529be6b35a"
   }
 }

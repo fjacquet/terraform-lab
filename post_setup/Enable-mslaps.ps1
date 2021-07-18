@@ -1,7 +1,7 @@
 Import-Module -name ActiveDirectory
 Import-Module -name admpwd.ps
 
-$ad = get-addomain
+$ad = get-ADDomain
 $domain = $ad.DistinguishedName
 $dns = $ad.DNSRoot
 
@@ -43,8 +43,10 @@ Add-ADGroupMember -Identity $Group `
 Set-AdmPwdReadPasswordPermission `
     -AllowedPrincipals $group.SamAccountName `
     -Identity $serversou.name
+
 Set-AdmPwdResetPasswordPermission `
     -AllowedPrincipals $group.SamAccountName `
     -Identity $serversou.name
+
 Set-AdmPwdComputerSelfPermission `
     -Identity $serversou.name
