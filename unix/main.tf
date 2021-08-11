@@ -8,11 +8,11 @@ module "bsd" {
   dns_zone_id          = var.dns_zone_id
   dns_suffix           = var.dns_suffix
 
-  aws_sg_ids = [
-    module.nbu.aws_sg_client_id,
+  aws_sg_ids = flatten([
+    module.nbu.aws_sg_client_ids,
     aws_security_group.ssh.id,
-    var.aws_sg_simpanaclient_id,
-  ]
+    var.aws_sg_simpana_client_id,
+  ])
 }
 
 module "glpi" {
@@ -27,10 +27,10 @@ module "glpi" {
   dns_zone_id             = var.dns_zone_id
   dns_suffix              = var.dns_suffix
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.ssh.id,
     module.glpi.aws_sg_glpi_id,
-  ]
+  ])
 }
 
 module "guacamole" {
@@ -45,10 +45,10 @@ module "guacamole" {
   dns_zone_id             = var.dns_zone_id
   dns_suffix              = var.dns_suffix
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.ssh.id,
     module.guacamole.aws_sg_guacamole_id,
-  ]
+  ])
 }
 
 module "nbu" {
@@ -71,9 +71,9 @@ module "nbu" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.ssh.id,
-  ]
+  ])
 }
 
 module "oracle" {
@@ -94,12 +94,12 @@ module "oracle" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.ssh.id,
-    module.nbu.aws_sg_client_id,
+    module.nbu.aws_sg_client_ids,
     module.oracle.aws_sg_oracle_id,
-    var.aws_sg_simpanaclient_id,
-  ]
+    # var.aws_sg_simpana_client_id,
+  ])
 }
 
 module "redis" {
@@ -114,10 +114,10 @@ module "redis" {
   dns_zone_id             = var.dns_zone_id
   dns_suffix              = var.dns_suffix
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.ssh.id,
     module.redis.aws_sg_redis_id,
-  ]
+  ])
 }
 
 resource "aws_security_group" "ssh" {

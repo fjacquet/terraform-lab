@@ -14,24 +14,24 @@ module "global" {
 }
 
 module "unix" {
-  source                  = "./unix"
-  aws_amis                = var.aws_amis
-  aws_disks_size          = var.aws_disks_size
-  aws_iip_assumerole_name = module.global.aws_iip_assumerole
-  aws_key_pair_auth_id    = aws_key_pair.auth.id
-  aws_number              = var.aws_number
-  aws_region              = var.aws_region
-  # aws_sg_simpanaclient_id = module.microsoft.aws_sg_simpanaclient_id
-  aws_subnet_back_id   = module.global.aws_subnet_back_id
-  aws_subnet_backup_id = module.global.aws_subnet_backup_id
-  aws_subnet_mgmt_id   = module.global.aws_subnet_mgmt_id
-  aws_subnet_web_id    = module.global.aws_subnet_web_id
-  aws_vpc_id           = module.global.aws_vpc_id
-  vpc_cidr             = module.global.vpc_cidr
-  dns_zone_id          = module.global.dns_zone_id
-  azs                  = var.azs
-  cidrbyte             = var.cidrbyte
-  dns_suffix           = var.dns_suffix
+  source                   = "./unix"
+  aws_amis                 = var.aws_amis
+  aws_disks_size           = var.aws_disks_size
+  aws_iip_assumerole_name  = module.global.aws_iip_assumerole
+  aws_key_pair_auth_id     = aws_key_pair.auth.id
+  aws_number               = var.aws_number
+  aws_region               = var.aws_region
+  aws_sg_simpana_client_id = module.microsoft.aws_sg_simpana_client_id
+  aws_subnet_back_id       = module.global.aws_subnet_back_id
+  aws_subnet_backup_id     = module.global.aws_subnet_backup_id
+  aws_subnet_mgmt_id       = module.global.aws_subnet_mgmt_id
+  aws_subnet_web_id        = module.global.aws_subnet_web_id
+  aws_vpc_id               = module.global.aws_vpc_id
+  vpc_cidr                 = module.global.vpc_cidr
+  dns_zone_id              = module.global.dns_zone_id
+  azs                      = var.azs
+  cidrbyte                 = var.cidrbyte
+  dns_suffix               = var.dns_suffix
 }
 
 module "microsoft" {
@@ -41,7 +41,7 @@ module "microsoft" {
   aws_key_pair_auth_id    = aws_key_pair.auth.id
   aws_number              = var.aws_number
   aws_region              = var.aws_region
-  aws_sg_nbuclient_id     = module.unix.aws_sg_nbuclient_id
+  aws_sg_nbuclient_ids    = module.unix.aws_sg_nbuclient_ids
   aws_subnet_back_id      = module.global.aws_subnet_back_id
   aws_subnet_backup_id    = module.global.aws_subnet_backup_id
   aws_subnet_exchange_id  = module.global.aws_subnet_exchange_id

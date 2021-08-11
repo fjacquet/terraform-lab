@@ -75,9 +75,9 @@ resource "aws_security_group" "master" {
     to_port   = 1556
     protocol  = "tcp"
 
-    security_groups = [
-      aws_security_group.client.id,
-    ]
+    security_groups = flatten([
+      aws_security_group.client.*.id,
+    ])
   }
 
   # novnc
@@ -111,82 +111,82 @@ resource "aws_security_group" "master" {
 
   # vnetd
   ingress {
-    from_port = 13724
-    to_port   = 13724
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 13724
+    to_port     = 13724
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # at port
   ingress {
-    from_port = 2821
-    to_port   = 2821
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 2821
+    to_port     = 2821
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # auth-port
   ingress {
-    from_port = 4032
-    to_port   = 4032
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 4032
+    to_port     = 4032
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # spad port
   ingress {
-    from_port = 10102
-    to_port   = 10102
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 10102
+    to_port     = 10102
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # spoold port
   ingress {
-    from_port = 10082
-    to_port   = 10082
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 10082
+    to_port     = 10082
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # portmapper nfs port
   ingress {
-    from_port = 111
-    to_port   = 111
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 111
+    to_port     = 111
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # portmapper nfs port
   ingress {
-    from_port = 2049
-    to_port   = 2049
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 2049
+    to_port     = 2049
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # portmapper nfs port
   ingress {
-    from_port = 29588
-    to_port   = 29588
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 29588
+    to_port     = 29588
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # nbfsd nfs port
   ingress {
-    from_port = 7394
-    to_port   = 7394
-    protocol  = "tcp"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 7394
+    to_port     = 7394
+    protocol    = "tcp"
+    cidr_blocks = var.cidr
   }
 
   # access from media/master
   ingress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = var.cidr
   }
 
   # outbound internet access
@@ -213,10 +213,10 @@ resource "aws_security_group" "client" {
 
   # access from media/master
   ingress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = var.cidr
   }
 
   # outbound internet access

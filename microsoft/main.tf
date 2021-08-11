@@ -19,15 +19,17 @@ module "adcs" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+
+
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
-    module.adcs.aws_sg_pki-crl_id,
-    module.adcs.aws_sg_pki-ica_id,
-    module.adcs.aws_sg_pki-rca_id,
+    module.adcs.aws_sg_pki-crl_ids,
+    module.adcs.aws_sg_pki-ica_ids,
+    module.adcs.aws_sg_pki-rca_ids,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "adds" {
@@ -49,13 +51,13 @@ module "adds" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.adds.aws_sg_dc_id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 
   aws_sg_domain_member = aws_security_group.domain-member.id
 }
@@ -79,13 +81,13 @@ module "adfs" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.adds.aws_sg_dc_id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 # module "dfs" {
@@ -111,13 +113,13 @@ module "dhcp" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     module.dhcp.aws_sg_dhcp_id,
     aws_security_group.domain-member.id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "da" {
@@ -139,13 +141,13 @@ module "da" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.da.aws_sg_da_id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "exchange" {
@@ -167,13 +169,13 @@ module "exchange" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["exchange3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.exchange.aws_sg_exchange_id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "fs" {
@@ -195,13 +197,13 @@ module "fs" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     module.fs.aws_sg_fs_id,
     aws_security_group.domain-member.id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 
   aws_sg_domain_members = aws_security_group.domain-member.id
 }
@@ -225,13 +227,13 @@ module "ipam" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.ipam.aws_sg_ipam_id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "jumpbox" {
@@ -247,12 +249,12 @@ module "jumpbox" {
   dns_zone_id             = var.dns_zone_id
   dns_suffix              = var.dns_suffix
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "nps" {
@@ -274,13 +276,13 @@ module "nps" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.nps.aws_sg_nps_id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "rdsh" {
@@ -303,13 +305,13 @@ module "rdsh" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.rdsh.aws_sg_rdsh_id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "sharepoint" {
@@ -331,13 +333,13 @@ module "sharepoint" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["web3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.sharepoint.aws_sg_sharepoint_id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "sql" {
@@ -359,13 +361,13 @@ module "sql" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["sql3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.simpana.aws_sg_client_id,
     module.sql.aws_sg_sql_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 }
 
 module "workfolders" {
@@ -391,11 +393,11 @@ module "simpana" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     # module.simpana.aws_sg_client_id,
-  ]
+  ])
 }
 
 module "sofs" {
@@ -417,13 +419,13 @@ module "sofs" {
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["back3.${var.aws_region}"]),
   ]
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     module.sofs.aws_sg_sofs_id,
     aws_security_group.domain-member.id,
     module.simpana.aws_sg_client_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 
   aws_sg_domain_members = aws_security_group.domain-member.id
 }
@@ -441,13 +443,13 @@ module "wac" {
   dns_zone_id             = var.dns_zone_id
   dns_suffix              = var.dns_suffix
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.simpana.aws_sg_client_id,
     module.wac.aws_sg_wac_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 
   cidr = [
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["mgmt1.${var.aws_region}"]),
@@ -469,13 +471,13 @@ module "wds" {
   dns_zone_id             = var.dns_zone_id
   dns_suffix              = var.dns_suffix
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.simpana.aws_sg_client_id,
     module.wds.aws_sg_wds_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 
   cidr = [
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup1.${var.aws_region}"]),
@@ -497,13 +499,13 @@ module "wsus" {
   dns_zone_id             = var.dns_zone_id
   dns_suffix              = var.dns_suffix
 
-  aws_sg_ids = [
+  aws_sg_ids = flatten([
     aws_security_group.rdp.id,
     aws_security_group.domain-member.id,
     module.simpana.aws_sg_client_id,
     module.wsus.aws_sg_wsus_id,
-    var.aws_sg_nbuclient_id,
-  ]
+    var.aws_sg_nbuclient_ids,
+  ])
 
   cidr = [
     cidrsubnet(var.vpc_cidr, 8, var.cidrbyte["backup1.${var.aws_region}"]),

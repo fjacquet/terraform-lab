@@ -37,10 +37,10 @@ resource "aws_instance" "pki-ica" {
   }
 
   # Our Security group to allow RDP access
-  vpc_security_group_ids = [
-    var.aws_sg_ids,
-    aws_security_group.pki-ica.id,
-  ]
+  vpc_security_group_ids = flatten([
+    # var.aws_sg_ids,
+    aws_security_group.pki-ica.*.id,
+  ])
 }
 
 # A security group for basic windows box
@@ -50,11 +50,11 @@ resource "aws_security_group" "pki-ica" {
   vpc_id      = var.aws_vpc_id
 
   ingress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-    self      = true
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    self        = true
+    cidr_blocks = var.cidr
   }
 
   # outbound internet access

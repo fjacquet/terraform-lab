@@ -39,8 +39,8 @@ resource "aws_instance" "pki-nde" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = [
-    var.aws_sg_ids,
-    # aws_security_group.pki-ndes.id,
+    # var.aws_sg_ids,
+    aws_security_group.pki-ndes.id,
   ]
 }
 
@@ -51,11 +51,11 @@ resource "aws_security_group" "pki-ndes" {
   vpc_id      = var.aws_vpc_id
 
   ingress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-    self      = true
-    cidr_blocks = [element(var.cidr, count.index)]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    self        = true
+    cidr_blocks = var.cidr
   }
 
   # outbound internet access

@@ -13,26 +13,26 @@ variable "dns_suffix" {
   default     = "evlab.ch"
 }
 
-# variable "azs" {
-#   description = "AWS availability zone to launch servers."
-#   // type        = list(string)
-
-#   default = [
-#     "eu-west-1a",
-#     "eu-west-1b",
-#     "eu-west-1c",
-#   ]
-# }
-
 variable "azs" {
   description = "AWS availability zone to launch servers."
   // type        = list(string)
 
   default = [
     "eu-west-1a",
-
+    "eu-west-1b",
+    "eu-west-1c",
   ]
 }
+
+# variable "azs" {
+#   description = "AWS availability zone to launch servers."
+#   // type        = list(string)
+
+#   default = [
+#     "eu-west-1a",
+
+#   ]
+# }
 
 # Region
 variable "aws_region" {
@@ -93,14 +93,18 @@ variable "aws_number" {
     "adfs"       = 0
     "bsd"        = 0
     "da"         = 0
-    "dc"         = 1
+    "dc"         = 0
     "dhcp"       = 0
     "exchange"   = 0
     "fs"         = 0
     "glpi"       = 0
-    "guacamole"  = 1
+    "guacamole"  = 0
     "ipam"       = 0
-    "jumpbox"    = 1
+    "jumpbox"    = 0
+    "etcd"       = 0
+    "workers"    = 0
+    "longhorn"   = 0
+    "rancher"    = 0
     "nbu"        = 0
     "nps"        = 0
     "opscenter"  = 0
