@@ -1,10 +1,33 @@
 {
-    "ARN": "arn:aws:secretsmanager:eu-west-1:240388846865:secret:evlab/ad/joinuser-26tJjK",
-    "Name": "evlab.ch/ad/joinuser",
-    "VersionId": "a83ac178-9bf5-4d3e-bb9e-fd916606aaec",
-    "SecretString": "{\"joinuser\":\"Alib4b4-2016!\"}",
-    "VersionStages": [
-        "AWSCURRENT"
-    ],
-    "CreatedDate": 1538514786.83
+  "Architecture": "x86_64",
+  "CreationDate": "2019-05-13T18:27:56.000Z",
+  "ImageId": "ami-000037ee86985ff3b",
+  "ImageLocation": "amazon/Deep Learning AMI (Amazon Linux) Version 23.0",
+  "ImageType": "machine",
+  "Public": true,
+  "OwnerId": "898082745236",
+  "PlatformDetails": "Linux/UNIX",
+  "UsageOperation": "RunInstances",
+  "State": "available",
+  "BlockDeviceMappings": [
+    {
+      "DeviceName": "/dev/xvda",
+      "Ebs": {
+        "DeleteOnTermination": true,
+        "SnapshotId": "snap-072931ecebd3d1c1f",
+        "VolumeSize": 75,
+        "VolumeType": "gp2",
+        "Encrypted": false
+      }
+    }
+  ],
+  "Description": "MXNet-1.4, TensorFlow-1.13, PyTorch-1.1, Keras-2.2, Chainer-5.4, Caffe/2-0.8, Theano-1.0 & CNTK-2.7, configured with NVIDIA CUDA, cuDNN, NCCL, Intel MKL-DNN, Docker & NVIDIA-Docker. For a fully managed experience, check: https://aws.amazon.com/sagemaker",
+  "EnaSupport": true,
+  "Hypervisor": "xen",
+  "ImageOwnerAlias": "amazon",
+  "Name": "Deep Learning AMI (Amazon Linux) Version 23.0",
+  "RootDeviceName": "/dev/xvda",
+  "RootDeviceType": "ebs",
+  "SriovNetSupport": "simple",
+  "VirtualizationType": "hvm"
 }

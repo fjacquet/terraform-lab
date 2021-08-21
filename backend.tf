@@ -5,14 +5,21 @@ terraform {
       version = "~> 3.0"
     }
   }
+  backend "remote" {
+    organization = "fjacquet"
 
-  backend "s3" {
-    encrypt = true
-    bucket  = "tf-config"
-    # dynamodb_table = "terraform-state-lock-dynamo"
-    region = "eu-west-1"
-    key    = "evlab/terraform.tfstate"
+    workspaces {
+      name = "terraform-lab"
+    }
   }
+
+  # backend "s3" {
+  #   encrypt = true
+  #   bucket  = "tf-config"
+  #   # dynamodb_table = "terraform-state-lock-dynamo"
+  #   region = "eu-west-1"
+  #   key    = "evlab/terraform.tfstate"
+  # }
 }
 
 provider "aws" {

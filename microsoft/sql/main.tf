@@ -1,5 +1,4 @@
 resource "aws_route53_record" "sql" {
-resource "aws_route53_record" "sql" {
   count   = var.aws_number
   zone_id = var.dns_zone_id
   name    = "sql-${count.index}.${var.dns_suffix}"

@@ -98,7 +98,7 @@ variable "aws_number" {
     "exchange"   = 0
     "fs"         = 0
     "glpi"       = 0
-    "guacamole"  = 0
+    "guacamole"  = 1
     "ipam"       = 0
     "jumpbox"    = 0
     "etcd"       = 0
@@ -132,6 +132,10 @@ variable "aws_amis" {
   default = {
     "bsd"        = "ami-0ec23856b3bad62d3"
     "glpi"       = "ami-0ec23856b3bad62d3"
+    "etcd"       = "ami-0ec23856b3bad62d3"
+    "workers"    = "ami-0ec23856b3bad62d3"
+    "rancher"    = "ami-0ec23856b3bad62d3"
+    "longhorn"   = "ami-0ec23856b3bad62d3"
     "guacamole"  = "ami-0ec23856b3bad62d3"
     "jumpbox"    = "ami-0acec5a529be6b35a"
     "lnx"        = "ami-0ec23856b3bad62d3"
@@ -143,4 +147,65 @@ variable "aws_amis" {
     "win2019"    = "ami-0acec5a529be6b35a"
     "wsus"       = "ami-0acec5a529be6b35a"
   }
+}
+
+data "aws_ami" "windows-2019" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2019-English-Full-Base-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}
+data "aws_ami" "sql-2019" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2019-English-Full-SQL_2019_Enterprise-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}
+data "aws_ami" "windows-2016" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2016-English-Full-Base-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}
+data "aws_ami" "sql-2016" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2016-English-Full-SQL_2017_Standard-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}
+data "aws_ami" "rhel-8" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2019-English-Full-Base-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
 }

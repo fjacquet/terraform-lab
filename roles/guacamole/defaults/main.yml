@@ -1,8 +1,0 @@
----
-# defaults file for ansible-role-guacamole-exporter
-guacamole_exporter_version: 0.1.1
-guacamole_exporter_binary_local_dir: ""
-guacamole_exporter_web_listen_address: "0.0.0.0:9623"
-guacamole_exporter_web_telemetry_path: "/metrics"
-
-guacamole_exporter_environment_file: "/etc/guacamole_exporter.conf"
