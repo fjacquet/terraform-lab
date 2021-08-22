@@ -15,10 +15,10 @@ yum clean all
 pip install --upgrade pip
 pip install awscli --upgrade --user
 export PATH=$PATH:/root/.local/bin
-INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) #DevSkim: ignore DS137138
+INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)                                               #DevSkim: ignore DS137138
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138
-HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text |grep Name |awk '{print $5}')
-PASSWD=$(aws secretsmanager get-secret-value --secret-id "ez-lab.xyz/redis/root" --output json|jq -r '.SecretString')
+HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text | grep Name | awk '{print $5}')
+PASSWD=$(aws secretsmanager get-secret-value --secret-id "ez-lab.xyz/redis/root" --output json | jq -r '.SecretString')
 FQDN="$HOSTNAME.ez-lab.xyz"
 hostnamectl set-hostname "$FQDN"
 
@@ -27,7 +27,7 @@ redis-cli ping
 SECURE=$(echo "$PASSWD" | sha256sum)
 
 sed -i "s/# requirepass foobared/requirepass $SECURE/" /etc/redis.conf
-cat >> /etc/redis.conf << EOF
+cat >>/etc/redis.conf <<EOF
 rename-command FLUSHDB ""
 rename-command FLUSHALL ""
 rename-command DEBUG ""

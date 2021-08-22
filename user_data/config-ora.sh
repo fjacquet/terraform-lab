@@ -2,9 +2,9 @@
 yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
 yum -y upgrade
-yum -y install wget numactl  xorg-x11-xauth unzip  libXrender
+yum -y install wget numactl xorg-x11-xauth unzip libXrender
 yum -y install binutils ksh
-yum -y install compat-libstdc++-33  compat-libstdc++-33.i686
+yum -y install compat-libstdc++-33 compat-libstdc++-33.i686
 yum -y install gcc gcc-c++
 yum -y install glibc glibc.i686
 yum -y install glibc-devel glibc-devel.i686
@@ -27,7 +27,6 @@ yum -y install rlwrap
 yum -y install cockpit cockpit-storaged
 sed -i "s/SELINUX=enforcing/SELINUX=permissive/" /etc/selinux/config
 
-
 groupadd -g 54321 oinstall
 groupadd -g 54322 dba
 groupadd -g 54323 oper
@@ -41,13 +40,12 @@ useradd -u 54321 -g oinstall -G dba,oper oracle
 
 mkdir -p /u01/app/oracle/product/12.2/db_1
 mkfs.xfs /dev/nvme1n1
-echo "/dev/nvme1n1      /u01     xfs     defaults     0 0 " >> /etc/fstab
-
+echo "/dev/nvme1n1      /u01     xfs     defaults     0 0 " >>/etc/fstab
 
 chown -R oracle:oinstall /u01
 chmod -R 775 /u01
 mount -a
-cat >> /etc/sysctl.conf << EOF
+cat >>/etc/sysctl.conf <<EOF
 fs.file-max = 6815744
 kernel.sem = 250 32000 100 128
 kernel.shmmni = 4096
@@ -64,10 +62,10 @@ fs.aio-max-nr = 1048576
 net.ipv4.ip_local_port_range = 9000 65500
 EOF
 
-echo "export PATH=\$PATH:/usr/openv/netbackup/bin:/usr/openv/netbackup/bin/admincmd:/usr/openv/netbackup/bin/goodies:/usr/openv/netbackup/bin/support" >> /etc/profile.d/netbackup.sh
-chmod 755  /etc/profile.d/netbackup.sh
+echo "export PATH=\$PATH:/usr/openv/netbackup/bin:/usr/openv/netbackup/bin/admincmd:/usr/openv/netbackup/bin/goodies:/usr/openv/netbackup/bin/support" >>/etc/profile.d/netbackup.sh
+chmod 755 /etc/profile.d/netbackup.sh
 sysctl -p
-cat >> /etc/security/limits.conf << EOF
+cat >>/etc/security/limits.conf <<EOF
 oracle   soft   nofile    1024
 oracle   hard   nofile    65536
 oracle   soft   nproc    16384
@@ -82,14 +80,14 @@ yum install python
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 sudo python get-pip.py
 sudo pip install awscli
-INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) #DevSkim: ignore DS137138
+INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)                                               #DevSkim: ignore DS137138
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138
-HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text |grep Name|awk '{print $5}')
+HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text | grep Name | awk '{print $5}')
 FQDN="$HOSTNAME.ez-lab.xyz"
 hostnamectl set-hostname "$FQDN"
 
 sudo sed -i "s/127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4/127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 $HOSTNAME/" /etc/hosts
-cat >> oracle.sh << EOF
+cat >>oracle.sh <<EOF
 # Oracle Settings
 export TMP=/tmp
 export TMPDIR=\$TMP
@@ -109,12 +107,12 @@ alias rlsqlplus='rlwrap sqlplus'
 alias rlrman='rlwrap rman'
 EOF
 mv oracle.sh /etc/profile.d/
-chmod 755  /etc/profile.d/oracle.sh
+chmod 755 /etc/profile.d/oracle.sh
 
 cd /u01 || exit
 rm -rf .aws/credentials
 
-aws s3 cp s3://installers-fja/linuxx64_12201_database.zip   /u01/linuxx64_12201_database.zip
+aws s3 cp s3://installers-fja/linuxx64_12201_database.zip /u01/linuxx64_12201_database.zip
 
 unzip /u01/linuxx64_12201_database.zip
 chown -R oracle:dba /u01
@@ -122,6 +120,6 @@ chown -R oracle:dba /u01
 cp -r /home/ec2-user/.ssh/ /home/oracle/
 chown -R oracle:dba /home/oracle/.ssh/
 
- systemctl start cockpit
- systemctl enable cockpit
+systemctl start cockpit
+systemctl enable cockpit
 reboot

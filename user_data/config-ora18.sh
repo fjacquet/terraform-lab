@@ -28,7 +28,6 @@ yum -y install rlwrap
 yum -y install cockpit cockpit-storaged
 sed -i "s/SELINUX=enforcing/SELINUX=permissive/" /etc/selinux/config
 
-
 groupadd -g 54321 oinstall
 groupadd -g 54322 dba
 groupadd -g 54323 oper
@@ -42,8 +41,7 @@ useradd -u 54321 -g oinstall -G dba,oper oracle
 
 mkdir -p /u01/app/oracle/product/12.2/db_1
 mkfs.xfs /dev/nvme1n1
-echo "/dev/nvme1n1      /u01     xfs     defaults     0 0 " >> /etc/fstab
-
+echo "/dev/nvme1n1      /u01     xfs     defaults     0 0 " >>/etc/fstab
 
 # chown -R oracle:oinstall /u01
 # chmod -R 775 /u01
@@ -65,8 +63,8 @@ echo "/dev/nvme1n1      /u01     xfs     defaults     0 0 " >> /etc/fstab
 # net.ipv4.ip_local_port_range = 9000 65500
 # EOF
 
-echo "export PATH=\$PATH:/usr/openv/netbackup/bin:/usr/openv/netbackup/bin/admincmd:/usr/openv/netbackup/bin/goodies:/usr/openv/netbackup/bin/support" >> /etc/profile.d/netbackup.sh
-chmod 755  /etc/profile.d/netbackup.sh
+echo "export PATH=\$PATH:/usr/openv/netbackup/bin:/usr/openv/netbackup/bin/admincmd:/usr/openv/netbackup/bin/goodies:/usr/openv/netbackup/bin/support" >>/etc/profile.d/netbackup.sh
+chmod 755 /etc/profile.d/netbackup.sh
 sysctl -p
 # cat >> /etc/security/limits.conf << EOF
 # oracle   soft   nofile    1024
@@ -83,9 +81,9 @@ yum -y install python
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 python get-pip.py
 pip install awscli
-INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) #DevSkim: ignore DS137138
+INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)                                               #DevSkim: ignore DS137138
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138
-HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text |grep Name|awk '{print $5}')
+HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text | grep Name | awk '{print $5}')
 FQDN="$HOSTNAME.ez-lab.xyz"
 hostnamectl set-hostname "$FQDN"
 
@@ -115,8 +113,7 @@ hostnamectl set-hostname "$FQDN"
 cd /u01 || exit
 rm -rf .aws/credentials
 
-
-aws s3 cp s3://installers-fja/oracle-database-ee-18c-1.0-1.x86_64.rpm   /u01/oracle-database-ee-18c-1.0-1.x86_64.rpm
+aws s3 cp s3://installers-fja/oracle-database-ee-18c-1.0-1.x86_64.rpm /u01/oracle-database-ee-18c-1.0-1.x86_64.rpm
 
 # unzip /u01/linuxx64_12201_database.zip
 chown -R oracle:dba /u01
