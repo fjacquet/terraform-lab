@@ -1,3 +1,3 @@
 output "dns_zone_id" {
-  value = aws_route53_zone.evlab.id
+  value = aws_route53_zone.ezlab.id
 }

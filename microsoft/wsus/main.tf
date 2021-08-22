@@ -59,7 +59,7 @@ resource "aws_ebs_volume" "wsus_d" {
 }
 
 resource "aws_security_group" "wsus" {
-  name        = "tf_evlab_wsus"
+  name        = "tf_ezlab_wsus"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

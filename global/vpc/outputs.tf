@@ -1,9 +1,9 @@
 output "aws_vpc_id" {
-  value = aws_vpc.evlab.id
+  value = aws_vpc.ezlab.id
 }
 
 output "vpc_cidr" {
-  value = aws_vpc.evlab.cidr_block
+  value = aws_vpc.ezlab.cidr_block
 }
 
 output "aws_subnet_back_id" {
@@ -25,4 +25,3 @@ output "aws_subnet_exchange_id" {
 output "aws_subnet_mgmt_id" {
   value = aws_subnet.mgmt.*.id
 }
-

@@ -24,7 +24,7 @@
         <Account>
             <AddToLocalAdminsDuringSetup>true</AddToLocalAdminsDuringSetup>
             <LeaveInLocalAdmins>false</LeaveInLocalAdmins>
-            <Username>evlab\SP_Farm</Username>
+            <Username>ezlab\SP_Farm</Username>
             <Password>Cisco1234*</Password>
         </Account>
         <CentralAdmin Provision="SPMGMT-0.ez-lab.xyz">
@@ -67,25 +67,25 @@
         </ServerRoles>
         <ManagedAccounts>
             <ManagedAccount CommonName="spservice">
-                <Username>evlab\SP_Services</Username>
+                <Username>ezlab\SP_Services</Username>
                 <Password>Cisco1234*</Password>
             </ManagedAccount>
             <ManagedAccount CommonName="Portal">
-                <Username>evlab\SP_PortalAppPool</Username>
+                <Username>ezlab\SP_PortalAppPool</Username>
                 <Password>Cisco1234*</Password>
             </ManagedAccount>
             <ManagedAccount CommonName="MySiteHost">
-                <Username>evlab\SP_ProfilesAppPool</Username>
+                <Username>ezlab\SP_ProfilesAppPool</Username>
                 <Password>Cisco1234*</Password>
             </ManagedAccount>
             <ManagedAccount CommonName="SearchService">
-                <Username>evlab\SP_SearchService</Username>
+                <Username>ezlab\SP_SearchService</Username>
                 <Password>Cisco1234*</Password>
             </ManagedAccount>
         </ManagedAccounts>
         <ObjectCacheAccounts>
-            <SuperUser>evlab\SP_CacheSuperUser</SuperUser>
-            <SuperReader>evlab\SP_CacheSuperReader</SuperReader>
+            <SuperUser>ezlab\SP_CacheSuperUser</SuperUser>
+            <SuperReader>ezlab\SP_CacheSuperReader</SuperReader>
         </ObjectCacheAccounts>
         <Logging>
             <IISLogs Compress="true">

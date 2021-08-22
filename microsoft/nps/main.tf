@@ -41,7 +41,7 @@ resource "aws_instance" "nps" {
 }
 
 resource "aws_security_group" "nps" {
-  name        = "tf_evlab_nps"
+  name        = "tf_ezlab_nps"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
@@ -76,4 +76,3 @@ resource "aws_security_group" "nps" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

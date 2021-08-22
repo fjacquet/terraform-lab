@@ -46,7 +46,7 @@ resource "aws_instance" "exchange" {
 }
 
 resource "aws_security_group" "exchange" {
-  name        = "tf_evlab_windows_exchange"
+  name        = "tf_ezlab_windows_exchange"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

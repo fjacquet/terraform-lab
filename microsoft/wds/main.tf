@@ -45,7 +45,7 @@ resource "aws_instance" "wds" {
 }
 
 resource "aws_security_group" "wds" {
-  name        = "tf_evlab_wds"
+  name        = "tf_ezlab_wds"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
@@ -85,4 +85,3 @@ resource "aws_security_group" "wds" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

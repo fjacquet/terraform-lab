@@ -36,6 +36,6 @@ Install-WindowsFeature Server-Media-Foundation, `
 # Prepare AD schema for Excahnge
 setup.exe /PrepareSchema /IAcceptExchangeServerLicenseTerms
 Setup.exe /IAcceptExchangeServerLicenseTerms /PrepareAllDomains
-setup.exe /PrepareAD /OrganizationName:"evLab" /IAcceptExchangeServerLicenseTerms
+setup.exe /PrepareAD /OrganizationName:"ezlab" /IAcceptExchangeServerLicenseTerms
 # Install mailbox role
 setup.exe /Mode:Install /Role:Mailbox /IAcceptExchangeServerLicenseTerms

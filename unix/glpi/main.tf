@@ -24,7 +24,7 @@ resource "aws_instance" "glpi" {
 }
 
 resource "aws_security_group" "glpi" {
-  name        = "tf_evlab_glpi"
+  name        = "tf_ezlab_glpi"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

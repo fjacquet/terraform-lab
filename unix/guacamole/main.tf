@@ -24,7 +24,7 @@ resource "aws_instance" "guacamole" {
 }
 
 resource "aws_security_group" "guacamole" {
-  name        = "tf_evlab_guacamole"
+  name        = "tf_ezlab_guacamole"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

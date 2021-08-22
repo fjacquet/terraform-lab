@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------------
 # Create a VPC and GW
 #-----------------------------------------------------------------------------
-resource "aws_vpc" "evlab" {
+resource "aws_vpc" "ezlab" {
   cidr_block                       = "10.0.0.0/16"
   enable_dns_hostnames             = "true"
   enable_dns_support               = "true"
@@ -9,11 +9,11 @@ resource "aws_vpc" "evlab" {
 }
 
 resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.evlab.id
+  vpc_id = aws_vpc.ezlab.id
 }
 
 resource "aws_egress_only_internet_gateway" "egw6" {
-  vpc_id = aws_vpc.evlab.id
+  vpc_id = aws_vpc.ezlab.id
 }
 
 #-----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ resource "aws_nat_gateway" "natgw" {
 #-----------------------------------------------------------------------------
 
 resource "aws_route_table" "public-rt" {
-  vpc_id = aws_vpc.evlab.id
+  vpc_id = aws_vpc.ezlab.id
 
   route {
     ipv6_cidr_block        = "::/0"
@@ -66,13 +66,13 @@ resource "aws_route_table" "public-rt" {
 resource "aws_subnet" "gw" {
   assign_ipv6_address_on_creation = true
   availability_zone               = element(var.azs, count.index)
-  cidr_block                      = cidrsubnet(aws_vpc.evlab.cidr_block, 8, element(var.cidrbyte_gw, count.index), )
+  cidr_block                      = cidrsubnet(aws_vpc.ezlab.cidr_block, 8, element(var.cidrbyte_gw, count.index), )
   count                           = length(var.azs)
   map_public_ip_on_launch         = true
-  vpc_id                          = aws_vpc.evlab.id
+  vpc_id                          = aws_vpc.ezlab.id
 
   ipv6_cidr_block = cidrsubnet(
-    aws_vpc.evlab.ipv6_cidr_block,
+    aws_vpc.ezlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_gw, count.index),
   )
@@ -87,12 +87,12 @@ resource "aws_subnet" "gw" {
 resource "aws_subnet" "mgmt" {
   assign_ipv6_address_on_creation = true
   availability_zone               = element(var.azs, count.index)
-  cidr_block                      = cidrsubnet(aws_vpc.evlab.cidr_block, 8, element(var.cidrbyte_mgmt, count.index), )
+  cidr_block                      = cidrsubnet(aws_vpc.ezlab.cidr_block, 8, element(var.cidrbyte_mgmt, count.index), )
   count                           = 1
   map_public_ip_on_launch         = true
-  vpc_id                          = aws_vpc.evlab.id
+  vpc_id                          = aws_vpc.ezlab.id
   ipv6_cidr_block = cidrsubnet(
-    aws_vpc.evlab.ipv6_cidr_block,
+    aws_vpc.ezlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_mgmt, count.index),
   )
@@ -123,12 +123,12 @@ resource "aws_route_table_association" "public_subnet_mgmt_association" {
 resource "aws_subnet" "back" {
   assign_ipv6_address_on_creation = true
   availability_zone               = element(var.azs, count.index)
-  cidr_block                      = cidrsubnet(aws_vpc.evlab.cidr_block, 8, element(var.cidrbyte_back, count.index), )
+  cidr_block                      = cidrsubnet(aws_vpc.ezlab.cidr_block, 8, element(var.cidrbyte_back, count.index), )
   count                           = length(var.azs)
   map_public_ip_on_launch         = false
-  vpc_id                          = aws_vpc.evlab.id
+  vpc_id                          = aws_vpc.ezlab.id
   ipv6_cidr_block = cidrsubnet(
-    aws_vpc.evlab.ipv6_cidr_block,
+    aws_vpc.ezlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_back, count.index),
   )
@@ -139,17 +139,17 @@ resource "aws_subnet" "back" {
 }
 
 resource "aws_subnet" "backup" {
-  vpc_id = aws_vpc.evlab.id
+  vpc_id = aws_vpc.ezlab.id
   count  = length(var.azs)
   cidr_block = cidrsubnet(
-    aws_vpc.evlab.cidr_block,
+    aws_vpc.ezlab.cidr_block,
     8,
     element(var.cidrbyte_backup, count.index),
   )
   availability_zone       = element(var.azs, count.index)
   map_public_ip_on_launch = false
   ipv6_cidr_block = cidrsubnet(
-    aws_vpc.evlab.ipv6_cidr_block,
+    aws_vpc.ezlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_backup, count.index),
   )
@@ -162,17 +162,17 @@ resource "aws_subnet" "backup" {
 }
 
 resource "aws_subnet" "exchange" {
-  vpc_id = aws_vpc.evlab.id
+  vpc_id = aws_vpc.ezlab.id
   count  = length(var.azs)
   cidr_block = cidrsubnet(
-    aws_vpc.evlab.cidr_block,
+    aws_vpc.ezlab.cidr_block,
     8,
     element(var.cidrbyte_exchange, count.index),
   )
   availability_zone       = element(var.azs, count.index)
   map_public_ip_on_launch = false
   ipv6_cidr_block = cidrsubnet(
-    aws_vpc.evlab.ipv6_cidr_block,
+    aws_vpc.ezlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_exchange, count.index),
   )
@@ -185,18 +185,18 @@ resource "aws_subnet" "exchange" {
 }
 
 resource "aws_subnet" "web" {
-  vpc_id                          = aws_vpc.evlab.id
+  vpc_id                          = aws_vpc.ezlab.id
   count                           = length(var.azs)
   availability_zone               = element(var.azs, count.index)
   map_public_ip_on_launch         = true
   assign_ipv6_address_on_creation = true
   cidr_block = cidrsubnet(
-    aws_vpc.evlab.cidr_block,
+    aws_vpc.ezlab.cidr_block,
     8,
     element(var.cidrbyte_web, count.index),
   )
   ipv6_cidr_block = cidrsubnet(
-    aws_vpc.evlab.ipv6_cidr_block,
+    aws_vpc.ezlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_web, count.index),
   )
@@ -209,7 +209,7 @@ resource "aws_subnet" "web" {
 
 resource "aws_route_table" "private-rt" {
   count  = length(var.azs)
-  vpc_id = aws_vpc.evlab.id
+  vpc_id = aws_vpc.ezlab.id
 
   tags = {
     Name        = "private-rt-${count.index}"
@@ -260,7 +260,7 @@ resource "aws_route_table_association" "private_backup_association" {
 #-----------------------------------------------------------------------------
 # Declare the end point to S3 (no cost)
 resource "aws_vpc_endpoint" "private-s3" {
-  vpc_id       = aws_vpc.evlab.id
+  vpc_id       = aws_vpc.ezlab.id
   service_name = "com.amazonaws.eu-west-1.s3"
   policy       = file("./policy_json/vpc-policy-s3endpoint.json")
 }

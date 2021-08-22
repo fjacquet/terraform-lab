@@ -2,7 +2,7 @@
 Initialize-AWSDefaults
 $svcsecret = (Get-SECSecretValue -SecretId "ez-lab.xyz/sql/svc-sql").SecretString | ConvertFrom-Json
 
-$domain = "evlab"
+$domain = "ezlab"
 $svcuser = "svc-sql"
 $arguments = "/ACTION=install "
 $arguments += "/QS "

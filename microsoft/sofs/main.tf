@@ -56,7 +56,7 @@ resource "aws_ebs_volume" "ssd" {
 }
 
 resource "aws_security_group" "sofs" {
-  name        = "sofs"
+  name        = "tf_ezlab_sofs"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
@@ -98,4 +98,3 @@ resource "aws_security_group" "sofs" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

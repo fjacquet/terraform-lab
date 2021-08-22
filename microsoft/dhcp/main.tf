@@ -41,7 +41,7 @@ resource "aws_instance" "dhcp" {
 }
 
 resource "aws_security_group" "dhcp" {
-  name        = "tf_evlab_dhcp"
+  name        = "tf_ezlab_dhcp"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
@@ -84,4 +84,3 @@ resource "aws_security_group" "dhcp" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

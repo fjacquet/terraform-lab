@@ -12,7 +12,7 @@ $Credential = New-Object -TypeName System.Management.Automation.PSCredential -Ar
 New-ADUser `
     -ChangePasswordAtLogon $false `
     -City "Montreux" `
-    -Company "evlab" `
+    -Company "ezlab" `
     -Country "CH" `
     -DisplayName "Frederic Jacquet" `
     -EmailAddress "$($username)@$($Domain)" `

@@ -121,7 +121,7 @@ module "redis" {
 }
 
 resource "aws_security_group" "ssh" {
-  name        = "tf_evlab_lssh"
+  name        = "tf_ezlab_lssh"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

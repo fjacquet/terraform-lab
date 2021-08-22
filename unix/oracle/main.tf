@@ -58,7 +58,7 @@ resource "aws_ebs_volume" "oracle_u01" {
 }
 
 resource "aws_security_group" "oracle" {
-  name        = "tf_evlab_oracle"
+  name        = "tf_ezlab_oracle"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
@@ -99,4 +99,3 @@ resource "aws_security_group" "oracle" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

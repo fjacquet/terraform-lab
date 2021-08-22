@@ -43,7 +43,7 @@ resource "aws_instance" "pki-nde" {
 
 # A security group for basic windows box
 resource "aws_security_group" "pki-ndes" {
-  name        = "tf_evlab_pki-ndes"
+  name        = "tf_ezlab_pki-ndes"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

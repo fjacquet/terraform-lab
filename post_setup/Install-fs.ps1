@@ -40,7 +40,7 @@ Revoke-SmbShareAccess -Name samples `
     -AccountName 'Everyone' `
     -Confirm:$false | Out-Null
 Grant-SmbShareAccess -Name samples -AccessRight Read `
-    -AccountName 'evlab\fjacquet' `
+    -AccountName 'ezlab\fjacquet' `
     -Confirm:$false | Out-Null
 Grant-SmbShareAccess -Name samples -AccessRight Full `
     -AccountName 'NT Authority\SYSTEM' `

@@ -33,7 +33,7 @@ resource "aws_instance" "pki-rca" {
 
 # A security group for basic windows box
 resource "aws_security_group" "pki-rca" {
-  name        = "tf_evlab_pki-rca"
+  name        = "tf_ezlab_pki-rca"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

@@ -1,11 +1,11 @@
 Initialize-AWSDefaults
 
 $s3bucket = "installers-fja"
-$domain = 'evlab'
+$domain = 'ezlab'
 $secret = (Get-SECSecretValue -SecretId "ez-lab.xyz/pki/svc-ndes").SecretString | ConvertFrom-Json
 $user = "svc-ndes"
-$caname = "evlab Root Certificate Authority"
-$raname = "evlab Enterprise Certificate Authority"
+$caname = "ezlab Root Certificate Authority"
+$raname = "ezlab Enterprise Certificate Authority"
 
 Install-AdcsNetworkDeviceEnrollmentService `
    -ServiceAccountName $domain\$user `

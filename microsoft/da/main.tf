@@ -41,7 +41,7 @@ resource "aws_instance" "da" {
 }
 
 resource "aws_security_group" "da" {
-  name        = "tf_evlab_da"
+  name        = "tf_ezlab_da"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

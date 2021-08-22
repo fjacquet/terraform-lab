@@ -42,7 +42,7 @@ resource "aws_instance" "sharepoint" {
 }
 
 resource "aws_security_group" "sharepoint" {
-  name        = "tf_evlab_sharepoint"
+  name        = "tf_ezlab_sharepoint"
   description = "Access to Sharepoint"
   vpc_id      = var.aws_vpc_id
 
@@ -77,4 +77,3 @@ resource "aws_security_group" "sharepoint" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

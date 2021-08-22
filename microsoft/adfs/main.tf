@@ -41,7 +41,7 @@ resource "aws_instance" "adfs" {
 }
 
 resource "aws_security_group" "adfs" {
-  name        = "tf_evlab_adfs"
+  name        = "tf_ezlab_adfs"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

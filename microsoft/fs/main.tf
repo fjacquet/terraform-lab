@@ -55,7 +55,7 @@ resource "aws_ebs_volume" "fs_d" {
 }
 
 resource "aws_security_group" "fs" {
-  name        = "fs"
+  name        = "tf_ezlab_fs"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
@@ -90,4 +90,3 @@ resource "aws_security_group" "fs" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

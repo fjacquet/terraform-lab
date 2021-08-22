@@ -16,7 +16,7 @@ $WSUSServerURL
 $PolicyName = "WSUS Client"
 
 New-GPO -Name $PolicyName
-New-GPLink -Name $PolicyName -Target "DC=EVLAB,DC=CH"
+New-GPLink -Name $PolicyName -Target "DC=ezlab,DC=CH"
 $key = 'HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU'
 Set-GPRegistryValue -Name $PolicyName `
     -Key $key `

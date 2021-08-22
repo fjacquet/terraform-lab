@@ -3,9 +3,9 @@ Initialize-AWSDefaults
 
 $file = "issuing-capolicy.inf"
 $domain = "ez-lab.xyz"
-$root = "EVLAB-ROOT"
+$root = "ezlab-ROOT"
 $s3bucket = "installers-fja"
-$caname = "evlab Enterprise Certificate Authority"
+$caname = "ezlab Enterprise Certificate Authority"
 $cacrl = 'C:\root-ca.crl'
 $cacrt = 'C:\root-ca.crt'
 

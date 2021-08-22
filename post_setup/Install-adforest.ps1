@@ -10,7 +10,7 @@ Install-ADDSForest `
    -DatabasePath "C:\Windows\NTDS" `
    -DomainMode 7 `
    -DomainName $domain  `
-   -DomainNetbiosName "EVLAB" `
+   -DomainNetbiosName "ezlab" `
    -ForestMode 7 `
    -InstallDns:$true `
    -SafeModeAdministratorPassword $password `

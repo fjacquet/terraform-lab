@@ -24,7 +24,7 @@ resource "aws_instance" "redis" {
 }
 
 resource "aws_security_group" "redis" {
-  name        = "tf_evlab_redis"
+  name        = "tf_ezlab_redis"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

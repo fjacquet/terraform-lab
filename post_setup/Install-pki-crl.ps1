@@ -1,7 +1,7 @@
 ﻿Initialize-AWSDefaults
 
 $s3bucket = "installers-fja"
-$root = "EVLAB-ROOT"
+$root = "ezlab-ROOT"
 $pkiroot = "C:\pki"
 $cacrl = "$($pkiroot)\root-ca.crl"
 $cacrt = "$($pkiroot)\root-ca.crt"

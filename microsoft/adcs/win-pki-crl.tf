@@ -51,7 +51,7 @@ resource "aws_route53_record" "pki" {
 
 # A security group for basic windows box
 resource "aws_security_group" "pki-crl" {
-  name        = "tf_evlab_pki-crl"
+  name        = "tf_ezlab_pki-crl"
   count       = var.aws_number_pki-crl
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id

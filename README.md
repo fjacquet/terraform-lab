@@ -35,20 +35,20 @@ I use an S3 repository named installers-fja, private. Remember to replace the na
 We use AWS secrets manager to avoid password in scripts.
 Need to create some aws secrets :
 
-* evlab/ad/joinuser
-* evlab/ad/fjacquet
-* evlab/guacamole/mysqlroot
-* evlab/guacamole/mysqluser
-* evlab/glpi/mysqlroot
-* evlab/glpi/mysqluser
-* evlab/guacamole/keystore
-* evlab/guacamole/mail
-* evlab/sharepoint/sp_farm
-* evlab/sharepoint/sp_services
-* evlab/sharepoint/sp_portalAppPool
-* evlab/sharepoint/sp_profilesAppPool
-* evlab/sharepoint/sp_searchService
-* evlab/sharepoint/sp_cacheSuperUser
-* evlab/sharepoint/sp_cacheSuperReader
-* evlab/sql/svc-sql
-* evlab/pki/svc-ndes
+* ezlab/ad/joinuser
+* ezlab/ad/fjacquet
+* ezlab/guacamole/mysqlroot
+* ezlab/guacamole/mysqluser
+* ezlab/glpi/mysqlroot
+* ezlab/glpi/mysqluser
+* ezlab/guacamole/keystore
+* ezlab/guacamole/mail
+* ezlab/sharepoint/sp_farm
+* ezlab/sharepoint/sp_services
+* ezlab/sharepoint/sp_portalAppPool
+* ezlab/sharepoint/sp_profilesAppPool
+* ezlab/sharepoint/sp_searchService
+* ezlab/sharepoint/sp_cacheSuperUser
+* ezlab/sharepoint/sp_cacheSuperReader
+* ezlab/sql/svc-sql
+* ezlab/pki/svc-ndes

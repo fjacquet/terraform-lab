@@ -41,7 +41,7 @@ resource "aws_instance" "wac" {
 }
 
 resource "aws_security_group" "wac" {
-  name        = "tf_evlab_wac"
+  name        = "tf_ezlab_wac"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 

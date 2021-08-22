@@ -3,8 +3,8 @@
 $file = "root-capolicy.inf"
 $domain = "ez-lab.xyz"
 $s3bucket = "installers-fja"
-$caname = "evlab Root Certificate Authority"
-$root = "EVLAB-ROOT"
+$caname = "ezlab Root Certificate Authority"
+$root = "ezlab-ROOT"
 $url = "https://raw.githubusercontent.com/fjacquet/terraform-lab/master/config_files/$($file)"
 
 Install-Module -Name PSPKI

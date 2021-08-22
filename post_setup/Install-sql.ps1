@@ -61,7 +61,7 @@
 #----------------------------------------------------------------------------------------------------
 #Parameters
 
-$domain = 'evlab'
+$domain = 'ezlab'
 #File Path to local GPO function
 $LocalGPOFunctionName = "Add-ECSLocalGPOUserRightAssignment.ps1"
 $LocalGPOFunctionFilePath = "\\a1-file-04\SysAdminStuff\SQL Servers\Functions" + "\" + $LocalGPOFunctionName
@@ -1472,9 +1472,3 @@ Test-Cluster
 
 #END Fix cluster setting and test cluster post AAG(only one node)
 #----------------------------------------------------------------------------------------------------
-
-
-
-
-
-

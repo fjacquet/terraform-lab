@@ -41,7 +41,7 @@ resource "aws_instance" "ipam" {
 }
 
 resource "aws_security_group" "ipam" {
-  name        = "tf_evlab_ipam"
+  name        = "tf_ezlab_ipam"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
@@ -81,4 +81,3 @@ resource "aws_security_group" "ipam" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

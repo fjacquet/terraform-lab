@@ -515,7 +515,7 @@ module "wsus" {
 }
 
 resource "aws_security_group" "rdp" {
-  name        = "tf_evlab_rdp"
+  name        = "tf_ezlab_rdp"
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
@@ -544,7 +544,7 @@ resource "aws_security_group" "rdp" {
 }
 
 resource "aws_security_group" "domain-member" {
-  name        = "tf_evlab_domain_member"
+  name        = "tf_ezlab_domain_member"
   description = "Allow Domain membteer traffic"
   vpc_id      = var.aws_vpc_id
 
