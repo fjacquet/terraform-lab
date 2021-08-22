@@ -28,10 +28,7 @@ resource "aws_instance" "pki-rca" {
   }
 
   # Our Security group to allow RDP access
-  vpc_security_group_ids = [
-    var.aws_sg_ids,
-    aws_security_group.pki-rca.id,
-  ]
+  vpc_security_group_ids =    var.aws_sg_ids
 }
 
 # A security group for basic windows box
