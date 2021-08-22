@@ -1,12 +1,12 @@
 resource "aws_instance" "guacamole" {
-  ami                  = var.aws_ami
-  count                = var.aws_number
-  iam_instance_profile = var.aws_iip_assumerole_name
-  instance_type        = "t3.medium"
-  ipv6_address_count   = 1
-  key_name             = var.aws_key_pair_auth_id
-  subnet_id            = element(var.aws_subnet_id, count.index)
-  user_data            = file("user_data/config-guacamole.sh")
+  ami                    = var.aws_ami
+  count                  = var.aws_number
+  iam_instance_profile   = var.aws_iip_assumerole_name
+  instance_type          = "t3.medium"
+  ipv6_address_count     = 1
+  key_name               = var.aws_key_pair_auth_id
+  subnet_id              = element(var.aws_subnet_id, count.index)
+  user_data              = file("user_data/config-guacamole.sh")
   vpc_security_group_ids = var.aws_sg_ids
 
   root_block_device {

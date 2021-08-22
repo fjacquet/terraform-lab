@@ -19,7 +19,7 @@ resource "aws_instance" "pki-crl" {
   }
 
   # Our Security group to allow RDP access
-  vpc_security_group_ids =   var.aws_sg_ids
+  vpc_security_group_ids = var.aws_sg_ids
 }
 
 resource "aws_route53_record" "pki-crl" {
