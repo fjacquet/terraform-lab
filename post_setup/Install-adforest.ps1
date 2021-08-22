@@ -1,5 +1,5 @@
 Initialize-AWSDefaults
-$domain = "evlab.ch"
+$domain = "ez-lab.xyz"
 $secret = (Get-SECSecretValue -SecretId "$($domain)/ad/joinuser").SecretString
 $username = "joinuser"
 $password = $secret | ConvertTo-SecureString -AsPlainText -Force

@@ -2,7 +2,7 @@
 Initialize-AWSDefaults
 
 $file = "issuing-capolicy.inf"
-$domain = "evlab.ch"
+$domain = "ez-lab.xyz"
 $root = "EVLAB-ROOT"
 $s3bucket = "installers-fja"
 $caname = "evlab Enterprise Certificate Authority"
@@ -50,5 +50,3 @@ Install-AdcsCertificationAuthority `
 
 Write-Host "add this step sign the .req in c:\ using the root CA"
 Pause
-
-

@@ -1,5 +1,5 @@
 Initialize-AWSDefaults
-$secret = (Get-SECSecretValue -SecretId "evlab.ch/mdt/service").SecretString | ConvertFrom-Json
+$secret = (Get-SECSecretValue -SecretId "ez-lab.xyz/mdt/service").SecretString | ConvertFrom-Json
 $deploymentdrive = "D:"
 $script = "setup-mdt8450auto.ps1"
 $url = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/$($script)'

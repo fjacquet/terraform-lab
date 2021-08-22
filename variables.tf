@@ -10,7 +10,7 @@ variable "key_name" {
 
 variable "dns_suffix" {
   description = "name of DNS zone"
-  default     = "evlab.ch"
+  default     = "ez-lab.xyz"
 }
 
 variable "azs" {

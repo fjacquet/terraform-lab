@@ -1,7 +1,7 @@
 ﻿Initialize-AWSDefaults
 
 $file = "root-capolicy.inf"
-$domain = "evlab.ch"
+$domain = "ez-lab.xyz"
 $s3bucket = "installers-fja"
 $caname = "evlab Root Certificate Authority"
 $root = "EVLAB-ROOT"

@@ -44,10 +44,10 @@ python get-pip.py
 pip install awscli
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) #DevSkim: ignore DS137138
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138
-HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text | grep Name |awk '{print $5}')
-hostnamectl  set-hostname $HOSTNAME.evlab.ch
+HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text | grep Name |awk '{print $5}')
+hostnamectl  set-hostname "$HOSTNAME".ez-lab.xyz
 
-cd /backups
+cd /backups || exit
 rm -rf .aws/credentials
 
 for i in NetBackup_8.1.3Beta2_LinuxR_x86_64.tar.gz NetBackup_8.1.3Beta2_Win.zip

@@ -1,6 +1,6 @@
 
 Initialize-AWSDefaults
-$svcsecret = (Get-SECSecretValue -SecretId "evlab.ch/sql/svc-sql").SecretString | ConvertFrom-Json
+$svcsecret = (Get-SECSecretValue -SecretId "ez-lab.xyz/sql/svc-sql").SecretString | ConvertFrom-Json
 
 $domain = "evlab"
 $svcuser = "svc-sql"
@@ -21,4 +21,3 @@ $params = @{
   ArgumentList = $arguments
 }
 Start-Process -FilePath $file -ArgumentList @params
-

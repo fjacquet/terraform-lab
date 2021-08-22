@@ -4,7 +4,7 @@ Signature=”$Windows NT$”
 Policies=InternalPolicy
 [InternalPolicy]
 OID= 1.2.3.4.1455.67.89.5
-URL=http://crl.evlab.ch/pki/cps.html
+URL=http://crl.ez-lab.xyz/pki/cps.html
 [Certsrv_Server]
 RenewalKeyLength=4096
 RenewalValidityPeriod=Years

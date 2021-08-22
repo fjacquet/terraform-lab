@@ -1,6 +1,6 @@
 ﻿Initialize-AWSDefaults
 $region = 'eu-west-1'
-$domain = 'evlab.ch'
+$domain = 'ez-lab.xyz'
 $username = "joinuser"
 $secret = (Get-SECSecretValue -SecretId "$($domain)/ad/$($username)" -region $region).SecretString
 
@@ -11,11 +11,11 @@ $Credential = New-Object `
     -TypeName System.Management.Automation.PSCredential `
     -ArgumentList $username, $password
 
-Write-Output 'set DNS'
-Get-NetAdapter -Physical `
-    | Set-DnsClientServerAddress -ServerAddresses (
-    "10.0.51.85",
-    "10.0.52.144")
+# Write-Output 'set DNS'
+# Get-NetAdapter -Physical `
+#     | Set-DnsClientServerAddress -ServerAddresses (
+#     "10.0.51.85",
+#     "10.0.52.144")
 
 Write-Output 'Set suffix'
 Set-DnsClientGlobalSetting -SuffixSearchList (

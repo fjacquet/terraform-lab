@@ -23,10 +23,10 @@ Import-Module -Name PSPKI
 
 Write-Host "Generating Certificate"
 Get-Certificate `
-    -Url "https://afds-0.evlab.ch" `
+    -Url "https://afds-0.ez-lab.xyz" `
     -Template "SSL" `
     -SubjectName <String>] `
-    -DnsName "afds-0.evlab.ch" `
+    -DnsName "afds-0.ez-lab.xyz" `
     -Credential <PkiCredential> `
     -CertStoreLocation <String> `
     -Confirm:$false

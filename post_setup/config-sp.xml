@@ -27,7 +27,7 @@
             <Username>evlab\SP_Farm</Username>
             <Password>Cisco1234*</Password>
         </Account>
-        <CentralAdmin Provision="SPMGMT-0.EVLAB.CH">
+        <CentralAdmin Provision="SPMGMT-0.ez-lab.xyz">
             <Database>Content_CentralAdmin</Database>
             <Port>2016</Port>
             <UseSSL>true</UseSSL>
@@ -58,12 +58,12 @@
         <ServerRoles>
             <Custom Provision="false"/>
             <WebFrontEnd Provision="false"/>
-            <WebFrontEndWithDistributedCache Provision="SPFE-0.EVLAB.CH,SPFE-1.EVLAB.CH"/>
+            <WebFrontEndWithDistributedCache Provision="SPFE-0.ez-lab.xyz,SPFE-1.ez-lab.xyz"/>
             <SingleServerFarm Provision="false"/>
             <Search Provision="false"/>
             <Application Provision="false"/>
-            <ApplicationWithSearch Provision="SPAPP-1.EVLAB.CH,SPAPP-0.EVLAB.CH"/>
-            <DistributedCache Provision="SPMGMT-0.EVLAB.CH"/>
+            <ApplicationWithSearch Provision="SPAPP-1.ez-lab.xyz,SPAPP-0.ez-lab.xyz"/>
+            <DistributedCache Provision="SPMGMT-0.ez-lab.xyz"/>
         </ServerRoles>
         <ManagedAccounts>
             <ManagedAccount CommonName="spservice">
@@ -107,8 +107,8 @@
     <WebApplications AddURLsToHOSTS="true">
         <WebApplication Name="Portal Home">
             <Type>Portal</Type>
-            <ApplicationPool>portal.evlab.ch</ApplicationPool>
-            <Url>http://portal.evlab.ch</Url>
+            <ApplicationPool>portal.ez-lab.xyz</ApplicationPool>
+            <Url>http://portal.ez-lab.xyz</Url>
             <Port>80</Port>
             <UseHostHeader>false</UseHostHeader>
             <AddURLToLocalIntranetZone>true</AddURLToLocalIntranetZone>
@@ -128,13 +128,13 @@
                 <ManagedPath relativeUrl="help" explicit="true"/>
             </ManagedPaths>
             <SiteCollections>
-                <SiteCollection siteUrl="http://portal.evlab.ch">
+                <SiteCollection siteUrl="http://portal.ez-lab.xyz">
                     <Name>Portal Home</Name>
                     <Description>Portal Home Site</Description>
                     <HostNamedSiteCollection>false</HostNamedSiteCollection>
                     <Owner></Owner>
                     <CustomDatabase></CustomDatabase>
-                    <SearchUrl>http://portal.evlab.ch/search</SearchUrl>
+                    <SearchUrl>http://portal.ez-lab.xyz/search</SearchUrl>
                     <Template>CMSPUBLISHING#0</Template>
                     <LCID>1033</LCID>
                     <Locale>en-us</Locale>
@@ -144,8 +144,8 @@
         </WebApplication>
         <WebApplication Name="MySite Host">
             <Type>MySiteHost</Type>
-            <ApplicationPool>mysites.evlab.ch</ApplicationPool>
-            <Url>http://mysites.evlab.ch</Url>
+            <ApplicationPool>mysites.ez-lab.xyz</ApplicationPool>
+            <Url>http://mysites.ez-lab.xyz</Url>
             <Port>80</Port>
             <UseHostHeader>true</UseHostHeader>
             <AddURLToLocalIntranetZone>true</AddURLToLocalIntranetZone>
@@ -165,13 +165,13 @@
                 <ManagedPath relativeUrl="personal" explicit="false"/>
             </ManagedPaths>
             <SiteCollections>
-                <SiteCollection siteUrl="http://mysites.evlab.ch">
+                <SiteCollection siteUrl="http://mysites.ez-lab.xyz">
                     <Name>My Site Host</Name>
                     <Description>My Site Host</Description>
                     <HostNamedSiteCollection>false</HostNamedSiteCollection>
                     <Owner></Owner>
                     <CustomDatabase></CustomDatabase>
-                    <SearchUrl>http://portal.evlab.ch/search</SearchUrl>
+                    <SearchUrl>http://portal.ez-lab.xyz/search</SearchUrl>
                     <Template>SPSMSITEHOST#0</Template>
                     <LCID>1033</LCID>
                     <Locale>en-us</Locale>
@@ -181,7 +181,7 @@
         </WebApplication>
     </WebApplications>
     <ServiceApps>
-        <ManagedMetadataServiceApp Provision="SPAPP-1.EVLAB.CH,SPAPP-0.EVLAB.CH">
+        <ManagedMetadataServiceApp Provision="SPAPP-1.ez-lab.xyz,SPAPP-0.ez-lab.xyz">
             <Name>Managed Metadata Service</Name>
             <ProxyName>Managed Metadata Service</ProxyName>
             <Database>
@@ -258,7 +258,7 @@
                 </EnterpriseSearchServiceApplication>
             </EnterpriseSearchServiceApplications>
         </EnterpriseSearchService>
-        <StateService Provision="SPFE-0.EVLAB.CH,SPFE-1.EVLAB.CH">
+        <StateService Provision="SPFE-0.ez-lab.xyz,SPFE-1.ez-lab.xyz">
             <Name>State Service</Name>
             <ProxyName>State Service</ProxyName>
             <Database>
@@ -282,7 +282,7 @@
                 </DBAlias>
             </Database>
         </WebAnalyticsService>
-        <SPUsageService Provision="SPAPP-1.EVLAB.CH,SPAPP-0.EVLAB.CH">
+        <SPUsageService Provision="SPAPP-1.ez-lab.xyz,SPAPP-0.ez-lab.xyz">
             <Name>Usage and Health Data Collection</Name>
             <Database>
                 <Name>UsageAndHealth</Name>
@@ -317,7 +317,7 @@
                 </DBAlias>
             </Database>
         </BusinessDataConnectivity>
-        <WordAutomationService Provision="SPAPP-1.EVLAB.CH,SPAPP-0.EVLAB.CH">
+        <WordAutomationService Provision="SPAPP-1.ez-lab.xyz,SPAPP-0.ez-lab.xyz">
             <Name>Word Automation Services</Name>
             <ProxyName>Word Automation Services</ProxyName>
             <Database>
@@ -332,7 +332,7 @@
         <AppManagementService Provision="localhost">
             <Name>App Management Service</Name>
             <ProxyName>App Management Service</ProxyName>
-            <AppDomain>apps.evlab.ch</AppDomain>
+            <AppDomain>apps.ez-lab.xyz</AppDomain>
             <Database>
                 <Name>AppManagement</Name>
                 <DBServer></DBServer>
@@ -358,7 +358,7 @@
             <Name>Work Management Service Application</Name>
             <ProxyName>Work Management Service Application</ProxyName>
         </WorkManagementService>
-        <MachineTranslationService Provision="SPAPP-1.EVLAB.CH,SPAPP-0.EVLAB.CH">
+        <MachineTranslationService Provision="SPAPP-1.ez-lab.xyz,SPAPP-0.ez-lab.xyz">
             <Name>Machine Translation Service</Name>
             <ProxyName>Machine Translation Service</ProxyName>
             <Database>
@@ -370,7 +370,7 @@
                 </DBAlias>
             </Database>
         </MachineTranslationService>
-        <PowerPointConversionService Provision="SPAPP-1.EVLAB.CH,SPAPP-0.EVLAB.CH">
+        <PowerPointConversionService Provision="SPAPP-1.ez-lab.xyz,SPAPP-0.ez-lab.xyz">
             <Name>PowerPoint Conversion Service Application</Name>
             <ProxyName>PowerPoint Conversion Service Application</ProxyName>
         </PowerPointConversionService>
