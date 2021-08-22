@@ -5,11 +5,11 @@ $username = "joinuser"
 $secret = (Get-SECSecretValue -SecretId "$($domain)/ad/$($username)" -region $region).SecretString
 
 $password = ConvertTo-SecureString `
-    -AsPlainText `
-    -Force $secret
+   -AsPlainText `
+   -Force $secret
 $Credential = New-Object `
-    -TypeName System.Management.Automation.PSCredential `
-    -ArgumentList $username, $password
+   -TypeName System.Management.Automation.PSCredential `
+   -ArgumentList $username,$password
 
 # Write-Output 'set DNS'
 # Get-NetAdapter -Physical `
@@ -19,13 +19,13 @@ $Credential = New-Object `
 
 Write-Output 'Set suffix'
 Set-DnsClientGlobalSetting -SuffixSearchList (
-    $domain,
-    "$($region).ec2-utilities.amazonaws.com",
-    "us-east-1.ec2-utilities.amazonaws.com",
-    "$($region).compute.internal")
+  $domain,
+  "$($region).ec2-utilities.amazonaws.com",
+  "us-east-1.ec2-utilities.amazonaws.com",
+  "$($region).compute.internal")
 
 Write-Output 'Join domain'
 Add-Computer –domainname $domain `
-    -Credential $Credential `
-    -Restart:$false `
-    –Force
+   -Credential $Credential `
+   -Restart:$false `
+   –Force

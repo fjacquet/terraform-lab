@@ -216,7 +216,7 @@ foreach ($disk in $OfflineDisks)
   {
     Write-Output "K:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "Misc" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "Misc" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter k
   }
 
@@ -224,42 +224,42 @@ foreach ($disk in $OfflineDisks)
   {
     Write-Output "V:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "TempLog" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "TempLog" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter V
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 3 -and $WMIDiskInformation.SCSITargetId -eq 1)
   {
     Write-Output "w:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "TempDB" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "TempDB" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter w
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 4 -and $WMIDiskInformation.SCSITargetId -eq 0)
   {
     Write-Output "F:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "UserDB1" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "UserDB1" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter f
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 4 -and $WMIDiskInformation.SCSITargetId -eq 1)
   {
     Write-Output "N:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "Index1" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "Index1" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter n
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 5 -and $WMIDiskInformation.SCSITargetId -eq 0)
   {
     Write-Output "J:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "UserLog1" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "UserLog1" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter j
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 4 -and $WMIDiskInformation.SCSITargetId -eq 2)
   {
     Write-Output "G:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "UserDB2" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "UserDB2" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter G
   }
 }
@@ -426,7 +426,7 @@ if ($GDRive -ne $null)
 #NOTE: You can find this setting buried in Computer\Windows\Security\Local Policies\User Rights Assignment
 
 #Copy our function to the temp directory
-Copy-Item -Path $LocalGPOFunctionFilePath -Destination $TempDirectory -Force -confirm:$false
+Copy-Item -Path $LocalGPOFunctionFilePath -Destination $TempDirectory -Force -Confirm:$false
 
 #Function Name to load
 
@@ -446,7 +446,7 @@ Add-ECSLocalGPOUserRightAssignment -UserOrGroup $sqlagentuser -UserRightAssignme
 #Install SQL
 
 #Copy the ISO to
-Copy-Item -Path $ISOFileSource -Destination $ISOFileDestination -Force -confirm:$false
+Copy-Item -Path $ISOFileSource -Destination $ISOFileDestination -Force -Confirm:$false
 
 #Copy the SQL config file
 Copy-Item -Path $ConfigFileSource -Destination $ConfigFileDestination -Force -Container:$false
@@ -459,7 +459,7 @@ $ConfigFileContent = (Get-Content -Path $ConfigFileDestination).Replace("$(domai
 $ConfigFileContent = (Get-Content -Path $ConfigFileDestination).Replace("$(domain)\SQLAGENTACCOUNTTOCHANGE",$sqlagentuser) | Set-Content -Path $ConfigFileDestination
 
 #Mount the ISO
-$mountResult = Mount-DiskImage $ISOFileDestination -Passthru
+$mountResult = Mount-DiskImage $ISOFileDestination -PassThru
 $ISOVolume = $mountResult | Get-Volume
 
 #Define the SQL install path
@@ -477,8 +477,8 @@ Start-Process -FilePath $SSMSFileDestination -ArgumentList "/passive /norestart"
 #----------------------------------------------------------------------------------------------------
 #Register SPNs
 
-Start-Process -FilePath setspn -ArgumentList "-A MSSQLSvc/$($ComputerName).$(domain).ch:1433  $($sqlserviceuserNoDomain)  " -NoNewWindow -Wait -Passthru
-Start-Process -FilePath setspn -ArgumentList "-A MSSQLSvc/$($ComputerName).$(domain).ch $($sqlserviceuserNoDomain)  " -NoNewWindow -Wait -Passthru
+Start-Process -FilePath setspn -ArgumentList "-A MSSQLSvc/$($ComputerName).$(domain).ch:1433  $($sqlserviceuserNoDomain)  " -NoNewWindow -Wait -PassThru
+Start-Process -FilePath setspn -ArgumentList "-A MSSQLSvc/$($ComputerName).$(domain).ch $($sqlserviceuserNoDomain)  " -NoNewWindow -Wait -PassThru
 
 #END Register SPNs
 #----------------------------------------------------------------------------------------------------
@@ -567,7 +567,7 @@ Set-ClusterQuorum ?NodeAndFileShareMajority $filesharewitness
 (Get-Cluster).SameSubnetThreshold = 10
 
 #Stop the cluster service so you can give it the correct AD rights
-Get-Cluster -Name $ClusterCNO | Stop-Cluster -Force -confirm:$false
+Get-Cluster -Name $ClusterCNO | Stop-Cluster -Force -Confirm:$false
 
 
 #!!!!!!!!!!!!!Add the cluster CNO to the same AD group that you added the invidvidual nodes to
@@ -586,7 +586,7 @@ Get-Service -Name ClusSvc -ComputerName $node2 | Start-Service
 #Enable SQL Always on (run on both nodes)
 
 #NOTE: This may fail once, wait a minute, then try again.
-Enable-SqlAlwaysOn -ServerInstance $($env:ComputerName) -confirm:$false -NoServiceRestart:$false -Force:$true
+Enable-SqlAlwaysOn -ServerInstance $($env:ComputerName) -Confirm:$false -NoServiceRestart:$false -Force:$true
 
 #End Enable SQL AAG, AAG only
 #----------------------------------------------------------------------------------------------------
@@ -935,7 +935,7 @@ foreach ($disk in $OfflineDisks)
   {
     Write-Output "K:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "Misc" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "Misc" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter k
   }
 
@@ -943,42 +943,42 @@ foreach ($disk in $OfflineDisks)
   {
     Write-Output "V:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "TempLog" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "TempLog" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter V
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 3 -and $WMIDiskInformation.SCSITargetId -eq 1)
   {
     Write-Output "w:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "TempDB" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "TempDB" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter w
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 4 -and $WMIDiskInformation.SCSITargetId -eq 0)
   {
     Write-Output "F:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "UserDB1" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "UserDB1" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter f
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 4 -and $WMIDiskInformation.SCSITargetId -eq 1)
   {
     Write-Output "N:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "Index1" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "Index1" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter n
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 5 -and $WMIDiskInformation.SCSITargetId -eq 0)
   {
     Write-Output "J:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "UserLog1" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 4096 -NewFileSystemLabel "UserLog1" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter j
   }
   elseif ($WMIDiskInformation.SCSIPort -eq 4 -and $WMIDiskInformation.SCSITargetId -eq 2)
   {
     Write-Output "G:"
     $disk | New-Partition -UseMaximumSize
-    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "UserDB2" -confirm:$false
+    $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Format-Volume -FileSystem NTFS -AllocationUnitSize 8192 -NewFileSystemLabel "UserDB2" -Confirm:$false
     $disk | Get-Partition | Where-Object { $_.type -eq "Basic" } | Set-Partition -NewDriveLetter G
   }
 }
@@ -1145,7 +1145,7 @@ if ($GDRive -ne $null)
 #NOTE: You can find this setting buried in Computer\Windows\Security\Local Policies\User Rights Assignment
 
 #Copy our function to the temp directory
-Copy-Item -Path $LocalGPOFunctionFilePath -Destination $TempDirectory -Force -confirm:$false
+Copy-Item -Path $LocalGPOFunctionFilePath -Destination $TempDirectory -Force -Confirm:$false
 
 #Function Name to load
 
@@ -1165,7 +1165,7 @@ Add-ECSLocalGPOUserRightAssignment -UserOrGroup $sqlagentuser -UserRightAssignme
 #Install SQL
 
 #Copy the ISO to
-Copy-Item -Path $ISOFileSource -Destination $ISOFileDestination -Force -confirm:$false
+Copy-Item -Path $ISOFileSource -Destination $ISOFileDestination -Force -Confirm:$false
 
 #Copy the SQL config file
 Copy-Item -Path $ConfigFileSource -Destination $ConfigFileDestination -Force -Container:$false
@@ -1178,7 +1178,7 @@ $ConfigFileContent = (Get-Content -Path $ConfigFileDestination).Replace("$(domai
 $ConfigFileContent = (Get-Content -Path $ConfigFileDestination).Replace("$(domain)\SQLAGENTACCOUNTTOCHANGE",$sqlagentuser) | Set-Content -Path $ConfigFileDestination
 
 #Mount the ISO
-$mountResult = Mount-DiskImage $ISOFileDestination -Passthru
+$mountResult = Mount-DiskImage $ISOFileDestination -PassThru
 $ISOVolume = $mountResult | Get-Volume
 
 #Define the SQL install path
@@ -1196,8 +1196,8 @@ Start-Process -FilePath $SSMSFileDestination -ArgumentList "/passive /norestart"
 #----------------------------------------------------------------------------------------------------
 #Register SPNs
 
-Start-Process -FilePath setspn -ArgumentList "-A MSSQLSvc/$($ComputerName).$(domain).ch:1433  $($sqlserviceuserNoDomain)  " -NoNewWindow -Wait -Passthru
-Start-Process -FilePath setspn -ArgumentList "-A MSSQLSvc/$($ComputerName).$(domain).ch $($sqlserviceuserNoDomain)  " -NoNewWindow -Wait -Passthru
+Start-Process -FilePath setspn -ArgumentList "-A MSSQLSvc/$($ComputerName).$(domain).ch:1433  $($sqlserviceuserNoDomain)  " -NoNewWindow -Wait -PassThru
+Start-Process -FilePath setspn -ArgumentList "-A MSSQLSvc/$($ComputerName).$(domain).ch $($sqlserviceuserNoDomain)  " -NoNewWindow -Wait -PassThru
 
 #END Register SPNs
 #----------------------------------------------------------------------------------------------------
@@ -1269,7 +1269,7 @@ Set-ClusterQuorum ?NodeAndFileShareMajority $filesharewitness
 (Get-Cluster).SameSubnetThreshold = 10
 
 #Stop the cluster service so you can give it the correct AD rights
-Get-Cluster -Name $ClusterCNO | Stop-Cluster -Force -confirm:$false
+Get-Cluster -Name $ClusterCNO | Stop-Cluster -Force -Confirm:$false
 
 
 
@@ -1288,7 +1288,7 @@ Get-Service -Name ClusSvc -ComputerName $node2 | Start-Service
 #Enable SQL Always on (run on both nodes)
 
 #NOTE: This may fail once, wait a minute, then try again.
-Enable-SqlAlwaysOn -ServerInstance $($env:ComputerName) -confirm:$false -NoServiceRestart:$false -Force:$true
+Enable-SqlAlwaysOn -ServerInstance $($env:ComputerName) -Confirm:$false -NoServiceRestart:$false -Force:$true
 
 #End Enable SQL AAG, AAG only
 #----------------------------------------------------------------------------------------------------

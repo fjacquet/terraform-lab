@@ -3,6 +3,6 @@ $instanceId = Invoke-RestMethod -Uri http://169.254.169.254/latest/meta-data/ins
 $instance = (Get-EC2Instance -InstanceId $instanceId).Instances[0]
 $instanceName = ($instance.Tags | Where-Object { $_.Key -eq "Name" } | Select-Object -Expand Value)
 Write-Output "running $($instanceName)"
-Rename-Computer -NewName $instanceName -force -confirm:$false
+Rename-Computer -NewName $instanceName -Force -Confirm:$false
 Write-Output "rename done"
-restart-computer -force
+Restart-Computer -Force

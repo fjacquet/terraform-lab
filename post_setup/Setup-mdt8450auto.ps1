@@ -112,7 +112,7 @@ if ($OperatingSystems) {
       Name = "$($OS.Description) in $WimName"
       Template = "Client.xml"
       Comments = ""
-      ID = $Counter
+      Id = $Counter
       version = "1.0"
       OperatingSystemPath = "DS001:\Operating Systems\$($OS.Name)"
       FullName = "fullname"
@@ -141,7 +141,7 @@ UserID=$localUser
 UserPassword=$ServiceAccountPassword
 "@
 
-Set-Content -Path "$DeploymentShareDrive\DeploymentShare\Control\Bootstrap.ini" -Value $bootstrapIni -Force -confirm:$false
+Set-Content -Path "$DeploymentShareDrive\DeploymentShare\Control\Bootstrap.ini" -Value $bootstrapIni -Force -Confirm:$false
 
 #Create LiteTouch Boot WIM & ISO
 Write-Output "Creating LiteTouch Boot Media"
@@ -165,7 +165,7 @@ if ($Office365) {
     ErrorAction = "Stop"
   }
   Start-Process @params -Wait
-  Remove-Item "$PSScriptRoot\odt\officedeploymenttool.exe" -Force -confirm:$false -ErrorAction Stop
+  Remove-Item "$PSScriptRoot\odt\officedeploymenttool.exe" -Force -Confirm:$false -ErrorAction Stop
 
   Write-Output "Remove Visio"
   $xml = @"
@@ -178,7 +178,7 @@ if ($Office365) {
   </Add>
 </Configuration>
 "@
-  Set-Content -Path "$PSScriptRoot\odt\configuration.xml" -Value $xml -Force -confirm:$false
+  Set-Content -Path "$PSScriptRoot\odt\configuration.xml" -Value $xml -Force -Confirm:$false
 
   Write-Output "Importing Office 365 into MDT"
   $params = @{
@@ -282,7 +282,7 @@ if ($Applications) {
     }
     Import-MDTApplication @params
   }
-  Remove-Item -Path "$PSScriptRoot\mdt_apps" -Recurse -Force -confirm:$false
+  Remove-Item -Path "$PSScriptRoot\mdt_apps" -Recurse -Force -Confirm:$false
 }
 
 #Finish

@@ -22,7 +22,7 @@ PASSWD=$(aws secretsmanager get-secret-value --secret-id "ez-lab.xyz/redis/root"
 FQDN="$HOSTNAME.ez-lab.xyz"
 hostnamectl set-hostname "$FQDN"
 
-re
+redis-cli ping
 
 SECURE=$(echo "$PASSWD" | sha256sum)
 

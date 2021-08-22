@@ -11,34 +11,34 @@ Write-Output "Disabling SMBv1"
 Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol -NoRestart
 # Install-Module -Name AWSPowerShell
 add-windowsfeature -Name RSAT `
-    -IncludeManagementTools
+   -IncludeManagementTools
 
 # Disable LMHosts
 $disable = 2
-$adapters = (gwmi win32_networkadapterconfiguration )
-Foreach ($adapter in $adapters) {
-    Write-Host $adapter
-    $adapter.settcpipnetbios($disable)
+$adapters = (gwmi win32_networkadapterconfiguration)
+foreach ($adapter in $adapters) {
+  Write-Host $adapter
+  $adapter.settcpipnetbios($disable)
 }
 
 # Disable Netbios
-$nicClass = Get-WmiObject -list Win32_NetworkAdapterConfiguration
-$nicClass.enableWins($false, $false)
+$nicClass = Get-WmiObject -List Win32_NetworkAdapterConfiguration
+$nicClass.enableWins($false,$false)
 
 # Set-SmbServerConfiguration `
 #     -EnableSMB1Protocol $false `
 #     -Confirm:$false
 
 Set-SmbServerConfiguration `
-    -RequireSecuritySignature $true `
-    -EnableSecuritySignature $true `
-    -EncryptData $true `
-    -Confirm:$false
+   -RequireSecuritySignature $true `
+   -EnableSecuritySignature $true `
+   -EncryptData $true `
+   -Confirm:$false
 
 Set-SmbServerConfiguration -AutoShareServer $false `
-    -AutoShareWorkstation $false `
-    -Confirm:$false
+   -AutoShareWorkstation $false `
+   -Confirm:$false
 
 Set-SmbServerConfiguration -ServerHidden $true `
-    -AnnounceServer $false `
-    -Confirm:$false
+   -AnnounceServer $false `
+   -Confirm:$false

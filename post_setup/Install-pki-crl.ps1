@@ -15,7 +15,7 @@ Install-Module -Name PSPKI
 
 
 Set-Location "inetsrv\"
-.\Appcmd Set config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
+.\Appcmd Set-Variable config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
 
 # Get the root CA
 Copy-S3Object `

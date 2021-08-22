@@ -1,7 +1,7 @@
 $wacport = 6516
 $dldir = 'C:\installers'
 mkdir $dldir
-$wacfile =  join-path -path $dldir -childpath 'wac.msi'
+$wacfile = Join-Path -Path $dldir -ChildPath 'wac.msi'
 
 Invoke-WebRequest -Uri https://aka.ms/WACDownload -OutFile $wacfile #DevSkim: ignore DS104456
 

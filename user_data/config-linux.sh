@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 yum -y upgrade
-yum -y install wget libaio numactl
+
+yum -y install wget libaio numactl python
 
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old
 sudo sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
 sudo sed -i "s/#PermitRootLogin yes/PermitRootLogin yes/" /etc/ssh/sshd_config
 
 sudo systemctl restart sshd
-sudo yum install python
 
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 sudo python get-pip.py

@@ -25,7 +25,7 @@ catch {
 
 if ($Container -eq $null) {
   $Container = New-ADObject -Type Container -Name "System Management" `
-     -Path "$SystemDN" -Passthru
+     -Path "$SystemDN" -PassThru
 }
 
 # Get current ACL for the System Management container

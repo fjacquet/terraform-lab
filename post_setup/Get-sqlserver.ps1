@@ -9,4 +9,4 @@ Mount-DiskImage -ImagePath C:\installers\$bin
 #-----------------------------------------------------------------------------
 $bin = 'FirstResponderKit.zip'
 $file = Join-Path -Parent $dlroot -ChildPath $bin
-Invoke-WebRequest -Uri http://public.brentozar.com/FirstResponderKit.zip -OutFile $file #DevSkim: ignore DS137138
+Invoke-WebRequest -Uri https://downloads.brentozar.com/FirstResponderKit.zip -OutFile $file #DevSkim: ignore DS137138
