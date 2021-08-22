@@ -85,9 +85,9 @@ python get-pip.py
 pip install awscli
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) #DevSkim: ignore DS137138
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138
-HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text |grep Name|awk '{print $5}')
+HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text |grep Name|awk '{print $5}')
 FQDN="$HOSTNAME.ez-lab.xyz"
-hostnamectl set-hostname $FQDN
+hostnamectl set-hostname "$FQDN"
 
 # sudo sed -i "s/127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4/127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 $HOSTNAME/" /etc/hosts
 # cat >> oracle.sh << EOF
@@ -112,7 +112,7 @@ hostnamectl set-hostname $FQDN
 # mv oracle.sh /etc/profile.d/
 # chmod 755  /etc/profile.d/oracle.sh
 
-cd /u01
+cd /u01 || exit
 rm -rf .aws/credentials
 
 
