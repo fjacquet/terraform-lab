@@ -19,8 +19,8 @@ variable "azs" {
 
   default = [
     "eu-west-1a",
-    "eu-west-1b",
-    "eu-west-1c",
+    # "eu-west-1b",
+    # "eu-west-1c",
   ]
 }
 
@@ -93,25 +93,25 @@ variable "aws_number" {
     "adfs"       = 0
     "bsd"        = 0
     "da"         = 0
-    "dc"         = 0
+    "dc"         = 2
     "dhcp"       = 0
     "exchange"   = 0
     "fs"         = 0
     "glpi"       = 0
     "guacamole"  = 1
     "ipam"       = 0
-    "jumpbox"    = 0
+    "jumpbox"    = 1
     "etcd"       = 0
     "workers"    = 0
     "longhorn"   = 0
     "rancher"    = 0
     "nbu"        = 0
-    "nps"        = 0
+    "nps"        = 1
     "opscenter"  = 0
     "oracle"     = 0
     "pki-crl"    = 0
     "pki-ica"    = 0
-    "pki-rca"    = 0
+    "pki-rca"    = 1
     "pki-ndes"   = 0
     "rdsh"       = 0
     "redis"      = 0
@@ -120,7 +120,7 @@ variable "aws_number" {
     "sql"        = 0
     "sofs"       = 0
     "symv"       = 0
-    "wac"        = 0
+    "wac"        = 1
     "wds"        = 0
     "wsus"       = 0
   }

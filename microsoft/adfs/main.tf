@@ -37,7 +37,7 @@ resource "aws_instance" "adfs" {
   }
 
   # Our Security group to allow RDP access
-  # vpc_security_group_ids = var.aws_sg_ids
+  vpc_security_group_ids = var.aws_sg_ids
 }
 
 resource "aws_security_group" "adfs" {
@@ -76,4 +76,3 @@ resource "aws_security_group" "adfs" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-

@@ -64,21 +64,18 @@ resource "aws_route_table" "public-rt" {
 }
 
 resource "aws_subnet" "gw" {
-  vpc_id = aws_vpc.evlab.id
-  count  = length(var.azs)
-  cidr_block = cidrsubnet(
-    aws_vpc.evlab.cidr_block,
-    8,
-    element(var.cidrbyte_gw, count.index),
-  )
-  availability_zone       = element(var.azs, count.index)
-  map_public_ip_on_launch = true
+  assign_ipv6_address_on_creation = true
+  availability_zone               = element(var.azs, count.index)
+  cidr_block                      = cidrsubnet(aws_vpc.evlab.cidr_block, 8, element(var.cidrbyte_gw, count.index), )
+  count                           = length(var.azs)
+  map_public_ip_on_launch         = true
+  vpc_id                          = aws_vpc.evlab.id
+
   ipv6_cidr_block = cidrsubnet(
     aws_vpc.evlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_gw, count.index),
   )
-  assign_ipv6_address_on_creation = true
 
   tags = {
     Name        = "subnet-gw-${count.index}"
@@ -88,17 +85,17 @@ resource "aws_subnet" "gw" {
 
 # Create a subnet to launch our instances into
 resource "aws_subnet" "mgmt" {
-  count                   = 1
-  vpc_id                  = aws_vpc.evlab.id
-  cidr_block              = cidrsubnet(aws_vpc.evlab.cidr_block, 8, var.cidrbyte_mgmt[count.index])
-  availability_zone       = element(var.azs, count.index)
-  map_public_ip_on_launch = true
+  assign_ipv6_address_on_creation = true
+  availability_zone               = element(var.azs, count.index)
+  cidr_block                      = cidrsubnet(aws_vpc.evlab.cidr_block, 8, element(var.cidrbyte_mgmt, count.index), )
+  count                           = 1
+  map_public_ip_on_launch         = true
+  vpc_id                          = aws_vpc.evlab.id
   ipv6_cidr_block = cidrsubnet(
     aws_vpc.evlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_mgmt, count.index),
   )
-  assign_ipv6_address_on_creation = true
 
   tags = {
     Name        = "subnet-mgmt-${count.index}"
@@ -106,7 +103,7 @@ resource "aws_subnet" "mgmt" {
   }
 }
 
-resource "aws_route_table_association" "public_gw_association" {
+resource "aws_route_table_association" "public_subnet_gw_association" {
   count          = length(var.azs)
   subnet_id      = element(aws_subnet.gw.*.id, count.index)
   route_table_id = aws_route_table.public-rt.id
@@ -124,22 +121,17 @@ resource "aws_route_table_association" "public_subnet_mgmt_association" {
 
 # Create a subnet to launch our instances into
 resource "aws_subnet" "back" {
-  vpc_id = aws_vpc.evlab.id
-  count  = length(var.azs)
-  cidr_block = cidrsubnet(
-    aws_vpc.evlab.cidr_block,
-    8,
-    element(var.cidrbyte_back, count.index),
-  )
-  availability_zone       = element(var.azs, count.index)
-  map_public_ip_on_launch = false
+  assign_ipv6_address_on_creation = true
+  availability_zone               = element(var.azs, count.index)
+  cidr_block                      = cidrsubnet(aws_vpc.evlab.cidr_block, 8, element(var.cidrbyte_back, count.index), )
+  count                           = length(var.azs)
+  map_public_ip_on_launch         = false
+  vpc_id                          = aws_vpc.evlab.id
   ipv6_cidr_block = cidrsubnet(
     aws_vpc.evlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_back, count.index),
   )
-  assign_ipv6_address_on_creation = true
-
   tags = {
     Name        = "subnet-back-${count.index}"
     Environment = "lab"
@@ -193,21 +185,21 @@ resource "aws_subnet" "exchange" {
 }
 
 resource "aws_subnet" "web" {
-  vpc_id = aws_vpc.evlab.id
-  count  = length(var.azs)
+  vpc_id                          = aws_vpc.evlab.id
+  count                           = length(var.azs)
+  availability_zone               = element(var.azs, count.index)
+  map_public_ip_on_launch         = true
+  assign_ipv6_address_on_creation = true
   cidr_block = cidrsubnet(
     aws_vpc.evlab.cidr_block,
     8,
     element(var.cidrbyte_web, count.index),
   )
-  availability_zone       = element(var.azs, count.index)
-  map_public_ip_on_launch = true
   ipv6_cidr_block = cidrsubnet(
     aws_vpc.evlab.ipv6_cidr_block,
     8,
     element(var.cidrbyte_web, count.index),
   )
-  assign_ipv6_address_on_creation = true
 
   tags = {
     Name        = "subnet-web-${count.index}"

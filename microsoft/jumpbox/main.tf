@@ -8,12 +8,12 @@ resource "aws_route53_record" "jumpbox" {
 }
 
 # resource "aws_route53_record" "jumpbox-v6" {
-#   count   = "${var.aws_number}"
-#   zone_id = "${var.dns_zone_id}"
+#   count   = var.aws_number
+#   zone_id = var.dns_zone_id
 #   name    = "jumpbox-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
-#   records = ["${aws_instance.jumpbox.*.ipv6_addresses}"]
+#   records = [element(aws_instance.jumpbox.*.ipv6_addresses, count.index)]
 # }
 
 resource "aws_eip" "jumpbox-public" {
@@ -43,6 +43,5 @@ resource "aws_instance" "jumpbox" {
   }
 
   # Our Security group to allow RDP access
-  # vpc_security_group_ids = var.aws_sg_ids
+  vpc_security_group_ids = var.aws_sg_ids
 }
-

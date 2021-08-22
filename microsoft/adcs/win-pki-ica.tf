@@ -38,7 +38,7 @@ resource "aws_instance" "pki-ica" {
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = flatten([
-    # var.aws_sg_ids,
+    var.aws_sg_ids,
     aws_security_group.pki-ica.*.id,
   ])
 }

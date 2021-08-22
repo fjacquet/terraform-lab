@@ -11,7 +11,9 @@ You should already know my Github if you read this
 ## SonarCloud status
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fjacquet_terraform-lab&metric=alert_status)](https://sonarcloud.io/dashboard?id=fjacquet_terraform-lab)
-
+![Terraform plan](https://github.com/fjacquet/terraform-lab/actions/workflows/terraform.yml/badge.svg)
+![SonarCloud](https://github.com/fjacquet/terraform-lab/actions/workflows/build.yml/badge.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/fjacquet/terraform-lab/badge.svg)](https://snyk.io/test/github/fjacquet/terraform-lab)
 ## SSH
 
 An ssh key must be set up, the public key should be declared in variable public_key
