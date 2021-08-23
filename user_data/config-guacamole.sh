@@ -6,8 +6,8 @@ yum -y upgrade
 yum -y install wget libaio numactl atop htop nfs-utils xorg-x11-xauth libXtst nfs-utils cockpit python jq
 
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-python get-pip.py
-pip install awscli
+python3 get-pip.py
+pip3 install awscli
 
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)                                               #DevSkim: ignore DS137138
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138

@@ -1,4 +1,4 @@
-< powershell>
+<powershell>
 mkdir C:\installers\
 
 # Install windows features
@@ -23,4 +23,4 @@ foreach ($script in $scripts) {
   $url = "$($gitroot)$($script).ps1"
   Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456
 }
-< /powershell>
+</powershell>

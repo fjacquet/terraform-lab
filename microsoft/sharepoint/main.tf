@@ -29,7 +29,7 @@ resource "aws_instance" "sharepoint" {
   user_data            = file("user_data/config-sharepoint.ps1")
 
   # Our Security group to allow Sharepoint access
-  # vpc_security_group_ids = var.aws_sg_ids
+  vpc_security_group_ids = var.aws_sg_ids
 
   lifecycle {
     ignore_changes = [user_data]

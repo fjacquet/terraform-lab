@@ -93,7 +93,7 @@ variable "aws_number" {
     "adfs"       = 0
     "bsd"        = 0
     "da"         = 0
-    "dc"         = 2
+    "dc"         = 1
     "dhcp"       = 0
     "exchange"   = 0
     "fs"         = 0
@@ -130,17 +130,17 @@ variable "aws_amis" {
   type = map(string)
 
   default = {
-    "bsd"        = "ami-0ec23856b3bad62d3"
-    "glpi"       = "ami-0ec23856b3bad62d3"
-    "etcd"       = "ami-0ec23856b3bad62d3"
-    "workers"    = "ami-0ec23856b3bad62d3"
-    "rancher"    = "ami-0ec23856b3bad62d3"
-    "longhorn"   = "ami-0ec23856b3bad62d3"
-    "guacamole"  = "ami-0ec23856b3bad62d3"
+    "bsd"        = "ami-02b4e72b17337d6c1"
+    "glpi"       = "ami-02b4e72b17337d6c1"
+    "etcd"       = "ami-02b4e72b17337d6c1"
+    "workers"    = "ami-02b4e72b17337d6c1"
+    "rancher"    = "ami-02b4e72b17337d6c1"
+    "longhorn"   = "ami-02b4e72b17337d6c1"
+    "guacamole"  = "ami-02b4e72b17337d6c1"
     "jumpbox"    = "ami-0acec5a529be6b35a"
-    "lnx"        = "ami-0ec23856b3bad62d3"
-    "nbu"        = "ami-0ec23856b3bad62d3"
-    "oracle"     = "ami-0ec23856b3bad62d3"
+    "lnx"        = "ami-02b4e72b17337d6c1"
+    "nbu"        = "ami-02b4e72b17337d6c1"
+    "oracle"     = "ami-02b4e72b17337d6c1"
     "redis"      = "ami-0ec23856b3bad62d"
     "sharepoint" = "ami-0acec5a529be6b35a"
     "sql"        = "ami-0b710fe222abdeb24"

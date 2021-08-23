@@ -41,7 +41,7 @@ resource "aws_instance" "rdsh" {
   }
 
   # Our Security group to allow RDP access
-  # vpc_security_group_ids = var.aws_sg_ids
+  vpc_security_group_ids = var.aws_sg_ids
 }
 
 resource "aws_security_group" "rdsh" {

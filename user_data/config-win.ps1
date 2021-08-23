@@ -1,4 +1,4 @@
-< powershell>
+<powershell>
 mkdir C:\installers\
 
 # Install windows features
@@ -15,12 +15,12 @@ $scripts = (
   'Install-chocolateys',
   'Install-mslaps',
   'Install-features',
-  'Install-fusioninventory',
-  'Join-domain-member',
+  # 'Install-fusioninventory',
+  # 'Join-domain-member',
   'Initialize-hostname'
 )
 foreach ($script in $scripts) {
   $url = "$($gitroot)$($script).ps1"
   Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456
 }
-< /powershell>
+</powershell>

@@ -1,4 +1,4 @@
-﻿< powershell>
+﻿<powershell>
 # Install windows features
 add-windowsfeature -Name 'DHCP' –IncludeManagementTools
 # download needed for this server
@@ -24,4 +24,4 @@ foreach ($script in $scripts) {
 
 
 
-< /powershell>
+</powershell>

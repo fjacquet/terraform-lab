@@ -1,4 +1,4 @@
-< powershell>
+<powershell>
 mkdir C:\installers\
 Write-Output "installing RSAT"
 # Install windows features
@@ -23,4 +23,4 @@ foreach ($script in $scripts) {
   Write-Output "running $($url)"
   Invoke-Expression ((New-Object System.Net.WebClient).DownloadString($url)) #DevSkim: ignore DS104456
 }
-< /powershell>
+</powershell>

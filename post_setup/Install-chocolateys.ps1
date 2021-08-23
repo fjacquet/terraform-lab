@@ -13,10 +13,11 @@ $values = (
   'googlechrome',
   'notepadplusplus',
   'reportviewer2012',
+  'rdmfree',
   'sysinternals',
   'windirstat'
 )
-
+choco feature enable -n allowGlobalConfirmation
 foreach ($value in $values) {
   Write-Output "installing $($value)"
   choco install $value -y
