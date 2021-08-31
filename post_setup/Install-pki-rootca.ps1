@@ -11,6 +11,7 @@ Install-Module -Name PSPKI
 # Get the right polica file
 Invoke-WebRequest -Uri $url -OutFile $file #DevSkim: ignore DS104456
 Copy-Item -Path $file -Destination "C:\Windows\capolicy.inf"
+import-module -name pspki
 # startup configuration
 Install-AdcsCertificationAuthority `
    -CAType StandaloneRootCA `
@@ -25,7 +26,7 @@ Install-AdcsCertificationAuthority `
 # remove default
 $crllist = Get-CACrlDistributionPoint
 foreach ($crl in $crllist) {
-  Remove-CACrlDistributionPoint $crl.uri -Force
+   Remove-CACrlDistributionPoint $crl.uri -Force
 }
 # create valide crl
 Add-CACRLDistributionPoint `
@@ -42,8 +43,8 @@ Add-CACRLDistributionPoint `
 
 # Prepare AIA
 Get-CAAuthorityInformationAccess `
-   | Where-Object { $_.uri -like '*ldap*' -or $_.uri -like '*http*' -or $_.uri -like '*file*' } `
-   | Remove-CAAuthorityInformationAccess `
+| Where-Object { $_.uri -like '*ldap*' -or $_.uri -like '*http*' -or $_.uri -like '*file*' } `
+| Remove-CAAuthorityInformationAccess `
    -Force
 
 Add-CAAuthorityInformationAccess `

@@ -2,7 +2,7 @@
 # download needed for this server
 mkdir C:\installers\
 # Install windows features
-# add-windowsfeature -Name Adcs-Cert-Authority,ADCS-Web-Enrollment -IncludeManagementTools
+add-windowsfeature -Name Adcs-Cert-Authority,ADCS-Web-Enrollment -IncludeManagementTools
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
 Set-ExecutionPolicy Bypass -Scope Process -Force #DevSkim: ignore DS113853
@@ -14,7 +14,7 @@ $scripts = (
   'Install-chocolateys',
   'Install-mslaps',
   'Install-features',
-  'Install-fusioninventory',
+  # 'Install-fusioninventory',
   'Join-domain-member',
   'Initialize-hostname'
 )

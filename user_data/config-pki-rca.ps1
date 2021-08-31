@@ -3,7 +3,7 @@
 mkdir C:\installers\
 
 # Install windows features
-# add-windowsfeature -Name Adcs-Cert-Authority -IncludeManagementTools
+add-windowsfeature -Name Adcs-Cert-Authority -IncludeManagementTools
 
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
 Set-ExecutionPolicy Bypass -Scope Process -Force #DevSkim: ignore DS113853
@@ -13,10 +13,10 @@ $scripts = (
   'Initialize-env',
   'Install-nbugrt',
   'Install-chocolateys',
-  'Install-mslaps',
-  'Install-features',
-  'Install-fusioninventory',
-  'Join-domain-member',
+  # 'Install-mslaps',
+  # 'Install-features',
+  # 'Install-fusioninventory',
+  # 'Join-domain-member',
   'Initialize-hostname'
 )
 foreach ($script in $scripts) {

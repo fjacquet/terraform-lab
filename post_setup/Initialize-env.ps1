@@ -17,13 +17,13 @@ add-windowsfeature -Name RSAT `
 $disable = 2
 $adapters = (gwmi win32_networkadapterconfiguration)
 foreach ($adapter in $adapters) {
-  Write-Host $adapter
-  $adapter.settcpipnetbios($disable)
+   Write-Host $adapter
+   $adapter.settcpipnetbios($disable)
 }
 
 # Disable Netbios
 $nicClass = Get-WmiObject -List Win32_NetworkAdapterConfiguration
-$nicClass.enableWins($false,$false)
+$nicClass.enableWins($false, $false)
 
 # Set-SmbServerConfiguration `
 #     -EnableSMB1Protocol $false `
