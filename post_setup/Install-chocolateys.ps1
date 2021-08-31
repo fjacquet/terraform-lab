@@ -15,6 +15,7 @@ $values = (
   'reportviewer2012',
   'rdmfree',
   'sysinternals',
+  'vscode',
   'windirstat'
 )
 choco feature enable -n allowGlobalConfirmation
