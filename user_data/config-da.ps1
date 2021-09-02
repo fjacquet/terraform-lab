@@ -16,8 +16,7 @@ $scripts = (
   'Install-features',
   'Install-fusioninventory',
   'Join-domain-member',
-  'Initia
-    lize-hostname'
+  'Initialize-hostname'
 )
 foreach ($script in $scripts) {
   $url = "$($gitroot)$($script).ps1"

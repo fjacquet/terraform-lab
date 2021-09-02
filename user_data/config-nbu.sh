@@ -51,8 +51,8 @@ cd /backups || exit
 rm -rf .aws/credentials
 
 for i in NetBackup_8.1.3Beta2_LinuxR_x86_64.tar.gz NetBackup_8.1.3Beta2_Win.zip; do
-	aws s3 cp s3://installers-fja/$i /backups/$i
-	tar xzf /backups/$i
+  aws s3 cp s3://installers-fja/$i /backups/$i
+  tar xzf /backups/$i
 done
 
 systemctl start cockpit

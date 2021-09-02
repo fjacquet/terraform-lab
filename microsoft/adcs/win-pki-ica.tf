@@ -35,7 +35,9 @@ resource "aws_instance" "pki-ica" {
   lifecycle {
     ignore_changes = [user_data]
   }
-
+  depends_on = [
+    aws_instance.pki-rca,
+  ]
   # Our Security group to allow RDP access
   vpc_security_group_ids = var.aws_sg_ids
 }

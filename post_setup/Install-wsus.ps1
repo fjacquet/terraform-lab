@@ -1,5 +1,5 @@
 
-add-windowsfeature -Name UpdateServices,RSAT -IncludeManagementTools
+add-windowsfeature -Name UpdateServices, RSAT -IncludeManagementTools
 
 $WSUSContentDir = 'D:\WSUS'
 New-Item -Path $WSUSContentDir -ItemType Directory
@@ -8,9 +8,9 @@ New-Item -Path $WSUSContentDir -ItemType Directory
 
 $WSUSServer = Get-WsusServer
 $WSUSServerURL = "http{2}://{0}:{1}" -f `
-   $WSUSServer.Name,`
-   $WSUSServer.PortNumber,`
-   ('','s')[$WSUSServer.UseSecureConnection]
+   $WSUSServer.Name, `
+   $WSUSServer.PortNumber, `
+('', 's')[$WSUSServer.UseSecureConnection]
 $WSUSServerURL
 
 $PolicyName = "WSUS Client"

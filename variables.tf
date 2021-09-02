@@ -98,7 +98,7 @@ variable "aws_number" {
     "exchange"   = 0
     "fs"         = 0
     "glpi"       = 0
-    "guacamole"  = 1
+    "guacamole"  = 0
     "ipam"       = 0
     "jumpbox"    = 1
     "etcd"       = 0
@@ -106,7 +106,7 @@ variable "aws_number" {
     "longhorn"   = 0
     "rancher"    = 0
     "nbu"        = 0
-    "nps"        = 1
+    "nps"        = 0
     "opscenter"  = 0
     "oracle"     = 0
     "pki-crl"    = 0
@@ -120,7 +120,7 @@ variable "aws_number" {
     "sql"        = 0
     "sofs"       = 0
     "symv"       = 0
-    "wac"        = 1
+    "wac"        = 0
     "wds"        = 0
     "wsus"       = 0
   }
@@ -136,7 +136,7 @@ variable "aws_amis" {
     "workers"    = "ami-02b4e72b17337d6c1"
     "rancher"    = "ami-02b4e72b17337d6c1"
     "longhorn"   = "ami-02b4e72b17337d6c1"
-    "guacamole"  = "ami-02b4e72b17337d6c1"
+    "guacamole"  = "ami-0a8e758f5e873d1c1"  #debian
     "jumpbox"    = "ami-0acec5a529be6b35a"
     "lnx"        = "ami-02b4e72b17337d6c1"
     "nbu"        = "ami-02b4e72b17337d6c1"

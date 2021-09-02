@@ -1,6 +1,6 @@
 ﻿# Install windows features
 Write-Output 'add DSC'
-add-windowsfeature -Name DSC-Service,GPMC,SNMP-Service,Bitlocker
+add-windowsfeature -Name DSC-Service, GPMC, SNMP-Service, Bitlocker
 # # Enable Remoting
 Write-Output 'Enable winrm'
 winrm qc -Quiet

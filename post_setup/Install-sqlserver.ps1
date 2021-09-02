@@ -16,8 +16,8 @@ $arguments += "/INSTANCENAME=MSSQLSERVER"
 
 $file = "E:\Setup.exe"
 $params = @{
-  FilePath = $file
-  Wait = $true
+  FilePath     = $file
+  Wait         = $true
   ArgumentList = $arguments
 }
 Start-Process -FilePath $file -ArgumentList @params

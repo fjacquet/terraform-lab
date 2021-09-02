@@ -1,7 +1,6 @@
 Initialize-AWSDefaults
 
 $s3bucket = "installers-fja"
-
 $domainName = "{{ windows_domain_info['dns_domain_name'] }}"
 $password = "{{ windows_domain_info['domain_admin_password'] }}"
 $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
@@ -30,7 +29,6 @@ Get-Certificate `
     -Credential <PkiCredential> `
     -CertStoreLocation <String> `
     -Confirm:$false
-
 
 $selfSignedCert = New-SelfSignedCertificateEx `
     -Subject "CN=$fqdn" `

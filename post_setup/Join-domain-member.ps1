@@ -9,7 +9,7 @@ $password = ConvertTo-SecureString `
    -Force $secret
 $Credential = New-Object `
    -TypeName System.Management.Automation.PSCredential `
-   -ArgumentList $username,$password
+   -ArgumentList $username, $password
 
 # Write-Output 'set DNS'
 # Get-NetAdapter -Physical `
@@ -19,10 +19,10 @@ $Credential = New-Object `
 
 Write-Output 'Set suffix'
 Set-DnsClientGlobalSetting -SuffixSearchList (
-  $domain,
-  "$($region).ec2-utilities.amazonaws.com",
-  "us-east-1.ec2-utilities.amazonaws.com",
-  "$($region).compute.internal")
+   $domain,
+   "$($region).ec2-utilities.amazonaws.com",
+   "us-east-1.ec2-utilities.amazonaws.com",
+   "$($region).compute.internal")
 
 Write-Output 'Join domain'
 Add-Computer –domainname $domain `

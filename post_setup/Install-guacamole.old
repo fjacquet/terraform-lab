@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+
+# Run system Update
+echo "deb http://deb.debian.org/debian buster-backports main" > /etc/apt/sources.list.d/backports.list
+apt update
+apt install -y build-essential libcairo2-dev libjpeg62-turbo-dev libpng-dev libtool-bin libossp-uuid-dev libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libpango1.0-dev libssh2-1-dev libvncserver-dev libtelnet-dev libssl-dev libvorbis-dev libwebp-dev libpulse-dev freerdp2-dev/buster-backports
+
+# Building Guacamole Server
+VER=1.3.0
+wget https://downloads.apache.org/guacamole/$VER/source/guacamole-server-$VER.tar.gz
+tar xzf guacamole-server-$VER.tar.gz
+cd guacamole-server-$VER
+./configure --with-init-dir=/etc/init.d
+make
+make install
+
+ldconfig
+systemctl daemon-reload
+
+
+systemctl enable --now guacd
+
+# Install Tomcat Servlet
+apt install tomcat9 tomcat9-admin tomcat9-common tomcat9-user -y
+systemctl status tomcat9.service
+ufw allow 8080/tcp
+
+# Installing Guacamole Client on Debian 10
+mkdir /etc/guacamole
+
+wget https://downloads.apache.org/guacamole/$VER/binary/guacamole-$VER.war -O /etc/guacamole/guacamole.war
+ln -s /etc/guacamole/guacamole.war /var/lib/tomcat9/webapps/
+systemctl restart tomcat9
+systemctl restart guacd
+
+mkdir /etc/guacamole/{extensions,lib}
+echo "GUACAMOLE_HOME=/etc/guacamole" >> /etc/default/tomcat9
+cat  <<EOF > /etc/guacamole/guacamole.properties
+guacd-hostname: localhost
+guacd-port: 4822
+user-mapping:   /etc/guacamole/user-mapping.xml
+auth-provider:  net.sourceforge.guacamole.net.basic.BasicFileAuthenticationProvider
+EOF
+
+ln -s /etc/guacamole /usr/share/tomcat9/.guacamole
+
+cat <<EOF > /etc/guacamole/user-mapping.xml
+<user-mapping>
+    <!-- Per-user authentication and config information -->
+    <!-- A user using md5 to hash the password
+         guacadmin user and its md5 hashed password below is used to
+             login to Guacamole Web UI-->
+    <authorize
+            username="guacadmin"
+            password="5f4dcc3b5aa765d61d8327deb882cf99"
+            encoding="md5">
+        <!-- First authorized Remote connection -->
+        <connection name="Ubuntu 20.04 Server SSH">
+            <protocol>ssh</protocol>
+            <param name="hostname">192.168.57.3</param>
+            <param name="port">22</param>
+        </connection>
+        <!-- Second authorized remote connection -->
+        <connection name="Windows 7 RDP">
+            <protocol>rdp</protocol>
+            <param name="hostname">192.168.56.103</param>
+            <param name="port">3389</param>
+            <param name="username">koromicha</param>
+            <param name="ignore-cert">true</param>
+        </connection>
+    </authorize>
+</user-mapping>
+EOF
+systemctl restart tomcat9 guacd
+
+# Install Nginx web server
+
+apt install nginx
+systemctl enable  nginx

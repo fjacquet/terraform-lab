@@ -29,7 +29,7 @@ $DeploymentShareDrive = $DeploymentShareDrive.TrimEnd("\")
 #Get Installers
 Write-Output "Downloading MDT 8450"
 $params = @{
-  Source = "https://download.microsoft.com/download/3/3/9/339BE62D-B4B8-4956-B58D-73C4685FC492/MicrosoftDeploymentToolkit_x64.msi"
+  Source      = "https://download.microsoft.com/download/3/3/9/339BE62D-B4B8-4956-B58D-73C4685FC492/MicrosoftDeploymentToolkit_x64.msi"
   Destination = "$PSScriptRoot\mdt_install.msi"
   ErrorAction = "Stop"
 }
@@ -37,7 +37,7 @@ Start-BitsTransfer @params
 
 Write-Output "Downloading ADK 1803"
 $params = @{
-  Source = "http://download.microsoft.com/download/6/8/9/689E62E5-C50F-407B-9C3C-B7F00F8C93C0/adk/adksetup.exe"
+  Source      = "http://download.microsoft.com/download/6/8/9/689E62E5-C50F-407B-9C3C-B7F00F8C93C0/adk/adksetup.exe"
   Destination = "$PSScriptRoot\adk_setup.exe"
   ErrorAction = "Stop"
 }
@@ -49,9 +49,9 @@ Start-Process msiexec.exe -Wait -ArgumentList "/i ""$PSScriptRoot\mdt_install.ms
 
 Write-Output "Installing ADK"
 $params = @{
-  FilePath = "$PSScriptRoot\adk_setup.exe"
+  FilePath     = "$PSScriptRoot\adk_setup.exe"
   ArgumentList = "/quiet /features OptionId.DeploymentTools OptionId.WindowsPreinstallationEnvironment"
-  ErrorAction = "Stop"
+  ErrorAction  = "Stop"
 }
 Start-Process @params -Wait
 
@@ -68,9 +68,9 @@ New-Item -Path "$DeploymentShareDrive\DeploymentShare" -ItemType directory -Erro
 New-SmbShare -Name "DeploymentShare$" -Path "$DeploymentShareDrive\DeploymentShare" -ReadAccess "$env:COMPUTERNAME\$localUser" -ErrorAction Stop
 
 $params = @{
-  Name = "DS001"
-  PSProvider = "MDTProvider"
-  Root = "$DeploymentShareDrive\DeploymentShare"
+  Name        = "DS001"
+  PSProvider  = "MDTProvider"
+  Root        = "$DeploymentShareDrive\DeploymentShare"
   Description = "MDT Deployment Share"
   NetworkPath = "\\$env:COMPUTERNAME\DeploymentShare$"
   ErrorAction = "Stop"
@@ -90,8 +90,8 @@ if ($Wims) {
     $WimName = $WimName.TrimEnd(".wim")
     Write-Output "$WimName found - will import"
     $params = @{
-      Path = "DS001:\Operating Systems"
-      SourceFile = $Wim
+      Path              = "DS001:\Operating Systems"
+      SourceFile        = $Wim
       DestinationFolder = $WimName
     }
     $osData = Import-MDTOperatingSystem @params -Verbose -ErrorAction Stop
@@ -108,18 +108,18 @@ if ($OperatingSystems) {
     $Counter++
     $WimName = Split-Path -Path $OS.Source -Leaf
     $params = @{
-      Path = "DS001:\Task Sequences"
-      Name = "$($OS.Description) in $WimName"
-      Template = "Client.xml"
-      Comments = ""
-      Id = $Counter
-      version = "1.0"
+      Path                = "DS001:\Task Sequences"
+      Name                = "$($OS.Description) in $WimName"
+      Template            = "Client.xml"
+      Comments            = ""
+      Id                  = $Counter
+      version             = "1.0"
       OperatingSystemPath = "DS001:\Operating Systems\$($OS.Name)"
-      FullName = "fullname"
-      OrgName = "org"
-      HomePage = "about:blank"
-      Verbose = $true
-      ErrorAction = "Stop"
+      FullName            = "fullname"
+      OrgName             = "org"
+      HomePage            = "about:blank"
+      Verbose             = $true
+      ErrorAction         = "Stop"
     }
     Import-MDTTaskSequence @params
   }
@@ -152,7 +152,7 @@ if ($Office365) {
   Write-Output "Downloading Office Deployment Toolkit"
   New-Item -ItemType Directory -Path "$PSScriptRoot\odt"
   $params = @{
-    Source = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_10306.33602.exe"
+    Source      = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_10306.33602.exe"
     Destination = "$PSScriptRoot\odt\officedeploymenttool.exe"
     ErrorAction = "Stop"
   }
@@ -160,9 +160,9 @@ if ($Office365) {
 
   Write-Output "Extracting Office Deployment Toolkit"
   $params = @{
-    FilePath = "$PSScriptRoot\odt\officedeploymenttool.exe"
+    FilePath     = "$PSScriptRoot\odt\officedeploymenttool.exe"
     ArgumentList = "/quiet /extract:$PSScriptRoot\odt"
-    ErrorAction = "Stop"
+    ErrorAction  = "Stop"
   }
   Start-Process @params -Wait
   Remove-Item "$PSScriptRoot\odt\officedeploymenttool.exe" -Force -Confirm:$false -ErrorAction Stop
@@ -182,19 +182,19 @@ if ($Office365) {
 
   Write-Output "Importing Office 365 into MDT"
   $params = @{
-    Path = "DS001:\Applications"
-    Name = "Microsoft Office 365 2016 Monthly"
-    ShortName = "Office 365 2016"
-    Publisher = "Microsoft"
-    Language = ""
-    Enable = "True"
-    version = "Monthly"
-    Verbose = $true
-    ErrorAction = "Stop"
-    CommandLine = "setup.exe /configure configuration.xml"
-    WorkingDirectory = ".\Applications\Microsoft Office 365 2016 Monthly"
+    Path                  = "DS001:\Applications"
+    Name                  = "Microsoft Office 365 2016 Monthly"
+    ShortName             = "Office 365 2016"
+    Publisher             = "Microsoft"
+    Language              = ""
+    Enable                = "True"
+    version               = "Monthly"
+    Verbose               = $true
+    ErrorAction           = "Stop"
+    CommandLine           = "setup.exe /configure configuration.xml"
+    WorkingDirectory      = ".\Applications\Microsoft Office 365 2016 Monthly"
     ApplicationSourcePath = "$PSScriptRoot\odt"
-    DestinationFolder = "Microsoft Office 365 2016 Monthly"
+    DestinationFolder     = "Microsoft Office 365 2016 Monthly"
   }
   Import-MDTApplication @params
 }
@@ -266,19 +266,19 @@ if ($Applications) {
     New-Item -Path "$PSScriptRoot\mdt_apps\$($application.name)" -ItemType Directory -Force
     Start-BitsTransfer -Source $Application.download -Destination "$PSScriptRoot\mdt_apps\$($application.name)\$($Application.filename)"
     $params = @{
-      Path = "DS001:\Applications"
-      Name = $Application.Name
-      ShortName = $Application.Name
-      Publisher = ""
-      Language = ""
-      Enable = "True"
-      version = $Application.version
-      Verbose = $true
-      ErrorAction = "Stop"
-      CommandLine = $Application.install
-      WorkingDirectory = ".\Applications\$($Application.name)"
+      Path                  = "DS001:\Applications"
+      Name                  = $Application.Name
+      ShortName             = $Application.Name
+      Publisher             = ""
+      Language              = ""
+      Enable                = "True"
+      version               = $Application.version
+      Verbose               = $true
+      ErrorAction           = "Stop"
+      CommandLine           = $Application.install
+      WorkingDirectory      = ".\Applications\$($Application.name)"
       ApplicationSourcePath = "$PSScriptRoot\mdt_apps\$($application.name)"
-      DestinationFolder = $Application.Name
+      DestinationFolder     = $Application.Name
     }
     Import-MDTApplication @params
   }

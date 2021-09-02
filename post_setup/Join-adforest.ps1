@@ -3,7 +3,7 @@ $domain = "ez-lab.xyz"
 $secret = (Get-SECSecretValue -SecretId "$($domain)/ad/joinuser").SecretString
 $username = "joinuser"
 $password = $secret | ConvertTo-SecureString -AsPlainText -Force
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username,$password
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
 
 Get-NetAdapter -Physical | Set-DnsClientServerAddress -ServerAddresses (
   "10.0.51.85",
@@ -16,9 +16,9 @@ Set-DnsClientGlobalSetting -SuffixSearchList (
   "eu-west-1.compute.internal")
 
 Install-ADDSDomainController `
-   -InstallDns `
-   -Credential $Credential `
-   -DomainName $($domain) `
-   -SafeModeAdministratorPassword $password `
-   -SiteName 'Default-First-Site-Name' `
-   -Confirm:$false
+  -InstallDns `
+  -Credential $Credential `
+  -DomainName $($domain) `
+  -SafeModeAdministratorPassword $password `
+  -SiteName 'Default-First-Site-Name' `
+  -Confirm:$false

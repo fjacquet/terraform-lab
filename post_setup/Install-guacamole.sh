@@ -23,7 +23,7 @@
 ##############################################################
 #####    VARIABLES    ####
 ##########################
-SCRIPT=$(basename ${BASH_SOURCE[0]}) #Script File Name
+SCRIPT=$(basename$ {BASH_SOURCE[0]}) #Script File Name
 GUACA_VER="0.9.14"
 MYSQL_CONNECTOR_VER="5.1.44"
 LIBJPEG_VER="1.5.2"

@@ -19,9 +19,9 @@ MYSQLPASS=$(aws secretsmanager get-secret-value --secret-id "ez-lab.xyz/guacamol
 KEYSTORE=$(aws secretsmanager get-secret-value --secret-id "ez-lab.xyz/guacamole/keystore" --region="$REGION" --output json | jq -r '.SecretString')
 MAIL=$(aws secretsmanager get-secret-value --secret-id "ez-lab.xyz/guacamole/mail" --region="$REGION" --output json | jq -r '.SecretString')
 
-hostnamectl set-hostname "$HOSTNAME.ez-lab.xyz"
-curl https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/Install-guacamole.sh -o /install-guacamole.sh
-chmod 755 /install-guacamole.sh
-echo "/install-guacamole.sh -a $MYSQLROOT -b $MYSQLDB -c $MYSQLUSER -d $MYSQLPASS -e $KEYSTORE -l ez-lab.xyz:$MAIL -s -p yes " >/install.sh
-chmod 755 /install.sh
-reboot
+# hostnamectl set-hostname "$HOSTNAME.ez-lab.xyz"
+# curl https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/Install-guacamole.sh -o /install-guacamole.sh
+# chmod 755 /install-guacamole.sh
+# echo "/install-guacamole.sh -a $MYSQLROOT -b $MYSQLDB -c $MYSQLUSER -d $MYSQLPASS -e $KEYSTORE -l ez-lab.xyz:$MAIL -s -p yes " >/install.sh
+# chmod 755 /install.sh
+# reboot

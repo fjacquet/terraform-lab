@@ -3,7 +3,7 @@
 
 #SCCM - Install Prerequisites
 add-windowsfeature -Name "Net-Framework-Core" -Source D:\sources\sxs
-add-windowsfeature -Name "RDC","BITS","Web-WMI","RSAT-AD-PowerShell"
+add-windowsfeature -Name "RDC", "BITS", "Web-WMI", "RSAT-AD-PowerShell"
 
 # Get the distinguished name of the Active Directory domain
 $DomainDN = (Get-ADDomain).DistinguishedName
@@ -25,7 +25,7 @@ catch {
 
 if ($Container -eq $null) {
   $Container = New-ADObject -Type Container -Name "System Management" `
-     -Path "$SystemDN" -PassThru
+    -Path "$SystemDN" -PassThru
 }
 
 # Get current ACL for the System Management container
@@ -39,7 +39,7 @@ $adRights = [System.DirectoryServices.ActiveDirectoryRights]"GenericAll"
 $type = [System.Security.AccessControl.AccessControlType]"Allow"
 $inheritanceType = [System.DirectoryServices.ActiveDirectorySecurityInheritance]"All"
 $ACE = New-Object System.DirectoryServices.ActiveDirectoryAccessRule `
-   $SID,$adRights,$type,$inheritanceType
+  $SID, $adRights, $type, $inheritanceType
 
 # Add the new access control entry to the ACL object we grabbed earlier
 $ACL.AddAccessRule($ACE)
@@ -50,14 +50,14 @@ Set-Acl -AclObject $ACL -Path "AD:$Container"
 New-Item -ItemType Directory -Path C:\installers
 
 $params = @{
-  Source = "https://download.microsoft.com/download/3/1/E/31EC1AAF-3501-4BB4-B61C-8BD8A07B4E8A/adk/adksetup.exe"
+  Source      = "https://download.microsoft.com/download/3/1/E/31EC1AAF-3501-4BB4-B61C-8BD8A07B4E8A/adk/adksetup.exe"
   Destination = "c:\installers\adk_setup.exe"
 }
 Start-BitsTransfer @params
 
 $params = @{
-  FilePath = "c:\installers\adk_setup.exe"
-  Wait = $true
+  FilePath     = "c:\installers\adk_setup.exe"
+  Wait         = $true
   ArgumentList = "/quiet /features OptionId.DeploymentTools OptionId.WindowsPreinstallationEnvironment OptionId.UserStateMigrationTool"
 }
 Start-Process @params

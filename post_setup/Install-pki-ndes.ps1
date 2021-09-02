@@ -10,8 +10,8 @@ $raname = "ezlab Enterprise Certificate Authority"
 Install-AdcsNetworkDeviceEnrollmentService `
    -ServiceAccountName $domain\$user `
    -ServiceAccountPassword (ConvertTo-SecureString -AsPlainText $secret -Force) `
-   -CAConfig $caname
--RAName $raname `
+   -CAConfig $caname `
+   -RAName $raname `
    -RACountry "CH" `
    -RACompany $domain `
    -SigningProviderName "Microsoft Strong Cryptographic Provider" `

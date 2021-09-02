@@ -12,15 +12,12 @@ setenforce 0
 wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 wget https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 rpm -Uvh remi-release-8.rpm epel-release-latest-8.noarch.rpm
-subscription-manager repos --enable=rhel-7-server-optional-rpms
+subscription-manager repos --enable=rhel-8-server-optional-rpms
 
-yum install  mariadb-server glpi
+yum install -y mariadb-server glpi
 
-systemctl enable httpd
-systemctl start httpd
-systemctl enable mariadb
-systemctl start mariad
-
+systemctl enable --now httpd
+systemctl enable --now mariadb
 
 mysql -u root << EOF
 CREATE DATABASE $MYSQLDB;

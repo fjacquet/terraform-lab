@@ -39,7 +39,6 @@ Add-ADGroupMember -Identity $Group `
    -Members $User `
    -Server $dc
 
-
 Set-AdmPwdReadPasswordPermission `
    -AllowedPrincipals $group.SamAccountName `
    -Identity $serversou.Name

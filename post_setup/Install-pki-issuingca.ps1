@@ -30,7 +30,6 @@ Copy-S3Object `
 
 # Push to domain
 certutil.exe –dsPublish –f $cacrt RootCA
-
 certutil.exe -dsPublish -f $cacrl RootCA
 
 # Add to local store
@@ -45,8 +44,6 @@ Install-AdcsCertificationAuthority `
    -HashAlgorithm SHA512 `
    -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" `
    -Force
-
-
 
 Write-Host "add this step sign the .req in c:\ using the root CA"
 Pause
