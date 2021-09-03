@@ -136,7 +136,7 @@ variable "aws_amis" {
     "workers"    = "ami-02b4e72b17337d6c1"
     "rancher"    = "ami-02b4e72b17337d6c1"
     "longhorn"   = "ami-02b4e72b17337d6c1"
-    "guacamole"  = "ami-0a8e758f5e873d1c1"  #debian
+    "guacamole"  = "ami-0a8e758f5e873d1c1" # Debian
     "jumpbox"    = "ami-0acec5a529be6b35a"
     "lnx"        = "ami-02b4e72b17337d6c1"
     "nbu"        = "ami-02b4e72b17337d6c1"
@@ -149,7 +149,21 @@ variable "aws_amis" {
   }
 }
 
-data "aws_ami" "windows-2019" {
+
+
+data "aws_ami" "debian" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["debian-11-amd64*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["679593333241"] # Canonical
+}
+data "aws_ami" "windows2019" {
   most_recent = true
   filter {
     name   = "name"
@@ -161,7 +175,7 @@ data "aws_ami" "windows-2019" {
   }
   owners = ["801119661308"] # Canonical
 }
-data "aws_ami" "sql-2019" {
+data "aws_ami" "sql2019" {
   most_recent = true
   filter {
     name   = "name"

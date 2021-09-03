@@ -1,6 +1,6 @@
 module "bsd" {
   source               = "./bsd"
-  aws_ami              = var.aws_amis["bsd"]
+  aws_ami              = data.aws_ami.bsd.id
   aws_key_pair_auth_id = var.aws_key_pair_auth_id
   aws_number           = var.aws_number["bsd"]
   aws_subnet_id        = var.aws_subnet_back_id
@@ -35,7 +35,7 @@ module "glpi" {
 
 module "guacamole" {
   source                  = "./guacamole"
-  aws_ami                 = var.aws_amis["guacamole"]
+  aws_ami                 = data.aws_ami.debian.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["guacamole"]
