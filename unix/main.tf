@@ -155,3 +155,43 @@ resource "aws_security_group" "ssh" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
+
+
+data "aws_ami" "bsd" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["FreeBSD 13.0-RELEASE-amd64-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["679593333241"] # aws-marketplace FreeBSD
+}
+
+data "aws_ami" "debian" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["debian-11-amd64*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["679593333241"] # aws-marketplace Debian
+}
+
+data "aws_ami" "rhel8" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2019-English-Full-Base-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}

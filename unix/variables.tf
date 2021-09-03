@@ -57,29 +57,3 @@ variable "azs" {
 variable "aws_amis" {
   type = map(string)
 }
-
-data "aws_ami" "bsd" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["FreeBSD 13.0-RELEASE-amd64-*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["679593333241"] # Canonical
-}
-
-data "aws_ami" "debian" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["debian-11-amd64*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["679593333241"] # Canonical
-}

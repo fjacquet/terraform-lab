@@ -1,6 +1,6 @@
 module "adcs" {
   source                  = "./adcs"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number_pki-crl      = var.aws_number["pki-crl"]
@@ -34,7 +34,7 @@ module "adcs" {
 
 module "adds" {
   source                  = "./adds"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["dc"]
@@ -64,7 +64,7 @@ module "adds" {
 
 module "adfs" {
   source                  = "./adfs"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["adfs"]
@@ -96,7 +96,7 @@ module "adfs" {
 
 module "dhcp" {
   source                  = "./dhcp"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["dhcp"]
@@ -124,7 +124,7 @@ module "dhcp" {
 
 module "da" {
   source                  = "./da"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["da"]
@@ -152,7 +152,7 @@ module "da" {
 
 module "exchange" {
   source                  = "./exchange"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["exchange"]
@@ -180,7 +180,7 @@ module "exchange" {
 
 module "fs" {
   source                  = "./fs"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["fs"]
@@ -210,7 +210,7 @@ module "fs" {
 
 module "ipam" {
   source                  = "./ipam/"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["ipam"]
@@ -259,7 +259,7 @@ module "jumpbox" {
 
 module "nps" {
   source                  = "./nps"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["nps"]
@@ -287,7 +287,7 @@ module "nps" {
 
 module "rdsh" {
   source                  = "./rdsh"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["rdsh"]
@@ -376,7 +376,7 @@ module "workfolders" {
 
 module "simpana" {
   source                  = "./simpana"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["simpana"]
@@ -402,7 +402,7 @@ module "simpana" {
 
 module "sofs" {
   source                  = "./sofs"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["sofs"]
@@ -432,7 +432,7 @@ module "sofs" {
 
 module "wac" {
   source                  = "./wac"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["wac"]
@@ -460,7 +460,7 @@ module "wac" {
 
 module "wds" {
   source                  = "./wds"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["wds"]
@@ -488,7 +488,7 @@ module "wds" {
 
 module "wsus" {
   source                  = "./wsus"
-  aws_ami                 = var.aws_amis["win2019"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["wsus"]
@@ -706,4 +706,67 @@ resource "aws_security_group" "domain-member" {
     protocol         = "-1"
     ipv6_cidr_blocks = ["::/0"]
   }
+}
+
+data "aws_ami" "windows2022" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2022-English-Full-Base-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}
+
+data "aws_ami" "windows2019" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2019-English-Full-Base-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}
+
+data "aws_ami" "sql2019" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2019-English-Full-SQL_2019_Standard-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}
+data "aws_ami" "windows2016" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2016-English-Full-Base-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
+}
+data "aws_ami" "sql2017" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2016-English-Full-SQL_2017_Standard-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["801119661308"] # Canonical
 }
