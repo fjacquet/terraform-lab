@@ -19,20 +19,11 @@ variable "azs" {
 
   default = [
     "eu-west-1a",
-    # "eu-west-1b",
-    # "eu-west-1c",
+    "eu-west-1b",
+    "eu-west-1c",
   ]
 }
 
-# variable "azs" {
-#   description = "AWS availability zone to launch servers."
-#   // type        = list(string)
-
-#   default = [
-#     "eu-west-1a",
-
-#   ]
-# }
 
 # Region
 variable "aws_region" {
@@ -120,31 +111,9 @@ variable "aws_number" {
     "sql"        = 0
     "sofs"       = 0
     "symv"       = 0
+    "vault"      = 0
     "wac"        = 0
     "wds"        = 0
     "wsus"       = 0
-  }
-}
-
-variable "aws_amis" {
-  type = map(string)
-
-  default = {
-    "bsd"        = "ami-02b4e72b17337d6c1"
-    "glpi"       = "ami-02b4e72b17337d6c1"
-    "etcd"       = "ami-02b4e72b17337d6c1"
-    "workers"    = "ami-02b4e72b17337d6c1"
-    "rancher"    = "ami-02b4e72b17337d6c1"
-    "longhorn"   = "ami-02b4e72b17337d6c1"
-    "guacamole"  = "ami-0a8e758f5e873d1c1" # Debian
-    "jumpbox"    = "ami-0acec5a529be6b35a"
-    "lnx"        = "ami-02b4e72b17337d6c1"
-    "nbu"        = "ami-02b4e72b17337d6c1"
-    "oracle"     = "ami-02b4e72b17337d6c1"
-    "redis"      = "ami-0ec23856b3bad62d"
-    "sharepoint" = "ami-0acec5a529be6b35a"
-    "sql"        = "ami-0b710fe222abdeb24"
-    "win2019"    = "ami-0acec5a529be6b35a"
-    "wsus"       = "ami-0acec5a529be6b35a"
   }
 }

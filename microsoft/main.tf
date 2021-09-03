@@ -238,7 +238,7 @@ module "ipam" {
 
 module "jumpbox" {
   source                  = "./jumpbox"
-  aws_ami                 = var.aws_amis["jumpbox"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["jumpbox"]
@@ -316,7 +316,7 @@ module "rdsh" {
 
 module "sharepoint" {
   source                  = "./sharepoint"
-  aws_ami                 = var.aws_amis["sharepoint"]
+  aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["sharepoint"]
@@ -344,7 +344,7 @@ module "sharepoint" {
 
 module "sql" {
   source                  = "./sql"
-  aws_ami                 = var.aws_amis["sql"]
+  aws_ami                 = data.aws_ami.sql2019.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["sql"]

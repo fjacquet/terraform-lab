@@ -54,6 +54,6 @@ variable "azs" {
   type = list(string)
 }
 
-variable "aws_amis" {
-  type = map(string)
-}
+# variable "aws_amis" {
+#   type = map(string)
+# }

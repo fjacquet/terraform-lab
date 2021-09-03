@@ -14,8 +14,8 @@ module "global" {
 }
 
 module "unix" {
-  source                   = "./unix"
-  aws_amis                 = var.aws_amis
+  source = "./unix"
+  # aws_amis               = var.aws_amis
   aws_disks_size           = var.aws_disks_size
   aws_iip_assumerole_name  = module.global.aws_iip_assumerole
   aws_key_pair_auth_id     = aws_key_pair.auth.id
@@ -35,8 +35,8 @@ module "unix" {
 }
 
 module "microsoft" {
-  source                  = "./microsoft"
-  aws_amis                = var.aws_amis
+  source = "./microsoft"
+  # aws_amis                = var.aws_amis
   aws_iip_assumerole_name = module.global.aws_iip_assumerole
   aws_key_pair_auth_id    = aws_key_pair.auth.id
   aws_number              = var.aws_number

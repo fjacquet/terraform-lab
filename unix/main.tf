@@ -17,7 +17,24 @@ module "bsd" {
 
 module "glpi" {
   source                  = "./glpi"
-  aws_ami                 = var.aws_amis["glpi"]
+  aws_ami                 = data.aws_ami.debian.id
+  aws_iip_assumerole_name = var.aws_iip_assumerole_name
+  aws_key_pair_auth_id    = var.aws_key_pair_auth_id
+  aws_number              = var.aws_number["glpi"]
+  aws_subnet_id           = var.aws_subnet_back_id
+  aws_vpc_id              = var.aws_vpc_id
+  azs                     = var.azs
+  dns_zone_id             = var.dns_zone_id
+  dns_suffix              = var.dns_suffix
+
+  aws_sg_ids = flatten([
+    aws_security_group.ssh.id,
+    module.glpi.aws_sg_glpi_id,
+  ])
+}
+module "vault" {
+  source                  = "./glpi"
+  aws_ami                 = data.aws_ami.debian.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["glpi"]
@@ -53,7 +70,7 @@ module "guacamole" {
 
 module "nbu" {
   source                  = "./nbu"
-  aws_ami                 = var.aws_amis["nbu"]
+  aws_ami                 = data.aws_ami.rhel8.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["nbu"]
@@ -78,7 +95,7 @@ module "nbu" {
 
 module "oracle" {
   source                  = "./oracle"
-  aws_ami                 = var.aws_amis["oracle"]
+  aws_ami                 = data.aws_ami.rhel8.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["oracle"]
@@ -104,7 +121,7 @@ module "oracle" {
 
 module "redis" {
   source                  = "./redis"
-  aws_ami                 = var.aws_amis["redis"]
+  aws_ami                 = data.aws_ami.debian.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
   aws_number              = var.aws_number["redis"]
