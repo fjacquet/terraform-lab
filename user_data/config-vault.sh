@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-yum upgrade -y
-yum install wget httpd fontconfig -y
-
-yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-
-yum upgrade -y
-yum install --enablerepo=epel python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged jq -y
-
 pip install --upgrade pip
 pip install awscli --upgrade --user
 export PATH=$PATH:/root/.local/bin
