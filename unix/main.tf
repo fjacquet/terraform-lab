@@ -33,11 +33,11 @@ module "glpi" {
   ])
 }
 module "vault" {
-  source                  = "./glpi"
+  source                  = "./vault"
   aws_ami                 = data.aws_ami.debian.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
-  aws_number              = var.aws_number["glpi"]
+  aws_number              = var.aws_number["vault"]
   aws_subnet_id           = var.aws_subnet_back_id
   aws_vpc_id              = var.aws_vpc_id
   azs                     = var.azs
@@ -46,7 +46,7 @@ module "vault" {
 
   aws_sg_ids = flatten([
     aws_security_group.ssh.id,
-    module.glpi.aws_sg_glpi_id,
+    module.vault.aws_sg_vault_id,
   ])
 }
 
@@ -198,6 +198,19 @@ data "aws_ami" "debian" {
     values = ["hvm"]
   }
   owners = ["679593333241"] # aws-marketplace Debian
+}
+
+data "aws_ami" "amazon" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["amazonlinux-2-base*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["766535289950"] # Canonical
 }
 
 data "aws_ami" "rhel8" {

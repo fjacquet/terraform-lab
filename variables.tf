@@ -19,8 +19,8 @@ variable "azs" {
 
   default = [
     "eu-west-1a",
-    "eu-west-1b",
-    "eu-west-1c",
+    # "eu-west-1b",
+    # "eu-west-1c",
   ]
 }
 
@@ -84,7 +84,7 @@ variable "aws_number" {
     "adfs"       = 0
     "bsd"        = 0
     "da"         = 0
-    "dc"         = 1
+    "dc"         = 0
     "dhcp"       = 0
     "exchange"   = 0
     "fs"         = 0
