@@ -16,6 +16,7 @@ resource "aws_instance" "guacamole" {
   tags = {
     Name        = "guacamole-${count.index}"
     Environment = "lab"
+    type        = "guacamole"
   }
 
   lifecycle {

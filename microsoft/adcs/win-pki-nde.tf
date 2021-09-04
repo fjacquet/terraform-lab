@@ -30,6 +30,7 @@ resource "aws_instance" "pki-nde" {
   tags = {
     Name        = "pki-nde-${count.index}"
     Environment = "lab"
+    type        = "ndes"
   }
 
   lifecycle {

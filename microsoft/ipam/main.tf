@@ -30,6 +30,7 @@ resource "aws_instance" "ipam" {
   tags = {
     Name        = "ipam-${count.index}"
     Environment = "lab"
+    type        = "ipam"
   }
 
   lifecycle {

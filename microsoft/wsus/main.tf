@@ -30,6 +30,7 @@ resource "aws_instance" "wsus" {
   tags = {
     Name        = "wsus-${count.index}"
     Environment = "lab"
+    type        = "wsus"
   }
 
   root_block_device {

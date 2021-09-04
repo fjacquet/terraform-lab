@@ -40,6 +40,7 @@ resource "aws_instance" "oracle" {
   tags = {
     Name        = "oracle-${count.index}"
     Environment = "lab"
+    type        = "oracle"
   }
 }
 

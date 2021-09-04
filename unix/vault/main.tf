@@ -16,6 +16,7 @@ resource "aws_instance" "vault" {
   tags = {
     Name        = "vault-${count.index}"
     Environment = "lab"
+    type        = "vault"
   }
 
   lifecycle {

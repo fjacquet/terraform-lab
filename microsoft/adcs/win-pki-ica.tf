@@ -30,6 +30,7 @@ resource "aws_instance" "pki-ica" {
   tags = {
     Name        = "pki-ica-${count.index}"
     Environment = "lab"
+    type        = "ica"
   }
 
   lifecycle {

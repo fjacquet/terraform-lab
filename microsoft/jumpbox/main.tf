@@ -36,6 +36,7 @@ resource "aws_instance" "jumpbox" {
   tags = {
     Name        = "mgmt-${count.index}"
     Environment = "lab"
+    type        = "jumpbox"
   }
 
   lifecycle {

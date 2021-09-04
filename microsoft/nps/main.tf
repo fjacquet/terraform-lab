@@ -30,6 +30,7 @@ resource "aws_instance" "nps" {
   tags = {
     Name        = "nps-${count.index}"
     Environment = "lab"
+    type        = "nps"
   }
 
   lifecycle {

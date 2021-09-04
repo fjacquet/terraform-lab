@@ -30,6 +30,7 @@ resource "aws_instance" "sofs" {
   tags = {
     Name        = "sofs-${count.index}"
     Environment = "lab"
+    type        = "scaleout"
   }
 
   lifecycle {

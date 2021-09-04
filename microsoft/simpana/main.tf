@@ -28,6 +28,7 @@ resource "aws_instance" "simpana" {
   tags = {
     Name        = "simpana-${count.index}"
     Environment = "lab"
+    type        = "simpana"
   }
 
   lifecycle {

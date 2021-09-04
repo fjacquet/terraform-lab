@@ -16,6 +16,7 @@ resource "aws_instance" "redis" {
   tags = {
     Name        = "redis-${count.index}"
     Environment = "lab"
+    type        = "redis"
   }
 
   lifecycle {

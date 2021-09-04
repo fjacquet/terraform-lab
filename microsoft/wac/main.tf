@@ -30,6 +30,7 @@ resource "aws_instance" "wac" {
   tags = {
     Name        = "wac-${count.index}"
     Environment = "lab"
+    type        = "wac"
   }
 
   lifecycle {

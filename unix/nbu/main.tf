@@ -28,6 +28,7 @@ resource "aws_instance" "nbumaster" {
   tags = {
     Name        = "nbu-${count.index}"
     Environment = "lab"
+    type        = "netbackup"
   }
 
   lifecycle {

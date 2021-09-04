@@ -30,6 +30,7 @@ resource "aws_instance" "fs" {
   tags = {
     Name        = "fs-${count.index}"
     Environment = "lab"
+    type        = "fs"
   }
 
   lifecycle {

@@ -12,6 +12,7 @@ resource "aws_instance" "pki-crl" {
   tags = {
     Name        = "pki-crl-${count.index}"
     Environment = "lab"
+    type        = "crl"
   }
 
   lifecycle {

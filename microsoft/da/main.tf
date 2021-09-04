@@ -30,6 +30,7 @@ resource "aws_instance" "da" {
   tags = {
     Name        = "da-${count.index}"
     Environment = "lab"
+    type        = "da"
   }
 
   lifecycle {

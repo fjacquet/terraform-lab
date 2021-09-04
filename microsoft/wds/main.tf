@@ -34,6 +34,7 @@ resource "aws_instance" "wds" {
   tags = {
     Name        = "wds-${count.index}"
     Environment = "lab"
+    type        = "wds"
   }
 
   lifecycle {

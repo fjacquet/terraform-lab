@@ -11,6 +11,7 @@ resource "aws_instance" "bsd" {
   tags = {
     Name        = "bsd-${count.index}"
     Environment = "lab"
+    type        = "bsd"
   }
 }
 

@@ -35,6 +35,7 @@ resource "aws_instance" "exchange" {
   tags = {
     Name        = "exchange-${count.index}"
     Environment = "lab"
+    type        = "exchange"
   }
 
   lifecycle {

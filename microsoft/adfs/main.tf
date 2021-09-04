@@ -30,6 +30,7 @@ resource "aws_instance" "adfs" {
   tags = {
     Name        = "adfs-${count.index}"
     Environment = "lab"
+    type        = "adfs"
   }
 
   lifecycle {

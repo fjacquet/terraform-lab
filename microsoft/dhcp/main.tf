@@ -30,6 +30,7 @@ resource "aws_instance" "dhcp" {
   tags = {
     Name        = "dhcp-${count.index}"
     Environment = "lab"
+    type        = "dhcp"
   }
 
   lifecycle {

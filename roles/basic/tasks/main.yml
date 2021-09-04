@@ -1,0 +1,19 @@
+---
+# tasks file for basic
+
+- name: Install via chocolatey
+  win_chocolatey:
+    name: {item}
+    state: present
+  with_items:
+  - 7zip.install
+  - baretail
+  - curl
+  - git
+  - googlechrome
+  - notepadplusplus
+  - reportviewer2012
+  - rdmfree
+  - sysinternals
+  - vscode
+  - windirstat

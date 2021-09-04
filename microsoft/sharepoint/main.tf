@@ -38,6 +38,7 @@ resource "aws_instance" "sharepoint" {
   tags = {
     Name        = "sharepoint-${count.index}"
     Environment = "lab"
+    type        = "sharepoint"
   }
 }
 

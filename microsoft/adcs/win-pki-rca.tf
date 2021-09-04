@@ -21,6 +21,7 @@ resource "aws_instance" "pki-rca" {
   tags = {
     Name        = "pki-rca-${count.index}"
     Environment = "lab"
+    type        = "rca"
   }
 
   lifecycle {

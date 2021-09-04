@@ -16,6 +16,7 @@ resource "aws_instance" "glpi" {
   tags = {
     Name        = "glpi-${count.index}"
     Environment = "lab"
+    type        = "glpi"
   }
 
   lifecycle {

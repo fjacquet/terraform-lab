@@ -30,6 +30,7 @@ resource "aws_instance" "rdsh" {
   tags = {
     Name        = "rdsh-${count.index}"
     Environment = "lab"
+    type        = "rdsh"
   }
 
   root_block_device {
