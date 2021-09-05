@@ -1,0 +1,11 @@
+- name: Set the region format to English Australia and copy settings to new profiles
+  win_region:
+    format: "{{ format }}"
+    unicode_language: "{{ lang }}"
+    location: "{{ location }}"
+    copy_settings: yes
+  register: result
+
+- name: reboot for local if needed
+  win_reboot:
+  when: result.restart_required

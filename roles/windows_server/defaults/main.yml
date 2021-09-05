@@ -1,2 +1,5 @@
 ---
 # defaults file for basic
+format: fr-CH
+lang: en-US
+location: 223

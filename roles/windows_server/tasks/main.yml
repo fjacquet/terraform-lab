@@ -1,9 +1,10 @@
 ---
-- name: Change to swiss keyboard
-  win_shell: |
-    Set-WinSystemLocale fr-CH
-    $langList = New-WinUserLanguageList fr-CH
-    Set-WinUserLanguageList $langList -Force
+# - name: Change to swiss keyboard
+#   win_shell: |
+#     Set-WinSystemLocale fr-CH
+#     $langList = New-WinUserLanguageList fr-CH
+#     Set-WinUserLanguageList $langList -Force
+
 
 - name: Make installers
   ansible.windows.win_file:
@@ -23,6 +24,9 @@
 
 - name: disable defender
   include_tasks: defender.yml
+
+- name: set local
+  include_tasks: locale.yml
 
 - name: manage smb
   include_tasks: smb.yml
