@@ -1,7 +1,4 @@
 ---
-# tasks file for da
----
-# tasks file for adfs
 - name: Install requirements for CSV with sub features and management tools
   ansible.windows.win_feature:
     name: "{{ item }}"
