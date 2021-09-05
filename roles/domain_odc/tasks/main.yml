@@ -1,0 +1,17 @@
+---
+# tasks file for domain_odc
+- name: Promote server with custom paths
+  ansible.windows.win_domain_controller:
+    dns_domain_name: "{{ domain }}"
+    domain_admin_user: "{{ username }}"
+    domain_admin_password: "{{ secret }}"
+    safe_mode_password: "{{ safe_mode_password }}"
+    state: domain_controller
+    sysvol_path:  "{{ sysvol_path }}"
+    database_path: "{{ database_path }}"
+    domain_log_path: "{{ domain_log_path }}"
+  register: dc_promotion
+
+- name: Reboot after promotion
+  ansible.windows.win_reboot:
+  when: dc_promotion.reboot_required

@@ -25,7 +25,7 @@ resource "aws_instance" "dhcp" {
   ipv6_address_count   = 1
   key_name             = var.aws_key_pair_auth_id
   subnet_id            = element(var.aws_subnet_id, count.index)
-  user_data            = file("user_data/config-dhcp.ps1")
+  user_data            = file("user_data/config-win.ps1")
 
   tags = {
     Name        = "dhcp-${count.index}"

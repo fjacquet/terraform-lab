@@ -1,0 +1,11 @@
+---
+# defaults file for domain_pdc
+database_path: C:\Windows\NTDS
+domain_log_path: C:\Windows\NTDS
+domain_mode: 'Win2019'
+domain_netbios_name: "EZLAB"
+domain: 'ez-lab.xyz'
+forest_mode: 'Win2019'
+region: 'eu-west-1'
+safe_mode_password: 'password123!'
+sysvol_path:  C:\Windows\SYSVOL

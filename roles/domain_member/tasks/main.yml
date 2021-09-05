@@ -1,0 +1,40 @@
+---
+# tasks file for domain_member
+# Initialize-AWSDefaults
+
+# $secret = (Get-SECSecretValue -SecretId "$($domain)/ad/$($username)" -region $region).SecretString
+# $password = ConvertTo-SecureString  -AsPlainText -Force $secret
+# $Credential = New-Object -TypeName System.Management.Automation.PSCredential  -ArgumentList $username, $password
+
+# Write-Output 'set DNS'
+# Get-NetAdapter -Physical `
+#     | Set-DnsClientServerAddress -ServerAddresses (
+#     "10.0.51.85",
+#     "10.0.52.144")
+
+
+
+- name: Set multiple lookup addresses on all visible adapters (usually physical adapters that are in the Up state), with debug logging to a file
+  ansible.windows.win_dns_client:
+    adapter_names: '*'
+    dns_servers: "{{ dns_servers }}"
+
+# TODO check if needed
+# - name: set suffix
+#   win_shell: Set-DnsClientGlobalSetting -SuffixSearchList ( "{{domain}}", "{{region}}".ec2-utilities.amazonaws.com", "us-east-1.ec2-utilities.amazonaws.com","${{region}}.compute.internal")
+
+# - name: Join domain
+#   win_shell: Add-Computer –domainname "{{domain}}"-Credential $Credential  -Restart:$false  –Force
+
+- name: join domain
+  win_domain_membership:
+    dns_domain_name:  "{{ domain }}"
+    domain_admin_user: "{{ username }}"
+    domain_admin_password: "{{ secret }}"
+    domain_ou_path: "{{ ou_win }}"
+    state: domain
+  register: domain_state
+
+- name: reboot if needed
+  win_reboot:
+  when: domain_state.reboot_required

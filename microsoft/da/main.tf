@@ -24,7 +24,7 @@ resource "aws_instance" "da" {
   ami                  = var.aws_ami
   ipv6_address_count   = 1
   key_name             = var.aws_key_pair_auth_id
-  user_data            = file("user_data/config-da.ps1")
+  user_data            = file("user_data/config-win.ps1")
   subnet_id            = element(var.aws_subnet_id, count.index)
 
   tags = {

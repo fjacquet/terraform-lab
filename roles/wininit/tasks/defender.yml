@@ -1,4 +1,0 @@
----
-
-- name: disable antivirus
-  win_shell: Set-MpPreference -DisableRealtimeMonitoring $true

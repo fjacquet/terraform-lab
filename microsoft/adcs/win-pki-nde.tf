@@ -25,7 +25,7 @@ resource "aws_instance" "pki-nde" {
   ipv6_address_count   = 1
   key_name             = var.aws_key_pair_auth_id
   subnet_id            = element(var.aws_subnet_id, count.index)
-  user_data            = file("user_data/config-pki-nde.ps1")
+  user_data            = file("user_data/config-win.ps1")
 
   tags = {
     Name        = "pki-nde-${count.index}"

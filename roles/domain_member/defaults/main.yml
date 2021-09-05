@@ -1,0 +1,10 @@
+---
+# defaults file for domain_member
+region: 'eu-west-1'
+domain: 'ez-lab.xyz'
+username: "joinuser"
+secret: "toto"
+ou_win: "OU=Windows,OU=Servers,DC=ez-lab,DC=xyz"
+dns_servers:
+  - 192.168.34.5
+  - 192.168.34.6
