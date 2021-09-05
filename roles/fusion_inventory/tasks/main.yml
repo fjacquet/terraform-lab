@@ -1,0 +1,32 @@
+---
+# tasks file for fusion_inventory
+- name: get agent
+  win_get:
+
+
+- name: Install fusion inventory
+  win_shell: |
+
+    $localfile = Join-Path -Path "{{ install }}" -ChildPath "{{ file }}"
+    Invoke-WebRequest -Uri "{{ url }}" -OutFile $localfile
+    Write-Output 'install'
+    $glpi = Resolve-DnsName "{{ ansible_inventory }}" -Type A
+    $arg = ('/acceptlicense',
+      '/add-firewall-exception',
+      '/execmode=Service',
+      '/installtasks=Default',
+      '/installtype=from-scratch',
+      '/runnow',
+      '/S',
+      '/scan-homedirs',
+      '/scan-profiles',
+      "/server={{ server }}")
+    Start-Process -FilePath $localfile -ArgumentList $arg
+  vars:
+    install: "C:\installers"
+    version: "2.6"
+    server: "http://{{ ansible_inventory }}/glpi/plugins/fusioninventory/"
+    file: "fusioninventory-agent_windows-x64_{{ version }}.exe"
+    glpi: "{{ glpi_host }}"
+    url: "https://github.com/fusioninventory/fusioninventory-agent/releases/download/{{ version }}/{{ file }}"
+    server: "http://{{ glpi_host }}/glpi/plugins/fusioninventory/"

@@ -1,24 +1,4 @@
 ---
-# tasks file for basic
-
-- name: disable antivirus
-  win_shell: Set-MpPreference -DisableRealtimeMonitoring $true
-
-- name: Disable-InternetExplorerESC - Admin
-  win_regedit:
-    path: HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}
-    name: IsInstalled
-    data: 0
-    type: dword
-
-- name: Disable-InternetExplorerESC - User
-  win_regedit:
-    path: HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}
-    name: IsInstalled
-    data: 0
-    type: dword
-
-
 - name: Change to swiss keyboard
   win_shell: |
     Set-WinSystemLocale fr-CH
@@ -28,52 +8,22 @@
 - name: Allow WinRM
   win_shell: Configure-SMremoting.exe -enable
 
-- name: Remove SMBv1
-  win_shell: Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol -NoRestart
-
-# Install-Module -Name AWSPowerShell
-- name: Install RSAT
-  win_shell: add-windowsfeature -Name RSAT  -IncludeManagementTools
-
-- name: Disable LMHosts
+- name: Enable Remoting
   win_shell: |
-    $disable = 2
-    $adapters = (gwmi win32_networkadapterconfiguration)
-    foreach ($adapter in $adapters) {
-      Write-Host $adapter
-      $adapter.settcpipnetbios($disable)
-    }
+    winrm qc -Quiet
+    Enable-PSRemoting –Force
 
-- name: Disable Netbios
-  win_shell: |
-    $nicClass = Get-WmiObject -List Win32_NetworkAdapterConfiguration
-    $nicClass.enableWins($false, $false)
+- name: disable ie esc
+  include_tasks: ieesc.yml
 
-- name: Disable EnableSMB1Protocol
-  win_shell: Set-SmbServerConfiguration -EnableSMB1Protocol $false -Confirm:$false
+- name: disable defender
+  include_tasks: defender.yml
 
-- name: Set-SmbServerConfiguration RequireSecuritySignature
-  win_shell: Set-SmbServerConfiguration -RequireSecuritySignature $true -EnableSecuritySignature $true -EncryptData $true -Confirm:$false
+- name: manage smb
+  include_tasks: smb.yml
 
-- name: Disable auto share
-  win_shell: Set-SmbServerConfiguration -AutoShareServer $false -AutoShareWorkstation $false  -Confirm:$false
+- name: Include chocolatey
+  include_tasks: features.yml
 
-- name: Disable hidden
-  win_shell: Set-SmbServerConfiguration -ServerHidden $true  -AnnounceServer $false  -Confirm:$false
-
-- name: Install via chocolatey
-  win_chocolatey:
-    name: {item}
-    state: present
-  with_items:
-  - 7zip.install
-  - baretail
-  - curl
-  - git
-  - googlechrome
-  - notepadplusplus
-  - reportviewer2012
-  - rdmfree
-  - sysinternals
-  - vscode
-  - windirstat
+- name: Include chocolatey
+  include_tasks: chocolatey.yml
