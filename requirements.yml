@@ -1,6 +1,8 @@
 roles:
 
 collections:
+- amazon.aws
 - ansible.windows
 - community.general
+- community.hashi_vault
 - community.windows

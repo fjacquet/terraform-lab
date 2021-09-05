@@ -52,3 +52,11 @@ Need to create some aws secrets :
 * ezlab/sharepoint/sp_cacheSuperReader
 * ezlab/sql/svc-sql
 * ezlab/pki/svc-ndes
+
+## ansible
+
+Be ready to install ansible (pywinrm and boto3 are a must )
+```bash
+pip3 install -r ./requirements.txt
+ansible-galaxy install -r requirements.yml
+```
