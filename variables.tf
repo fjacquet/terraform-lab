@@ -91,7 +91,7 @@ variable "aws_number" {
     "glpi"       = 0
     "guacamole"  = 0
     "ipam"       = 0
-    "jumpbox"    = 1
+    "mgmt"       = 1
     "etcd"       = 0
     "workers"    = 0
     "longhorn"   = 0

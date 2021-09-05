@@ -1,2 +1,23 @@
 ---
 # tasks file for wds
+- name: Install WDS
+  win_feature:
+    name: WDS
+    state: present
+    include_sub_features: true
+    include_management_tools: true
+  register: _services
+
+- name: Install FS-Data-Deduplication
+  win_feature:
+    name: FS-Data-Deduplication
+    state: present
+    include_sub_features: true
+    include_management_tools: true
+  register: _dedup
+
+- name: Reboot for WSUS Install
+  win_reboot:
+  when:
+    _dedup.reboot_required
+    or _services.reboot_required

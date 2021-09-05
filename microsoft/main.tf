@@ -236,12 +236,12 @@ module "ipam" {
   ])
 }
 
-module "jumpbox" {
-  source                  = "./jumpbox"
+module "mgmt" {
+  source                  = "./mgmt"
   aws_ami                 = data.aws_ami.windows2022.id
   aws_iip_assumerole_name = var.aws_iip_assumerole_name
   aws_key_pair_auth_id    = var.aws_key_pair_auth_id
-  aws_number              = var.aws_number["jumpbox"]
+  aws_number              = var.aws_number["mgmt"]
   aws_region              = var.aws_region
   aws_subnet_id           = var.aws_subnet_mgmt_id
   aws_vpc_id              = var.aws_vpc_id
@@ -526,6 +526,21 @@ resource "aws_security_group" "rdp" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 5985
+    to_port     = 5986
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 
   # outbound internet access
   egress {

@@ -23,6 +23,14 @@
     include_management_tools: "{{ wsus_install_management_tools }}"
   register: _services
 
+ - name: Install Deduplication
+  win_feature:
+    name: FS-Data-Deduplication
+    state: present
+    include_sub_features: true
+    include_management_tools: "{{ wsus_install_management_tools }}"
+  register: _services
+
 - name: Install Reportviewer
   chocolatey.chocolatey.win_chocolatey:
     name: 'reportviewer2012'

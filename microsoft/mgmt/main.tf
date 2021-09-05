@@ -1,28 +1,28 @@
-resource "aws_route53_record" "jumpbox" {
+resource "aws_route53_record" "mgmt" {
   count   = var.aws_number
   zone_id = var.dns_zone_id
-  name    = "jumpbox-${count.index}.${var.dns_suffix}"
+  name    = "mgmt-${count.index}.${var.dns_suffix}"
   type    = "A"
   ttl     = "300"
-  records = [element(aws_instance.jumpbox.*.private_ip, count.index)]
+  records = [element(aws_instance.mgmt.*.private_ip, count.index)]
 }
 
-# resource "aws_route53_record" "jumpbox-v6" {
+# resource "aws_route53_record" "mgmt-v6" {
 #   count   = var.aws_number
 #   zone_id = var.dns_zone_id
-#   name    = "jumpbox-${count.index}.${var.dns_suffix}"
+#   name    = "mgmt-${count.index}.${var.dns_suffix}"
 #   type    = "AAAA"
 #   ttl     = "300"
-#   records = [element(aws_instance.jumpbox.*.ipv6_addresses, count.index)]
+#   records = [element(aws_instance.mgmt.*.ipv6_addresses, count.index)]
 # }
 
-resource "aws_eip" "jumpbox-public" {
+resource "aws_eip" "mgmt-public" {
   count    = var.aws_number
-  instance = element(aws_instance.jumpbox.*.id, count.index)
+  instance = element(aws_instance.mgmt.*.id, count.index)
   vpc      = true
 }
 
-resource "aws_instance" "jumpbox" {
+resource "aws_instance" "mgmt" {
   ami                  = var.aws_ami
   availability_zone    = element(var.azs, count.index)
   count                = var.aws_number
@@ -36,7 +36,7 @@ resource "aws_instance" "jumpbox" {
   tags = {
     Name        = "mgmt-${count.index}"
     Environment = "lab"
-    type        = "jumpbox"
+    type        = "mgmt"
   }
 
   lifecycle {
