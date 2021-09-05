@@ -1,7 +1,7 @@
 ﻿<powershell>
 # download needed for this server
 mkdir C:\installers\
-# Install windows features
+# Install windows features 
 Install-WindowsFeature AD-Domain-Services –IncludeManagementTools
 $gitroot = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/'
 Set-ExecutionPolicy Bypass -Scope Process -Force #DevSkim: ignore DS113853

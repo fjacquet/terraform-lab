@@ -6,7 +6,7 @@
     line: Port {{ opt_openssh_port }}
     regexp: '^#?Port\s+'
     state: present
-  ignore_errors: '{{ ansible_check_mode }}'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set the sshd_config PubkeyAuthentication value
   win_lineinfile:
@@ -14,7 +14,7 @@
     line: PubkeyAuthentication {{ opt_openssh_pubkey_auth | ternary('yes', 'no') }}
     regexp: '^#?PubkeyAuthentication\s+'
     state: present
-  ignore_errors: '{{ ansible_check_mode }}'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set the sshd_config PasswordAuthentication value
   win_lineinfile:
@@ -22,7 +22,7 @@
     line: PasswordAuthentication {{ opt_openssh_password_auth | ternary('yes', 'no') }}
     regexp: '^#?PasswordAuthentication\s+'
     state: present
-  ignore_errors: '{{ ansible_check_mode }}'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: set powershell subsystem
   win_lineinfile:
@@ -31,7 +31,7 @@
     state: present
     insertafter: "^# override default of no subsystems"
   when: opt_openssh_powershell_subsystem is defined
-  ignore_errors: '{{ ansible_check_mode }}'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: get the localised name for the Administrators group
   win_shell: |
@@ -43,7 +43,7 @@
 
 - name: process admin name from raw win_shell output
   set_fact:
-    pri_openssh_admin_name: '{{ pri_openssh_admin_name_raw.stdout | trim }}'
+    pri_openssh_admin_name: "{{ pri_openssh_admin_name_raw.stdout | trim }}"
 
 - name: set the admin_authorized_keys setting
   win_sshd_config:
@@ -51,7 +51,7 @@
     match_name: Group {{ pri_openssh_admin_name }}
     name: AuthorizedKeysFile
     value: '{{ (opt_openssh_shared_admin_key | bool) | ternary("__PROGRAMDATA__/ssh/administrators_authorized_keys", omit) }}'
-  ignore_errors: '{{ ansible_check_mode }}'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: check if the server config directory already exists
   win_stat:
@@ -65,4 +65,4 @@
     remote_src: True
   when: pri_openssh_config_dir.stat.exists
   notify:
-  - restart sshd service
+    - restart sshd service

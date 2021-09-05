@@ -6,7 +6,6 @@
 
 - name: Install fusion inventory
   win_shell: |
-
     $localfile = Join-Path -Path "{{ install }}" -ChildPath "{{ file }}"
     Invoke-WebRequest -Uri "{{ url }}" -OutFile $localfile
     Write-Output 'install'
@@ -23,10 +22,9 @@
       "/server={{ server }}")
     Start-Process -FilePath $localfile -ArgumentList $arg
   vars:
-    install: "C:\installers"
-    version: "2.6"
-    server: "http://{{ ansible_inventory }}/glpi/plugins/fusioninventory/"
     file: "fusioninventory-agent_windows-x64_{{ version }}.exe"
     glpi: "{{ glpi_host }}"
+    install: 'C:\installers'
+    server: "http://{{ ansible_inventory }}/glpi/plugins/fusioninventory/"
     url: "https://github.com/fusioninventory/fusioninventory-agent/releases/download/{{ version }}/{{ file }}"
-    server: "http://{{ glpi_host }}/glpi/plugins/fusioninventory/"
+    version: "2.6"
