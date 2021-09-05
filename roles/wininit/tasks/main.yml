@@ -5,6 +5,11 @@
     $langList = New-WinUserLanguageList fr-CH
     Set-WinUserLanguageList $langList -Force
 
+- name: Make installers
+  ansible.windows.win_file:
+    path: C:\installers
+    state: directory
+
 - name: Allow WinRM
   win_shell: Configure-SMremoting.exe -enable
 
