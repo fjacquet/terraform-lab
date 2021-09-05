@@ -1,2 +1,6 @@
 ---
 # defaults file for exchange
+org: "ez-lab"
+bin: "SW_DVD9_Exchange_Svr_2016_MultiLang_-6_Std_Ent_.iso_MLF_X21-40135.ISO"
+bucket: installers-fja
+dlroot: 'C:\installers\'

@@ -26,3 +26,6 @@
   win_copy:
     src: "/tmp/{{ xml }}"
     dest: "{{ dlroot }}\\{{ bin }}"
+
+- name: Reboot the machine with all defaults
+  ansible.windows.win_reboot:
