@@ -12,16 +12,17 @@
 - name: Reboot if installing feature requires it
   ansible.windows.win_reboot:
   when: win_feature.reboot_required
+  ignore_errors: True
 
 
 - name: Configure DA
   win_shell: |
     Install-RemoteAccess `
     -DAInstallType FullInstall `
-    -ConnectToAddress da.ez-lab.xyz `
-    -ClientGPOName "ez-lab.xyz\DirectAccess Clients GPO" `
-    -ServerGPOName "ez-lab.xyz\DirectAccess Server GPO" `
+    -ConnectToAddress da.{{ domain }} `
+    -ClientGPOName "{{ domain }}\DirectAccess Clients GPO" `
+    -ServerGPOName "{{ domain }}\DirectAccess Server GPO" `
     -InternalInterface LAN `
     -InternetInterface INTERNET `
-    -NLSURL https://nls.ez-lab.xyz `
+    -NLSURL "https://nls.{{ domain }} "`
     -Force

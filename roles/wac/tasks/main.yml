@@ -4,3 +4,9 @@
   win_chocolatey:
     name: windows-admin-center
     state: present
+
+# was
+
+# mkdir $dldir
+# Invoke-WebRequest -Uri https://aka.ms/WACDownload -OutFile $wacfile #DevSkim: ignore DS104456
+# msiexec /i $wacfile /qn /L*v log.txt SME_PORT=$wacport SSL_CERTIFICATE_OPTION=generate
