@@ -7,6 +7,9 @@ $instanceName = ($instance.Tags | Where-Object { $_.Key -eq "Name" } | Select-Ob
 
 Rename-Computer -NewName $instanceName -Force -Confirm:$false
 
+$admin = [adsi]("WinNT://./administrator, ansible")
+$admin.PSBase.Invoke("SetPassword", "NotS0S3cr3t!")
+
 $url = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/ConfigureRemotingForAnsible.ps1'
 Invoke-Expression ((New-Object System.Net.Webclient).DownloadString($url)) #DevSkim: ignore DS104456
 
