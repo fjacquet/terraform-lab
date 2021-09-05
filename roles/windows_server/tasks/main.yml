@@ -36,3 +36,6 @@
 
 - name: Include chocolatey
   include_tasks: chocolatey.yml
+
+- name: install powershell modules
+  win_shell: Install-Module -Name PSPKI -Force

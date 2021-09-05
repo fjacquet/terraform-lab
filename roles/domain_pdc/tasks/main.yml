@@ -11,3 +11,10 @@
     safe_mode_password: "{{ safe_mode_password }}"
     sysvol_path: "{{ sysvol_path }}"
   register: domain_install
+
+- name: enable ad recycle bin
+  win_shell: |
+    Import-Module ActiveDirectory
+    # Get the distinguished name of the Active Directory domain
+    $Domain = (Get-ADDomain).DistinguishedName
+    Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target $Domain -Confirm:$false
