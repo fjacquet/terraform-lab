@@ -5,19 +5,18 @@
 #     $langList = New-WinUserLanguageList fr-CH
 #     Set-WinUserLanguageList $langList -Force
 
-
 - name: Make installers
   ansible.windows.win_file:
     path: C:\installers
     state: directory
 
-- name: Allow WinRM
-  win_shell: Configure-SMremoting.exe -enable
+# - name: Allow WinRM
+#   win_shell: Configure-SMremoting.exe -enable
 
-- name: Enable Remoting
-  win_shell: |
-    winrm qc -Quiet
-    Enable-PSRemoting –Force
+# - name: Enable Remoting
+#   win_shell: |
+#     winrm qc -Quiet
+#     Enable-PSRemoting –Force
 
 - name: disable ie esc
   include_tasks: ieesc.yml
@@ -25,17 +24,25 @@
 - name: disable defender
   include_tasks: defender.yml
 
-- name: set local
-  include_tasks: locale.yml
-
 - name: manage smb
   include_tasks: smb.yml
 
-- name: Include chocolatey
+- name: Include features
   include_tasks: features.yml
 
 - name: Include chocolatey
   include_tasks: chocolatey.yml
 
 - name: install powershell modules
-  win_shell: Install-Module -Name PSPKI -Force
+  community.windows.win_psmodule:
+    name: "{{ item }}"
+    skip_publisher_check: yes
+    state: present
+  with_items:
+    - PSPKI
+    - PSExcel
+    - Logging
+    - AWSPowerShell
+
+- name: set locale
+  include_tasks: locale.yml

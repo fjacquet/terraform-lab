@@ -1,4 +1,4 @@
-- name: Set the region format to English Australia and copy settings to new profiles
+- name: Set the region format to {{ format }} and copy settings to new profiles
   win_region:
     format: "{{ format }}"
     unicode_language: "{{ lang }}"

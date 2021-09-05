@@ -1,6 +1,6 @@
 # Install-Module -Name AWSPowerShell
 
-- name: Install IIS Web-Server with sub features and management tools
+- name: Install features with sub features and management tools
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
@@ -14,6 +14,6 @@
   - SNMP-Service
   - Bitlocker
 
-- name: Reboot if installing feature requires it
-  ansible.windows.win_reboot:
-  when: win_feature.reboot_required
+# - name: Reboot if installing feature requires it
+  # ansible.windows.win_reboot:
+  # when: win_feature.reboot_required

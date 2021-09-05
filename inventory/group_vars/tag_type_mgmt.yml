@@ -1,0 +1,7 @@
+ansible_user: "ansible"
+ansible_password: "NotS0S3cr3t!"
+ansible_connection: "winrm"
+ansible_winrm_transport: "basic"
+ansible_port: 5986
+ansible_winrm_server_cert_validation: "ignore"
+ansible_winrm_scheme: "https"

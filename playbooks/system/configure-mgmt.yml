@@ -1,0 +1,9 @@
+---
+- hosts: tag_type_mgmt
+  become: no
+  gather_facts: yes
+
+
+  roles:
+  - openssh
+  - windows_server

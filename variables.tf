@@ -97,7 +97,7 @@ variable "aws_number" {
     "longhorn"   = 0
     "rancher"    = 0
     "nbu"        = 0
-    "nps"        = 1
+    "nps"        = 0
     "opscenter"  = 0
     "oracle"     = 0
     "pki-crl"    = 0

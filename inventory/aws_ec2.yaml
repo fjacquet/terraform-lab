@@ -5,9 +5,21 @@ plugin: aws_ec2
 regions:
   - eu-west-1
 keyed_groups:
-  - key: tags
-    prefix: tag
+  # Add e.g. x86_64 hosts to an arch_x86_64 group
+  - prefix: arch
+    key: 'architecture'
+  # Add hosts to tag_Name_Value groups for each Name/Value tag pair
+  - prefix: tag
+    key: tags
+  # Add hosts to e.g. instance_type_z3_tiny
   - prefix: instance_type
     key: instance_type
+  # Create security_groups_sg_abcd1234 group for each SG
+  - key: 'security_groups|json_query("[].group_id")'
+    prefix: 'security_groups'
+  # Create a group for each value of the Application tag
+  - key: tags.Application
+    separator: ''
+  # Create a group per region e.g. aws_region_us_east_2
   - key: placement.region
     prefix: aws_region

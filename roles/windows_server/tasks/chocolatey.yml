@@ -1,7 +1,7 @@
 ---
 - name: Install via chocolatey
   win_chocolatey:
-    name: { item }
+    name: "{{ item }}"
     state: present
   with_items:
     - 7zip.install
@@ -10,7 +10,6 @@
     - git
     - googlechrome
     - notepadplusplus
-    - reportviewer2012
     - rdmfree
     - sysinternals
     - vscode
