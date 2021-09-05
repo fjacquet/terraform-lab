@@ -1,0 +1,5 @@
+.vagrant
+tests/.vagrant
+*.retry
+*.swp
+*.pyc
