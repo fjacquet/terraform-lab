@@ -18,3 +18,6 @@
     # Get the distinguished name of the Active Directory domain
     $Domain = (Get-ADDomain).DistinguishedName
     Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target $Domain -Confirm:$false
+
+- name: Reboot the machine with all defaults
+  ansible.windows.win_reboot:

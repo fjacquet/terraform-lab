@@ -1,2 +1,82 @@
 ---
+- name: download bin to Ansible controller
+  aws_s3:
+    bucket: "{{ s3bucket }}"
+    object: "{{ bin }}"
+    dest: "/tmp/{{ bin }}"
+    mode: get
+  delegate_to: localhost
+
+- name: copy s3 object from Ansible controller to Windows host
+  win_copy:
+    src: "/tmp/{{ bin }}"
+    dest: "{{ dlroot }}\\{{ bin }}"
+
+- name: Ensure an ISO is mounted
+  community.windows.win_disk_image:
+    image_path: "{{ dlroot }}\\{{ bin }}"
+    state: present
+  register: disk_image_out
+
 # tasks file for exchange
+- name: intall all features
+  ansible.windows.win_feature:
+    name: "{{ item }}"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: win_feature
+  with_items:
+    - NET-Framework-45-Features
+    - RPC-over-HTTP-proxy
+    - RSAT-ADDS
+    - RSAT-Clustering-CmdInterface
+    - RSAT-Clustering-Mgmt
+    - RSAT-Clustering-PowerShell
+    - RSAT-Clustering
+    - Server-Media-Foundation
+    - WAS-Process-Model
+    - Web-Asp-Net45
+    - Web-Basic-Auth
+    - Web-Client-Auth
+    - Web-Digest-Auth
+    - Web-Dir-Browsing
+    - Web-Dyn-Compression
+    - Web-Http-Errors
+    - Web-Http-Logging
+    - Web-Http-Redirect
+    - Web-Http-Tracing
+    - Web-ISAPI-Ext
+    - Web-ISAPI-Filter
+    - Web-Lgcy-Mgmt-Console
+    - Web-Metabase, Web-Mgmt-Console
+    - Web-Mgmt-Service
+    - Web-Net-Ext45
+    - Web-Request-Monitor
+    - Web-Server
+    - Web-Stat-Compression
+    - Web-Static-Content
+    - Web-Windows-Auth
+    - Web-WMI
+    - Windows-Identity-Foundation
+# Prepare AD schema for Excahnge
+
+- name: prepare schema
+  ansible.windows.win_command: setup.exe /PrepareSchema /IAcceptExchangeServerLicenseTerms
+
+- name: prepare domains
+  ansible.windows.win_command: setup.exe /PrepareAllDomains /IAcceptExchangeServerLicenseTerms
+
+- name: prepare AD
+  ansible.windows.win_command: setup.exe /PrepareAD /OrganizationName:"{{ org }}" /IAcceptExchangeServerLicenseTerms
+
+- name: Install mailbox role
+  ansible.windows.win_command: etup.exe /Mode:Install /Role:Mailbox /IAcceptExchangeServerLicenseTerms
+
+- name: Unmount ISO
+  community.windows.win_disk_image:
+    image_path: "{{ dlroot }}\\{{ bin }}"
+    state: absent
+
+- name: Reboot the machine with all defaults
+  ansible.windows.win_reboot:

@@ -1,0 +1,12 @@
+###### Requirements without Version Specifiers ######`
+ansible
+ansible-lint
+boto3
+cryptography
+kerberos
+molecule
+pypsrp
+pyspnego
+pywinrm
+requests
+yamllint
