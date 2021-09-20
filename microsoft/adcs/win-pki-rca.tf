@@ -22,6 +22,7 @@ resource "aws_instance" "pki-rca" {
     Name        = "pki-rca-${count.index}"
     Environment = "lab"
     type        = "rca"
+    system      = "windows"
   }
 
   lifecycle {

@@ -31,6 +31,7 @@ resource "aws_instance" "nps" {
     Name        = "nps-${count.index}"
     Environment = "lab"
     type        = "nps"
+    system      = "windows"
   }
 
   lifecycle {

@@ -31,6 +31,7 @@ resource "aws_instance" "rdsh" {
     Name        = "rdsh-${count.index}"
     Environment = "lab"
     type        = "rdsh"
+    system      = "windows"
   }
 
   root_block_device {

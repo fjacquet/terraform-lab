@@ -12,6 +12,7 @@ resource "aws_instance" "bsd" {
     Name        = "bsd-${count.index}"
     Environment = "lab"
     type        = "bsd"
+    system      = "bsd"
   }
 }
 

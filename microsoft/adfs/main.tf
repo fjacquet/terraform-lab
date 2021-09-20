@@ -31,6 +31,7 @@ resource "aws_instance" "adfs" {
     Name        = "adfs-${count.index}"
     Environment = "lab"
     type        = "adfs"
+    system      = "windows"
   }
 
   lifecycle {

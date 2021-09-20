@@ -17,6 +17,7 @@ resource "aws_instance" "glpi" {
     Name        = "glpi-${count.index}"
     Environment = "lab"
     type        = "glpi"
+    system      = "debian"
   }
 
   lifecycle {

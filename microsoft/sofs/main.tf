@@ -31,6 +31,7 @@ resource "aws_instance" "sofs" {
     Name        = "sofs-${count.index}"
     Environment = "lab"
     type        = "scaleout"
+    system      = "windows"
   }
 
   lifecycle {

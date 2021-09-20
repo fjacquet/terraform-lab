@@ -31,6 +31,7 @@ resource "aws_instance" "pki-ica" {
     Name        = "pki-ica-${count.index}"
     Environment = "lab"
     type        = "ica"
+    system      = "windows"
   }
 
   lifecycle {

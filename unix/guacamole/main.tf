@@ -17,6 +17,7 @@ resource "aws_instance" "guacamole" {
     Name        = "guacamole-${count.index}"
     Environment = "lab"
     type        = "guacamole"
+    system      = "debian"
   }
 
   lifecycle {

@@ -29,6 +29,7 @@ resource "aws_instance" "simpana" {
     Name        = "simpana-${count.index}"
     Environment = "lab"
     type        = "simpana"
+    system      = "windows"
   }
 
   lifecycle {

@@ -17,6 +17,7 @@ resource "aws_instance" "vault" {
     Name        = "vault-${count.index}"
     Environment = "lab"
     type        = "vault"
+    system      = "debian"
   }
 
   lifecycle {

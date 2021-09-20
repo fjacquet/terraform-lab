@@ -31,6 +31,8 @@ resource "aws_instance" "dhcp" {
     Name        = "dhcp-${count.index}"
     Environment = "lab"
     type        = "dhcp"
+
+    system = "windows"
   }
 
   lifecycle {

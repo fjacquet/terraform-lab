@@ -36,6 +36,7 @@ resource "aws_instance" "exchange" {
     Name        = "exchange-${count.index}"
     Environment = "lab"
     type        = "exchange"
+    system      = "windows"
   }
 
   lifecycle {

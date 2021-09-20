@@ -29,6 +29,7 @@ resource "aws_instance" "nbumaster" {
     Name        = "nbu-${count.index}"
     Environment = "lab"
     type        = "netbackup"
+    system      = "rhel"
   }
 
   lifecycle {

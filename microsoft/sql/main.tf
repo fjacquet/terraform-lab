@@ -36,6 +36,7 @@ resource "aws_instance" "sql" {
     Name        = "sql-${count.index}"
     Environment = "lab"
     type        = "sql"
+    system      = "windows"
   }
 
   # Our Security group to allow RDP access

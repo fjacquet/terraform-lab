@@ -35,6 +35,7 @@ resource "aws_instance" "wds" {
     Name        = "wds-${count.index}"
     Environment = "lab"
     type        = "wds"
+    system      = "windows"
   }
 
   lifecycle {

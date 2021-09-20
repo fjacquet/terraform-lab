@@ -31,6 +31,7 @@ resource "aws_instance" "wsus" {
     Name        = "wsus-${count.index}"
     Environment = "lab"
     type        = "wsus"
+    system      = "windows"
   }
 
   root_block_device {

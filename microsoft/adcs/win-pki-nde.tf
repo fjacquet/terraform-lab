@@ -31,6 +31,7 @@ resource "aws_instance" "pki-nde" {
     Name        = "pki-nde-${count.index}"
     Environment = "lab"
     type        = "ndes"
+    system      = "windows"
   }
 
   lifecycle {

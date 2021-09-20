@@ -17,6 +17,7 @@ resource "aws_instance" "redis" {
     Name        = "redis-${count.index}"
     Environment = "lab"
     type        = "redis"
+    system      = "debian"
   }
 
   lifecycle {

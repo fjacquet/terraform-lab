@@ -31,6 +31,7 @@ resource "aws_instance" "fs" {
     Name        = "fs-${count.index}"
     Environment = "lab"
     type        = "fs"
+    system      = "windows"
   }
 
   lifecycle {

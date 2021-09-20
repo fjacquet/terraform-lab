@@ -13,6 +13,7 @@ resource "aws_instance" "pki-crl" {
     Name        = "pki-crl-${count.index}"
     Environment = "lab"
     type        = "crl"
+    system      = "windows"
   }
 
   lifecycle {

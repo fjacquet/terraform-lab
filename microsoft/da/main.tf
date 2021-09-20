@@ -31,6 +31,7 @@ resource "aws_instance" "da" {
     Name        = "da-${count.index}"
     Environment = "lab"
     type        = "da"
+    system      = "windows"
   }
 
   lifecycle {

@@ -31,6 +31,7 @@ resource "aws_instance" "wac" {
     Name        = "wac-${count.index}"
     Environment = "lab"
     type        = "wac"
+    system      = "windows"
   }
 
   lifecycle {

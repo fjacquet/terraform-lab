@@ -31,6 +31,7 @@ resource "aws_instance" "dc" {
     Name        = "dc-${count.index}"
     Environment = "lab"
     type        = "adds"
+    system      = "windows"
   }
 
   lifecycle {

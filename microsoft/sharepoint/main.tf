@@ -39,6 +39,7 @@ resource "aws_instance" "sharepoint" {
     Name        = "sharepoint-${count.index}"
     Environment = "lab"
     type        = "sharepoint"
+    system      = "windows"
   }
 }
 

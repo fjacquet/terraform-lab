@@ -31,6 +31,7 @@ resource "aws_instance" "ipam" {
     Name        = "ipam-${count.index}"
     Environment = "lab"
     type        = "ipam"
+    system      = "windows"
   }
 
   lifecycle {

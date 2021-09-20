@@ -41,6 +41,7 @@ resource "aws_instance" "oracle" {
     Name        = "oracle-${count.index}"
     Environment = "lab"
     type        = "oracle"
+    system      = "rhel"
   }
 }
 
