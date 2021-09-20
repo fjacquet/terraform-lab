@@ -1,7 +1,10 @@
-ansible_user: "ansible"
+# ansible_connection: "winrm"
+# ansible_winrm_transport: "basic"
+ansible_connection=psrp
 ansible_password: "NotS0S3cr3t!"
-ansible_connection: "winrm"
-ansible_winrm_transport: "basic"
 ansible_port: 5986
-ansible_winrm_server_cert_validation: "ignore"
+ansible_psrp_protocol=https
+ansible_psrp_proxy=socks5h://localhost:1234
+ansible_user: "ansible"
 ansible_winrm_scheme: "https"
+ansible_winrm_server_cert_validation: "ignore"
