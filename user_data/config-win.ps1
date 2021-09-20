@@ -7,20 +7,14 @@ $instanceName = ($instance.Tags | Where-Object { $_.Key -eq "Name" } | Select-Ob
 
 Rename-Computer -NewName $instanceName -Force -Confirm:$false
 
-# net user ansible NotS0S3cr3t! /add /expires:never
-# net localgroup administrators ansible /add
-
 $NewLocalAdmin = "ansible"
 $Password = "NotS0S3cr3t!"
 
 New-LocalUser "$NewLocalAdmin" -Password $Password -FullName "$NewLocalAdmin" -Description "Temporary local admin"
 Add-LocalGroupMember -Group "Administrators" -Member "$NewLocalAdmin"
 
-
-
 $url = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/ConfigureRemotingForAnsible.ps1'
 Invoke-Expression ((New-Object System.Net.Webclient).DownloadString($url)) #DevSkim: ignore DS104456
-
 
 
 # winrm quickconfig -q

@@ -1,0 +1,11 @@
+---
+# defaults file for pki_rca
+
+caname: "{{ domain  }}  Root Certificate Authority"
+certdir: 'C:\Windows\System32\CertSrv\CertEnroll'
+dns_domain: "{{ domain  }}.xyz"
+domain: "ez-lab"
+file: "root-capolicy.inf"
+localdir: 'c:\installers'
+root: "{{ domain  }}-ROOT"
+s3bucket: "installers-fja"

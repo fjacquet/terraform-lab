@@ -1,0 +1,37 @@
+---
+# tasks file for pki_crl
+# Initialize-AWSDefaults
+
+- name: Install requirements for rds with sub features and management tools
+  ansible.windows.win_feature:
+    name: "{{ item }}"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: win_feature
+  with_items:
+    - Web-server
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ pkiroot }}"
+    state: directory
+    mode: "0755"
+
+- name: Add PSPKI PowerShell module
+  community.windows.win_psmodule:
+    name: PSPKI
+    state: present
+
+- name: Start synchronization
+  win_shell: |
+    Set-Location "inetsrv\"
+    .\Appcmd Set-Variable config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
+
+- name: Start synchronization
+  win_shell: |
+    Copy-S3Object -BucketName "{{ s3bucket }}" -Key 'root-ca.crt' -LocalFile "{{ cacrt }}"
+
+- name: Start synchronization
+  win_shell: |
+    Copy-S3Object -BucketName "{{ s3bucket }}" -Key 'ent-ca.crl' -LocalFile "{{ entcrt }}"

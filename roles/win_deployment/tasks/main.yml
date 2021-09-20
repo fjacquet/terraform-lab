@@ -1,0 +1,49 @@
+---
+# tasks file for wds
+- name: Install WDS
+  win_feature:
+    name: WDS
+    state: present
+    include_sub_features: true
+    include_management_tools: true
+  register: _services
+
+- name: Install FS-Data-Deduplication
+  win_feature:
+    name: FS-Data-Deduplication
+    state: present
+    include_sub_features: true
+    include_management_tools: true
+  register: _dedup
+
+- name: Start copy from s3
+  win_shell: |
+    Copy-S3Object -BucketName installers-fja -Key "{{ item }}" -LocalFile "C:\installers\{{ item }}"
+  with_items:
+    - "{{ adksetup }}"
+    - "{{ map }}"
+    - "{{ mdt }}"
+    - "{{ winpe }}"
+
+- name: Copy a single file
+  ansible.windows.win_copy:
+    src: files/setup-mdt8450auto.ps1
+    dest: C:\installers
+
+
+
+# $script = "setup-mdt8450auto.ps1"
+- name: Run multi-lined shell commands
+  ansible.windows.win_shell: |
+    $secret = (Get-SECSecretValue -SecretId "{{ dns_domain_name }}/mdt/service").SecretString | ConvertFrom-Json
+    powershell -ExecutionPolicy bypass -File C:\installers\setup-mdt8450auto.ps1  `
+      -office365 `
+      -applications `
+      -DeploymentShareDrive "{{ deploymentdrive }}" `
+      -ServiceAccountPassword $secret
+
+
+- name: Reboot for WDS Install
+  win_reboot:
+  when: _dedup.reboot_required
+    or _services.reboot_required

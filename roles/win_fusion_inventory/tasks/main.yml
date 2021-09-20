@@ -1,0 +1,21 @@
+---
+# tasks file for fusion_inventory
+- name: get agent
+  ansible.windows.win_get_url:
+    url: "{{ url }}"
+    dest: "{{ dest }}"
+
+
+- name: Install fusion inventory
+  win_shell: |
+    $arg = ('/acceptlicense',
+      '/add-firewall-exception',
+      '/execmode=Service',
+      '/installtasks=Default',
+      '/installtype=from-scratch',
+      '/runnow',
+      '/S',
+      '/scan-homedirs',
+      '/scan-profiles',
+      "/server={{ server }}")
+    Start-Process -FilePath "{{ dest }}" -ArgumentList $arg

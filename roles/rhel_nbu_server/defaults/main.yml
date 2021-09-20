@@ -1,0 +1,5 @@
+---
+# defaults file for nbu_server
+linux_package: NetBackup_8.1.3Beta2_LinuxR_x86_64.tar.gz
+
+windows_package: NetBackup_8.1.3Beta2_Win.zip

@@ -1,6 +1,0 @@
----
-# defaults file for simpana
-bin: "Commvault_R80_SP13_14September18.exe"
-s3bucket: 'installers-fja'
-dlroot: "C:\\installers"
-xml: "CVL_00003359.xml"

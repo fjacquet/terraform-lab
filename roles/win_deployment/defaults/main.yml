@@ -1,0 +1,7 @@
+---
+# defaults file for wds
+adk: "adksetup.exe"
+deploymentdrive: 'd:\'
+map: "MapSetup.exe"
+mdt: "MicrosoftDeploymentToolkit_x64.msi"
+winpe: "adkwinpesetup.exe"

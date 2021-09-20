@@ -1,0 +1,14 @@
+---
+# tasks file for debian_vault
+
+- name: Get key
+  ansible.builtin.shell: curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
+- name: EAdd to repo
+  ansible.builtin.shell: apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+
+- name: Install vault
+  ansible.builtin.package:
+    name: vault
+    state: present

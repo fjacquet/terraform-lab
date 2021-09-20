@@ -24,7 +24,6 @@ variable "azs" {
   ]
 }
 
-
 # Region
 variable "aws_region" {
   // type    = string

@@ -1,0 +1,23 @@
+---
+# Common variables
+opt_laps_configure_gpo: False
+opt_laps_install_client: False
+opt_laps_install_powershell: False
+opt_laps_install_server: False
+opt_laps_install_ui: False
+opt_laps_skip_reboot: False
+
+# Server variables
+
+# GPO variables
+opt_laps_gpo_name: ansible-laps
+opt_laps_password_policy_complexity: uppercase,lowercase,digits,symbols
+opt_laps_password_policy_length: 14
+opt_laps_password_policy_age: 30
+
+opt_laps_domain_server: "ez-lab"
+opt_laps_domain_username: "adnin"
+opt_laps_domain_password: "passwed"
+opt_laps_s3bucket: "installers-fja"
+opt_laps_install: 'C:\installers'
+opt_laps_file: "LAPS.x64.msi"

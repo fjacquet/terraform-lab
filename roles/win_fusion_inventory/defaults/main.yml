@@ -1,0 +1,10 @@
+---
+# defaults file for fusion_inventory
+
+file: "fusioninventory-agent_windows-x64_{{ version }}.exe"
+glpi: "{{ ansible_inventory }}"
+install: 'C:\installers'
+dest: "{{ install }}\\{{ file }}"
+server: "http://{{ ansible_inventory }}/glpi/plugins/fusioninventory/"
+url: "https://github.com/fusioninventory/fusioninventory-agent/releases/download/{{ version }}/{{ file }}"
+version: "2.6"

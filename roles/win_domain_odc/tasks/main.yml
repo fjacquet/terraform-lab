@@ -1,0 +1,31 @@
+---
+# tasks file for domain_odc
+- name: Install requirements for ADDS with sub features and management tools
+  ansible.windows.win_feature:
+    name: "{{ item }}"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: win_feature
+  with_items:
+    - AD-Domain-Services
+
+- name: Reboot if installing feature requires it
+  ansible.windows.win_reboot:
+  when: win_feature.reboot_required
+
+- name: Promote server with custom paths
+  ansible.windows.win_domain_controller:
+    dns_domain_name: "{{ domain }}"
+    domain_admin_user: "{{ username }}"
+    domain_admin_password: "{{ secret }}"
+    safe_mode_password: "{{ safe_mode_password }}"
+    state: domain_controller
+    sysvol_path: "{{ sysvol_path }}"
+    database_path: "{{ database_path }}"
+    domain_log_path: "{{ domain_log_path }}"
+  register: dc_promotion
+
+- name: Reboot after promotion
+  ansible.windows.win_reboot:
+  when: dc_promotion.reboot_required

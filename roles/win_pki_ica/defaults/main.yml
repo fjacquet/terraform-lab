@@ -1,0 +1,10 @@
+---
+# defaults file for pki_ica
+
+cacrl: 'C:\root-ca.crl'
+caname: "{{ domain }} Enterprise Certificate Authority"
+dns_domain: "{{ domain }}.xyz"
+domain: "ez-lab"
+file: "issuing-capolicy.inf"
+root: "{{ domain }}-ROOT"
+s3bucket: "installers-fja"

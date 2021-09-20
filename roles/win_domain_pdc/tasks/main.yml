@@ -1,0 +1,37 @@
+---
+# tasks file for domain_pdc
+- name: Install requirements for ADDS with sub features and management tools
+  ansible.windows.win_feature:
+    name: "{{ item }}"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: win_feature
+  with_items:
+    - AD-Domain-Services
+
+- name: Reboot if installing feature requires it
+  ansible.windows.win_reboot:
+  when: win_feature.reboot_required
+
+- name: Create new Windows domain in a new forest
+  ansible.windows.win_domain:
+    create_dns_delegation: no
+    database_path: "{{ database_path }}"
+    dns_domain_name: "{{ domain }}"
+    domain_mode: "{{ domain_mode }}"
+    domain_netbios_name: "{{ domain_netbios_name }}"
+    forest_mode: "{{ forest_mode }}"
+    safe_mode_password: "{{ safe_mode_password }}"
+    sysvol_path: "{{ sysvol_path }}"
+  register: domain_install
+
+- name: enable ad recycle bin
+  win_shell: |
+    Import-Module -name ActiveDirectory
+    # Get the distinguished name of the Active Directory domain
+    $Domain = (Get-ADDomain).DistinguishedName
+    Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target $Domain -Confirm:$false
+
+- name: Reboot the machine with all defaults
+  ansible.windows.win_reboot:

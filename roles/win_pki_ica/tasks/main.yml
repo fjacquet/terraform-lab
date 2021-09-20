@@ -1,0 +1,46 @@
+---
+# tasks file for pki_ica
+
+- name: Add PSPKI PowerShell module
+  community.windows.win_psmodule:
+    name: PSPKI
+    state: present
+
+# $url = "https://raw.githubusercontent.com/fjacquet/terraform-lab/master/config_files/$($file)"
+
+# # Get the right polica file
+# Invoke-WebRequest -Uri $url -OutFile $file #DevSkim: ignore DS104456
+- name: copy template
+  ansible.windows.win_template:
+    src: templates/capolicy.inf.j2
+    dest: C:\Windows\capolicy.inf
+    newline_sequence: '\n'
+    backup: yes
+
+# Copy-Item -Path $file -Destination "C:\Windows\capolicy.inf"
+
+- name: Start synchronization
+  win_shell: |
+    Copy-S3Object -BucketName "{{ s3bucket }}" -Key 'root-ca.crt' -LocalFile "{{ cacrt }}"
+
+- name: Start synchronization
+  win_shell: |
+    Copy-S3Object -BucketName "{{ s3bucket }}" -Key 'ent-ca.crl' -LocalFile "{{ cacrl }}"
+
+- name: Push to domain
+  win_shell: |
+    certutil.exe -dsPublish -f "{{ cacrl }}" RootCA
+
+- name: Add to local store
+  win_shell: |
+    certutil.exe –addstore –f root "{{ cacrl }}"
+
+- name: startup configuration
+  win_shell: |
+    Install-AdcsCertificationAuthority `
+      -CAType EnterpriseSubordinateCA `
+      -CACommonName  "{{ caname }}" `
+      -KeyLength 4096 `
+      -HashAlgorithm SHA512 `
+      -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" `
+      -Force

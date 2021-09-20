@@ -1,0 +1,7 @@
+---
+# defaults file for pki_ndes
+caname: "{{ dns_domain }} Root Certificate Authority"
+dns_domain: 'ez-lab'
+raname: "{{ dns_domain }} Enterprise Certificate Authority"
+s3bucket: "installers-fja"
+user: "svc-ndes"

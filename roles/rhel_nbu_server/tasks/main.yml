@@ -1,0 +1,146 @@
+---
+# tasks file for nbu_server
+
+- name: create a profile with all good program path
+  ansible.builtin.copy:
+    src: files/nbu.sh
+    dest: /etc/profile.d/nbu.sh
+    owner: root
+    group: root
+    mode: "0755"
+
+
+- name: Enable service httpd and ensure it is not masked
+  ansible.builtin.systemd:
+    name: firewalld
+    enabled: no
+    masked: yes
+
+
+- name: install some package
+  yum:
+    name:
+      - atop
+      - cockpit
+      - cockpit-storaged
+      - firefox
+      - htop
+      - libaio
+      - libXtst
+      - nfs-utils
+      - numactl
+      - wget
+      - xauth
+      - xclock
+      - xorg-x11-xauth
+    state: present
+
+
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+# yum -y upgrade
+# yum -y install wget libaio numactl atop htop nfs-utils xorg-x11-xauth libXtst nfs-utils cockpit cockpit-storaged xclock xauth firefox
+
+# cat >>/etc/profile.d/nbu.sh <<EOF
+# #!/usr/bin/env bash
+# export PATH=\$PATH:/usr/openv/netbackup/bin:/usr/openv/netbackup/bin/admincmd:/usr/openv/netbackup/bin/goodies:/usr/openv/netbackup/bin/support:/usr/openv/netbackup/bin/driver:/usr/openv/pdde/pdcr/bin:/usr/openv/volmgr/bin/
+# EOF
+# chmod 755 /etc/profile.d/nbu.sh
+
+# sed -i "s/SELINUX=enforcing/SELINUX=permissive/" /etc/selinux/config
+# systemctl restart sshd
+# systemctl disable firewalld
+# systemctl stop firewalld
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - /usr/openv
+    - /backups
+    - /backups/dr
+    - /backups/msdp
+    - /backups/simple
+
+- name: Ensure group "nbwebgrp" exists
+  ansible.builtin.group:
+    name: nbwebgrp
+    state: present
+
+- name: Add the user 'nbwebsvc' with a specific uid and a primary group of 'nbwebgrp'
+  ansible.builtin.user:
+    name: nbwebsvc
+    comment: NetBackup Web Services account
+    group: nbwebgrp
+    home: /usr/openv/wmc
+
+
+# groupadd nbwebgrp
+# useradd -g nbwebgrp -c 'NetBackup Web Services account' -d /usr/openv/wmc nbwebsvc
+mkfs.xfs /dev/xvdb
+mkfs.xfs /dev/xvdc
+cat >>/etc/fstab <<EOF
+/dev/xvdb		/usr/openv				xfs     defaults        0 0
+/dev/xvdc		/backups				xfs     defaults        0 0
+EOF
+
+
+
+# sudo mkdir -p /usr/openv
+# sudo mkdir -p /backups
+
+# mount -a
+# mkdir -p /backups/dr
+# mkdir -p /backups/msdp
+# mkdir -p /backups/simple
+
+# echo "kernel.sem=300  307200  32  1024" >>/etc/sysctl.conf
+# sysctl -p
+- ansible.posix.sysctl:
+    name: kernel.sem
+    value: '300  307200  32  1024'
+    state: present
+    reload: yes
+
+cat >>/etc/security/limits.conf <<EOF
+*               soft    core            0
+*               hard    core            0
+*               soft    nofile            20480
+*               hard    nofile            20480
+EOF
+
+
+# cd /backups || exit
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /root/.aws/credentials
+
+- name: This command will change the working directory to somedir/
+  ansible.builtin.shell:
+    cmd: aws s3 cp s3://installers-fja/{{ linux_package }} /backups/{{ linux_package }}
+    chdir: /backups
+
+- name: This command will change the working directory to somedir/
+  ansible.builtin.shell:
+    cmd: aws s3 cp s3://installers-fja/{{ windows_package }} /backups/{{ windows_package }}
+    chdir: /backups
+
+- name: Extract windows_package into /backups
+  ansible.builtin.unarchive:
+    src: "/backups/{{ linux_package }}"
+    dest:  /backups/
+    remote_src: yes
+
+- name: Extract windows_package into /backups
+  ansible.builtin.unarchive:
+    src: "/backups/{{ windows_package }}"
+    dest:  /backups/
+    remote_src: yes
+
+- name: Unconditionally reboot the machine with all defaults
+  reboot:

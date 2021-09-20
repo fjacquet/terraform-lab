@@ -1,0 +1,8 @@
+---
+# defaults file for pki_crl
+s3bucket: "installers-fja"
+domain: "ez-lab"
+root: "{{domain }}-ROOT"
+pkiroot: 'C:\pki'
+cacrt: "{{ pkiroot }}\root-ca.crt"
+entcrt: "{{ pkiroot }}\ent-ca.crt"

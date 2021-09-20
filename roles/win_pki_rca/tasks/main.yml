@@ -1,0 +1,128 @@
+---
+- name: Add PSPKI PowerShell module
+  community.windows.win_psmodule:
+    name: PSPKI
+    state: present
+
+- name: copy template
+  ansible.windows.win_template:
+    src: templates/capolicy.inf.j2
+    dest: C:\Windows\capolicy.inf
+    newline_sequence: '\n'
+    backup: yes
+
+- name: startup configuration
+  win_shell: |
+    Install-AdcsCertificationAuthority `
+      -CAType StandaloneRootCA `
+      -CACommonName "{{ caname }}" `
+      -KeyLength 4096 `
+      -HashAlgorithm SHA512 `
+      -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" `
+      -ValidityPeriod Years `
+      -ValidityPeriodUnits 20 `
+      -Force
+
+- name: startup configuration
+  win_shell: |
+    $crllist = Get-CACrlDistributionPoint
+    foreach ($crl in $crllist) {
+      Remove-CACrlDistributionPoint $crl.uri -Force
+    }
+# create valide crl
+# Configure
+- name: startup configuration
+  win_shell: |
+    Add-CACRLDistributionPoint `
+    -Uri C:\Windows\System32\CertSrv\CertEnroll\$($root)%8%9.crl `
+    -PublishToServer `
+    -PublishDeltaToServer `
+    -Force
+
+# Configure
+- name: startup configuration
+  win_shell: |
+    Add-CACRLDistributionPoint `
+      -Uri http://pki."{{ domain}}"/pki/$($root)%8%9.crl `
+      -AddToCertificateCDP `
+      -AddToFreshestCrl `
+      -Force
+
+# Configure
+- name: startup configuration
+  win_shell: |
+    Get-CAAuthorityInformationAccess `
+    | Where-Object { $_.uri -like '*ldap*' -or $_.uri -like '*http*' -or $_.uri -like '*file*' } `
+    | Remove-CAAuthorityInformationAccess `
+      -Force
+
+# Configure
+- name: startup configuration
+  win_shell: |
+    Add-CAAuthorityInformationAccess `
+    -AddToCertificateAia http://pki.$($domain)/pki/$($root)%3%4.crt `
+    -Force
+
+# Configure
+- name: startup configuration
+  win_shell: |
+    certutil.exe –setreg CA\CRLPeriodUnits 20
+
+- name: startup configuration
+  win_shell: |
+    certutil.exe –setreg CA\CRLPeriod "Years"
+
+- name: startup configuration
+  win_shell: |
+    certutil.exe –setreg CA\CRLOverlapPeriodUnits 3
+
+- name: startup configuration
+  win_shell: |
+    certutil.exe –setreg CA\CRLOverlapPeriod "Weeks"
+
+- name: startup configuration
+  win_shell: |
+    certutil.exe –setreg CA\ValidityPeriodUnits 10
+
+- name: startup configuration
+  win_shell: |
+    certutil.exe –setreg CA\ValidityPeriod "Years"
+
+- name: startup configuration
+  win_shell: |
+    certutil.exe -setreg CA\AuditFilter 127
+
+- name: Restart ca
+  win_service:
+    name: certsvc
+    state: restarted
+
+# publish
+- name: startup configuration
+  win_shell: |
+    certutil -crl
+
+# TODO: end conversion
+- name: Copy ca locally
+  ansible.windows.win_copy:
+    src: "{{ certdir }}\\{{ ansible_hostname }}_{{caname}}.crt"
+    dest: "{{ localdir }}"
+    remote_src: yes
+
+- name: Copy a root localy
+  ansible.windows.win_copy:
+    src: "{{ certdir }}\\{{ root }}.crt"
+    dest: "{{ localdir }}"
+    remote_src: yes
+
+- name: startup configuration
+  win_shell: |
+    Write-S3Object -File "{{ localdir }}\\{{ ansible_hostname }}_{{caname}}.crt" `
+      -BucketName {{ s3bucket }}t `
+      -Key "{{ ansible_hostname }}_{{caname}}.crt"
+
+- name: startup configuration
+  win_shell: |
+    Write-S3Object -File "{{ localdir }}\\{{ root }}.crl" `
+      -BucketName {{ s3bucket }} `
+      -Key root-ca.crl

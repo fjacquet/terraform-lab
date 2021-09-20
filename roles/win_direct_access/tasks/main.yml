@@ -1,0 +1,28 @@
+---
+- name: Install requirements for CSV with sub features and management tools
+  ansible.windows.win_feature:
+    name: "{{ item }}"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: win_feature
+  with_items:
+    - DirectAccess-VPN
+
+- name: Reboot if installing feature requires it
+  ansible.windows.win_reboot:
+  when: win_feature.reboot_required
+  ignore_errors: True
+
+
+- name: Configure DA
+  ansible.windows.win_shell : |
+    Install-RemoteAccess `
+    -DAInstallType FullInstall `
+    -ConnectToAddress da.{{ domain }} `
+    -ClientGPOName "{{ domain }}\DirectAccess Clients GPO" `
+    -ServerGPOName "{{ domain }}\DirectAccess Server GPO" `
+    -InternalInterface LAN `
+    -InternetInterface INTERNET `
+    -NLSURL "https://nls.{{ domain }} "`
+    -Force

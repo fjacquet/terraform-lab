@@ -1,0 +1,12 @@
+[Version]
+Signature=”$Windows NT$”
+[PolicyStatementExtension]
+Policies=InternalPolicy
+[InternalPolicy]
+OID= 1.2.3.4.1455.67.89.5
+URL=http://crl."{{ dns_domain }}"/pki/cps.html
+[Certsrv_Server]
+RenewalKeyLength=4096
+RenewalValidityPeriod=Years
+RenewalValidityPeriodUnits=2
+LoadDefaultTemplates=0

@@ -1,0 +1,4 @@
+---
+# defaults file for ipam
+dns_domain: "ez-lab.xyz"
+gpo_prefix: "EZIPAM"
