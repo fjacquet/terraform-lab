@@ -2,7 +2,7 @@ resource "aws_instance" "vault" {
   instance_type          = "t3.medium"
   count                  = var.aws_number
   subnet_id              = element(var.aws_subnet_id, count.index)
-  user_data              = file("user_data/config-vault.sh")
+  user_data              = file("user_data/config-linux.sh")
   iam_instance_profile   = var.aws_iip_assumerole_name
   ami                    = var.aws_ami
   ipv6_address_count     = 1
