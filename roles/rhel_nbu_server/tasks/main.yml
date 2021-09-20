@@ -9,13 +9,17 @@
     group: root
     mode: "0755"
 
-
 - name: Enable service httpd and ensure it is not masked
   ansible.builtin.systemd:
     name: firewalld
     enabled: no
     masked: yes
 
+- name: Add repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
 
 - name: install some package
   yum:
@@ -35,21 +39,6 @@
       - xorg-x11-xauth
     state: present
 
-
-yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-# yum -y upgrade
-# yum -y install wget libaio numactl atop htop nfs-utils xorg-x11-xauth libXtst nfs-utils cockpit cockpit-storaged xclock xauth firefox
-
-# cat >>/etc/profile.d/nbu.sh <<EOF
-# #!/usr/bin/env bash
-# export PATH=\$PATH:/usr/openv/netbackup/bin:/usr/openv/netbackup/bin/admincmd:/usr/openv/netbackup/bin/goodies:/usr/openv/netbackup/bin/support:/usr/openv/netbackup/bin/driver:/usr/openv/pdde/pdcr/bin:/usr/openv/volmgr/bin/
-# EOF
-# chmod 755 /etc/profile.d/nbu.sh
-
-# sed -i "s/SELINUX=enforcing/SELINUX=permissive/" /etc/selinux/config
-# systemctl restart sshd
-# systemctl disable firewalld
-# systemctl stop firewalld
 
 - name: Create a directory if it does not exist
   ansible.builtin.file:
@@ -75,43 +64,68 @@ yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.r
     group: nbwebgrp
     home: /usr/openv/wmc
 
+- name: Create a exxfs2 filesystem on /dev/xvdb
+  community.general.filesystem:
+    fstype: xfs
+    dev: /dev/xvdb
 
-# groupadd nbwebgrp
-# useradd -g nbwebgrp -c 'NetBackup Web Services account' -d /usr/openv/wmc nbwebsvc
-mkfs.xfs /dev/xvdb
-mkfs.xfs /dev/xvdc
-cat >>/etc/fstab <<EOF
-/dev/xvdb		/usr/openv				xfs     defaults        0 0
-/dev/xvdc		/backups				xfs     defaults        0 0
-EOF
+- name: Create a xfs filesystem on /dev/xvdc
+  community.general.filesystem:
+    fstype: xfs
+    dev: /dev/xvdc
 
+- name: /usr/openv
+  ansible.posix.mount:
+    path: /usr/openv
+    src: /dev/xvdb
+    fstype: xfs
+    opts: defaults
+    state: present
 
+- name: Mount /backups
+  ansible.posix.mount:
+    path: /backups
+    src: /dev/xvdc
+    fstype: xfs
+    opts: defaults
+    state: present
 
-# sudo mkdir -p /usr/openv
-# sudo mkdir -p /backups
-
-# mount -a
-# mkdir -p /backups/dr
-# mkdir -p /backups/msdp
-# mkdir -p /backups/simple
-
-# echo "kernel.sem=300  307200  32  1024" >>/etc/sysctl.conf
-# sysctl -p
-- ansible.posix.sysctl:
+- name: kernel tuning
+  ansible.posix.sysctl:
     name: kernel.sem
     value: '300  307200  32  1024'
     state: present
     reload: yes
 
-cat >>/etc/security/limits.conf <<EOF
-*               soft    core            0
-*               hard    core            0
-*               soft    nofile            20480
-*               hard    nofile            20480
-EOF
 
+- name: Add or modify nofile soft limit for the user joe
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: soft
+    limit_item: nofile
+    value: 64000
 
-# cd /backups || exit
+- name: Add or modify nofile soft limit for the user joe
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: hard
+    limit_item: nofile
+    value: 64000
+
+- name: Add or modify nofile soft limit for the user joe
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: soft
+    limit_item: core
+    value: 0
+
+- name: Add or modify nofile soft limit for the user joe
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: hard
+    limit_item: core
+    value: 0
+
 
 - name: Create a directory if it does not exist
   ansible.builtin.file:

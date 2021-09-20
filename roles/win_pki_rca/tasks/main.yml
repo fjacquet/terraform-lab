@@ -43,7 +43,7 @@
 - name: startup configuration
   win_shell: |
     Add-CACRLDistributionPoint `
-      -Uri http://pki."{{ domain}}"/pki/$($root)%8%9.crl `
+      -Uri http://pki."{{ domain }}"/pki/$($root)%8%9.crl `
       -AddToCertificateCDP `
       -AddToFreshestCrl `
       -Force
@@ -105,7 +105,7 @@
 # TODO: end conversion
 - name: Copy ca locally
   ansible.windows.win_copy:
-    src: "{{ certdir }}\\{{ ansible_hostname }}_{{caname}}.crt"
+    src: "{{ certdir }}\\{{ ansible_hostname }}_{{ caname }}.crt"
     dest: "{{ localdir }}"
     remote_src: yes
 
@@ -117,9 +117,9 @@
 
 - name: startup configuration
   win_shell: |
-    Write-S3Object -File "{{ localdir }}\\{{ ansible_hostname }}_{{caname}}.crt" `
+    Write-S3Object -File "{{ localdir }}\\{{ ansible_hostname }}_{{ caname }}.crt" `
       -BucketName {{ s3bucket }}t `
-      -Key "{{ ansible_hostname }}_{{caname}}.crt"
+      -Key "{{ ansible_hostname }}_{{ caname }}.crt"
 
 - name: startup configuration
   win_shell: |

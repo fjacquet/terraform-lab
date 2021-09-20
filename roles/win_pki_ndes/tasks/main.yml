@@ -1,7 +1,7 @@
 ---
 - name: Start synchronization
   win_shell: |
-    $secret = (Get-SECSecretValue -SecretId "{{ domain }}.xyz/pki/svc-ndes").SecretString | ConvertFrom-Json
+    $secret = (Get-SECSecretValue -SecretId "{{ domain }}".xyz/pki/svc-ndes").SecretString | ConvertFrom-Json
     Install-AdcsNetworkDeviceEnrollmentService `
       -ServiceAccountName "{{ domain }}"\"{{ user }}" `
       -ServiceAccountPassword (ConvertTo-SecureString -AsPlainText $secret -Force) `

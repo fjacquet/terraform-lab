@@ -1,2 +1,18 @@
 ---
 # tasks file for sharepoint
+- name: copy installer
+  win_shell: |
+    Copy-S3Object -BucketName installers-fja -Key "{{ iso }}" -LocalFile "C:\installers\\{{ iso }}"
+- name: mount iso
+  win_shell: |
+    Mount-DiskImage -ImagePath "C:\installers\\{{ iso }}"
+
+- name: git clone autosp
+  win_shell: |
+    Set-Location C:\installers\
+    git clone https://github.com/brianlala/AutoSPInstaller.git
+
+- name: get template
+  win_template:
+    src: templates/config-sp.xml.j2
+    dest: C:\installers\config-sp.xml

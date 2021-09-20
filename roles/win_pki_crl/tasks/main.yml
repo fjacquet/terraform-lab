@@ -25,7 +25,7 @@
 
 - name: Start synchronization
   win_shell: |
-    Set-Location "inetsrv\"
+    Set-Location "inetsrv"
     .\Appcmd Set-Variable config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
 
 - name: Start synchronization
