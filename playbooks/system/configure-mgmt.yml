@@ -1,9 +1,19 @@
 ---
+
 - hosts: tag_type_mgmt
   become: no
   gather_facts: yes
 
+  roles:
+  - win_openssh
+  - win_server
+
+- hosts: tag_type_guacamole
+  become: yes
+  gather_facts: yes
+
 
   roles:
-  - openssh
-  - windows_server
+  - debian_server
+  - debian_guacamole
+  - debian_vault

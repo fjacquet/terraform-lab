@@ -37,6 +37,7 @@ resource "aws_instance" "mgmt" {
     Name        = "mgmt-${count.index}"
     Environment = "lab"
     type        = "mgmt"
+    system      = "windows"
   }
 
   lifecycle {

@@ -1,2 +1,4 @@
 ---
 # defaults file for guacamole
+mysql_password: password
+guacamole_admin_password: password

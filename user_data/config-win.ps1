@@ -9,25 +9,16 @@ Rename-Computer -NewName $instanceName -Force -Confirm:$false
 
 $NewLocalAdmin = "ansible"
 $Password = "NotS0S3cr3t!"
+$SecurePassword=ConvertTo-SecureString $Password -asplaintext -force
 
-New-LocalUser "$NewLocalAdmin" -Password $Password -FullName "$NewLocalAdmin" -Description "Temporary local admin"
+New-LocalUser "$NewLocalAdmin" -Password $SecurePassword -FullName "$NewLocalAdmin" -Description "Temporary local admin"
 Add-LocalGroupMember -Group "Administrators" -Member "$NewLocalAdmin"
 
-$url = 'https://raw.githubusercontent.com/fjacquet/terraform-lab/master/post_setup/ConfigureRemotingForAnsible.ps1'
-Invoke-Expression ((New-Object System.Net.Webclient).DownloadString($url)) #DevSkim: ignore DS104456
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+$file = "$env:temp\ConfigureRemotingForAnsible.ps1"
 
+(New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
 
-# winrm quickconfig -q
-# winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="300"}'
-# winrm set winrm/config '@{MaxTimeoutms="1800000"}'
-# winrm set winrm/config/service '@{AllowUnencrypted="true"}'
-# winrm set winrm/config/service/auth '@{Basic="true"}'
-
-# netsh advfirewall firewall add rule name="WinRM 5985" protocol=TCP dir=in localport=5985 action=allow
-# netsh advfirewall firewall add rule name="WinRM 5986" protocol=TCP dir=in localport=5986 action=allow
-
-# Stop-Service -Name "WinRM" -ErrorAction Stop
-# Set-Service -Name "WinRM" -StartupType Automatic
-# Start-Service -Name "WinRM" -ErrorAction Stop
-
+powershell.exe -ExecutionPolicy ByPass -File $file
 </powershell>

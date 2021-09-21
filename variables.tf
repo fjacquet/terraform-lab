@@ -87,10 +87,10 @@ variable "aws_number" {
     "dhcp"       = 0
     "exchange"   = 0
     "fs"         = 0
-    "glpi"       = 0
-    "guacamole"  = 0
+    "glpi"       = 1
+    "guacamole"  = 1
     "ipam"       = 0
-    "mgmt"       = 1
+    "mgmt"       = 0
     "etcd"       = 0
     "workers"    = 0
     "longhorn"   = 0

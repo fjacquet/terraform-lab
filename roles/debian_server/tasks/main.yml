@@ -1,0 +1,16 @@
+---
+# tasks file for debian_server
+
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    state: latest
+- name: install gpg
+  package:
+    name: gnupg
+    state: present
