@@ -3,6 +3,7 @@
   win_chocolatey:
     name: "{{ item }}"
     state: present
+  ignore_errors: yes
   with_items:
     - 7zip.install
     - baretail

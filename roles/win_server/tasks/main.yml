@@ -33,16 +33,10 @@
 - name: Include chocolatey
   include_tasks: chocolatey.yml
 
-- name: install powershell modules
-  community.windows.win_psmodule:
-    name: "{{ item }}"
-    skip_publisher_check: yes
-    state: present
-  with_items:
-    - PSPKI
-    - PSExcel
-    - Logging
-    - AWSPowerShell
+- name: set powershell
+  include_tasks: powershell.yml
 
 - name: set locale
   include_tasks: locale.yml
+# - name: Reboot the machine with all defaults
+#   ansible.windows.win_reboot:

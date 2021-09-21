@@ -1,0 +1,14 @@
+---
+- name: Ensure the required NuGet package provider version is installed
+  win_shell: Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force
+
+- name: install powershell modules
+  community.windows.win_psmodule:
+    name: "{{ item }}"
+    skip_publisher_check: yes
+    state: present
+  with_items:
+    - PSPKI
+    - PSExcel
+    - Logging
+    - AWSPowerShell
