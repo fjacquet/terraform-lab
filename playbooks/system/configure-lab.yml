@@ -23,6 +23,7 @@
   roles:
     - win_server
     - win_openssh
+    - win_nbu_client
 
 
 - hosts: tag_type_adds
