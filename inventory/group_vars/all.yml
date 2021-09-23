@@ -2,3 +2,4 @@
 win_domain: "ez-lab"
 dns_domain: "{{ win_domain }}.xyz"
 ansible_user: "ansible"
+ansible_python_interpreter: "/usr/bin/python3"

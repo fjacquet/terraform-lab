@@ -1,20 +1,12 @@
 ---
-- hosts: tag_type_mgmt
+
+- hosts: tag_type_glpi
   become: no
   gather_facts: yes
 
   roles:
     - win_server
     - win_openssh
-
-- hosts: tag_type_guacamole
-  become: yes
-  gather_facts: yes
-
-  roles:
-    - debian_server
-    - debian_guacamole
-
 
 - hosts: tag_system_windows
   become: no
