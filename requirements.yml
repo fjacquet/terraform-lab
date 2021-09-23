@@ -1,9 +1,17 @@
 roles:
+- geerlingguy.certbot
 
 collections:
 - amazon.aws
 - ansible.windows
+- azure.azcollection
+- cisco.intersight
+- cisco.iosxr
 - cisco.ise
+- cisco.ucs
 - community.general
 - community.hashi_vault
+- community.vmware
 - community.windows
+- purestorage.flasharray
+- vmware.vmware_rest

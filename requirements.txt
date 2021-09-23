@@ -1,10 +1,18 @@
 ###### Requirements without Version Specifiers ######`
+pip
+setuptools
 ansible
 ansible-lint
+ansiblemetrics
+aiohttp
+azure-mgmt-redhatopenshift
 boto3
 cryptography
+hvac
+hvac[parser]
 kerberos
-molecule
+# molecule
+# molecule-docker
 pypsrp
 pyspnego
 pywinrm

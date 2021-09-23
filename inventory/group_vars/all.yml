@@ -1,0 +1,4 @@
+---
+win_domain: "ez-lab"
+dns_domain: "{{ win_domain }}.xyz"
+ansible_user: "ansible"
