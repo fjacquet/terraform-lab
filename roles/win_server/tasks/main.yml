@@ -36,6 +36,9 @@
 - name: set powershell
   include_tasks: powershell.yml
 
+- name: create admin
+  include_tasks: admin.yml
+
 - name: set locale
   include_tasks: locale.yml
 # - name: Reboot the machine with all defaults

@@ -15,8 +15,9 @@
       - php-bz2
       - php-cas
       - php-curl
-      - php-domxml
-      - php-fileinfo
+      # - php-domxml
+      # - php-fileinfo
+      - php-geoip
       - php-gd
       - php-imap
       - php-intl
@@ -24,14 +25,14 @@
       - php-json
       - php-ldap
       - php-mbstring
-      - php-mysqli
-      - php-openssl
-      - php-session
-      - php-simplexml
+      - php-mysql
+      # - php-openssl
+      # - php-session
+      # - php-simplexml
       - php-xmlrpc
       - php-xml
       - php-zip
-      - php-zlib
+      # - php-zlib
     state: present
     update_cache: yes
     cache_valid_time: 3600
@@ -46,6 +47,7 @@
   ansible.builtin.unarchive:
     src: /tmp/glpi.tgz
     dest: /var/www
+    remote_src: true
 
 - name: Recursively change ownership of a directory
   ansible.builtin.file:
@@ -100,11 +102,6 @@
     group: www-data
     mode: "0755"
 
-- name: Removes anonymous user account for localhost
-  community.mysql.mysql_user:
-    name: ""
-    host: localhost
-    state: absent
 
 - name: Create a new database with name 'glpi'
   mysql_db:

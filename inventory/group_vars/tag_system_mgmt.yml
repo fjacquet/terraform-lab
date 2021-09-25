@@ -1,0 +1,5 @@
+ansible_connection: "psrp"
+ansible_password: "NotS0S3cr3t!"
+ansible_port: 5986
+ansible_psrp_auth: "negotiate"
+ansible_psrp_cert_validation: "ignore"

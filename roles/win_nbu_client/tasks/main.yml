@@ -1,6 +1,6 @@
 ---
 # tasks file for nbu_client
-- name: Install requirements for CSV with sub features and management tools
+- name: Install requirements for NBU Client with sub features and management tools
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
@@ -11,14 +11,14 @@
     - FS-NFS-Service
     - NFS-Client
 
-- name: Set NFS client on manual
-  ansible.windows.win_service:
-    name: NfsClnt
-    start_mode: manual
-    state: started
+# - name: Set NFS client on manual
+#   ansible.windows.win_service:
+#     name: NfsClnt
+#     start_mode: manual
+#     state: started
 
-- name: Set NFS server on manual
-  ansible.windows.win_service:
-    name: NfsService
-    start_mode: manual
-    state: started
+# - name: Set NFS server on manual
+#   ansible.windows.win_service:
+#     name: NfsService
+#     start_mode: manual
+#     state: started

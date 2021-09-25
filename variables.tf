@@ -90,7 +90,7 @@ variable "aws_number" {
     "glpi"       = 1
     "guacamole"  = 1
     "ipam"       = 0
-    "mgmt"       = 0
+    "mgmt"       = 1
     "etcd"       = 0
     "workers"    = 0
     "longhorn"   = 0
@@ -101,7 +101,7 @@ variable "aws_number" {
     "oracle"     = 0
     "pki-crl"    = 0
     "pki-ica"    = 0
-    "pki-rca"    = 0
+    "pki-rca"    = 1
     "pki-ndes"   = 0
     "rdsh"       = 0
     "redis"      = 0

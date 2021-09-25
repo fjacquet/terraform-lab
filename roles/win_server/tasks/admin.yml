@@ -1,0 +1,9 @@
+---
+- name: Ensure user admin is present
+  ansible.windows.win_user:
+    name: "{{ win_username }}"
+    password: "{{ win_password }}"
+    state: present
+    groups:
+      - Users
+      - "{{ win_group }}"

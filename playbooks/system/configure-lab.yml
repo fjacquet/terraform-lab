@@ -1,34 +1,51 @@
 ---
-- hosts: tag_type_mgmt
-  become: no
+- hosts: tag_system_debian
+  become: yes
   gather_facts: yes
+  strategy: free
 
-  roles:
-    - win_server
-    - win_openssh
-
-- hosts: tag_system_windows
-  become: no
-  gather_facts: yes
-
-  roles:
-    - win_server
-    - win_openssh
-    - win_nbu_client
-
-
-- hosts: tag_type_adds
-  become: no
-  gather_facts: yes
-
-  roles:
-    - win_server
-    - win_openssh
+  tasks:
+    - name: install basic server
+      include_role:
+        name: debian_server
 
 - hosts: tag_type_glpi
   become: yes
   gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Install mysql
+      include_role:
+        name: linux_mysql
+
+    - name: Install php
+      include_role:
+        name: linux_php
+      vars:
+        php_memory_limit: "64M"
+        php_file_uploads: "on"
+        php_max_execution_time: "600"
+        php_session_auto_start: "off"
+
+    - name: Install glpi
+      include_role:
+        name: debian_glpi
+
+- hosts: tag_system_windows
+  become: no
+  gather_facts: yes
+  strategy: free
 
   roles:
-    - debian_server
-    - debian_glpi
+    - win_server
+    - win_nbu_client
+    - win_openssh
+
+- hosts: tag_type_rca
+  become: no
+  gather_facts: yes
+  strategy: free
+
+  roles:
+    - win_pki_rca
