@@ -5,76 +5,121 @@
   apt:
     name:
       - apache2
-      - php
+      - fontconfig
+      - fusioninventory-agent
+      - jq
       - libapache2-mod-php
       - mariadb-server
-      - php-mysqli
-      - php-mbstring
+      - php
+      - php-apcu
+      - php-bz2
+      - php-cas
       - php-curl
+      - php-domxml
+      - php-fileinfo
       - php-gd
-      - php-simplexml
+      - php-imap
       - php-intl
       - php-ldap
-      - php-apcu
-      - php-xmlrpc
-      - php-cas
-      - php-zip
-      - php-bz2
+      - php-json
       - php-ldap
-      - php-imap
-      - fontconfig
-      - jq
-      - fusioninventory-agent
+      - php-mbstring
+      - php-mysqli
+      - php-openssl
+      - php-session
+      - php-simplexml
+      - php-xmlrpc
+      - php-xml
+      - php-zip
+      - php-zlib
     state: present
     update_cache: yes
     cache_valid_time: 3600
 
+- name: Download glpi.tgz
+  get_url:
+    url: "https://github.com/glpi-project/glpi/releases/download/{{ glpi_version }}/glpi-{{ glpi_version }}.tgz"
+    dest: /tmp/glpi.tgz
+    mode: "0755"
 
-# yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+- name: Extract glpi.tgz into /var/lib/foo
+  ansible.builtin.unarchive:
+    src: /tmp/glpi.tgz
+    dest: /var/www
 
+- name: Recursively change ownership of a directory
+  ansible.builtin.file:
+    path: "/var/www/glpi/{{ item }}"
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+  with_items:
+    - files
+    - config
 
-# yum install --enablerepo=epel python2-pip.noarch python34-pip.noarch cockpit cockpit-storaged jq -y
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: /var/www/glpi/config
+    dest: /etc/glpi
+    owner: www-data
+    group: www-data
+    mode: "0755"
+    remote_src: yes
 
-# pip install --upgrade pip
-# pip install awscli --upgrade --user
-# export PATH=$PATH:/root/.local/bin
-# INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)                                               #DevSkim: ignore DS137138
-# REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}') #DevSkim: ignore DS137138
-# HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text | grep Name | awk '{print $5}')
-# FQDN="$HOSTNAME.ez-lab.xyz"
-# hostnamectl set-hostname "$FQDN"
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: /var/www/glpi/files
+    dest: /var/lib/glpi
+    owner: www-data
+    group: www-data
+    mode: "0755"
+    remote_src: yes
 
-# yum install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /var/log/glpi
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: "0755"
 
-# yum upgrade -y
-# yum --enablerepo=remi,remi-glpi93,remi-php73,epel --disablerepo=amzn2-core install glpi jq glpi-* php php-gd php-mysql php-mcrypt php-apcu php-xmlrpc php-pecl-zendopcache php-ldap php-imap php-mbstring php-simplexml php-xml -y
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: files/downstream.php
+    dest: /var/lib/glpi/inc/
+    owner: www-data
+    group: www-data
+    mode: "0755"
 
-# yum clean all
-# rm -rf /var/cache/yum
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: files/local_define.php
+    dest: /etc/glpi/local_define.php
+    owner: www-data
+    group: www-data
+    mode: "0755"
 
-# cat >/etc/yum.repos.d/mariadb.repo <<EOF
-# # MariaDB 10.3 RedHat repository list - created 2018-10-13 16:11 UTC
-# # http://downloads.mariadb.org/mariadb/repositories/
-# [mariadb]
-# name = MariaDB
-# baseurl = http://yum.mariadb.org/10.3/rhel7-amd64
-# gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
-# gpgcheck=1
-# enabled=1
-# EOF
-# yum upgrade -y
-# yum install MariaDB-server MariaDB-client -y
+- name: Removes anonymous user account for localhost
+  community.mysql.mysql_user:
+    name: ""
+    host: localhost
+    state: absent
 
-# MYSQLROOT=$(aws secretsmanager get-secret-value --secret-id "ez-lab.xyz/glpi/mysqlroot" --region=$REGION  --output json|jq -r '.SecretString')
-# MYSQLUSER=$(aws secretsmanager get-secret-value --secret-id "ez-lab.xyz/glpi/mysqluser" --region=$REGION  --output json|jq -r '.SecretString')
-# MYSQLDB=glpidb
+- name: Create a new database with name 'glpi'
+  mysql_db:
+    name: glpi
+    state: present
 
-# sed -i "s/SELINUX=enforcing/SELINUX=permissive/" /etc/selinux/config
-# sed -i 's/Allow from 127.0.0.1/Allow from 10.0.*.*/' /etc/httpd/conf.d/glpi.conf
-# sed -i 's/Allow from ::1//' /etc/httpd/conf.d/glpi.conf
-# setenforce 0
+- name: Create database user with name 'bob' and password '12345' with all database privileges
+  community.mysql.mysql_user:
+    name: glpi
+    password: glpi
+    priv: "glpi.*:ALL,GRANT"
+    state: present
 
-
+- name: Execute the command in remote shell; stdout goes to the specified file on the remote
+  ansible.builtin.shell: "php /var/www/html/glpi/bin/console db:install --default-language={{ glpi_lang }}  --db-host={{ glpi_hostname }} --db-name={{ glpi_database }} --db-user={{ glpi_username }} --db-password={{ glpi_password }}"
 
 - name: Make sure a service is running
   ansible.builtin.systemd:

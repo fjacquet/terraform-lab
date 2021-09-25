@@ -1,2 +1,8 @@
 ---
 # defaults file for glpi
+glpi_version: 9.5.6
+glpi_database: glpi
+glpi_username: glpi
+glpi_password: glpi
+glpi_hostname: localhost
+glpi_lang: fr_CH

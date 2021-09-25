@@ -11,6 +11,7 @@ collections:
 - cisco.ucs
 - community.general
 - community.hashi_vault
+- community.mysql
 - community.vmware
 - community.windows
 - purestorage.flasharray
