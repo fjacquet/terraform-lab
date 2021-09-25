@@ -5,11 +5,17 @@
 - name: Run the equivalent of "apt-get update" as a separate step
   apt:
     update_cache: yes
+    cache_valid_time: 3600
+
 
 - name: Update all packages to their latest version
   apt:
     name: "*"
     state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
+
 - name: install gpg
   package:
     name: gnupg

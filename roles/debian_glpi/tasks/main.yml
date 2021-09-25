@@ -2,12 +2,32 @@
 # tasks file for glpi
 
 - name: install some package
-  yum:
+  apt:
     name:
-      - httpd
+      - apache2
+      - php
+      - libapache2-mod-php
+      - mariadb-server
+      - php-mysqli
+      - php-mbstring
+      - php-curl
+      - php-gd
+      - php-simplexml
+      - php-intl
+      - php-ldap
+      - php-apcu
+      - php-xmlrpc
+      - php-cas
+      - php-zip
+      - php-bz2
+      - php-ldap
+      - php-imap
       - fontconfig
       - jq
+      - fusioninventory-agent
     state: present
+    update_cache: yes
+    cache_valid_time: 3600
 
 
 # yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
@@ -59,7 +79,7 @@
 - name: Make sure a service is running
   ansible.builtin.systemd:
     enabled: yes
-    name: httpd
+    name: apache2
     state: started
 
 - name: Make sure a service is running
@@ -67,3 +87,11 @@
     enabled: yes
     name: mariadb
     state: started
+
+- name: Remove useless packages from the cache
+  apt:
+    autoclean: yes
+
+- name: Remove dependencies that are no longer required
+  apt:
+    autoremove: yes

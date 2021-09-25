@@ -2,3 +2,4 @@
 win_domain: "ez-lab"
 dns_domain: "ez-lab.xyz"
 ansible_user: "ansible"
+ansible_host: ec2-54-195-190-31.eu-west-1.compute.amazonaws.com

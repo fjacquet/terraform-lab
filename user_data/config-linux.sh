@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
-# yum -y upgrade
-
-# yum -y install wget libaio numactl python
-
-# sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old
-# sudo sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
-# sudo sed -i "s/#PermitRootLogin yes/PermitRootLogin yes/" /etc/ssh/sshd_config
-
-# sudo systemctl restart sshd
 
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 python get-pip.py
@@ -18,4 +9,3 @@ REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/documen
 HOSTNAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region="$REGION" --output=text | awk '{print $5}')
 
 hostnamectl set-hostname "$HOSTNAME".ez-lab.xyz
-# sudo reboot
