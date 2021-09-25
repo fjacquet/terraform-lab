@@ -1,4 +1,5 @@
 ---
+---
 - hosts: tag_type_mgmt
   become: no
   gather_facts: yes
@@ -33,3 +34,11 @@
   roles:
     - win_server
     - win_openssh
+
+- hosts: tag_type_glpi
+  become: yes
+  gather_facts: yes
+
+  roles:
+    - debian_server
+    - debian_glpi
