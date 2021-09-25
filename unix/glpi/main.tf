@@ -30,6 +30,14 @@ resource "aws_security_group" "glpi" {
   description = "Used in the terraform"
   vpc_id      = var.aws_vpc_id
 
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
   ingress {
     from_port   = 80
     to_port     = 80
