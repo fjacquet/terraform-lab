@@ -33,8 +33,12 @@ resource "aws_instance" "wsus" {
     type        = "wsus"
     system      = "windows"
   }
+  metadata_options {
+    http_tokens = "required"
+  }
 
   root_block_device {
+    encrypted   = true
     volume_size = 100
   }
 

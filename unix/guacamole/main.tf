@@ -11,6 +11,7 @@ resource "aws_instance" "guacamole" {
 
   root_block_device {
     volume_size = 80
+    encrypted   = true
   }
 
   tags = {
@@ -19,6 +20,10 @@ resource "aws_instance" "guacamole" {
     type        = "guacamole"
     system      = "debian"
   }
+  metadata_options {
+    http_tokens = "required"
+  }
+
 
   lifecycle {
     ignore_changes = [user_data]

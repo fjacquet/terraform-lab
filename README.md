@@ -11,8 +11,8 @@ You should already know my Github if you read this
 ## SonarCloud status
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fjacquet_terraform-lab&metric=alert_status)](https://sonarcloud.io/dashboard?id=fjacquet_terraform-lab)
-![Terraform plan](https://github.com/fjacquet/terraform-lab/actions/workflows/terraform.yml/badge.svg)
-![SonarCloud](https://github.com/fjacquet/terraform-lab/actions/workflows/build.yml/badge.svg)
+[![Terraform](https://github.com/fjacquet/terraform-lab/actions/workflows/terraform.yml/badge.svg)](https://github.com/fjacquet/terraform-lab/actions/workflows/terraform.yml)
+[![Build](https://github.com/fjacquet/terraform-lab/actions/workflows/build.yml/badge.svg)](https://github.com/fjacquet/terraform-lab/actions/workflows/build.yml)
 [![Known Vulnerabilities](https://snyk.io/test/github/fjacquet/terraform-lab/badge.svg)](https://snyk.io/test/github/fjacquet/terraform-lab)
 ## SSH
 

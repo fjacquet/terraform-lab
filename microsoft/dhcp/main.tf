@@ -34,6 +34,13 @@ resource "aws_instance" "dhcp" {
 
     system = "windows"
   }
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
 
   lifecycle {
     ignore_changes = [user_data]

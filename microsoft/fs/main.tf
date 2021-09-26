@@ -37,6 +37,14 @@ resource "aws_instance" "fs" {
   lifecycle {
     ignore_changes = [user_data]
   }
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
+
 
   # Our Security group to allow RDP access
   vpc_security_group_ids = var.aws_sg_ids

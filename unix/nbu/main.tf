@@ -23,7 +23,12 @@ resource "aws_instance" "nbumaster" {
 
   root_block_device {
     volume_size = 80
+    encrypted   = true
   }
+  metadata_options {
+    http_tokens = "required"
+  }
+
 
   tags = {
     Name        = "nbu-${count.index}"

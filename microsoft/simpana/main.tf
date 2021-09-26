@@ -21,8 +21,13 @@ resource "aws_instance" "simpana" {
 
   vpc_security_group_ids = var.aws_sg_ids
 
+  metadata_options {
+    http_tokens = "required"
+  }
+
   root_block_device {
     volume_size = 80
+    encrypted   = true
   }
 
   tags = {

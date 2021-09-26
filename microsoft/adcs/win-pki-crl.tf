@@ -8,6 +8,14 @@ resource "aws_instance" "pki-crl" {
   key_name             = var.aws_key_pair_auth_id
   subnet_id            = element(var.aws_subnet_id, count.index)
   user_data            = file("user_data/config-win.ps1")
+  
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
 
   tags = {
     Name        = "pki-crl-${count.index}"

@@ -30,6 +30,10 @@ resource "aws_instance" "exchange" {
 
   root_block_device {
     volume_size = 100
+    encrypted   = true
+  }
+  metadata_options {
+    http_tokens = "required"
   }
 
   tags = {

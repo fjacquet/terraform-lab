@@ -29,6 +29,10 @@ resource "aws_instance" "wds" {
 
   root_block_device {
     volume_size = 250
+    encrypted   = true
+  }
+  metadata_options {
+    http_tokens = "required"
   }
 
   tags = {

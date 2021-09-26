@@ -34,6 +34,13 @@ resource "aws_instance" "sharepoint" {
   lifecycle {
     ignore_changes = [user_data]
   }
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
 
   tags = {
     Name        = "sharepoint-${count.index}"
