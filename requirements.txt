@@ -1,22 +1,23 @@
 ###### Requirements without Version Specifiers ######`
 pip
 setuptools
+# molecule
+# molecule-docker
+aiohttp
 ansible
 ansible-lint
+ansible-parallel
 ansiblemetrics
-aiohttp
 azure-mgmt-redhatopenshift
 boto3
 cryptography
 hvac
 hvac[parser]
 kerberos
-# molecule
-# molecule-docker
 pypsrp
 pyspnego
 pywinrm
 requests
-yamllint
 requests[security]
 requests[socks]
+yamllint
