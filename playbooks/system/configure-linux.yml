@@ -1,0 +1,10 @@
+---
+- hosts: tag_system_debian,!tag_type_guacamole
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: install basic server
+      include_role:
+        name: debian_server

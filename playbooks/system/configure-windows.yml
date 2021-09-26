@@ -1,0 +1,11 @@
+---
+- hosts: tag_system_windows
+  become: no
+  gather_facts: yes
+  strategy: free
+
+  roles:
+    - win_server
+    - win_nbu_client
+    - win_openssh
+

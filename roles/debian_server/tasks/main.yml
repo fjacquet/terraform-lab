@@ -19,9 +19,6 @@
       - aptitude
       - fusioninventory-agent
       - gnupg
-      - python3-aiomysql
-      - python3-mysqldb
-      - python3-pymysql
     state: present
 
 - name: Remove useless packages from the cache

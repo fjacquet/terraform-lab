@@ -4,12 +4,7 @@
 - name: install some package
   apt:
     name:
-      - apache2
-      - fontconfig
-      - fusioninventory-agent
-      - jq
       - libapache2-mod-php
-      - mariadb-server
       - php
       - php-apcu
       - php-bz2
@@ -51,14 +46,11 @@
 
 - name: Recursively change ownership of a directory
   ansible.builtin.file:
-    path: "/var/www/glpi/{{ item }}"
+    path: "/var/www/glpi"
     state: directory
     recurse: yes
     owner: www-data
     group: www-data
-  with_items:
-    - files
-    - config
 
 - name: Copy file with owner and permissions
   ansible.builtin.copy:
@@ -108,7 +100,7 @@
     name: glpi
     state: present
 
-- name: Create database user with name 'bob' and password '12345' with all database privileges
+- name: Create database user with all database privileges
   community.mysql.mysql_user:
     name: glpi
     password: glpi
@@ -116,7 +108,7 @@
     state: present
 
 - name: Execute the command in remote shell; stdout goes to the specified file on the remote
-  ansible.builtin.shell: "php /var/www/html/glpi/bin/console db:install --default-language={{ glpi_lang }}  --db-host={{ glpi_hostname }} --db-name={{ glpi_database }} --db-user={{ glpi_username }} --db-password={{ glpi_password }}"
+  ansible.builtin.shell: "php /var/www/glpi/bin/console db:install --default-language={{ glpi_lang }}  --db-host={{ glpi_hostname }} --db-name={{ glpi_database }} --db-user={{ glpi_username }} --db-password={{ glpi_password }}" --no-interaction
 
 - name: Make sure a service is running
   ansible.builtin.systemd:
@@ -129,6 +121,11 @@
     enabled: yes
     name: mariadb
     state: started
+
+- name: remove install
+  ansible.builtin.file:
+    path: /var/www/glpi/install/install.php
+    state: absent
 
 - name: Remove useless packages from the cache
   apt:

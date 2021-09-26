@@ -1,8 +1,9 @@
+
 ---
-- hosts: tag_type_wac
+- hosts: tag_type_rca
   become: no
   gather_facts: yes
   strategy: free
 
   roles:
-    - win_admin_center
+    - win_pki_rca

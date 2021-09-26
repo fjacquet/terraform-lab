@@ -1,14 +1,4 @@
 ---
-- hosts: tag_system_debian
-  become: yes
-  gather_facts: yes
-  strategy: free
-
-  tasks:
-    - name: install basic server
-      include_role:
-        name: debian_server
-
 - hosts: tag_type_glpi
   become: yes
   gather_facts: yes
@@ -18,6 +8,16 @@
     - name: Install mysql
       include_role:
         name: linux_mysql
+
+    - name: Install apache
+      include_role:
+        name: linux_apache
+      vars:
+        apache_state: started
+        apache_vhosts:
+          # Additional optional properties: 'serveradmin, serveralias, extra_parameters'.
+          - servername: "glpi-0.ez-lab.xyz"
+            documentroot: "/var/www/glpi"
 
     - name: Install php
       include_role:
@@ -31,21 +31,3 @@
     - name: Install glpi
       include_role:
         name: debian_glpi
-
-- hosts: tag_system_windows
-  become: no
-  gather_facts: yes
-  strategy: free
-
-  roles:
-    - win_server
-    - win_nbu_client
-    - win_openssh
-
-- hosts: tag_type_rca
-  become: no
-  gather_facts: yes
-  strategy: free
-
-  roles:
-    - win_pki_rca

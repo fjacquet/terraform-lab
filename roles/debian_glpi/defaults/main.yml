@@ -5,4 +5,4 @@ glpi_database: glpi
 glpi_username: glpi
 glpi_password: glpi
 glpi_hostname: localhost
-glpi_lang: fr_CH
+glpi_lang: en_US
