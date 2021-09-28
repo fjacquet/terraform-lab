@@ -1,8 +1,8 @@
 ---
-- hosts: tag_type_rca
+- hosts: tag_type_crl
   become: no
   gather_facts: yes
   strategy: free
 
   roles:
-    - win_pki_rca
+    - win_pki_crl

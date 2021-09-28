@@ -1,8 +1,8 @@
 ---
-- hosts: tag_type_rca
+- hosts: tag_Name_dc_1
   become: no
   gather_facts: yes
   strategy: free
 
   roles:
-    - win_pki_rca
+    - win_domain_odc
