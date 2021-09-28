@@ -1,4 +1,20 @@
 ---
+
+- name: Install requirements for ADDS with sub features and management tools
+  ansible.windows.win_feature:
+    name: "{{ item }}"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: win_feature
+  with_items:
+    - Adcs-Cert-Authority
+
+- name: Install AD-Certificate
+  ansible.windows.win_feature:
+    name: AD-Certificate
+    state: present
+
 - name: Add PSPKI PowerShell module
   community.windows.win_psmodule:
     name: PSPKI
@@ -13,6 +29,7 @@
 
 - name: startup configuration
   win_shell: |
+    import-module -name pspki
     Install-AdcsCertificationAuthority `
       -CAType StandaloneRootCA `
       -CACommonName "{{ caname }}" `

@@ -83,11 +83,11 @@ variable "aws_number" {
     "adfs"       = 0
     "bsd"        = 0
     "da"         = 0
-    "dc"         = 0
+    "dc"         = 2
     "dhcp"       = 0
     "exchange"   = 0
     "fs"         = 0
-    "glpi"       = 1
+    "glpi"       = 0
     "guacamole"  = 1
     "ipam"       = 0
     "mgmt"       = 1
@@ -99,10 +99,10 @@ variable "aws_number" {
     "nps"        = 0
     "opscenter"  = 0
     "oracle"     = 0
-    "pki-crl"    = 0
-    "pki-ica"    = 0
+    "pki-crl"    = 1
+    "pki-ica"    = 1
     "pki-rca"    = 1
-    "pki-ndes"   = 0
+    "pki-ndes"   = 1
     "rdsh"       = 0
     "redis"      = 0
     "sharepoint" = 0

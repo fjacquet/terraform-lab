@@ -12,7 +12,7 @@
 
 - name: Reboot if installing feature requires it
   ansible.windows.win_reboot:
-  when: win_feature.reboot_required
+  # when: win_feature.reboot_required
 
 - name: Create new Windows domain in a new forest
   ansible.windows.win_domain:
