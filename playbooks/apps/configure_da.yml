@@ -1,0 +1,10 @@
+---
+- hosts: tag_type_da
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Install direct access
+      include_role:
+        name: win_direct_access

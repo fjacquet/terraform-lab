@@ -1,0 +1,10 @@
+---
+- hosts: tag_type_exchange
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Install exchange
+      include_role:
+        name: ms_exchange
