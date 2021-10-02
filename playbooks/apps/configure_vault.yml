@@ -1,0 +1,8 @@
+---
+- hosts: tag_type_vault
+  become: no
+  gather_facts: yes
+  strategy: free
+
+  roles:
+    - linux_vault
