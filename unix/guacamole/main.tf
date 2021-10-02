@@ -76,6 +76,24 @@ resource "aws_route53_record" "guacamole" {
   records = [element(aws_instance.guacamole.*.private_ip, count.index)]
 }
 
+resource "aws_route53_record" "guacamole-public" {
+  count   = var.aws_number
+  zone_id = var.dns_public_zone_id
+  name    = "guacamole-${count.index}.{var.dns_suffix}"
+  type    = "A"
+  ttl     = "300"
+  records = [element(aws_instance.guacamole.*.public_ip, count.index)]
+}
+
+resource "aws_route53_record" "bastion-public" {
+  count   = var.aws_number
+  zone_id = var.dns_public_zone_id
+  name    = "bastion-${count.index}.{var.dns_suffix}"
+  type    = "A"
+  ttl     = "300"
+  records = [element(aws_instance.guacamole.*.public_ip, count.index)]
+}
+
 # resource "aws_route53_record" "guacamole-v6" {
 #   count   = "${var.aws_number}"
 #   zone_id = "${var.dns_zone_id}"
