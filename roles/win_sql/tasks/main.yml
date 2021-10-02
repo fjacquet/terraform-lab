@@ -1,0 +1,33 @@
+---
+# tasks file for win_sql
+
+- name: install sql server
+  ansible.windows.win_powershell:
+    script: |
+
+      $CredEngine = Get-Credential
+      $CredSa     = Get-Credential 'sa'
+      $Params     = @{
+          DestinationServer = "SqlServer01"
+          SetupFilesPath = "C:\Setup"
+          Version = "{{ sql_version }}"
+          InstallEngine = $true
+          InstallCU = $true
+          InstallSSMS = $true
+          SqlCollation = "{{ sql_collation }}"
+          InstancePath = "C:\Program Files\Microsoft SQL Server"
+          DataPath = "{{ path_data }}"
+          LogPath = "{{ path_lgo }}"
+          TempPath = "{{ path_temp }}"
+          BackupPath = "{{ path_backup }}"
+          EngineCredential = $CredEngine
+          AgentCredential = $CredEngine
+          SaCredential = $CredSa
+          Credential = $CredEngine
+          AdminAccount = "$($env:userdomain)\DBAdmin"
+          Restart = $true
+          WhatIf = $false
+          VerboseCommand = $false
+          EnableException = $true
+      }
+      Install-SqlServer @Params

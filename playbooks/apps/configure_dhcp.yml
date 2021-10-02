@@ -1,0 +1,10 @@
+---
+- hosts: tag_type_dhcp
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Install dhcp
+      include_role:
+        name: win_dhcp

@@ -5,6 +5,10 @@
   strategy: free
 
   tasks:
+    - name: Join Domain
+      include_role:
+        name: win_domain_member
+
     - name: Install laps
       include_role:
         name: win_laps

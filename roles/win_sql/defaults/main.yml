@@ -1,0 +1,8 @@
+---
+# defaults file for win_sql
+sql_version: 2019
+sql_collation: Latin1_General_CI_AS
+path_data: "D:\\Data"
+path_log: "L:\\Log"
+path_temp: "T:\\TempDB"
+path_backup: "B:\\Backup"
