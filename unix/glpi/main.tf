@@ -20,9 +20,9 @@ resource "aws_instance" "glpi" {
     type        = "glpi"
     system      = "debian"
   }
-  metadata_options {
-    http_tokens = "required"
-  }
+  # metadata_options {
+  #   http_tokens = "required"
+  # }
 
 
   lifecycle {

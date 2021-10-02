@@ -38,10 +38,10 @@ resource "aws_instance" "mgmt" {
     Environment = "lab"
     type        = "mgmt"
     system      = "management"
-  }
-  metadata_options {
-    http_tokens = "required"
-  }
+   }
+  # metadata_options {
+  #   http_tokens = "required"
+  # }
 
   root_block_device {
     encrypted = true

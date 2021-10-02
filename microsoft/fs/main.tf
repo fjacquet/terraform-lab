@@ -37,9 +37,9 @@ resource "aws_instance" "fs" {
   lifecycle {
     ignore_changes = [user_data]
   }
-  metadata_options {
-    http_tokens = "required"
-  }
+  # metadata_options {
+  #   http_tokens = "required"
+  # }
 
   root_block_device {
     encrypted = true

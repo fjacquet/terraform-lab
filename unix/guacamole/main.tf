@@ -20,9 +20,9 @@ resource "aws_instance" "guacamole" {
     type        = "guacamole"
     system      = "debian"
   }
-  metadata_options {
-    http_tokens = "required"
-  }
+  # metadata_options {
+  #   http_tokens = "required"
+  # }
 
 
   lifecycle {

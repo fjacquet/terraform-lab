@@ -33,9 +33,9 @@ resource "aws_instance" "wac" {
     type        = "wac"
     system      = "windows"
   }
-  metadata_options {
-    http_tokens = "required"
-  }
+  # metadata_options {
+  #   http_tokens = "required"
+  # }
 
   root_block_device {
     encrypted = true

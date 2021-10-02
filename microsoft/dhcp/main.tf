@@ -34,9 +34,9 @@ resource "aws_instance" "dhcp" {
 
     system = "windows"
   }
-  metadata_options {
-    http_tokens = "required"
-  }
+  # metadata_options {
+  #   http_tokens = "required"
+  # }
 
   root_block_device {
     encrypted = true
