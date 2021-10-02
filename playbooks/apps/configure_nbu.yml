@@ -1,0 +1,10 @@
+---
+- hosts: tag_type_netbackup
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Prepare netbackup
+      include_role:
+        name: rhel_nbu_server
