@@ -2,6 +2,7 @@ variable "azs" {
   type = list(string)
 }
 
+
 variable "aws_number" {
   type = map(string)
 }

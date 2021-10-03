@@ -20,6 +20,25 @@ You should already know my Github if you read this :)
 [![Known Vulnerabilities](https://snyk.io/test/github/fjacquet/terraform-lab/badge.svg)](https://snyk.io/test/github/fjacquet/terraform-lab)
 
 ## Configuration
+### Shell
+
+To fix winrm on mac set
+```bash
+no_proxy="*"
+```
+
+To speedup terraform set
+
+```bash
+TF_CLI_ARGS="-parallelism=50"
+TFE_PARALLELISM=50
+TF_REGISTRY_CLIENT_TIMEOUT=15
+export TF_REGISTRY_CLIENT_TIMEOUT
+export TF_CLI_ARGS
+export TFE_PARALLELISM
+```
+
+NB must have execution local if you use https://app.terraform.io/
 
 ### ansible
 

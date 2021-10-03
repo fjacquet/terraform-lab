@@ -12,6 +12,10 @@ variable "dns_suffix" {
   description = "name of DNS zone"
   default     = "ez-lab.xyz"
 }
+variable "public_dns_id" {
+  description = "ID of public DNS"
+  default     = "Z09111591ZZVC86K0WQ2K"
+}
 
 variable "azs" {
   description = "AWS availability zone to launch servers."

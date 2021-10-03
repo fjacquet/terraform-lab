@@ -2,16 +2,17 @@
 
 module "global" {
   # dhcpops    = aws_vpc_dhcp_options.dns_resolver.id
-  access_key = var.access_key
-  aws_number = var.aws_number
-  aws_region = var.aws_region
-  azs        = var.azs
-  cidrbyte   = var.cidrbyte
-  dns_suffix = var.dns_suffix
-  key_name   = var.key_name
-  public_key = var.public_key
-  secret_key = var.secret_key
-  source     = "./global"
+  access_key    = var.access_key
+  aws_number    = var.aws_number
+  aws_region    = var.aws_region
+  azs           = var.azs
+  cidrbyte      = var.cidrbyte
+  dns_suffix    = var.dns_suffix
+  public_dns_id = var.public_dns_id
+  key_name      = var.key_name
+  public_key    = var.public_key
+  secret_key    = var.secret_key
+  source        = "./global"
 }
 
 module "unix" {
@@ -31,7 +32,7 @@ module "unix" {
   cidrbyte                 = var.cidrbyte
   dns_suffix               = var.dns_suffix
   dns_zone_id              = module.global.dns_zone_id
-  dns_public_zone_id       = module.global.dns_public_zone_id
+  dns_public_zone_id       = var.public_dns_id
   source                   = "./unix"
   vpc_cidr                 = module.global.vpc_cidr
 }
@@ -53,7 +54,7 @@ module "microsoft" {
   cidrbyte                = var.cidrbyte
   dns_suffix              = var.dns_suffix
   dns_zone_id             = module.global.dns_zone_id
-  dns_public_zone_id      = module.global.dns_public_zone_id
+  dns_public_zone_id      = var.public_dns_id
   source                  = "./microsoft"
   vpc_cidr                = module.global.vpc_cidr
 }
