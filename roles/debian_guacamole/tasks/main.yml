@@ -8,4 +8,4 @@
     mode: '0775'
 
 - name: Execute the command in remote shell; stdout goes to the specified file on the remote
-  ansible.builtin.shell: /usr/local/bin/guac-install.sh --mysqlpwd "{{ mysql_password }}" --guacpwd "{{ guacamole_admin_password }}" --nomfa --installmysql
+  ansible.builtin.command: /usr/local/bin/guac-install.sh --mysqlpwd "{{ mysql_password }}" --guacpwd "{{ guacamole_admin_password }}" --nomfa --installmysql

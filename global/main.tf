@@ -33,6 +33,7 @@ module "vpc" {
   # cidr       = "${var.cidr}"
   cidrbyte   = var.cidrbyte
   aws_region = var.aws_region
+  aws_number = var.aws_number
   # dhcpops    = var.dhcpops
 
   cidrbyte_back = [

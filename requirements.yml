@@ -9,6 +9,7 @@ collections:
 - cisco.iosxr
 - cisco.ise
 - cisco.ucs
+- community.crypto
 - community.general
 - community.hashi_vault
 - community.mysql

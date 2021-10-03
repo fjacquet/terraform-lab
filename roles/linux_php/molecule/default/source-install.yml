@@ -19,8 +19,7 @@
       changed_when: false
 
   roles:
-    - role: geerlingguy.git
-    - role: geerlingguy.php
+    - role: linux_php
 
   post_tasks:
     - name: Confirm PHP configuration is correct.

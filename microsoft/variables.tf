@@ -13,6 +13,9 @@ variable "aws_sg_nbuclient_ids" {
 variable "dns_zone_id" {
 }
 
+variable "dns_public_zone_id" {
+}
+
 variable "aws_number" {
   type = map(string)
 }

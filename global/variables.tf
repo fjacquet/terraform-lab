@@ -30,3 +30,7 @@ variable "cidrbyte" {
 
 variable "dns_suffix" {
 }
+
+variable "aws_number" {
+  type = map(string)
+}

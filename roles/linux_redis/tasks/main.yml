@@ -33,6 +33,6 @@
 
 - name: Ensure Redis is running and enabled on boot.
   service:
-    name: {{ redis_daemon }}
+    name: "{{ redis_daemon }}"
     state: started
-    enabled:yes
+    enabled: yes

@@ -12,6 +12,9 @@ variable "aws_sg_ids" {
 variable "dns_suffix" {
 }
 
+variable "dns_public_zone_id" {
+}
+
 variable "aws_number" {
 }
 
@@ -30,4 +33,3 @@ variable "aws_vpc_id" {
 
 variable "dns_zone_id" {
 }
-
