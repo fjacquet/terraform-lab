@@ -1,0 +1,9 @@
+---
+- hosts: tag_type_mgmt
+  become: yes
+  gather_facts: no
+
+  tasks:
+  - name: install Chocolatey Server with the defaults
+    include_role:
+      name: win_chocolatey_server
