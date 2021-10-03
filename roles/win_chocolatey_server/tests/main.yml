@@ -1,0 +1,222 @@
+---
+- name: install with the defaults
+  hosts: windows
+  gather_facts: no
+  roles:
+  # need to set a random var so the role will run twice in a row
+  - role: ../..
+    run: 1
+  - role: ../..
+    run: 2
+
+  post_tasks:
+  - name: check if site exists
+    win_shell: |
+      $site = Get-WebSite -Name chocolatey_server_site
+      if ($site) {
+          $true
+          $site.applicationPool
+          $site.physicalPath
+          foreach ($binding in $site.bindings.Collection) {
+            "$($binding.protocol.ToString()) $($binding.bindingInformation.ToString())"
+          }
+      } else {
+          $false
+      }
+    register: site
+    check_mode: no
+
+  - name: get list of packages that have been installed
+    win_find:
+      paths: C:\tools\chocolatey.server\App_Data\Packages
+      file_type: directory
+    ignore_errors: '{{ ansible_check_mode }}'  # folder won't exist in check mode
+    register: packages
+
+  - name: get information on web.config file
+    win_stat:
+      path: C:\tools\chocolatey.server\web.config
+    register: web_config
+
+  - name: set expected web.config hash
+    set_fact:
+      expected_web_config: '{{ lookup("file", "default_web.config")|windows_newlines|hash("sha1") }}'
+
+  - name: check if firewall rules for Chocolatey exists
+    win_shell: |
+      $fw = New-object -comObject HNetCfg.FwPolicy2
+      $rules = $fw.Rules | Where-Object { $_.Name.StartsWith("Chocolatey ") }
+      foreach ($rule in $rules) { $rule.Name; $rule.LocalPorts }
+    register: firewall_rules
+    check_mode: no
+
+  - name: connect to the main chocolatey page
+    win_uri:
+      url: http://localhost:80
+      return_content: yes
+    register: uri
+    when: not ansible_check_mode
+
+  - name: assert results (check mode)
+    assert:
+      that:
+      - site.stdout_lines[0] == "False"
+      - packages.files == []
+      - web_config.stat.exists == False
+      - firewall_rules.stdout_lines == []
+    when: ansible_check_mode
+
+  - name: assert results
+    assert:
+      that:
+      - site.stdout_lines|count == 4
+      - site.stdout_lines[0] == "True"
+      - site.stdout_lines[1] == "chocolatey_server_app_pool"
+      - site.stdout_lines[2] == "C:\\tools\\chocolatey.server"
+      - site.stdout_lines[3] == "http *:80:"
+      - packages.files == []
+      - web_config.stat.checksum == expected_web_config
+      - firewall_rules.stdout_lines == ["Chocolatey Server HTTP (In)", "80"]
+      - '"You are running a Simple Chocolatey Package Repository" in uri.content'
+      - uri.status_code == 200
+    when: not ansible_check_mode
+
+- import_playbook: cleanup.yml
+
+- name: install with https, basic auth, api token and chocolatey package
+  hosts: windows
+  gather_facts: no
+  vars:
+    opt_chocolatey_server_api_token: test-token
+    opt_chocolatey_server_credentials:
+      user1: '{{ "pass1"|hash("sha1")|upper }}'
+      user2: '{{ "pass2"|hash("sha1")|upper }}'
+    opt_chocolatey_server_http_port: 8080
+    opt_chocolatey_server_https_port: 8443
+    opt_chocolatey_server_max_package_size: 1147483648
+    opt_chocolatey_server_path: C:\tools2
+    opt_chocolatey_server_chocolatey_url: https://packages.chocolatey.org/chocolatey.0.10.11.nupkg
+  roles:
+  - role: ../..
+    run: 1
+  - role: ../..
+    run: 2
+
+  post_tasks:
+  - name: check if site exists
+    win_shell: |
+      $site = Get-WebSite -Name chocolatey_server_site
+      if ($site) {
+          $true
+          $site.applicationPool
+          $site.physicalPath
+          foreach ($binding in $site.bindings.Collection) {
+            "$($binding.protocol.ToString()) $($binding.bindingInformation.ToString())"
+          }
+      } else {
+          $false
+      }
+    register: site
+    check_mode: no
+
+  - name: get list of packages that have been installed
+    win_find:
+      paths: C:\tools2\chocolatey.server\App_Data\Packages
+      file_type: directory
+    ignore_errors: '{{ ansible_check_mode }}'  # folder won't exist in check mode
+    register: packages
+
+  - name: get information on web.config file
+    win_stat:
+      path: C:\tools2\chocolatey.server\web.config
+    register: web_config
+
+  - name: set expected web.config hash
+    set_fact:
+      expected_web_config: '{{ lookup("file", "custom_web.config")|windows_newlines|hash("sha1") }}'
+
+  - name: check if firewall rules for Chocolatey exists
+    win_shell: |
+      $fw = New-object -comObject HNetCfg.FwPolicy2
+      $rules = $fw.Rules | Where-Object { $_.Name.StartsWith("Chocolatey ") }
+      foreach ($rule in $rules) { $rule.Name; $rule.LocalPorts }
+    register: firewall_rules
+    check_mode: no
+
+  - name: fail to connect with no authentication
+    win_uri:
+      url: http://localhost:8080
+    register: url_fail
+    when: not ansible_check_mode
+    ignore_errors: yes
+
+  - name: connect to the http main chocolatey page
+    win_uri:
+      url: http://localhost:8080
+      return_content: yes
+      user: user1
+      password: pass1
+    register: uri_http
+    when: not ansible_check_mode
+
+  # win_uri in 2.4 does not support TLSv1.2 by default, resort to win_shell until we can drop that version
+  - name: connect to the https main chocolatey page
+    win_shell: |
+      $ErrorActionPreference = "Stop"
+      $client = [System.Net.WebRequest]::Create("https://localhost:8443")
+
+      [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
+      $security_protcols = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::SystemDefault
+      if ([Net.SecurityProtocolType].GetMember("Tls11").Count -gt 0) {
+          $security_protcols = $security_protcols -bor [Net.SecurityProtocolType]::Tls11
+      }
+      if ([Net.SecurityProtocolType].GetMember("Tls12").Count -gt 0) {
+          $security_protcols = $security_protcols -bor [Net.SecurityProtocolType]::Tls12
+      }
+      [Net.ServicePointManager]::SecurityProtocol = $security_protcols
+
+      $sec_password = ConvertTo-SecureString -String "pass1" -AsPlainText -Force
+      $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "user1", $sec_password
+      $client.Credentials = $credential
+      $response = $client.GetResponse()
+
+      $resp_st = $response.GetResponseStream()
+      $memory_st = New-Object -TypeName System.IO.MemoryStream
+      $resp_st.CopyTo($memory_st)
+      $resp_st.Close()
+      $memory_st.Seek(0, [System.IO.SeekOrigin]::Begin) > $null
+      $content_bytes = $memory_st.ToArray()
+
+      [int]$response.StatusCode
+      [System.Text.Encoding]::UTF8.GetString($content_bytes)
+    register: uri_https
+    when: not ansible_check_mode
+
+  - name: assert results (check mode)
+    assert:
+      that:
+      - site.stdout_lines[0] == "False"
+      - packages.files == []
+      - web_config.stat.exists == False
+      - firewall_rules.stdout_lines == []
+    when: ansible_check_mode
+
+  - name: assert results
+    assert:
+      that:
+      - site.stdout_lines|count == 5
+      - site.stdout_lines[0] == "True"
+      - site.stdout_lines[1] == "chocolatey_server_app_pool"
+      - site.stdout_lines[2] == "C:\\tools2\\chocolatey.server"
+      - site.stdout_lines[3] == "http *:8080:"
+      - site.stdout_lines[4] == "https *:8443:"
+      - packages.files|count == 1
+      - packages.files[0].filename == "chocolatey"
+      - web_config.stat.checksum == expected_web_config
+      - firewall_rules.stdout_lines == ["Chocolatey Server HTTPS (In)", "8443", "Chocolatey Server HTTP (In)", "8080"]
+      - url_fail is failed
+      - '"You are running a Simple Chocolatey Package Repository" in uri_http.content'
+      - uri_http.status_code == 200
+      - '"You are running a Simple Chocolatey Package Repository" in uri_https.stdout'
+      - uri_https.stdout_lines[0] == "200"
+    when: not ansible_check_mode
