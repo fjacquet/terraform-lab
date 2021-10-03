@@ -247,6 +247,7 @@ module "mgmt" {
   aws_vpc_id              = var.aws_vpc_id
   azs                     = var.azs
   dns_zone_id             = var.dns_zone_id
+  dns_public_zone_id      = var.dns_public_zone_id
   dns_suffix              = var.dns_suffix
 
   aws_sg_ids = flatten([

@@ -9,7 +9,7 @@
     - baretail
     - curl
     - git
-    - googlechrome
+    # - googlechrome
     - notepadplusplus
     - rdmfree
     - sysinternals

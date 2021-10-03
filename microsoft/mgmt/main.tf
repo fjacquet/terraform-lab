@@ -1,10 +1,19 @@
 resource "aws_route53_record" "mgmt" {
   count   = var.aws_number
   zone_id = var.dns_zone_id
-  name    = "mgmt-${count.index}.${var.dns_suffix}"
+  name    = "mgmt-${count.index}"
   type    = "A"
   ttl     = "300"
   records = [element(aws_instance.mgmt.*.private_ip, count.index)]
+}
+
+resource "aws_route53_record" "mgmt-public" {
+  count   = var.aws_number
+  zone_id = var.dns_public_zone_id
+  name    = "mgmt-${count.index}"
+  type    = "A"
+  ttl     = "300"
+  records = [element(aws_instance.mgmt.*.public_ip, count.index)]
 }
 
 # resource "aws_route53_record" "mgmt-v6" {

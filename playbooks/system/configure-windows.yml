@@ -1,5 +1,5 @@
 ---
-- hosts: tag_system_windows
+- hosts: tag_system_windows, tag_system_management
   become: no
   gather_facts: yes
   strategy: free
@@ -8,4 +8,3 @@
     - win_server
     - win_nbu_client
     - win_openssh
-

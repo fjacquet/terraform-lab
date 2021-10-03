@@ -88,7 +88,7 @@ variable "aws_number" {
     "exchange"   = 0
     "fs"         = 0
     "glpi"       = 0
-    "guacamole"  = 0
+    "guacamole"  = 1
     "ipam"       = 0
     "mgmt"       = 1
     "etcd"       = 0

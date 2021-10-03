@@ -1,6 +1,6 @@
 ---
 - hosts: tag_type_mgmt
-  become: yes
+  become: no
   gather_facts: no
 
   tasks:

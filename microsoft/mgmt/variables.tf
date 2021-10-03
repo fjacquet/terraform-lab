@@ -16,6 +16,8 @@ variable "aws_number" {
 
 variable "dns_zone_id" {
 }
+variable "dns_public_zone_id" {
+}
 
 variable "azs" {
   type = list(string)
@@ -33,4 +35,3 @@ variable "aws_sg_ids" {
 
 variable "dns_suffix" {
 }
-
