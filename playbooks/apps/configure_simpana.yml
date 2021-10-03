@@ -1,0 +1,10 @@
+---
+- hosts: tag_type_simpana
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Install simpana
+      include_role:
+        name: win_simpana_server

@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Create a domain controller to host the fsmo pdc role
+A brief description of the role goes here.
 
 Requirements
 ------------

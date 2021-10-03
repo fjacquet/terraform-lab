@@ -1,0 +1,8 @@
+---
+- hosts: tag_type_sql
+  become: no
+  gather_facts: yes
+  strategy: free
+
+  roles:
+    - win_sql

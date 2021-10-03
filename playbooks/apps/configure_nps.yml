@@ -1,0 +1,10 @@
+---
+- hosts: tag_type_nps
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Install radius
+      include_role:
+        name: win_nps

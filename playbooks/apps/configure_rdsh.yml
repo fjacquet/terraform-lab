@@ -1,0 +1,10 @@
+---
+- hosts: tag_type_rdsh
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Install remove desktop hpst
+      include_role:
+        name: win_rds

@@ -1,0 +1,14 @@
+---
+- hosts: tag_system_windows
+  become: yes
+  gather_facts: yes
+  strategy: free
+
+  tasks:
+    - name: Join Domain
+      include_role:
+        name: win_domain_member
+
+    - name: Install laps
+      include_role:
+        name: win_laps
