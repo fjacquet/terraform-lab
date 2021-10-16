@@ -33,10 +33,10 @@ resource "aws_instance" "sofs" {
     type        = "scaleout"
     system      = "windows"
   }
-  # metadata_options {
-  #   http_tokens = "required"
-  # }
-
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = "1"
+  }
   root_block_device {
     encrypted = true
   }

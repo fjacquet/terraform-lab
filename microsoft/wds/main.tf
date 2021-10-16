@@ -31,9 +31,10 @@ resource "aws_instance" "wds" {
     volume_size = 250
     encrypted   = true
   }
-  # metadata_options {
-  #   http_tokens = "required"
-  # }
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = "1"
+  }
 
   tags = {
     Name        = "wds-${count.index}"

@@ -20,10 +20,10 @@ resource "aws_instance" "simpana" {
   user_data            = file("user_data/config-win.ps1")
 
   vpc_security_group_ids = var.aws_sg_ids
-
-  # metadata_options {
-  #   http_tokens = "required"
-  # }
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = "1"
+  }
 
   root_block_device {
     volume_size = 80

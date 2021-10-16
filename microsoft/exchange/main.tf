@@ -32,9 +32,10 @@ resource "aws_instance" "exchange" {
     volume_size = 100
     encrypted   = true
   }
-  # metadata_options {
-  #   http_tokens = "required"
-  # }
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = "1"
+  }
 
   tags = {
     Name        = "exchange-${count.index}"

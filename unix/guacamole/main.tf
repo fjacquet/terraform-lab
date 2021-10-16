@@ -20,10 +20,10 @@ resource "aws_instance" "guacamole" {
     type        = "guacamole"
     system      = "debian"
   }
-  # metadata_options {
-  #   http_tokens = "required"
-  # }
-
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = "1"
+  }
 
   lifecycle {
     ignore_changes = [user_data]

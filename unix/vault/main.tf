@@ -8,10 +8,10 @@ resource "aws_instance" "vault" {
   ipv6_address_count     = 1
   key_name               = var.aws_key_pair_auth_id
   vpc_security_group_ids = var.aws_sg_ids
-  # metadata_options {
-  #   http_tokens = "required"
-  # }
-
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = "1"
+  }
   root_block_device {
     encrypted   = true
     volume_size = 80

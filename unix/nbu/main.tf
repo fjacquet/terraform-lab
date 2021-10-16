@@ -25,9 +25,10 @@ resource "aws_instance" "nbumaster" {
     volume_size = 80
     encrypted   = true
   }
-  # metadata_options {
-  #   http_tokens = "required"
-  # }
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = "1"
+  }
 
 
   tags = {
