@@ -66,7 +66,3 @@ variable "cidr_blocks" {
   description = "Computed CIDR blocks for all subnet types"
   type        = map(list(string))
 }
-
-# variable "aws_amis" {
-#   type = map(string)
-# }

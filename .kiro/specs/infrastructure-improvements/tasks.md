@@ -83,11 +83,11 @@ Tasks have been organized into **phases** for logical implementation order. Comp
   - [x] Add appropriate tags to all new resources
   - _Requirements: 8.1, 8.3, 7.3, 10.1-10.5_
 
-- [-] **Task 9: Code Cleanup**
+- [x] **Task 9: Code Cleanup**
   - [x] Remove commented-out code from main.tf (aws_vpc_dhcp_options block)
   - [x] Remove commented-out code from global/main.tf (providers, s3 modules)
   - [x] Remove commented-out code from microsoft/main.tf (dfs module)
-  - [-] Verify no other commented-out resources exist in key files
+  - [x] Verify no other commented-out resources exist in key files
   - _Requirements: 9.1-9.3_
 
 ---
