@@ -11,12 +11,7 @@ resource "aws_route53_zone" "ezlab" {
 }
 
 data "aws_route53_zone" "ezlab-public" {
-  # name         = var.dns_suffix
+  count        = var.public_dns_id != "" ? 1 : 0
   zone_id      = var.public_dns_id
   private_zone = false
-  // vpc_id = "${var.aws_vpc_id}"
-  tags = {
-    Environment = "lab"
-  }
-
 }

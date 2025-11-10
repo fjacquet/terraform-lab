@@ -50,14 +50,6 @@ variable "cidrbyte" {
   type = map(string)
 }
 
-# variable "cidr" {
-#   type = "map"
-# }
-
-# variable "aws_amis" {
-#   type = map(string)
-# }
-
 variable "azs" {
   type = list(string)
 }

@@ -196,50 +196,50 @@ data "aws_ami" "bsd" {
   most_recent = true
   filter {
     name   = "name"
-    values = ["FreeBSD 13.0-RELEASE-amd64-*"]
+    values = ["FreeBSD 13.*-RELEASE-amd64*"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-  owners = ["679593333241"] # aws-marketplace FreeBSD
+  owners = ["118940168514"] # FreeBSD official
 }
 
 data "aws_ami" "debian" {
   most_recent = true
   filter {
     name   = "name"
-    values = ["debian-11-amd64*"]
+    values = ["debian-12-amd64-*"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-  owners = ["679593333241"] # aws-marketplace Debian
+  owners = ["136693071363"] # Debian official
 }
 
 data "aws_ami" "amazon" {
   most_recent = true
   filter {
     name   = "name"
-    values = ["amazonlinux-2-base*"]
+    values = ["al2023-ami-2023.*-x86_64"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-  owners = ["766535289950"] # Canonical
+  owners = ["137112412989"] # Amazon
 }
 
 data "aws_ami" "rhel8" {
   most_recent = true
   filter {
     name   = "name"
-    values = ["Windows_Server-2019-English-Full-Base-*"]
+    values = ["RHEL-8.*_HVM-*-x86_64-*"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-  owners = ["801119661308"] # Canonical
+  owners = ["309956199498"] # Red Hat
 }
