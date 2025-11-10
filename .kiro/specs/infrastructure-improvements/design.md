@@ -2,17 +2,19 @@
 
 ## Overview
 
-This design document outlines the technical approach for improving the terraform-lab infrastructure codebase. The improvements are organized into four phases: Security Hardening, Code Quality Improvements, Best Practices Implementation, and Tooling & Documentation. The design ensures backward compatibility while modernizing the codebase to follow current Terraform and AWS best practices.
+This design document outlines the technical approach for improving the terraform-lab infrastructure codebase. The improvements address 21 requirements organized into security hardening, code quality improvements, best practices implementation, and tooling & documentation. The design ensures backward compatibility while modernizing the codebase to follow current Terraform and AWS best practices, with a focus on the DRY (Don't Repeat Yourself) and KISS (Keep It Simple, Stupid) principles.
 
 ## Architecture
 
 ### High-Level Design Principles
 
-1. **Backward Compatibility First**: All changes must maintain existing functionality
-2. **Security by Default**: Secure configurations should be the default, with opt-out where necessary
-3. **DRY (Don't Repeat Yourself)**: Eliminate code duplication through locals and modules
-4. **Fail Fast**: Use validation and error handling to catch issues early
-5. **Documentation as Code**: Generate documentation from code where possible
+1. **Backward Compatibility First**: All changes must maintain existing functionality (Requirement 20)
+2. **Security by Default**: Secure configurations should be the default, with opt-out where necessary (Requirements 1, 2, 16)
+3. **DRY (Don't Repeat Yourself)**: Eliminate code duplication through locals and modules (Requirement 21.1)
+4. **KISS (Keep It Simple, Stupid)**: Favor simplicity over complexity in all implementations (Requirement 21.2)
+5. **Fail Fast**: Use validation and error handling to catch issues early (Requirements 5, 6, 14, 17)
+6. **Documentation as Code**: Generate documentation from code where possible (Requirement 12)
+7. **Explicit Over Implicit**: Use explicit version constraints and type definitions (Requirements 3, 5)
 
 ### Module Structure
 
@@ -465,18 +467,26 @@ resource "aws_vpc_endpoint" "private-s3" {
 
 ### Component 5: Provider Configuration Enhancement
 
-**Purpose**: Standardize provider configuration with version constraints and default tags
+**Purpose**: Standardize provider configuration with version constraints and default tags (Requirements 3, 7)
+
+**Design Rationale**:
+
+- Using Terraform >= 1.0 ensures access to modern features like moved blocks and improved validation (Requirement 3.1)
+- AWS provider ~> 5.0 constraint allows patch updates while preventing breaking changes (Requirement 3.2)
+- Default tags at provider level ensure consistent tagging without repetition, following DRY principle (Requirement 7.1-7.2)
+- Separate versions.tf file makes version management explicit and easy to audit (Requirement 3.3)
+- Tags include Project, ManagedBy, Environment, and Repository for cost tracking and resource management (Requirement 7.2)
 
 **versions.tf** (new file):
 
 ```hcl
 terraform {
-  required_version = ">= 1.0"
+  required_version = ">= 1.0"  # Requirement 3.1
   
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 5.0"  # Requirement 3.2 - pessimistic constraint
     }
   }
 }
@@ -489,7 +499,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"  # Updated from 3.0
+      version = "~> 5.0"  # Updated from 3.0 (Requirement 3.2)
     }
   }
   
@@ -507,7 +517,7 @@ provider "aws" {
   access_key = var.access_key
   secret_key = var.secret_key
   
-  # Default tags applied to all resources
+  # Default tags applied to all resources (Requirement 7.1-7.3)
   default_tags {
     tags = {
       Project     = "terraform-lab"
@@ -564,6 +574,155 @@ $instanceId = Invoke-RestMethod -Uri http://169.254.169.254/latest/meta-data/ins
 $region = Invoke-RestMethod -Uri http://169.254.169.254/latest/meta-data/placement/region `
     -Headers @{"X-aws-ec2-metadata-token" = $token}
 ```
+
+## Design Decisions and Rationale
+
+### Key Design Decisions
+
+**1. Security-First Approach (Requirements 1, 2, 16)**
+
+**Decision**: Implement restrictive security defaults with opt-out capability rather than permissive defaults with opt-in security.
+
+**Rationale**:
+
+- Follows security best practices and principle of least privilege
+- Reduces risk of accidental exposure in production environments
+- Provides `enable_public_admin_access` flag for development/testing scenarios
+- Default CIDR blocks restrict to RFC1918 private networks (10.0.0.0/16)
+- IMDSv2 enforcement prevents SSRF attacks against metadata service
+
+**Trade-offs**:
+
+- Requires explicit configuration for public access scenarios
+- May require additional setup for remote access in some environments
+- Benefit: Significantly improved security posture outweighs minor inconvenience
+
+**2. Locals-Based Code Deduplication (Requirements 4, 19, 21.1)**
+
+**Decision**: Use locals blocks to define common configurations once and reference them across modules.
+
+**Rationale**:
+
+- Achieves 60%+ reduction in code duplication (Requirement 4.4)
+- Single source of truth for common values reduces errors
+- Easier to maintain and update configurations
+- Follows DRY principle (Requirement 21.1)
+- Groups related values logically (Requirement 19.1)
+
+**Trade-offs**:
+
+- Slightly more complex initial setup
+- Requires understanding of locals vs variables
+- Benefit: Dramatically improved maintainability and reduced error potential
+
+**3. Type Safety and Validation (Requirements 5, 17)**
+
+**Decision**: Add explicit types and validation rules to all variables.
+
+**Rationale**:
+
+- Catches configuration errors before apply (fail fast principle)
+- Provides clear error messages for invalid inputs (Requirement 17.5)
+- Documents expected input formats
+- Prevents common mistakes (e.g., string "0" vs number 0)
+- Improves IDE autocomplete and documentation
+
+**Trade-offs**:
+
+- More verbose variable declarations
+- Requires updating existing configurations
+- Benefit: Prevents costly runtime errors and improves developer experience
+
+**4. VPC Endpoints for Cost and Security (Requirement 10)**
+
+**Decision**: Add interface endpoints for SSM, EC2 Messages, SSM Messages, and Secrets Manager.
+
+**Rationale**:
+
+- Reduces data transfer costs (no NAT gateway charges for AWS services)
+- Improves security (traffic stays within VPC)
+- Reduces latency for AWS API calls
+- Enables private subnet instances to access AWS services without internet access
+- Essential for Secrets Manager integration (Requirement 1.1)
+
+**Trade-offs**:
+
+- Additional cost for interface endpoints (~$7.20/month per endpoint)
+- Increased complexity in VPC configuration
+- Benefit: Cost savings from reduced NAT gateway usage typically offset endpoint costs, plus security benefits
+
+**5. IMDSv2 Enforcement (Requirements 1.5, 16)**
+
+**Decision**: Enforce IMDSv2 on all EC2 instances with http_tokens="required".
+
+**Rationale**:
+
+- Prevents SSRF attacks against metadata service
+- AWS security best practice
+- Required for compliance in many environments
+- Minimal impact on properly written applications
+- User data scripts updated to use token-based authentication
+
+**Trade-offs**:
+
+- Requires updating user data scripts to use tokens
+- May break legacy applications that use IMDSv1
+- Benefit: Significant security improvement with minimal effort
+
+**6. Secrets Manager Integration (Requirements 1.1, 1.2)**
+
+**Decision**: Replace hardcoded credentials with AWS Secrets Manager retrieval.
+
+**Rationale**:
+
+- Eliminates credentials from code and version control
+- Enables credential rotation without code changes
+- Provides audit trail via CloudTrail
+- Follows AWS security best practices
+- Supports compliance requirements
+
+**Trade-offs**:
+
+- Additional AWS service dependency
+- Requires initial secret creation
+- Slight increase in complexity
+- Benefit: Dramatically improved security posture and compliance
+
+**7. Backward Compatibility Strategy (Requirement 20)**
+
+**Decision**: Use sensible defaults and moved blocks to maintain compatibility.
+
+**Rationale**:
+
+- Prevents disruption to existing deployments
+- Allows gradual adoption of new features
+- Uses Terraform moved blocks to handle resource renames
+- New variables have defaults matching current behavior
+- Provides migration guide for breaking changes
+
+**Trade-offs**:
+
+- Some defaults may not be optimal for new deployments
+- Requires careful testing of upgrade path
+- Benefit: Enables safe adoption without downtime
+
+**8. Simplified Module Interfaces (Requirement 21.2 - KISS)**
+
+**Decision**: Use locals to simplify module calls while maintaining flexibility.
+
+**Rationale**:
+
+- Reduces cognitive load when reading module calls
+- Makes common patterns obvious
+- Easier to identify service-specific configuration
+- Maintains flexibility for special cases
+- Follows KISS principle
+
+**Trade-offs**:
+
+- Requires understanding of locals structure
+- Less explicit at call site
+- Benefit: Dramatically improved readability and maintainability
 
 ## Data Models
 
@@ -740,19 +899,28 @@ Invoke-SafeOperation -OperationName "Retrieve Secret" -ScriptBlock {
 
 ## Testing Strategy
 
+### Testing Approach
+
+**Design Rationale**:
+
+- Multi-phase testing ensures quality at each level
+- Validation tests catch errors early (fail fast principle)
+- Integration tests verify interactions between components
+- Backward compatibility tests prevent breaking changes (Requirement 20)
+
 ### Phase 1: Unit Testing (Terraform Validation)
 
-**Validation Tests**:
+**Validation Tests** (Requirements 3, 5, 17):
 
 ```bash
-# Syntax validation
+# Syntax validation (Requirement 9.4)
 terraform fmt -check -recursive
 terraform validate
 
-# Variable validation
+# Variable validation (Requirements 5, 17)
 terraform plan -var-file=test.tfvars
 
-# Module validation
+# Module validation (Requirement 3.5)
 for module in global microsoft unix; do
   cd $module
   terraform init
@@ -789,14 +957,20 @@ terraform show -json test.tfplan | jq '.resource_changes[] | select(.type=="aws_
 
 **Validation Checklist**:
 
-- [ ] All EC2 instances use IMDSv2
-- [ ] Security groups restrict admin access
-- [ ] Secrets retrieved from Secrets Manager
-- [ ] VPC endpoints created and functional
-- [ ] Tags applied to all resources
-- [ ] No hardcoded credentials in user data
-- [ ] PowerShell scripts handle errors
-- [ ] Ansible playbooks execute successfully
+- [ ] All EC2 instances use IMDSv2 (Requirement 16.1-16.3)
+- [ ] Security groups restrict admin access (Requirements 2.1-2.3)
+- [ ] Security group rules have descriptions (Requirement 18.1-18.2)
+- [ ] Secrets retrieved from Secrets Manager (Requirement 1.1)
+- [ ] VPC endpoints created and functional (Requirements 10.1-10.5)
+- [ ] Tags applied to all resources (Requirement 7.3)
+- [ ] No hardcoded credentials in user data (Requirement 1.1)
+- [ ] No hardcoded regions in code (Requirements 8.1, 8.4, 8.5)
+- [ ] PowerShell scripts handle errors (Requirements 6.1-6.5)
+- [ ] Ansible playbooks execute successfully (Requirement 11)
+- [ ] Variable types are explicit (Requirement 5.1-5.2)
+- [ ] Variable validation rules work (Requirement 17.1-17.5)
+- [ ] Module documentation exists (Requirements 12.1-12.5)
+- [ ] Pre-commit hooks function (Requirements 13.1-13.4)
 
 ### Phase 4: Backward Compatibility Testing
 
@@ -813,6 +987,63 @@ terraform plan | grep -E "(destroy|replace)"
 terraform state list
 terraform plan -target=module.example
 ```
+
+## Code Cleanup and Maintainability (Requirement 9)
+
+### Cleanup Strategy
+
+**Design Rationale**:
+
+- Commented-out code creates confusion and maintenance burden
+- Historical context belongs in version control, not comments
+- Consistent formatting improves readability
+- Clean code follows KISS principle (Requirement 21.2)
+
+**Cleanup Actions**:
+
+1. **Remove Commented-Out Resources** (Requirement 9.1):
+   - `main.tf`: Remove commented aws_vpc_dhcp_options block
+   - `global/main.tf`: Remove commented providers and s3 modules
+   - `microsoft/main.tf`: Remove commented dfs module
+   - Document removal reasons in commit messages
+
+2. **Remove Commented-Out Variables** (Requirement 9.2):
+   - Audit all `variables.tf` files
+   - Remove unused variable declarations
+   - Document deprecated variables in MIGRATION.md
+
+3. **Document Historical Context** (Requirement 9.3):
+   - Move important historical notes to README.md
+   - Document architectural decisions in design.md
+   - Use git history for code evolution tracking
+
+4. **Consistent Formatting** (Requirements 9.4, 9.5):
+   - Run `terraform fmt -recursive` on all Terraform files
+   - Use consistent PowerShell formatting (4-space indentation)
+   - Enforce via pre-commit hooks
+
+**Formatting Standards**:
+
+```hcl
+# Terraform formatting
+- 2-space indentation
+- Align equals signs in blocks
+- One blank line between resources
+- Group related resources together
+
+# PowerShell formatting
+- 4-space indentation
+- Opening braces on same line
+- Consistent parameter formatting
+- Use approved verbs (Verb-Noun)
+```
+
+**Maintenance Benefits**:
+
+- Easier code review and understanding
+- Reduced cognitive load for developers
+- Faster onboarding for new team members
+- Fewer merge conflicts
 
 ## Migration Strategy
 
@@ -890,6 +1121,119 @@ terraform state pull > current-state.backup
 terraform state push previous-state.backup
 ```
 
+## Terraform State Management
+
+### State Backend Configuration (Requirement 15)
+
+**Current Configuration**: Terraform Cloud remote backend
+
+**Design Rationale**:
+
+- Terraform Cloud provides built-in state locking (Requirement 15.1)
+- State encryption at rest is enabled by default (Requirement 15.2)
+- Workspace isolation prevents concurrent modification conflicts
+- Automatic state versioning and backup
+- No additional DynamoDB table required (handled by Terraform Cloud)
+
+**Backend Configuration**:
+
+```hcl
+terraform {
+  backend "remote" {
+    organization = "fjacquet"
+    
+    workspaces {
+      name = "terraform-lab"
+    }
+  }
+}
+```
+
+**State Management Best Practices**:
+
+1. **State Locking**: Automatically handled by Terraform Cloud (Requirement 15.1)
+2. **Encryption**: State encrypted at rest by Terraform Cloud (Requirement 15.2)
+3. **Sensitive Data**: Marked sensitive in outputs to prevent exposure (Requirement 15.3)
+4. **Backup Strategy**: Terraform Cloud maintains state history
+5. **Access Control**: Managed through Terraform Cloud workspace permissions
+
+**Alternative S3 Backend Configuration** (if migrating from Terraform Cloud):
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "terraform-state-bucket"
+    key            = "terraform-lab/terraform.tfstate"
+    region         = "eu-west-1"
+    encrypt        = true                    # Requirement 15.2
+    dynamodb_table = "terraform-state-locks" # Requirement 15.1
+    kms_key_id     = "arn:aws:kms:..."      # Requirement 15.3
+  }
+}
+```
+
+**Documentation Requirements** (Requirement 15.4-15.5):
+
+- Backend configuration documented in README.md
+- Workspace setup instructions in MIGRATION.md
+- State management procedures in operational documentation
+- Backup and recovery procedures documented
+
+## Region Parameterization (Requirement 8)
+
+### Multi-Region Support Design
+
+**Design Rationale**:
+
+- Enables deployment to any AWS region without code changes
+- Supports disaster recovery and multi-region architectures
+- Eliminates hardcoded region references
+- Follows infrastructure-as-code best practices
+
+**Parameterization Strategy**:
+
+1. **Terraform Resources** (Requirements 8.1, 8.3, 8.4):
+   - Use `var.aws_region` in all service names
+   - Construct VPC endpoint service names dynamically
+   - Example: `com.amazonaws.${var.aws_region}.s3`
+   - No hardcoded region strings in any `.tf` files
+
+2. **PowerShell Scripts** (Requirements 8.2, 8.5):
+   - Retrieve region from instance metadata
+   - Use IMDSv2 token-based authentication
+   - Cache region value for script duration
+   - Example:
+
+     ```powershell
+     $token = Invoke-RestMethod -Uri http://169.254.169.254/latest/api/token `
+         -Method PUT -Headers @{"X-aws-ec2-metadata-token-ttl-seconds" = "21600"}
+     $region = Invoke-RestMethod -Uri http://169.254.169.254/latest/meta-data/placement/region `
+         -Headers @{"X-aws-ec2-metadata-token" = $token}
+     ```
+
+3. **Service Name Construction**:
+
+   ```hcl
+   # VPC Endpoints
+   service_name = "com.amazonaws.${var.aws_region}.ssm"
+   service_name = "com.amazonaws.${var.aws_region}.ec2messages"
+   service_name = "com.amazonaws.${var.aws_region}.secretsmanager"
+   service_name = "com.amazonaws.${var.aws_region}.s3"
+   ```
+
+**Validation**:
+
+- Region variable includes validation for valid AWS region format
+- Prevents typos and invalid region specifications
+- Clear error messages for invalid inputs
+
+**Benefits**:
+
+- Deploy to any AWS region with single variable change
+- Support multi-region disaster recovery
+- Easier testing in different regions
+- Compliance with data residency requirements
+
 ## Performance Considerations
 
 ### Terraform Performance
@@ -904,11 +1248,48 @@ terraform state push previous-state.backup
 - Improved latency for AWS API calls
 - Enhanced security (traffic stays in VPC)
 
-### Ansible Performance
+### Ansible Configuration Optimization (Requirement 11)
 
-- Fact caching reduces gather time
-- Pipelining reduces SSH overhead
-- Parallel execution with `strategy: free`
+**Design Rationale**:
+
+- Optimized SSH connection reuse reduces overhead
+- YAML callback provides better readability than default output
+- Consistent control path prevents conflicts
+- Fact caching improves performance for repeated runs
+
+**Configuration Changes**:
+
+```ini
+[defaults]
+# Requirement 11.3 - Better output readability
+stdout_callback = yaml  # Changed from 'skippy'
+
+# Requirement 11.1 - Consistent control path
+control_path = ~/.ssh/cp/ssh-%%r@%%h:%%p
+
+# Fact caching for performance
+gathering = smart
+fact_caching = jsonfile
+fact_caching_connection = /tmp/facts_cache
+fact_caching_timeout = 7200
+
+[ssh_connection]
+# Requirement 11.2 - Connection reuse
+ssh_args = -o ControlMaster=auto -o ControlPersist=1200s
+pipelining = True
+```
+
+**Performance Benefits**:
+
+- Fact caching reduces gather time by ~50% on subsequent runs
+- SSH connection reuse (ControlMaster) reduces connection overhead
+- Pipelining reduces the number of SSH operations
+- YAML callback makes debugging easier without performance impact
+
+**Removed Duplicates** (Requirement 11.5):
+
+- Consolidated duplicate control_path settings
+- Removed conflicting SSH configuration options
 
 ## Security Considerations
 
@@ -972,9 +1353,264 @@ Each module must include:
 - Troubleshooting guide
 - Security configuration guide
 
+### Pre-commimentationration (Requirement 13)
+
+**Design Rationale**:
+
+- Automated quality checks prevent common errors before commit
+- Consistent code formatting across team
+- Early detection of syntax and validation errors
+- Reduces CI/CD pipeline failures
+
+**Pre-commit Configuration** (.pre-commit-config.yaml):
+
+```yaml
+repos:
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.83.5
+    hooks:
+      - id: terraform_fmt        # Requirement 13.2
+      - id: terraform_validate   # Requirement 13.3
+      - id: terraform_tflint
+      - id: terraform_docs
+        args:
+          - --hook-config=--path-to-file=README.md
+          - --hook-config=--add-to-existing-file=true
+          - --hook-config=--create-file-if-not-exist=true
+
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v6.22.0
+    hooks:
+      - id: ansible-lint        # Requirement 13.4
+        files: \.(yaml|yml)$
+        args: ['-c', '.ansible-lint']
+```
+
+**Installation and Usage** (Requirement 13.5):
+
+```bash
+# Install pre-commit
+pip install pre-commit
+
+# Install hooks
+pre-commit install
+
+# Run manually on all files
+pre-commit run --all-files
+```
+
+**Documentation Location**: README.md includes installation and usage instructions
+
+### Module Documentation (Requirement 12)
+
+**Design Rationale**:
+
+- Terraform-docs format ensures consistency (Requirement 12.5)
+- Auto-generated documentation stays in sync with code
+- Usage examples provide quick start for new team members
+- Input/output documentation aids integration
+
+**Documentation Structure** (Requirements 12.1-12.4):
+
+Each module README.md includes:
+
+1. **Overview**: Module purpose and functionality
+2. **Requirements**: Terraform version, provider versions, dependencies
+3. **Inputs**: Auto-generated table of variables with descriptions and defaults
+4. **Outputs**: Auto-generated table of outputs with descriptions
+5. **Usage Example**: Practical example showing module usage
+
+**Example Module README.md**:
+
+```markdown
+# Microsoft Services Module
+
+## Overview
+
+This module provisions Windows-based Microsoft services including Active Directory, Exchange, SharePoint, and supporting infrastructure.
+
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 1.0 |
+| aws | ~> 5.0 |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| aws_number | Number of instances per service | `map(number)` | `{}` | yes |
+| aws_region | AWS region | `string` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| instance_ids | Map of service names to instance IDs |
+| security_group_ids | Map of security group IDs |
+
+## Usage Example
+
+\`\`\`hcl
+module "microsoft" {
+  source = "./microsoft"
+  
+  aws_number = {
+    dc = 2
+    exchange = 1
+  }
+  aws_region = "us-east-1"
+  aws_vpc_id = module.global.vpc_id
+}
+\`\`\`
+```
+
+**Documentation Generation**:
+
+```bash
+# Generate documentation for all modules
+terraform-docs markdown table --output-file README.md --output-mode inject global/
+terraform-docs markdown table --output-file README.md --output-mode inject microsoft/
+terraform-docs markdown table --output-file README.md --output-mode inject unix/
+```
+
 ### Code Documentation
 
-- Inline comments for complex logic
-- Variable descriptions
-- Security group rule descriptions
-- Locals block documentation
+- Inline comments for complex logic (Requirement 9.3)
+- Variable descriptions (Requirement 5.5)
+- Security group rule descriptions (Requirement 18.1-18.5)
+- Locals block documentation (Requirement 19.4)
+
+## Code Cleanup and Maintainability (Requirement 9)
+
+### Cleanup Strategy
+
+**Design Rationale**:
+
+- Commented-out code creates confusion and maintenance burden
+- Historical context belongs in version control, not comments
+- Consistent formatting improves readability
+- Clean code follows KISS principle (Requirement 21.2)
+
+**Cleanup Actions**:
+
+1. **Remove Commented-Out Resources** (Requirement 9.1):
+   - `main.tf`: Remove commented aws_vpc_dhcp_options block
+   - `global/main.tf`: Remove commented providers and s3 modules
+   - `microsoft/main.tf`: Remove commented dfs module
+   - Document removal reasons in commit messages
+
+2. **Remove Commented-Out Variables** (Requirement 9.2):
+   - Audit all `variables.tf` files
+   - Remove unused variable declarations
+   - Document deprecated variables in MIGRATION.md
+
+3. **Document Historical Context** (Requirement 9.3):
+   - Move important historical notes to README.md
+   - Document architectural decisions in design.md
+   - Use git history for code evolution tracking
+
+4. **Consistent Formatting** (Requirements 9.4, 9.5):
+   - Run `terraform fmt -recursive` on all Terraform files
+   - Use consistent PowerShell formatting (4-space indentation)
+   - Enforce via pre-commit hooks
+
+**Formatting Standards**:
+
+```hcl
+# Terraform formatting
+- 2-space indentation
+- Align equals signs in blocks
+- One blank line between resources
+- Group related resources together
+
+# PowerShell formatting
+- 4-space indentation
+- Opening braces on same line
+- Consistent parameter formatting
+- Use approved verbs (Verb-Noun)
+```
+
+**Maintenance Benefits**:
+
+- Easier code review and understanding
+- Reduced cognitive load for developers
+- Faster onboarding for new team members
+- Fewer merge conflicts
+
+## Requirements Traceability Matrix
+
+This section maps each requirement to the design components that address it, ensuring complete coverage.
+
+### Security Requirements
+
+| Requirement | Design Component | Implementation Details |
+|-------------|------------------|------------------------|
+| 1.1 | Component 1: Security Hardening Layer | Secrets Manager integration in user data scripts |
+| 1.2 | Component 1: Security Hardening Layer | Error handling with Windows Event Log |
+| 1.3 | Component 1: Security Hardening Layer | Security groups with variable CIDR blocks |
+| 1.4 | Component 1: Security Hardening Layer | `admin_cidr_blocks` and `enable_public_admin_access` variables |
+| 1.5 | Component 6: IMDSv2 Enforcement | metadata_options block on all instances |
+| 2.1-2.3 | Component 1: Security Hardening Layer | RDP, SSH, WinRM rules use `local.admin_cidr_blocks` |
+| 2.4 | Component 1: Security Hardening Layer | Description fields on all security group rules |
+| 2.5 | Component 1: Security Hardening Layer | Default to RFC1918 private networks |
+| 16.1-16.5 | Component 6: IMDSv2 Enforcement | http_tokens="required" on all instances, IMDSv2-compatible scripts |
+| 18.1-18.5 | Component 1: Security Hardening Layer | Description fields with consistent formatting |
+
+### Code Quality Requirements
+
+| Requirement | Design Component | Implementation Details |
+|-------------|------------------|------------------------|
+| 3.1-3.5 | Component 5: Provider Configuration | versions.tf with Terraform >= 1.0, AWS ~> 5.0 |
+| 4.1-4.5 | Component 2: Code Deduplication Layer | locals.tf files with common configurations |
+| 5.1-5.5 | Component 3: Type Safety and Validation | Explicit types and validation on all variables |
+| 9.1-9.5 | Code Cleanup and Maintainability | Remove commented code, consistent formatting |
+| 17.1-17.5 | Component 3: Type Safety and Validation | Validation rules with clear error messages |
+| 19.1-19.5 | Component 2: Code Deduplication Layer | Organized locals blocks with documentation |
+| 21.1 | Component 2: Code Deduplication Layer | DRY principle through locals |
+| 21.2-21.5 | Design Decisions and Rationale | KISS principle in all implementations |
+
+### Infrastructure Requirements
+
+| Requirement | Design Component | Implementation Details |
+|-------------|------------------|------------------------|
+| 7.1-7.5 | Component 5: Provider Configuration | Default tags at provider level |
+| 8.1-8.5 | Region Parameterization | Variable-based region in all resources and scripts |
+| 10.1-10.5 | Component 4: VPC Endpoint Enhancement | Interface endpoints for SSM, EC2Messages, SSMMessages, Secrets Manager |
+| 15.1-15.5 | Terraform State Management | Terraform Cloud backend with encryption and locking |
+
+### Operational Requirements
+
+| Requirement | Design Component | Implementation Details |
+|-------------|------------------|------------------------|
+| 6.1-6.5 | Component 1: Security Hardening Layer | PowerShell error handling patterns with try-catch |
+| 11.1-11.5 | Ansible Configuration Optimization | ansible.cfg with YAML callback, ControlMaster, optimized settings |
+| 12.1-12.5 | Module Documentation | README.md files with terraform-docs format |
+| 13.1-13.5 | Pre-commit Hook Integration | .pre-commit-config.yaml with terraform and ansible hooks |
+| 14.1-14.5 | Component 1: Security Hardening Layer | User data script error handling and validation |
+| 20.1-20.5 | Migration Strategy | Backward compatible defaults, moved blocks, migration guide |
+
+## Summary
+
+This design addresses all 21 requirements through 6 main components and supporting infrastructure:
+
+1. **Security Hardening Layer**: Addresses requirements 1, 2, 6, 14, 16, 18
+2. **Code Deduplication Layer**: Addresses requirements 4, 19, 21.1
+3. **Type Safety and Validation Layer**: Addresses requirements 5, 17
+4. **VPC Endpoint Enhancement**: Addresses requirement 10
+5. **Provider Configuration Enhancement**: Addresses requirements 3, 7
+6. **IMDSv2 Enforcement**: Addresses requirements 1.5, 16
+
+Additional design elements address:
+
+- **Region Parameterization**: Requirement 8
+- **Code Cleanup**: Requirement 9
+- **Ansible Optimization**: Requirement 11
+- **Module Documentation**: Requirement 12
+- **Pre-commit Hooks**: Requirement 13
+- **State Management**: Requirement 15
+- **Backward Compatibility**: Requirement 20
+- **Design Principles**: Requirement 21
+
+The design follows established best practices from AWS, Terraform, Ansible, PowerShell, and Windows Server domains, ensuring a robust, maintainable, and secure infrastructure codebase.
