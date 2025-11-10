@@ -311,7 +311,7 @@ resource "aws_security_group" "vpc_endpoints" {
 resource "aws_vpc_endpoint" "private-s3" {
   vpc_id       = aws_vpc.ezlab.id
   service_name = "com.amazonaws.${var.aws_region}.s3"
-  policy       = file("./policy_json/vpc-policy-s3endpoint.json")
+  policy       = file("${path.root}/policy_json/vpc-policy-s3endpoint.json")
 
   tags = {
     Name        = "s3-endpoint"

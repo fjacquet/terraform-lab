@@ -158,27 +158,27 @@ Tasks have been organized into **phases** for logical implementation order. Comp
   - [x] Run terraform-docs to auto-generate variable and output tables
   - _Requirements: 12.1-12.5_
 
-- [-] **Task 17: Root Documentation Updates**
+- [x] **Task 17: Root Documentation Updates**
   - [x] Update README.md: Add section on new security variables (admin_cidr_blocks, enable_public_admin_access)
   - [x] Update README.md: Document Secrets Manager integration
   - [x] Update README.md: Document IMDSv2 enforcement
   - [x] Create MIGRATION.md: Step-by-step upgrade guide from old to new configuration
   - [x] Create MIGRATION.md: Include examples of variable changes and rollback procedures
-  - [-] Create SECURITY.md: Document security improvements (restricted access, Secrets Manager, IMDSv2, VPC endpoints)
-  - [ ] Create SECURITY.md: Include best practices for production deployments
+  - [x] Create SECURITY.md: Document security improvements (restricted access, Secrets Manager, IMDSv2, VPC endpoints)
+  - [x] Create SECURITY.md: Include best practices for production deployments
   - _Requirements: 20.1-20.5, 1.1-1.5_
 
 ---
 
 ## Phase 8: Validation & Testing
 
-- [ ] **Task 18: Final Validation & Testing** _(Sequential steps - must run in order)_
-  - [ ] Run terraform fmt -recursive on entire project
-  - [ ] Run terraform init in root directory
-  - [ ] Run terraform validate in root directory
-  - [ ] Run terraform init + validate in global, microsoft, unix directories
-  - [ ] Create test.tfvars with minimal instance counts and security settings (admin_cidr_blocks, enable_public_admin_access=false)
-  - [ ] Run terraform plan -var-file=test.tfvars
+- [-] **Task 18: Final Validation & Testing** _(Sequential steps - must run in order)_
+  - [x] Run terraform fmt -recursive on entire project
+  - [x] Run terraform init in root directory
+  - [x] Run terraform validate in root directory
+  - [x] Run terraform init + validate in global, microsoft, unix directories
+  - [x] Create test.tfvars with minimal instance counts and security settings (admin_cidr_blocks, enable_public_admin_access=false)
+  - [-] Run terraform plan -var-file=test.tfvars
   - [ ] Verify plan output: no unexpected resource deletions, security groups use restricted CIDRs, VPC endpoints present, tags applied
   - [ ] Create moved blocks if any resources were renamed during refactoring
   - [ ] Update .gitignore: ensure .terraform/, *.tfstate, *.tfvars (with secrets) are excluded, .terraform.lock.hcl is committed
