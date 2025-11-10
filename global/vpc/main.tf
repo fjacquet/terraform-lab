@@ -6,22 +6,42 @@ resource "aws_vpc" "ezlab" {
   enable_dns_hostnames             = "true"
   enable_dns_support               = "true"
   assign_generated_ipv6_cidr_block = true
+
+  tags = {
+    Name        = "ezlab-vpc"
+    Environment = "lab"
+  }
 }
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.ezlab.id
+
+  tags = {
+    Name        = "ezlab-igw"
+    Environment = "lab"
+  }
 }
 
 resource "aws_egress_only_internet_gateway" "egw6" {
   vpc_id = aws_vpc.ezlab.id
+
+  tags = {
+    Name        = "ezlab-egw6"
+    Environment = "lab"
+  }
 }
 
 #-----------------------------------------------------------------------------
 # private Nat Gateways
 #-----------------------------------------------------------------------------
 resource "aws_eip" "natip" {
-  count = length(var.azs)
-  vpc   = true
+  count  = length(var.azs)
+  domain = "vpc"
+
+  tags = {
+    Name        = "natip-${count.index}"
+    Environment = "lab"
+  }
 }
 
 resource "aws_nat_gateway" "natgw" {
@@ -256,11 +276,105 @@ resource "aws_route_table_association" "private_backup_association" {
 }
 
 #-----------------------------------------------------------------------------
-# Create VPC endpoint
+# Create VPC endpoints
 #-----------------------------------------------------------------------------
-# Declare the end point to S3 (no cost)
+
+# Security group for VPC interface endpoints
+resource "aws_security_group" "vpc_endpoints" {
+  name        = "tf_ezlab_vpc_endpoints"
+  description = "Security group for VPC interface endpoints"
+  vpc_id      = aws_vpc.ezlab.id
+
+  ingress {
+    description = "HTTPS from VPC"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.ezlab.cidr_block]
+  }
+
+  egress {
+    description = "Allow all outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name        = "vpc-endpoints-sg"
+    Environment = "lab"
+  }
+}
+
+# S3 Gateway endpoint (no cost)
 resource "aws_vpc_endpoint" "private-s3" {
   vpc_id       = aws_vpc.ezlab.id
-  service_name = "com.amazonaws.eu-west-1.s3"
+  service_name = "com.amazonaws.${var.aws_region}.s3"
   policy       = file("./policy_json/vpc-policy-s3endpoint.json")
+
+  tags = {
+    Name        = "s3-endpoint"
+    Environment = "lab"
+  }
+}
+
+# SSM endpoint for Systems Manager
+resource "aws_vpc_endpoint" "ssm" {
+  vpc_id              = aws_vpc.ezlab.id
+  service_name        = "com.amazonaws.${var.aws_region}.ssm"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = aws_subnet.back[*].id
+  security_group_ids  = [aws_security_group.vpc_endpoints.id]
+  private_dns_enabled = true
+
+  tags = {
+    Name        = "ssm-endpoint"
+    Environment = "lab"
+  }
+}
+
+# EC2 Messages endpoint for Systems Manager
+resource "aws_vpc_endpoint" "ec2messages" {
+  vpc_id              = aws_vpc.ezlab.id
+  service_name        = "com.amazonaws.${var.aws_region}.ec2messages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = aws_subnet.back[*].id
+  security_group_ids  = [aws_security_group.vpc_endpoints.id]
+  private_dns_enabled = true
+
+  tags = {
+    Name        = "ec2messages-endpoint"
+    Environment = "lab"
+  }
+}
+
+# SSM Messages endpoint for Systems Manager
+resource "aws_vpc_endpoint" "ssmmessages" {
+  vpc_id              = aws_vpc.ezlab.id
+  service_name        = "com.amazonaws.${var.aws_region}.ssmmessages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = aws_subnet.back[*].id
+  security_group_ids  = [aws_security_group.vpc_endpoints.id]
+  private_dns_enabled = true
+
+  tags = {
+    Name        = "ssmmessages-endpoint"
+    Environment = "lab"
+  }
+}
+
+# Secrets Manager endpoint
+resource "aws_vpc_endpoint" "secretsmanager" {
+  vpc_id              = aws_vpc.ezlab.id
+  service_name        = "com.amazonaws.${var.aws_region}.secretsmanager"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = aws_subnet.back[*].id
+  security_group_ids  = [aws_security_group.vpc_endpoints.id]
+  private_dns_enabled = true
+
+  tags = {
+    Name        = "secretsmanager-endpoint"
+    Environment = "lab"
+  }
 }

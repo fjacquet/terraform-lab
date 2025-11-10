@@ -7,13 +7,6 @@ variable "aws_number" {
   type = map(string)
 }
 
-# variable "cidr" {
-#   type = "map"
-# }
-
-# variable "dhcpops" {
-# }
-
 variable "cidrbyte" {
   type = map(string)
 }

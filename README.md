@@ -22,7 +22,31 @@ You should already know my Github if you read this :)
 
 [![Known Vulnerabilities](https://snyk.io/test/github/fjacquet/terraform-lab/badge.svg)](https://snyk.io/test/github/fjacquet/terraform-lab)
 
+## Requirements
+
+- **Terraform**: >= 1.0
+- **AWS Provider**: ~> 5.0
+- **Python**: 3.x with pip
+- **Ansible**: Latest version
+
 ## Configuration
+
+### Terraform Backend
+
+The project currently uses **local state** storage. The Terraform Cloud remote backend is temporarily disabled due to template provider compatibility issues on Apple Silicon.
+
+If you need to enable remote state in the future, uncomment the backend configuration in `backend.tf`.
+
+### Resource Tagging
+
+All AWS resources are automatically tagged with default tags configured at the provider level:
+
+- **Project**: terraform-lab
+- **ManagedBy**: Terraform
+- **Environment**: lab
+- **Repository**: github.com/fjacquet/terraform-lab
+
+These tags are applied automatically to all resources created by Terraform, enabling better cost tracking, resource management, and compliance.
 
 ### Shell
 
@@ -42,8 +66,6 @@ export TF_REGISTRY_CLIENT_TIMEOUT
 export TF_CLI_ARGS
 export TFE_PARALLELISM
 ```
-
-NB must have execution local if you use https://app.terraform.io/
 
 ### ansible
 

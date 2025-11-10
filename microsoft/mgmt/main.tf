@@ -28,7 +28,7 @@ resource "aws_route53_record" "mgmt-public" {
 resource "aws_eip" "mgmt-public" {
   count    = var.aws_number
   instance = element(aws_instance.mgmt.*.id, count.index)
-  vpc      = true
+  domain   = "vpc"
 }
 
 resource "aws_instance" "mgmt" {

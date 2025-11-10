@@ -7,15 +7,6 @@ resource "aws_route53_record" "adfs" {
   records = [element(aws_instance.adfs.*.private_ip, count.index)]
 }
 
-# resource "aws_route53_record" "adfs-v6" {
-#   count   = "${var.aws_number}"
-#   zone_id = "${var.dns_zone_id}"
-#   name    = "adfs-${count.index}.${var.dns_suffix}"
-#   type    = "AAAA"
-#   ttl     = "300"
-#   records = ["${aws_instance.adfs.*.ipv6_addresses}"]
-# }
-
 resource "aws_instance" "adfs" {
   ami                  = var.aws_ami
   availability_zone    = element(var.azs, count.index)

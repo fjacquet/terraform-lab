@@ -1,0 +1,13 @@
+{
+  "enabled": false,
+  "name": "Source to Docs Sync",
+  "description": "Monitors all Terraform (.tf), Ansible (.yml, .yaml), PowerShell (.ps1), and shell script (.sh) files in the repository. When changes are detected, prompts the agent to review and update documentation in README.md or the /docs folder to reflect the changes.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Source files have been modified. Please review the changes and update the documentation accordingly. Check if README.md needs updates or if documentation in any /docs folder should be modified to reflect these changes. Focus on:\n1. New modules or roles added\n2. Changed configuration patterns or conventions\n3. Updated dependencies or requirements\n4. Modified workflows or deployment procedures\n5. New features or capabilities\n6. Changes to infrastructure components\n\nEnsure documentation remains accurate and helpful for users."
+  }
+}

@@ -17,16 +17,9 @@ variable "azs" {
   type = list(string)
 }
 
-# variable "cidr" {
-#   type = "map"
-# }
-
 variable "cidrbyte" {
   type = map(string)
 }
-
-# variable "dhcpops" {
-# }
 
 variable "dns_suffix" {
 }

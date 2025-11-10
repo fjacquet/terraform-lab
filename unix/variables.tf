@@ -57,6 +57,16 @@ variable "azs" {
   type = list(string)
 }
 
+variable "admin_cidr_blocks" {
+  description = "CIDR blocks allowed for administrative access"
+  type        = list(string)
+}
+
+variable "cidr_blocks" {
+  description = "Computed CIDR blocks for all subnet types"
+  type        = map(list(string))
+}
+
 # variable "aws_amis" {
 #   type = map(string)
 # }
