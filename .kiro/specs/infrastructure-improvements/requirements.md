@@ -18,6 +18,8 @@ This specification defines the requirements for improving the terraform-lab infr
 - **Module**: Reusable Terraform configuration component
 - **DRY Principle**: Don't Repeat Yourself - code reusability principle
 - **IaC**: Infrastructure as Code
+- **System**: The terraform-lab infrastructure codebase including Terraform configurations, Ansible playbooks, and associated scripts
+- **KISS Principle**: Keep It Simple, Stupid - design simplicity principle
 
 ## Requirements
 
@@ -260,3 +262,15 @@ This specification defines the requirements for improving the terraform-lab infr
 3. WHEN resources are refactored, THE System SHALL use moved blocks to prevent recreation
 4. THE System SHALL document any breaking changes in upgrade notes
 5. THE System SHALL provide migration guides for significant changes
+
+### Requirement 21: Code Design Principles
+
+**User Story:** As a software engineer, I want the codebase to follow established design principles, so that the code remains maintainable and understandable over time.
+
+#### Acceptance Criteria
+
+1. THE System SHALL apply the DRY Principle to eliminate code duplication
+2. THE System SHALL apply the KISS Principle to maintain simple and understandable implementations
+3. WHEN implementing new features, THE System SHALL favor simplicity over complexity
+4. WHEN refactoring code, THE System SHALL consolidate duplicate logic into reusable components
+5. THE System SHALL document design decisions that deviate from standard patterns

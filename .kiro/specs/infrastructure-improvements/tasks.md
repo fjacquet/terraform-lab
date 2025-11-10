@@ -172,19 +172,19 @@ Tasks have been organized into **phases** for logical implementation order. Comp
 
 ## Phase 8: Validation & Testing
 
-- [-] **Task 18: Final Validation & Testing** _(Sequential steps - must run in order)_
+- [x] **Task 18: Final Validation & Testing** _(Sequential steps - must run in order)_
   - [x] Run terraform fmt -recursive on entire project
   - [x] Run terraform init in root directory
   - [x] Run terraform validate in root directory
   - [x] Run terraform init + validate in global, microsoft, unix directories
   - [x] Create test.tfvars with minimal instance counts and security settings (admin_cidr_blocks, enable_public_admin_access=false)
-  - [-] Run terraform plan -var-file=test.tfvars
-  - [ ] Verify plan output: no unexpected resource deletions, security groups use restricted CIDRs, VPC endpoints present, tags applied
-  - [ ] Create moved blocks if any resources were renamed during refactoring
-  - [ ] Update .gitignore: ensure .terraform/, *.tfstate, *.tfvars (with secrets) are excluded, .terraform.lock.hcl is committed
-  - [ ] Create scripts/setup-secrets.sh script with error handling for initial Secrets Manager setup
-  - [ ] Run final terraform plan and verify all requirements are met
-  - [ ] Test pre-commit hooks: run pre-commit run --all-files
+  - [x] Run terraform plan -var-file=test.tfvars
+  - [x] Verify plan output: no unexpected resource deletions, security groups use restricted CIDRs, VPC endpoints present, tags applied
+  - [x] Create moved blocks if any resources were renamed during refactoring
+  - [x] Update .gitignore: ensure .terraform/, *.tfstate, *.tfvars (with secrets) are excluded, .terraform.lock.hcl is committed
+  - [x] Create scripts/setup-secrets.sh script with error handling for initial Secrets Manager setup
+  - [x] Run final terraform plan and verify all requirements are met
+  - [x] Test pre-commit hooks: run pre-commit run --all-files
   - _Requirements: 9.4, 3.5, 5.5, 20.1-20.3, 15.4, 1.1-1.2, All_
 
 ---

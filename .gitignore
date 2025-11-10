@@ -1,12 +1,17 @@
-#  Local .terraform directories
+# Local .terraform directories
 **/.terraform/*
-.terraform.lock.hcl
-# .tfstate files
+
+# .tfstate files (contain sensitive data and managed remotely)
 *.tfstate
 *.tfstate.*
 
-# .tfvars files
+# .tfvars files (may contain secrets - exclude by default)
 *.tfvars
+
+# Exception: Allow test.tfvars (no secrets)
+!test.tfvars
+
+# Note: .terraform.lock.hcl should be committed to ensure consistent provider versions
 **/bin/*
 **/secrets/*
 **/private/*
