@@ -76,6 +76,56 @@ pip3 install -r ./requirements.txt
 ansible-galaxy install -r requirements.yml
 ```
 
+### Pre-commit Hooks
+
+This project uses pre-commit hooks to ensure code quality and consistency. The hooks automatically run Terraform formatting, validation, linting, and Ansible linting before each commit.
+
+#### Installation
+
+1. Install pre-commit:
+
+```bash
+pip install pre-commit
+```
+
+2. Install the git hook scripts:
+
+```bash
+pre-commit install
+```
+
+#### Configured Hooks
+
+The following hooks are configured:
+
+- **terraform_fmt**: Automatically formats Terraform files recursively
+- **terraform_validate**: Validates Terraform configuration syntax
+- **terraform_tflint**: Runs TFLint to catch potential issues
+- **ansible-lint**: Lints Ansible playbooks and roles
+
+#### Manual Execution
+
+To run all hooks manually on all files:
+
+```bash
+pre-commit run --all-files
+```
+
+To run a specific hook:
+
+```bash
+pre-commit run terraform_fmt --all-files
+pre-commit run ansible-lint --all-files
+```
+
+#### Skipping Hooks
+
+If you need to skip hooks for a specific commit (not recommended):
+
+```bash
+git commit --no-verify
+```
+
 ## ssh
 
 To access private network, you can use `.ssh/config` like :

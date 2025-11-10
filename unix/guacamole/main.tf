@@ -22,7 +22,8 @@ resource "aws_instance" "guacamole" {
   }
   metadata_options {
     http_tokens                 = "required"
-    http_put_response_hop_limit = "1"
+    http_put_response_hop_limit = 1
+    http_endpoint               = "enabled"
   }
 
   lifecycle {

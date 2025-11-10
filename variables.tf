@@ -20,7 +20,7 @@ variable "dns_suffix" {
 }
 variable "public_dns_id" {
   description = "ID of public DNS"
-  default     = "Z09111591ZZVC86K0WQ2K"
+  default     = "Z07150253A0MNSTGYQG5P"
 }
 
 variable "azs" {

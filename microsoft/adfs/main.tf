@@ -19,7 +19,8 @@ resource "aws_instance" "adfs" {
   user_data            = file("user_data/config-win.ps1")
   metadata_options {
     http_tokens                 = "required"
-    http_put_response_hop_limit = "1"
+    http_put_response_hop_limit = 1
+    http_endpoint               = "enabled"
   }
 
   root_block_device {

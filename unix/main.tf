@@ -1,6 +1,6 @@
 module "bsd" {
   source        = "./bsd"
-  aws_ami       = data.aws_ami.bsd.id
+  aws_ami       = var.aws_number["bsd"] > 0 ? data.aws_ami.bsd[0].id : ""
   aws_number    = var.aws_number["bsd"]
   aws_subnet_id = var.aws_subnet_back_id
 
@@ -79,7 +79,7 @@ module "guacamole" {
 
 module "nbu" {
   source               = "./nbu"
-  aws_ami              = data.aws_ami.rhel8.id
+  aws_ami              = (var.aws_number["nbu"] + var.aws_number["oracle"]) > 0 ? data.aws_ami.rhel9[0].id : ""
   aws_number           = var.aws_number["nbu"]
   aws_size_nbu_backups = var.aws_disks_size["nbu_backups"]
   aws_size_nbu_openv   = var.aws_disks_size["nbu_openv"]
@@ -104,7 +104,7 @@ module "nbu" {
 
 module "oracle" {
   source        = "./oracle"
-  aws_ami       = data.aws_ami.rhel8.id
+  aws_ami       = (var.aws_number["nbu"] + var.aws_number["oracle"]) > 0 ? data.aws_ami.rhel9[0].id : ""
   aws_number    = var.aws_number["oracle"]
   aws_subnet_id = var.aws_subnet_back_id
 
@@ -193,6 +193,7 @@ resource "aws_security_group" "ssh" {
 
 
 data "aws_ami" "bsd" {
+  count       = var.aws_number["bsd"] > 0 ? 1 : 0
   most_recent = true
   filter {
     name   = "name"
@@ -219,6 +220,7 @@ data "aws_ami" "debian" {
 }
 
 data "aws_ami" "amazon" {
+  count       = var.aws_number["oracle"] > 0 ? 1 : 0
   most_recent = true
   filter {
     name   = "name"
@@ -231,11 +233,12 @@ data "aws_ami" "amazon" {
   owners = ["137112412989"] # Amazon
 }
 
-data "aws_ami" "rhel8" {
+data "aws_ami" "rhel9" {
+  count       = (var.aws_number["nbu"] + var.aws_number["oracle"]) > 0 ? 1 : 0
   most_recent = true
   filter {
     name   = "name"
-    values = ["RHEL-8.*_HVM-*-x86_64-*"]
+    values = ["RHEL-9.*_HVM-*-x86_64-*"]
   }
   filter {
     name   = "virtualization-type"

@@ -10,7 +10,8 @@ resource "aws_instance" "redis" {
   vpc_security_group_ids = var.aws_sg_ids
   metadata_options {
     http_tokens                 = "required"
-    http_put_response_hop_limit = "1"
+    http_put_response_hop_limit = 1
+    http_endpoint               = "enabled"
   }
 
   root_block_device {

@@ -22,7 +22,8 @@ resource "aws_instance" "pki-crl" {
   }
   metadata_options {
     http_tokens                 = "required"
-    http_put_response_hop_limit = "1"
+    http_put_response_hop_limit = 1
+    http_endpoint               = "enabled"
   }
   lifecycle {
     ignore_changes = [user_data]

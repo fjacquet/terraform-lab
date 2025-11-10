@@ -35,7 +35,8 @@ resource "aws_instance" "sofs" {
   }
   metadata_options {
     http_tokens                 = "required"
-    http_put_response_hop_limit = "1"
+    http_put_response_hop_limit = 1
+    http_endpoint               = "enabled"
   }
   root_block_device {
     encrypted = true

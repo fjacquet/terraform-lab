@@ -28,7 +28,8 @@ resource "aws_instance" "da" {
   subnet_id            = element(var.aws_subnet_id, count.index)
   metadata_options {
     http_tokens                 = "required"
-    http_put_response_hop_limit = "1"
+    http_put_response_hop_limit = 1
+    http_endpoint               = "enabled"
   }
 
   root_block_device {

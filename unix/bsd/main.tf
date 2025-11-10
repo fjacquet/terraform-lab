@@ -9,7 +9,8 @@ resource "aws_instance" "bsd" {
   vpc_security_group_ids = var.aws_sg_ids
   metadata_options {
     http_tokens                 = "required"
-    http_put_response_hop_limit = "1"
+    http_put_response_hop_limit = 1
+    http_endpoint               = "enabled"
   }
   tags = {
     Name        = "bsd-${count.index}"

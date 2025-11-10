@@ -94,64 +94,64 @@ Tasks have been organized into **phases** for logical implementation order. Comp
 
 ## Phase 6: PowerShell Scripts and IMDSv2
 
-- [ ] **Task 10: Update user_data/config-win.ps1**
-  - [ ] Create Get-SecretSafely function with try-catch, validation, and Windows Event Log error logging
-  - [ ] Create Invoke-SafeOperation function for general error handling
-  - [ ] Add IMDSv2 token retrieval (PUT request to http://169.254.169.254/latest/api/token with TTL header)
-  - [ ] Update metadata API calls to include X-aws-ec2-metadata-token header
-  - [ ] Replace hardcoded password "NotS0S3cr3t!" with Get-SecretSafely call to retrieve from Secrets Manager
-  - [ ] Add try-catch around Invoke-WebRequest for ConfigureRemotingForAnsible.ps1 download
-  - [ ] Add Test-Path verification before executing downloaded script
-  - [ ] Add error logging for download and execution failures
+- [x] **Task 10: Update user_data/config-win.ps1**
+  - [x] Create Get-SecretSafely function with try-catch, validation, and Windows Event Log error logging
+  - [x] Create Invoke-SafeOperation function for general error handling
+  - [x] Add IMDSv2 token retrieval (PUT request to http://169.254.169.254/latest/api/token with TTL header)
+  - [x] Update metadata API calls to include X-aws-ec2-metadata-token header
+  - [x] Replace hardcoded password "NotS0S3cr3t!" with Get-SecretSafely call to retrieve from Secrets Manager
+  - [x] Add try-catch around Invoke-WebRequest for ConfigureRemotingForAnsible.ps1 download
+  - [x] Add Test-Path verification before executing downloaded script
+  - [x] Add error logging for download and execution failures
   - _Requirements: 1.1-1.2, 1.5, 6.1-6.3, 14.1-14.3, 16.1, 16.5_
 
-- [ ] **Task 11: Update post_setup/Join-domain-member.ps1**
-  - [ ] Add try-catch around Get-SECSecretValue with -ErrorAction Stop
-  - [ ] Add validation to ensure secret value is not null or empty
-  - [ ] Add Windows Event Log error logging for secret retrieval failures
-  - [ ] Add IMDSv2 token retrieval function
-  - [ ] Replace hardcoded region 'eu-west-1' with metadata retrieval using IMDSv2
-  - [ ] Use -ErrorAction Stop for Add-Computer and other critical cmdlets
+- [x] **Task 11: Update post_setup/Join-domain-member.ps1**
+  - [x] Add try-catch around Get-SECSecretValue with -ErrorAction Stop
+  - [x] Add validation to ensure secret value is not null or empty
+  - [x] Add Windows Event Log error logging for secret retrieval failures
+  - [x] Add IMDSv2 token retrieval function
+  - [x] Replace hardcoded region 'eu-west-1' with metadata retrieval using IMDSv2
+  - [x] Use -ErrorAction Stop for Add-Computer and other critical cmdlets
   - _Requirements: 6.1-6.2, 6.4-6.5, 8.2, 8.5_
 
-- [ ] **Task 12: Update post_setup/New-Secrets.ps1**
-  - [ ] Add try-catch around Get-SECRandomPassword with -ErrorAction Stop
-  - [ ] Add try-catch around New-SECSecret with -ErrorAction Stop
-  - [ ] Add validation for secret creation success
-  - [ ] Add error logging for failed secret operations
-  - [ ] Add IMDSv2 token retrieval function
-  - [ ] Replace hardcoded region 'eu-west-1' with metadata retrieval using IMDSv2
+- [x] **Task 12: Update post_setup/New-Secrets.ps1**
+  - [x] Add try-catch around Get-SECRandomPassword with -ErrorAction Stop
+  - [x] Add try-catch around New-SECSecret with -ErrorAction Stop
+  - [x] Add validation for secret creation success
+  - [x] Add error logging for failed secret operations
+  - [x] Add IMDSv2 token retrieval function
+  - [x] Replace hardcoded region 'eu-west-1' with metadata retrieval using IMDSv2
   - _Requirements: 6.1-6.2, 6.4-6.5, 8.2, 8.5_
 
-- [ ] **Task 13: IMDSv2 Enforcement Across All Instances**
-  - [ ] Search all module directories for aws_instance resources
-  - [ ] Add metadata_options block to all aws_instance resources with: http_tokens="required", http_put_response_hop_limit=1, http_endpoint="enabled"
-  - [ ] Verify microsoft modules: adds, adcs, adfs, dhcp, da, exchange, fs, ipam, mgmt, nps, rdsh, sharepoint, sql, simpana, sofs, wac, wds, wsus
-  - [ ] Verify unix modules: bsd, glpi, guacamole, nbu, oracle, redis, vault
+- [x] **Task 13: IMDSv2 Enforcement Across All Instances**
+  - [x] Search all module directories for aws_instance resources
+  - [x] Add metadata_options block to all aws_instance resources with: http_tokens="required", http_put_response_hop_limit=1, http_endpoint="enabled"
+  - [x] Verify microsoft modules: adds, adcs, adfs, dhcp, da, exchange, fs, ipam, mgmt, nps, rdsh, sharepoint, sql, simpana, sofs, wac, wds, wsus
+  - [x] Verify unix modules: bsd, glpi, guacamole, nbu, oracle, redis, vault
   - _Requirements: 1.5, 16.1-16.4_
 
 ---
 
 ## Phase 7: Configuration & Documentation
 
-- [ ] **Task 14: Ansible Configuration**
-  - [ ] Update ansible.cfg: Change stdout_callback from 'skippy' to 'yaml'
-  - [ ] Update ansible.cfg: Add ControlMaster=auto and ControlPersist=1200s to ssh_args
-  - [ ] Update ansible.cfg: Ensure control_path is consistent (currently has duplicate settings)
-  - [ ] Verify fact_caching_connection is set to /tmp/facts_cache (currently /tmp/facts_cache, correct)
+- [x] **Task 14: Ansible Configuration**
+  - [x] Update ansible.cfg: Change stdout_callback from 'skippy' to 'yaml'
+  - [x] Update ansible.cfg: Add ControlMaster=auto and ControlPersist=1200s to ssh_args
+  - [x] Update ansible.cfg: Ensure control_path is consistent (currently has duplicate settings)
+  - [x] Verify fact_caching_connection is set to /tmp/facts_cache (currently /tmp/facts_cache, correct)
   - _Requirements: 11.1-11.5_
 
-- [ ] **Task 15: Pre-commit Configuration**
-  - [ ] Create .pre-commit-config.yaml with repos for terraform and ansible
-  - [ ] Add terraform_fmt hook (runs terraform fmt -recursive)
-  - [ ] Add terraform_validate hook (runs terraform validate)
-  - [ ] Add terraform_tflint hook (runs tflint)
-  - [ ] Add ansible-lint hook (runs ansible-lint on playbooks)
-  - [ ] Document installation steps in README.md (pip install pre-commit, pre-commit install)
+- [x] **Task 15: Pre-commit Configuration**
+  - [x] Create .pre-commit-config.yaml with repos for terraform and ansible
+  - [x] Add terraform_fmt hook (runs terraform fmt -recursive)
+  - [x] Add terraform_validate hook (runs terraform validate)
+  - [x] Add terraform_tflint hook (runs tflint)
+  - [x] Add ansible-lint hook (runs ansible-lint on playbooks)
+  - [x] Document installation steps in README.md (pip install pre-commit, pre-commit install)
   - _Requirements: 13.1-13.5_
 
-- [ ] **Task 16: Module Documentation**
-  - [ ] Create README.md template with sections: Overview, Requirements, Inputs, Outputs, Usage Example
+- [-] **Task 16: Module Documentation**
+  - [-] Create README.md template with sections: Overview, Requirements, Inputs, Outputs, Usage Example
   - [ ] Create global/README.md documenting VPC, IAM, Route53, DynamoDB modules
   - [ ] Create microsoft/README.md documenting all Windows service modules
   - [ ] Create unix/README.md documenting all Unix/Linux service modules
