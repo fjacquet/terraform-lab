@@ -31,6 +31,61 @@ You should already know my Github if you read this :)
 
 ## Configuration
 
+### Security Variables
+
+The project includes security-focused variables to control administrative access to infrastructure:
+
+#### admin_cidr_blocks
+
+Controls which IP addresses/ranges are allowed to access administrative services (RDP, SSH, WinRM):
+
+```hcl
+variable "admin_cidr_blocks" {
+  description = "CIDR blocks allowed for administrative access"
+  type        = list(string)
+  default     = ["10.0.0.0/16"]  # Default: VPC CIDR only
+}
+```
+
+**Best Practices:**
+- For production: Restrict to your organization's public IP ranges or VPN endpoints
+- For lab environments: Use VPC CIDR (default) or specific trusted networks
+- Never use `0.0.0.0/0` in production environments
+
+**Example configurations:**
+
+```hcl
+# Corporate office access only
+admin_cidr_blocks = ["203.0.113.0/24", "198.51.100.0/24"]
+
+# VPN endpoint access
+admin_cidr_blocks = ["10.0.0.0/16", "192.168.1.0/24"]
+
+# Lab environment (VPC only)
+admin_cidr_blocks = ["10.0.0.0/16"]
+```
+
+#### enable_public_admin_access
+
+Emergency override to allow administrative access from anywhere (not recommended for production):
+
+```hcl
+variable "enable_public_admin_access" {
+  description = "Allow administrative access from internet"
+  type        = bool
+  default     = false
+}
+```
+
+**Warning:** Setting this to `true` allows access from `0.0.0.0/0`. Only use for:
+- Temporary troubleshooting in non-production environments
+- Initial setup when your IP is unknown
+- Always set back to `false` after use
+
+**Security Impact:**
+- When `false` (default): Uses `admin_cidr_blocks` for access control
+- When `true`: Overrides `admin_cidr_blocks` and allows `0.0.0.0/0`
+
 ### Terraform Backend
 
 The project currently uses **local state** storage. The Terraform Cloud remote backend is temporarily disabled due to template provider compatibility issues on Apple Silicon.
@@ -47,6 +102,68 @@ All AWS resources are automatically tagged with default tags configured at the p
 - **Repository**: github.com/fjacquet/terraform-lab
 
 These tags are applied automatically to all resources created by Terraform, enabling better cost tracking, resource management, and compliance.
+
+### IMDSv2 Enforcement
+
+All EC2 instances in this infrastructure are configured to use **Instance Metadata Service Version 2 (IMDSv2)**, which provides enhanced security for accessing instance metadata.
+
+**What is IMDSv2?**
+
+IMDSv2 is a session-oriented method for accessing instance metadata that protects against:
+- Server-Side Request Forgery (SSRF) attacks
+- Open firewall/NAT/router vulnerabilities
+- Open layer 3 firewall vulnerabilities
+
+**Security Benefits:**
+
+1. **Session-based authentication**: Requires a session token obtained via PUT request
+2. **Hop limit protection**: Prevents metadata access from containers or forwarded requests
+3. **Defense in depth**: Additional security layer even if other protections fail
+
+**Configuration:**
+
+All EC2 instances are configured with:
+
+```hcl
+metadata_options {
+  http_tokens                 = "required"  # Enforce IMDSv2
+  http_put_response_hop_limit = 1           # Prevent forwarding
+  http_endpoint               = "enabled"   # Keep metadata service enabled
+}
+```
+
+**Impact on Scripts:**
+
+User data scripts and applications must use IMDSv2-compatible requests:
+
+```powershell
+# PowerShell example - Retrieve IMDSv2 token
+$token = Invoke-RestMethod -Uri "http://169.254.169.254/latest/api/token" `
+    -Method PUT `
+    -Headers @{"X-aws-ec2-metadata-token-ttl-seconds" = "21600"}
+
+# Use token to access metadata
+$instanceId = Invoke-RestMethod `
+    -Uri "http://169.254.169.254/latest/meta-data/instance-id" `
+    -Headers @{"X-aws-ec2-metadata-token" = $token}
+```
+
+```bash
+# Bash example - Retrieve IMDSv2 token
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" \
+    -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+
+# Use token to access metadata
+INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
+    http://169.254.169.254/latest/meta-data/instance-id)
+```
+
+**Compatibility:**
+
+All user data scripts in this project have been updated to support IMDSv2. If you add custom scripts, ensure they:
+1. Request a session token before accessing metadata
+2. Include the token in all metadata requests
+3. Handle token expiration (default: 6 hours)
 
 ### Shell
 
@@ -167,28 +284,101 @@ Normally, I use t3.medium except if the application needs more
 
 I use an S3 repository named installers-fja, private. Remember to replace the name in your case.
 
-#### Secrets management
+#### Secrets Management
 
-We use AWS secrets manager to avoid password in scripts.
-Need to create some aws secrets :
+The project uses **AWS Secrets Manager** to securely store and retrieve sensitive credentials. All passwords and secrets are retrieved at runtime from Secrets Manager, eliminating hardcoded credentials in scripts and configuration files.
 
-- ezlab/ad/joinuser
-- ezlab/ad/fjacquet
-- ezlab/guacamole/mysqlroot
-- ezlab/guacamole/mysqluser
-- ezlab/glpi/mysqlroot
-- ezlab/glpi/mysqluser
-- ezlab/guacamole/keystore
-- ezlab/guacamole/mail
-- ezlab/sharepoint/sp_farm
-- ezlab/sharepoint/sp_services
-- ezlab/sharepoint/sp_portalAppPool
-- ezlab/sharepoint/sp_profilesAppPool
-- ezlab/sharepoint/sp_searchService
-- ezlab/sharepoint/sp_cacheSuperUser
-- ezlab/sharepoint/sp_cacheSuperReader
-- ezlab/sql/svc-sql
-- ezlab/pki/svc-ndes
+**Security Benefits:**
+- No hardcoded passwords in code or user data scripts
+- Centralized secret management and rotation
+- Audit trail via CloudTrail
+- Encryption at rest with KMS
+- Fine-grained IAM access control
+
+**Required Secrets:**
+
+The following secrets must be created in AWS Secrets Manager before deployment:
+
+| Secret Name | Purpose | Format |
+|-------------|---------|--------|
+| `ez-lab.xyz/ansible/localadmin` | Local administrator password for Windows instances | Plain text password |
+| `ezlab/ad/joinuser` | Domain join credentials | JSON: `{"username": "...", "password": "..."}` |
+| `ezlab/ad/fjacquet` | Domain user account | Plain text password |
+| `ezlab/guacamole/mysqlroot` | Guacamole MySQL root password | Plain text password |
+| `ezlab/guacamole/mysqluser` | Guacamole MySQL user password | Plain text password |
+| `ezlab/glpi/mysqlroot` | GLPI MySQL root password | Plain text password |
+| `ezlab/glpi/mysqluser` | GLPI MySQL user password | Plain text password |
+| `ezlab/guacamole/keystore` | Guacamole keystore password | Plain text password |
+| `ezlab/guacamole/mail` | Guacamole email configuration | Plain text password |
+| `ezlab/sharepoint/sp_farm` | SharePoint farm account | Plain text password |
+| `ezlab/sharepoint/sp_services` | SharePoint services account | Plain text password |
+| `ezlab/sharepoint/sp_portalAppPool` | SharePoint portal app pool account | Plain text password |
+| `ezlab/sharepoint/sp_profilesAppPool` | SharePoint profiles app pool account | Plain text password |
+| `ezlab/sharepoint/sp_searchService` | SharePoint search service account | Plain text password |
+| `ezlab/sharepoint/sp_cacheSuperUser` | SharePoint cache super user | Plain text password |
+| `ezlab/sharepoint/sp_cacheSuperReader` | SharePoint cache super reader | Plain text password |
+| `ezlab/sql/svc-sql` | SQL Server service account | Plain text password |
+| `ezlab/pki/svc-ndes` | NDES service account | Plain text password |
+
+**Creating Secrets:**
+
+Use the AWS CLI or Console to create secrets:
+
+```bash
+# Using AWS CLI
+aws secretsmanager create-secret \
+    --name "ez-lab.xyz/ansible/localadmin" \
+    --description "Local administrator password" \
+    --secret-string "YourSecurePassword123!"
+
+# Generate random password
+aws secretsmanager create-secret \
+    --name "ezlab/guacamole/mysqlroot" \
+    --description "Guacamole MySQL root password" \
+    --secret-string "$(openssl rand -base64 32)"
+
+# JSON format for credentials with username
+aws secretsmanager create-secret \
+    --name "ezlab/ad/joinuser" \
+    --description "Domain join credentials" \
+    --secret-string '{"username":"domain-join-user","password":"SecurePassword123!"}'
+```
+
+**IAM Permissions:**
+
+EC2 instances require IAM permissions to retrieve secrets:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+      ],
+      "Resource": [
+        "arn:aws:secretsmanager:*:*:secret:ez-lab.xyz/*",
+        "arn:aws:secretsmanager:*:*:secret:ezlab/*"
+      ]
+    }
+  ]
+}
+```
+
+**Usage in Scripts:**
+
+PowerShell scripts automatically retrieve secrets using the AWS PowerShell module:
+
+```powershell
+# Retrieve secret with error handling
+$password = Get-SECSecretValue -SecretId "ez-lab.xyz/ansible/localadmin" -Region $region -ErrorAction Stop
+```
+
+**VPC Endpoints:**
+
+For enhanced security and reduced costs, the infrastructure includes a VPC endpoint for Secrets Manager, allowing instances in private subnets to access secrets without internet connectivity.
 
 ## Run
 

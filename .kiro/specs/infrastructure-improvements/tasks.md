@@ -150,21 +150,21 @@ Tasks have been organized into **phases** for logical implementation order. Comp
   - [x] Document installation steps in README.md (pip install pre-commit, pre-commit install)
   - _Requirements: 13.1-13.5_
 
-- [-] **Task 16: Module Documentation**
-  - [-] Create README.md template with sections: Overview, Requirements, Inputs, Outputs, Usage Example
-  - [ ] Create global/README.md documenting VPC, IAM, Route53, DynamoDB modules
-  - [ ] Create microsoft/README.md documenting all Windows service modules
-  - [ ] Create unix/README.md documenting all Unix/Linux service modules
-  - [ ] Run terraform-docs to auto-generate variable and output tables
+- [x] **Task 16: Module Documentation**
+  - [x] Create README.md template with sections: Overview, Requirements, Inputs, Outputs, Usage Example
+  - [x] Create global/README.md documenting VPC, IAM, Route53, DynamoDB modules
+  - [x] Create microsoft/README.md documenting all Windows service modules
+  - [x] Create unix/README.md documenting all Unix/Linux service modules
+  - [x] Run terraform-docs to auto-generate variable and output tables
   - _Requirements: 12.1-12.5_
 
-- [ ] **Task 17: Root Documentation Updates**
-  - [ ] Update README.md: Add section on new security variables (admin_cidr_blocks, enable_public_admin_access)
-  - [ ] Update README.md: Document Secrets Manager integration
-  - [ ] Update README.md: Document IMDSv2 enforcement
-  - [ ] Create MIGRATION.md: Step-by-step upgrade guide from old to new configuration
-  - [ ] Create MIGRATION.md: Include examples of variable changes and rollback procedures
-  - [ ] Create SECURITY.md: Document security improvements (restricted access, Secrets Manager, IMDSv2, VPC endpoints)
+- [-] **Task 17: Root Documentation Updates**
+  - [x] Update README.md: Add section on new security variables (admin_cidr_blocks, enable_public_admin_access)
+  - [x] Update README.md: Document Secrets Manager integration
+  - [x] Update README.md: Document IMDSv2 enforcement
+  - [x] Create MIGRATION.md: Step-by-step upgrade guide from old to new configuration
+  - [x] Create MIGRATION.md: Include examples of variable changes and rollback procedures
+  - [-] Create SECURITY.md: Document security improvements (restricted access, Secrets Manager, IMDSv2, VPC endpoints)
   - [ ] Create SECURITY.md: Include best practices for production deployments
   - _Requirements: 20.1-20.5, 1.1-1.5_
 
