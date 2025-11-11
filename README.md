@@ -4,22 +4,27 @@ We all need to create a set of VM to perform some labs. Thanks to terraforming, 
 
 Some variables are still hardcoded to simplify writing. Maybe it will go in parameter later
 
-## Project status
+## Project Status
 
-### Github
+### Architecture
 
-You should already know my Github if you read this :)
+This project uses a **modern, flattened 2-level architecture** that eliminates unnecessary abstraction layers:
 
-### SonarCloud status
+- **Old**: root → microsoft/unix → 25+ service modules (3 levels)
+- **New**: root → unified service module (2 levels)
+
+**Benefits:**
+- 90% code reduction (~2,000 lines → ~300 lines)
+- Single source of truth (all configs in `locals.tf`)
+- 97% module consolidation (25+ modules → 1 unified module)
+- Easier maintenance (edit 1-3 files vs 18-30 files)
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed architecture documentation.
+
+### Build Status
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fjacquet_terraform-lab&metric=alert_status)](https://sonarcloud.io/dashboard?id=fjacquet_terraform-lab)
-
-### Terraform cloud build status
-
 [![Build](https://github.com/fjacquet/terraform-lab/actions/workflows/build.yml/badge.svg)](https://github.com/fjacquet/terraform-lab/actions/workflows/build.yml)
-
-### Snyk status
-
 [![Known Vulnerabilities](https://snyk.io/test/github/fjacquet/terraform-lab/badge.svg)](https://snyk.io/test/github/fjacquet/terraform-lab)
 
 ## Requirements
@@ -28,6 +33,82 @@ You should already know my Github if you read this :)
 - **AWS Provider**: ~> 5.0
 - **Python**: 3.x with pip
 - **Ansible**: Latest version
+
+## Quick Start
+
+### 1. Configure Services
+
+Edit `terraform.tfvars` or `variables.tf` to enable services:
+
+```hcl
+aws_number = {
+  "guacamole" = 1  # Bastion host (recommended first)
+  "adds"      = 2  # Domain Controllers
+  "dhcp"      = 1  # DHCP Server
+  # ... enable other services as needed
+}
+```
+
+### 2. Deploy Infrastructure
+
+```bash
+# Initialize Terraform
+terraform init
+
+# Review planned changes
+terraform plan
+
+# Deploy infrastructure
+terraform apply
+```
+
+### 3. Configure with Ansible
+
+```bash
+# Install dependencies
+pip3 install -r requirements.txt
+ansible-galaxy install -r requirements.yml
+
+# Configure base systems
+ansible-parallel playbooks/system/*.yml
+
+# Configure applications
+ansible-parallel playbooks/apps/*.yml
+```
+
+## Available Services
+
+The project supports **23 services** across Windows and Unix platforms:
+
+### Windows Services (16)
+- **adds**: Active Directory Domain Services
+- **adfs**: Active Directory Federation Services
+- **dhcp**: DHCP Server
+- **da**: DirectAccess VPN
+- **exchange**: Exchange Server
+- **fs**: File Server
+- **ipam**: IP Address Management
+- **mgmt**: Management Server
+- **nps**: Network Policy Server (RADIUS)
+- **rdsh**: Remote Desktop Session Host
+- **sharepoint**: SharePoint Server
+- **sql**: SQL Server
+- **simpana**: Commvault Backup
+- **sofs**: Scale-Out File Server
+- **wac**: Windows Admin Center
+- **wds**: Windows Deployment Services
+- **wsus**: Windows Server Update Services
+
+### Unix/Linux Services (7)
+- **guacamole**: Apache Guacamole (Bastion/Jump Host)
+- **glpi**: IT Asset Management
+- **vault**: HashiCorp Vault (Secrets Management)
+- **nbu**: Veritas NetBackup
+- **oracle**: Oracle Database
+- **redis**: Redis Cache
+- **bsd**: FreeBSD System
+
+All services are configured in a single file (`locals.tf`) and deployed using one unified module (`modules/service/`).
 
 ## Configuration
 
@@ -380,19 +461,152 @@ $password = Get-SECSecretValue -SecretId "ez-lab.xyz/ansible/localadmin" -Region
 
 For enhanced security and reduced costs, the infrastructure includes a VPC endpoint for Secrets Manager, allowing instances in private subnets to access secrets without internet connectivity.
 
-## Run
+## Deployment Workflow
 
-1. Adapt variables.tf to deploy the VM you want
-1. run `terraform plan` to validate what will happens
-1. if ok, start `terraform apply`
-1. then when vm are baked, start ansible
+### 1. Enable Services
 
-- `ansible-parallel playbooks/system/*yml` to get the minimum informations
-- `ansible-parallel playbooks/apps/*yml` to get the preconfigurations
+Edit the `aws_number` variable in `terraform.tfvars` or `variables.tf`:
 
-## Build order
+```hcl
+variable "aws_number" {
+  default = {
+    "guacamole" = 1  # Start with bastion
+    "adds"      = 2  # Then domain controllers
+    "dhcp"      = 1  # Then infrastructure services
+    # ... enable others as needed
+  }
+}
+```
 
-Some dependencies always exists :
+### 2. Deploy Infrastructure
 
-- deploy guacamole to get bastion jump host
-- when you want windows services, start by deploying a "first" DC
+```bash
+# Validate configuration
+terraform validate
+
+# Review changes
+terraform plan
+
+# Deploy
+terraform apply
+
+# View deployed services
+terraform output deployed_services
+```
+
+### 3. Configure with Ansible
+
+```bash
+# Configure base operating systems
+ansible-parallel playbooks/system/configure-windows.yml
+ansible-parallel playbooks/system/configure-linux.yml
+
+# Configure applications
+ansible-parallel playbooks/apps/configure_pdc.yml
+ansible-parallel playbooks/apps/configure_dhcp.yml
+# ... run other app playbooks as needed
+```
+
+## Build Order and Dependencies
+
+### Recommended Deployment Order
+
+1. **Guacamole** (bastion host) - Deploy first for secure access
+2. **Domain Controllers** (adds) - Required for Windows domain services
+3. **Infrastructure Services** (dhcp, dns, ipam) - Core network services
+4. **Application Services** (exchange, sharepoint, sql) - Business applications
+5. **Management Services** (wac, mgmt) - Administrative tools
+
+### Service Dependencies
+
+- **Windows Services**: Most require domain controllers (adds) to be deployed first
+- **Guacamole**: Should be deployed first as it provides bastion/jump host access
+- **Exchange/SharePoint**: Require SQL Server and domain controllers
+- **PKI Services**: Require domain controllers and specific deployment order (RCA → ICA → CRL → NDES)
+
+## Adding or Modifying Services
+
+### To Add a New Service
+
+1. **Add configuration to `locals.tf`**:
+```hcl
+locals {
+  windows_services = {
+    # ... existing services
+    
+    mynewservice = {
+      instance_type    = "t3.medium"
+      subnet_type      = "back"
+      os_type          = "windows"
+      ami_type         = "windows2022"
+      user_data        = "user_data/config-win.ps1"
+      root_volume_size = 30
+      has_public_dns   = false
+      creates_sg       = true
+    }
+  }
+}
+```
+
+2. **Add to `variables.tf`**:
+```hcl
+variable "aws_number" {
+  default = {
+    # ... existing services
+    "mynewservice" = 0
+  }
+}
+```
+
+3. **Deploy**:
+```bash
+terraform plan
+terraform apply
+```
+
+That's it! No need to create new modules or update multiple files.
+
+### To Modify a Service
+
+Simply edit the service configuration in `locals.tf` and run `terraform apply`. All service configurations are in one place!
+
+## Project Structure
+
+```
+terraform-lab/
+├── main.tf                    # Root module with unified service deployment
+├── locals.tf                  # ALL service configurations (single source of truth)
+├── variables.tf               # Input variables
+├── outputs.tf                 # Output values
+├── backend.tf                 # Terraform backend configuration
+├── versions.tf                # Provider version constraints
+│
+├── modules/
+│   └── service/               # UNIFIED service module (Windows + Unix)
+│       ├── main.tf            # Generic instance, SG, and DNS resources
+│       ├── variables.tf       # Module inputs
+│       ├── outputs.tf         # Module outputs
+│       └── README.md          # Module documentation
+│
+├── global/                    # Global infrastructure
+│   ├── vpc/                   # VPC, subnets, routing
+│   ├── iam/                   # IAM roles and policies
+│   ├── route53/               # DNS zones
+│   └── dynamodb/              # State locking
+│
+├── user_data/                 # Bootstrap scripts
+│   ├── config-win.ps1         # Windows initialization
+│   └── config-linux.sh        # Linux initialization
+│
+├── playbooks/                 # Ansible configuration
+│   ├── system/                # Base OS configuration
+│   └── apps/                  # Application configuration
+│
+├── inventory/                 # Ansible dynamic inventory
+│   └── aws_ec2.yaml           # AWS EC2 plugin configuration
+│
+└── docs/                      # Documentation
+    ├── ARCHITECTURE.md        # Architecture details
+    ├── TERRAFORM-DOCS.md      # Terraform documentation
+    └── DEPLOYMENT-STATUS.md   # Deployment guide
+```

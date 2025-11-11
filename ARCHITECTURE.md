@@ -203,9 +203,10 @@ Each service configuration supports:
 
 ## Adding a New Service
 
-To add a new service:
+To add a new service, you only need to edit **2 files**:
 
-1. **Add to `locals.tf`**:
+### 1. Add Configuration to `locals.tf`
+
 ```hcl
 locals {
   windows_services = {
@@ -220,28 +221,69 @@ locals {
       root_volume_size = 30
       has_public_dns   = false
       creates_sg       = true
+      needs_domain_sg  = true  # Optional: if service needs domain membership
+      
+      # Optional: Custom security group rules
+      ingress_rules = [
+        {
+          description = "Custom port"
+          from_port   = 8080
+          to_port     = 8080
+          protocol    = "tcp"
+          cidr_blocks = ["10.0.0.0/16"]
+        }
+      ]
     }
   }
 }
 ```
 
-2. **Add to `variables.tf`**:
+### 2. Add to `variables.tf`
+
 ```hcl
 variable "aws_number" {
+  description = "Number of instances to create for each service type (0-10)"
+  type        = map(number)
+  
   default = {
     # ... existing services
-    "mynewservice" = 0
+    "mynewservice" = 0  # Set to 0 by default, enable when needed
   }
 }
 ```
 
-3. **Deploy**:
+### 3. Deploy
+
 ```bash
+# Validate configuration
+terraform validate
+
+# Review changes
 terraform plan
+
+# Deploy
 terraform apply
 ```
 
-That's it! No need to create a new module or update multiple files.
+That's it! The unified service module automatically handles:
+- EC2 instance creation
+- Security group creation (if `creates_sg = true`)
+- DNS record creation (private and optionally public)
+- Proper security group associations based on `os_type`
+- User data script application
+- Volume encryption
+- IMDSv2 enforcement
+
+### Configuration Options Reference
+
+See [modules/service/README.md](modules/service/README.md) for complete configuration options including:
+- `extra_volumes`: Additional EBS volumes
+- `extra_dns_names`: Additional DNS aliases
+- `cidr_override`: Use different CIDR blocks
+- `skip_cidr`: Don't pass CIDR blocks
+- `needs_dc_sg`: Require DC security group
+- `needs_nbu_sg`: Require NBU client security group
+- And more...
 
 ## Modifying a Service
 

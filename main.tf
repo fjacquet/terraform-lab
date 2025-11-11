@@ -440,9 +440,9 @@ module "services" {
   config         = each.value
 
   # Common configuration passed once for all services
-  ami_ids                  = local.ami_ids
-  common_metadata_options  = local.common_instance_metadata_options
-  common_root_block_device = local.common_instance_root_block_device
+  ami_ids                     = local.ami_ids
+  common_metadata_options     = local.common_instance_metadata_options
+  common_root_block_device    = local.common_instance_root_block_device
 
   vpc_id = module.global.aws_vpc_id
 
