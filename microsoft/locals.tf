@@ -33,4 +33,39 @@ locals {
   web_subnet_sg_ids = local.common_windows_sg_ids
 
   mgmt_subnet_sg_ids = local.common_windows_sg_ids
+
+  # Common egress rules for all security groups
+  # Eliminates duplication of identical egress blocks across 18+ security groups
+  common_egress_rules = [
+    {
+      description      = "Allow all outbound IPv4 traffic"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = []
+    },
+    {
+      description      = "Allow all outbound IPv6 traffic"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = []
+      ipv6_cidr_blocks = ["::/0"]
+    }
+  ]
+
+  # Common instance metadata options - enforces IMDSv2
+  # Eliminates duplication across all EC2 instance resources
+  common_instance_metadata_options = {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+    http_endpoint               = "enabled"
+  }
+
+  # Common instance root block device configuration
+  # Ensures all instances have encrypted root volumes
+  common_instance_root_block_device = {
+    encrypted = true
+  }
 }

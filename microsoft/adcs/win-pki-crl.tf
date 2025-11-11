@@ -11,7 +11,7 @@ resource "aws_instance" "pki-crl" {
 
 
   root_block_device {
-    encrypted = true
+    encrypted = var.common_instance_root_block_device.encrypted
   }
 
   tags = {
@@ -21,9 +21,9 @@ resource "aws_instance" "pki-crl" {
     system      = "windows"
   }
   metadata_options {
-    http_tokens                 = "required"
-    http_put_response_hop_limit = 1
-    http_endpoint               = "enabled"
+    http_tokens                 = var.common_instance_metadata_options.http_tokens
+    http_put_response_hop_limit = var.common_instance_metadata_options.http_put_response_hop_limit
+    http_endpoint               = var.common_instance_metadata_options.http_endpoint
   }
   lifecycle {
     ignore_changes = [user_data]

@@ -10,6 +10,10 @@ module "adcs" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number_pki-crl  = var.aws_number["pki-crl"]
   aws_number_pki-ica  = var.aws_number["pki-ica"]
@@ -42,6 +46,10 @@ module "adds" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["dc"]
   aws_subnet_id = var.aws_subnet_back_id
@@ -71,6 +79,10 @@ module "adfs" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["adfs"]
   aws_subnet_id = var.aws_subnet_web_id
@@ -97,6 +109,10 @@ module "dhcp" {
   azs                     = local.common_windows_config.azs
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["dhcp"]
@@ -125,6 +141,10 @@ module "da" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["da"]
   aws_subnet_id = var.aws_subnet_mgmt_id
@@ -152,6 +172,10 @@ module "exchange" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["exchange"]
   aws_subnet_id = var.aws_subnet_exchange_id
@@ -178,6 +202,10 @@ module "fs" {
   azs                     = local.common_windows_config.azs
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["fs"]
@@ -208,6 +236,10 @@ module "ipam" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["ipam"]
   aws_subnet_id = var.aws_subnet_back_id
@@ -234,6 +266,10 @@ module "mgmt" {
   azs                     = local.common_windows_config.azs
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_public_zone_id      = local.common_windows_config.dns_public_zone_id
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Service-specific configuration
@@ -256,6 +292,10 @@ module "nps" {
   azs                     = local.common_windows_config.azs
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["nps"]
@@ -283,6 +323,10 @@ module "rdsh" {
   azs                     = local.common_windows_config.azs
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number            = var.aws_number["rdsh"]
@@ -312,6 +356,10 @@ module "sharepoint" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["sharepoint"]
   aws_subnet_id = var.aws_subnet_web_id
@@ -340,6 +388,10 @@ module "sql" {
   azs                     = local.common_windows_config.azs
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["sql"]
@@ -372,6 +424,10 @@ module "simpana" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["simpana"]
   aws_subnet_id = var.aws_subnet_backup_id
@@ -398,6 +454,10 @@ module "sofs" {
   azs                     = local.common_windows_config.azs
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number            = var.aws_number["sofs"]
@@ -427,6 +487,10 @@ module "wac" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["wac"]
   aws_subnet_id = var.aws_subnet_back_id
@@ -454,6 +518,10 @@ module "wds" {
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific configuration
   aws_number    = var.aws_number["wds"]
   aws_subnet_id = var.aws_subnet_back_id
@@ -480,6 +548,10 @@ module "wsus" {
   azs                     = local.common_windows_config.azs
   dns_zone_id             = local.common_windows_config.dns_zone_id
   dns_suffix              = local.common_windows_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["wsus"]
@@ -527,22 +599,17 @@ resource "aws_security_group" "rdp" {
     cidr_blocks = var.admin_cidr_blocks
   }
 
-  # Outbound internet access (IPv4)
-  egress {
-    description = "Allow all outbound IPv4 traffic"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # Outbound internet access (IPv6)
-  egress {
-    description      = "Allow all outbound IPv6 traffic"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    ipv6_cidr_blocks = ["::/0"]
+  # Dynamic egress rules - eliminates code duplication
+  dynamic "egress" {
+    for_each = local.common_egress_rules
+    content {
+      description      = egress.value.description
+      from_port        = egress.value.from_port
+      to_port          = egress.value.to_port
+      protocol         = egress.value.protocol
+      cidr_blocks      = egress.value.cidr_blocks
+      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
+    }
   }
 }
 
@@ -712,22 +779,17 @@ resource "aws_security_group" "domain-member" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  # Outbound internet access (IPv4)
-  egress {
-    description = "Allow all outbound IPv4 traffic"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # Outbound internet access (IPv6)
-  egress {
-    description      = "Allow all outbound IPv6 traffic"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    ipv6_cidr_blocks = ["::/0"]
+  # Dynamic egress rules - eliminates code duplication
+  dynamic "egress" {
+    for_each = local.common_egress_rules
+    content {
+      description      = egress.value.description
+      from_port        = egress.value.from_port
+      to_port          = egress.value.to_port
+      protocol         = egress.value.protocol
+      cidr_blocks      = egress.value.cidr_blocks
+      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
+    }
   }
 }
 

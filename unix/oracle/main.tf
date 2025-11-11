@@ -1,3 +1,25 @@
+locals {
+  # Common egress rules - allow all outbound traffic
+  common_egress_rules = [
+    {
+      description      = "Allow all outbound IPv4 traffic"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = []
+    },
+    {
+      description      = "Allow all outbound IPv6 traffic"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = []
+      ipv6_cidr_blocks = ["::/0"]
+    }
+  ]
+}
+
 resource "aws_route53_record" "oracle" {
   count   = var.aws_number
   zone_id = var.dns_zone_id
@@ -33,13 +55,13 @@ resource "aws_instance" "oracle" {
     ignore_changes = [user_data]
   }
   metadata_options {
-    http_tokens                 = "required"
-    http_put_response_hop_limit = 1
-    http_endpoint               = "enabled"
+    http_tokens                 = var.common_instance_metadata_options.http_tokens
+    http_put_response_hop_limit = var.common_instance_metadata_options.http_put_response_hop_limit
+    http_endpoint               = var.common_instance_metadata_options.http_endpoint
   }
 
   root_block_device {
-    encrypted   = true
+    encrypted   = var.common_instance_root_block_device.encrypted
     volume_size = 80
   }
 
@@ -93,18 +115,16 @@ resource "aws_security_group" "oracle" {
     cidr_blocks = ["10.0.0.0/16"]
   }
 
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    ipv6_cidr_blocks = ["::/0"]
+  # Dynamic egress rules - eliminates code duplication
+  dynamic "egress" {
+    for_each = local.common_egress_rules
+    content {
+      description      = egress.value.description
+      from_port        = egress.value.from_port
+      to_port          = egress.value.to_port
+      protocol         = egress.value.protocol
+      cidr_blocks      = egress.value.cidr_blocks
+      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
+    }
   }
 }

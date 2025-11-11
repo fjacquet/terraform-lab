@@ -38,3 +38,19 @@ variable "azs" {
   type = list(string)
 }
 
+
+variable "common_instance_metadata_options" {
+  description = "Common metadata options for EC2 instances (IMDSv2 enforcement)"
+  type = object({
+    http_tokens                 = string
+    http_put_response_hop_limit = number
+    http_endpoint               = string
+  })
+}
+
+variable "common_instance_root_block_device" {
+  description = "Common root block device configuration for EC2 instances"
+  type = object({
+    encrypted = bool
+  })
+}

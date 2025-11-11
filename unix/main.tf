@@ -10,6 +10,10 @@ module "bsd" {
   dns_zone_id          = local.common_unix_config.dns_zone_id
   dns_suffix           = local.common_unix_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Common security groups
   aws_sg_ids = local.common_unix_sg_ids
 }
@@ -27,6 +31,10 @@ module "glpi" {
   azs                     = local.common_unix_config.azs
   dns_zone_id             = local.common_unix_config.dns_zone_id
   dns_suffix              = local.common_unix_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific security groups
   aws_sg_ids = flatten([
@@ -48,6 +56,10 @@ module "vault" {
   dns_zone_id             = local.common_unix_config.dns_zone_id
   dns_suffix              = local.common_unix_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Service-specific security groups
   aws_sg_ids = flatten([
     aws_security_group.ssh.id,
@@ -68,6 +80,10 @@ module "guacamole" {
   azs                     = local.common_unix_config.azs
   dns_zone_id             = local.common_unix_config.dns_zone_id
   dns_public_zone_id      = local.common_unix_config.dns_public_zone_id
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
   dns_suffix              = local.common_unix_config.dns_suffix
 
   # Service-specific security groups
@@ -93,6 +109,10 @@ module "nbu" {
   dns_zone_id             = local.common_unix_config.dns_zone_id
   dns_suffix              = local.common_unix_config.dns_suffix
 
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
+
   # Use computed CIDR blocks from root locals
   cidr = local.cidr_blocks.backup
 
@@ -115,6 +135,10 @@ module "oracle" {
   azs                     = local.common_unix_config.azs
   dns_zone_id             = local.common_unix_config.dns_zone_id
   dns_suffix              = local.common_unix_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Use computed CIDR blocks from root locals
   cidr = local.cidr_blocks.back
@@ -141,6 +165,10 @@ module "redis" {
   azs                     = local.common_unix_config.azs
   dns_zone_id             = local.common_unix_config.dns_zone_id
   dns_suffix              = local.common_unix_config.dns_suffix
+
+  # Common instance configuration
+  common_instance_metadata_options    = local.common_instance_metadata_options
+  common_instance_root_block_device   = local.common_instance_root_block_device
 
   # Service-specific security groups
   aws_sg_ids = flatten([
@@ -172,22 +200,17 @@ resource "aws_security_group" "ssh" {
     cidr_blocks = ["10.0.0.0/16"]
   }
 
-  # Outbound internet access (IPv4)
-  egress {
-    description = "Allow all outbound IPv4 traffic"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # Outbound internet access (IPv6)
-  egress {
-    description      = "Allow all outbound IPv6 traffic"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    ipv6_cidr_blocks = ["::/0"]
+  # Dynamic egress rules - eliminates code duplication
+  dynamic "egress" {
+    for_each = local.common_egress_rules
+    content {
+      description      = egress.value.description
+      from_port        = egress.value.from_port
+      to_port          = egress.value.to_port
+      protocol         = egress.value.protocol
+      cidr_blocks      = egress.value.cidr_blocks
+      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
+    }
   }
 }
 
