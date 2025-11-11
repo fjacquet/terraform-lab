@@ -93,9 +93,9 @@ locals {
       root_volume_size = 30
       has_public_dns   = false
       # Service creates its own security group with DC-specific rules
-      creates_sg       = true
+      creates_sg = true
       # Requires domain-member security group reference
-      needs_domain_sg  = true
+      needs_domain_sg = true
     }
 
     # Active Directory Federation Services - SSO and federation
@@ -134,7 +134,7 @@ locals {
       has_public_dns   = false
       creates_sg       = true
       # DA uses web CIDR blocks for routing
-      cidr_override    = "web"
+      cidr_override = "web"
     }
 
     # Exchange Server - Email and collaboration
@@ -185,7 +185,7 @@ locals {
       has_public_dns   = true
       creates_sg       = false
       # mgmt doesn't use cidr parameter
-      skip_cidr        = true
+      skip_cidr = true
     }
 
     # Network Policy Server - RADIUS authentication
@@ -236,7 +236,7 @@ locals {
       has_public_dns   = false
       creates_sg       = true
       # SQL uses sql CIDR blocks
-      cidr_override    = "sql"
+      cidr_override = "sql"
     }
 
     # Commvault Simpana - Backup server
@@ -250,9 +250,9 @@ locals {
       has_public_dns   = false
       creates_sg       = true
       # Simpana uses back CIDR blocks
-      cidr_override    = "back"
+      cidr_override = "back"
       # Simpana doesn't include its own client SG in the list
-      skip_own_sg      = true
+      skip_own_sg = true
     }
 
     # Scale-Out File Server - Clustered file services
@@ -279,7 +279,7 @@ locals {
       has_public_dns   = false
       creates_sg       = true
       # WAC uses mgmt CIDR blocks
-      cidr_override    = "mgmt"
+      cidr_override = "mgmt"
     }
 
     # Windows Deployment Services - OS deployment
@@ -293,7 +293,7 @@ locals {
       has_public_dns   = false
       creates_sg       = true
       # WDS uses backup CIDR blocks
-      cidr_override    = "backup"
+      cidr_override = "backup"
     }
 
     # Windows Server Update Services - Patch management
@@ -307,7 +307,7 @@ locals {
       has_public_dns   = false
       creates_sg       = true
       # WSUS uses backup CIDR blocks
-      cidr_override    = "backup"
+      cidr_override = "backup"
     }
   }
 
@@ -324,9 +324,9 @@ locals {
       has_public_dns   = true
       creates_sg       = true
       # Guacamole doesn't use cidr parameter
-      skip_cidr        = true
+      skip_cidr = true
       # Additional public DNS records for bastion
-      extra_dns_names  = ["bastion"]
+      extra_dns_names = ["bastion"]
     }
 
     # GLPI - IT asset management and helpdesk
@@ -383,7 +383,7 @@ locals {
       has_public_dns   = false
       creates_sg       = true
       # Oracle needs NBU client SG
-      needs_nbu_sg     = true
+      needs_nbu_sg = true
     }
 
     # Redis - In-memory data store
@@ -411,50 +411,93 @@ locals {
       creates_sg       = false
       skip_cidr        = true
     }
-  }
 
-  # PKI Services - Special handling for multiple instance types
-  # ADCS module handles 4 different PKI roles
-  pki_services = {
-    "pki-rca" = {
+    # ========================================================================
+    # KUBERNETES/CONTAINER SERVICES (NOT YET IMPLEMENTED)
+    # These are placeholders for future implementation
+    # ========================================================================
+
+    # etcd - Distributed key-value store for Kubernetes
+    etcd = {
       instance_type    = "t3.medium"
       subnet_type      = "back"
-      os_type          = "windows"
-      ami_type         = "windows2022"
-      user_data        = "user_data/config-win.ps1"
+      os_type          = "debian"
+      ami_type         = "debian"
+      user_data        = "user_data/config-linux.sh"
       root_volume_size = 30
       has_public_dns   = false
-      pki_role         = "rca"
+      creates_sg       = true
+      skip_cidr        = true
     }
-    "pki-ica" = {
+
+    # workers - Kubernetes worker nodes
+    workers = {
       instance_type    = "t3.medium"
       subnet_type      = "back"
-      os_type          = "windows"
-      ami_type         = "windows2022"
-      user_data        = "user_data/config-win.ps1"
-      root_volume_size = 30
+      os_type          = "debian"
+      ami_type         = "debian"
+      user_data        = "user_data/config-linux.sh"
+      root_volume_size = 50
       has_public_dns   = false
-      pki_role         = "ica"
+      creates_sg       = true
+      skip_cidr        = true
     }
-    "pki-crl" = {
+
+    # longhorn - Distributed block storage for Kubernetes
+    longhorn = {
       instance_type    = "t3.medium"
       subnet_type      = "back"
-      os_type          = "windows"
-      ami_type         = "windows2022"
-      user_data        = "user_data/config-win.ps1"
-      root_volume_size = 30
+      os_type          = "debian"
+      ami_type         = "debian"
+      user_data        = "user_data/config-linux.sh"
+      root_volume_size = 100
       has_public_dns   = false
-      pki_role         = "crl"
+      creates_sg       = true
+      skip_cidr        = true
     }
-    "pki-ndes" = {
+
+    # rancher - Kubernetes management platform
+    rancher = {
       instance_type    = "t3.medium"
-      subnet_type      = "back"
-      os_type          = "windows"
-      ami_type         = "windows2022"
-      user_data        = "user_data/config-win.ps1"
+      subnet_type      = "mgmt"
+      os_type          = "debian"
+      ami_type         = "debian"
+      user_data        = "user_data/config-linux.sh"
+      root_volume_size = 30
+      has_public_dns   = true
+      creates_sg       = true
+      skip_cidr        = true
+    }
+
+    # ========================================================================
+    # BACKUP SERVICES (NOT YET IMPLEMENTED)
+    # These are placeholders for future implementation
+    # ========================================================================
+
+    # opscenter - DataStax OpsCenter for Cassandra management
+    opscenter = {
+      instance_type    = "t3.medium"
+      subnet_type      = "mgmt"
+      os_type          = "debian"
+      ami_type         = "debian"
+      user_data        = "user_data/config-linux.sh"
       root_volume_size = 30
       has_public_dns   = false
-      pki_role         = "ndes"
+      creates_sg       = true
+      skip_cidr        = true
+    }
+
+    # symv - Symantec/Veritas backup (alternative to NetBackup)
+    symv = {
+      instance_type    = "t3.medium"
+      subnet_type      = "backup"
+      os_type          = "debian"
+      ami_type         = "debian"
+      user_data        = "user_data/config-linux.sh"
+      root_volume_size = 30
+      has_public_dns   = false
+      creates_sg       = true
+      skip_cidr        = true
     }
   }
 

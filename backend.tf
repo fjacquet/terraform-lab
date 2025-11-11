@@ -33,10 +33,6 @@ provider "aws" {
   }
 }
 
-data "aws_s3_bucket" "tf-config" {
-  bucket = "tf-config"
-}
-
 resource "aws_key_pair" "auth" {
   key_name   = var.key_name
   public_key = var.public_key

@@ -170,7 +170,7 @@ terraform-lab/
 - ✅ SQL Server 2019
 - ✅ Debian 12
 - ✅ RHEL 9 (conditional)
-- ✅ FreeBSD 13 (conditional)
+- ✅ FreeBSD 14 (conditional)
 
 ### Security Groups
 - ✅ RDP (Windows administrative access)

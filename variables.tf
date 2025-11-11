@@ -11,15 +11,19 @@ variable "public_key" {
 
 variable "key_name" {
   description = "Desired name of AWS key pair"
+  type        = string
   default     = "aws"
 }
 
 variable "dns_suffix" {
   description = "name of DNS zone"
+  type        = string
   default     = "ez-lab.xyz"
 }
+
 variable "public_dns_id" {
   description = "ID of public DNS"
+  type        = string
   default     = "Z07150253A0MNSTGYQG5P"
 }
 
@@ -51,14 +55,7 @@ variable "aws_region" {
   }
 }
 
-variable "aws_disks_size" {
-  // type = map(string)
 
-  default = {
-    nbu_backups = 500
-    nbu_openv   = 50
-  }
-}
 
 variable "access_key" {
   description = "AWS access key (prefer using IAM roles or AWS SSO instead)"
@@ -121,7 +118,7 @@ variable "cidrbyte" {
   }
 
   validation {
-    condition     = alltrue([for v in values(var.cidrbyte) : v >= 3 && v <= 255])
+    condition     = alltrue([for v in values(var.cidrbyte) : v >= 0 && v <= 255])
     error_message = "CIDR byte values must be between 0 and 255."
   }
 }
@@ -168,7 +165,7 @@ variable "aws_number" {
   }
 
   validation {
-    condition     = alltrue([for v in values(var.aws_number) : v >= 3 && v <= 10])
+    condition     = alltrue([for v in values(var.aws_number) : v >= 0 && v <= 10])
     error_message = "Instance counts must be between 0 and 10."
   }
 }

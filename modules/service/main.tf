@@ -61,8 +61,8 @@ locals {
   # Add service-specific security group if it creates one
   service_sg_ids = lookup(var.config, "creates_sg", false) ? [aws_security_group.service[0].id] : []
 
-  # Combine all security groups
-  all_sg_ids = concat(local.base_sg_ids, local.service_sg_ids, var.nbu_client_sg_ids)
+  # Combine all security groups and filter out empty strings and nulls
+  all_sg_ids = compact(concat(local.base_sg_ids, local.service_sg_ids, var.nbu_client_sg_ids))
 }
 
 # ============================================================================

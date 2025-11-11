@@ -1,0 +1,2503 @@
+[0m[33mRunning plan in the remote backend. Output will stream here. Pressing Ctrl-C
+will stop streaming the logs, but will not stop the plan running remotely.[0m
+
+Preparing the remote plan...
+[0m
+[0m[33mTo view this run in a browser, visit:[0m
+[0m[33mhttps://app.terraform.io/app/fjacquet/terraform-lab/runs/run-xHHxZgMf2MpFwKtW[0m
+[0m
+Waiting for the plan to start...
+
+Terraform v1.13.5
+on linux_amd64
+Initializing plugins and modules...
+[0m[1mmodule.global.module.route53.data.aws_route53_zone.ezlab-public[0]: Reading...[0m[0m
+[0m[1mdata.aws_ami.sql2019: Reading...[0m[0m
+[0m[1mdata.aws_ami.rhel9[0]: Reading...[0m[0m
+[0m[1mdata.aws_ami.bsd[0]: Reading...[0m[0m
+[0m[1mdata.aws_ami.debian: Reading...[0m[0m
+[0m[1mdata.aws_ami.windows2022: Reading...[0m[0m
+[0m[1mmodule.global.module.route53.data.aws_route53_zone.ezlab-public[0]: Read complete after 0s [id=Z07150253A0MNSTGYQG5P][0m
+[0m[1mdata.aws_ami.windows2022: Read complete after 0s [id=ami-0c0dd5ec2d91c4221][0m
+[0m[1mdata.aws_ami.sql2019: Read complete after 0s [id=ami-05fcc9ea07c99ca7c][0m
+[0m[1mdata.aws_ami.rhel9[0]: Read complete after 0s [id=ami-0cfe4b47ad4c9e739][0m
+[0m[1mdata.aws_ami.debian: Read complete after 0s [id=ami-0735bf8e58d02fa57][0m
+[0m[1mdata.aws_ami.bsd[0]: Read complete after 0s [id=ami-0a1138c218f7156ce][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+
+Terraform planned the following actions, but then encountered a problem:
+
+[1m  # aws_key_pair.auth[0m will be created
+[0m  [32m+[0m[0m resource "aws_key_pair" "auth" {
+      [32m+[0m[0m arn             = (known after apply)
+      [32m+[0m[0m fingerprint     = (known after apply)
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m key_name        = "aws-test"
+      [32m+[0m[0m key_name_prefix = (known after apply)
+      [32m+[0m[0m key_pair_id     = (known after apply)
+      [32m+[0m[0m key_type        = (known after apply)
+      [32m+[0m[0m public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+sBJl4PYrY+DEjXFU8QUR2wGrZruh/PETMkr585aIv/F06K7vcpR012J9cjh3Ib14Kx5PAHhrm2r/jAnMPLaBZinJIDJGGuc/Tv/m/3P39Yl/QvfTZ/A2Cjy0g6Igmc4C3Kd6T0WBRqxWRxM3yRJRuq2Iv9UDCAasQ/UFZ4RAWiPWkrQVWsJvkkEXcJ/TciV0+DBodXTaQQ1Af8a8tHuzD9m5ALkdgpmjqwnrNwrJCKy4R7Kn1ZcDMn0ajrVux/ejXrPch8APzC4iS2dlGel+hbHHpeAszkiFZpNMZ6SOH2u6Qq5viPffMKoAM00m7MvEfFziRx/EDSFul1Wk78pC599Q1QtVGaDIvQZwyRRZoOCOqWc+PaBnUa43AcETEOQt+7BylIpxczvi0NcIemyeisXtxCrfTZk6rZHF3r/NeSKHEUxadTXvPZHjkS2l4hzqHwGCfpEOIKNpBXRWchcm4cnMuXh6/ZUTda5BsYGZjX74KfTxrBkOxz0+J6HPUws= fjacquet@mm-fj.ljf.home"
+      [32m+[0m[0m tags_all        = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+    }
+
+[1m  # aws_security_group.domain_member[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "domain_member" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for Active Directory domain member traffic"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "10.0.0.0/16",
+                ]
+              [32m+[0m[0m description      = "Allow FusionInventory agent from VPC"
+              [32m+[0m[0m from_port        = 62354
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 62354
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow DNS TCP from domain members"
+              [32m+[0m[0m from_port        = 53
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 53
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow DNS UDP from domain members"
+              [32m+[0m[0m from_port        = 53
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "udp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 53
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow FusionInventory agent from IPv6"
+              [32m+[0m[0m from_port        = 62354
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 62354
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow ICMP ping from domain members"
+              [32m+[0m[0m from_port        = 8
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "icmp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 8
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow Kerberos TCP from domain members"
+              [32m+[0m[0m from_port        = 88
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 88
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow Kerberos UDP from domain members"
+              [32m+[0m[0m from_port        = 88
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "udp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 88
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow Kerberos password change from domain members"
+              [32m+[0m[0m from_port        = 749
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "udp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 749
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow LDAP Global Catalog from domain members"
+              [32m+[0m[0m from_port        = 3268
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 3269
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow LDAP TCP from domain members"
+              [32m+[0m[0m from_port        = 389
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 389
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow LDAP UDP from domain members"
+              [32m+[0m[0m from_port        = 389
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "udp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 389
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow LDAPS TCP from domain members"
+              [32m+[0m[0m from_port        = 636
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 636
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow LDAPS UDP from domain members"
+              [32m+[0m[0m from_port        = 636
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "udp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 636
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow NTP from domain members"
+              [32m+[0m[0m from_port        = 123
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "udp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 123
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow RPC endpoint mapper from domain members"
+              [32m+[0m[0m from_port        = 135
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 135
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow SMB TCP from domain members"
+              [32m+[0m[0m from_port        = 445
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 445
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow SMB UDP from domain members"
+              [32m+[0m[0m from_port        = 445
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "udp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 445
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow WinRM from domain members"
+              [32m+[0m[0m from_port        = 5985
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 5986
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow dynamic RPC ports from domain members"
+              [32m+[0m[0m from_port        = 49152
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 65535
+            },
+        ]
+      [32m+[0m[0m name                   = "tf_ezlab_domain_member"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_security_group.rdp[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "rdp" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for Windows administrative access (RDP, SSH, WinRM)"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "10.0.0.0/16",
+                ]
+              [32m+[0m[0m description      = "Allow RDP from admin CIDR blocks"
+              [32m+[0m[0m from_port        = 3389
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 3389
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "10.0.0.0/16",
+                ]
+              [32m+[0m[0m description      = "Allow SSH from admin CIDR blocks"
+              [32m+[0m[0m from_port        = 22
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 22
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "10.0.0.0/16",
+                ]
+              [32m+[0m[0m description      = "Allow WinRM (HTTP and HTTPS) from admin CIDR blocks"
+              [32m+[0m[0m from_port        = 5985
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 5986
+            },
+        ]
+      [32m+[0m[0m name                   = "tf_ezlab_rdp"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_security_group.simpana_client[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "simpana_client" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for Simpana/Commvault backup clients"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "10.0.0.0/16",
+                ]
+              [32m+[0m[0m description      = "Simpana web console"
+              [32m+[0m[0m from_port        = 81
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 81
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Simpana client services (CVD)"
+              [32m+[0m[0m from_port        = 8400
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 8403
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Simpana data transfer"
+              [32m+[0m[0m from_port        = 8600
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = true
+              [32m+[0m[0m to_port          = 8699
+            },
+        ]
+      [32m+[0m[0m name                   = "tf_ezlab_simpana_client"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "tf_ezlab_simpana_client"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "tf_ezlab_simpana_client"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # aws_security_group.ssh[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "ssh" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for Unix/Linux administrative access (SSH)"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "10.0.0.0/16",
+                ]
+              [32m+[0m[0m description      = "Allow Cockpit web console from VPC"
+              [32m+[0m[0m from_port        = 9090
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 9090
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "10.0.0.0/16",
+                ]
+              [32m+[0m[0m description      = "Allow SSH from admin CIDR blocks"
+              [32m+[0m[0m from_port        = 22
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 22
+            },
+        ]
+      [32m+[0m[0m name                   = "tf_ezlab_lssh"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["adds"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for adds service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_adds"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["adfs"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for adfs service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_adfs"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["da"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for da service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_da"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["dhcp"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for dhcp service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_dhcp"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["exchange"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for exchange service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_exchange"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["fs"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for fs service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_fs"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["glpi"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for glpi service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_glpi"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["guacamole"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for guacamole service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_guacamole"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["ipam"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for ipam service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_ipam"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["nps"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for nps service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_nps"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["oracle"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for oracle service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_oracle"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["rdsh"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for rdsh service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_rdsh"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["redis"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for redis service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_redis"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["sharepoint"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for sharepoint service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_sharepoint"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["simpana"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for simpana service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_simpana"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["sofs"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for sofs service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_sofs"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["sql"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for sql service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_sql"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["vault"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for vault service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_vault"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["wac"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for wac service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_wac"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["wds"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for wds service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_wds"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.services["wsus"].aws_security_group.service[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "service" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for wsus service"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound IPv4 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "Allow all outbound IPv6 traffic"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = [
+                  [32m+[0m[0m "::/0",
+                ]
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = "tf_ezlab_wsus"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.global.module.iam.aws_iam_instance_profile.aws_iip_assumerole[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_instance_profile" "aws_iip_assumerole" {
+      [32m+[0m[0m arn         = (known after apply)
+      [32m+[0m[0m create_date = (known after apply)
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = (known after apply)
+      [32m+[0m[0m name_prefix = (known after apply)
+      [32m+[0m[0m path        = "/"
+      [32m+[0m[0m role        = (known after apply)
+      [32m+[0m[0m tags_all    = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m unique_id   = (known after apply)
+    }
+
+[1m  # module.global.module.iam.aws_iam_policy.ec2getsecret[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "ec2getsecret" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m attachment_count = (known after apply)
+      [32m+[0m[0m description      = "ec2 can access secretes"
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m name             = (known after apply)
+      [32m+[0m[0m name_prefix      = (known after apply)
+      [32m+[0m[0m path             = "/"
+      [32m+[0m[0m policy           = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = "secretsmanager:GetSecretValue"
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "arn:aws:secretsmanager:eu-west-1:240388846865:secret:*"
+                      [32m+[0m[0m Sid      = "VisualEditor0"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "secretsmanager:GetRandomPassword",
+                          [32m+[0m[0m "secretsmanager:CreateSecret",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                      [32m+[0m[0m Sid      = "VisualEditor1"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m policy_id        = (known after apply)
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+    }
+
+[1m  # module.global.module.iam.aws_iam_policy.ec2ro[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "ec2ro" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m attachment_count = (known after apply)
+      [32m+[0m[0m description      = "ec2 can access ec2 read only"
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m name             = (known after apply)
+      [32m+[0m[0m name_prefix      = (known after apply)
+      [32m+[0m[0m path             = "/"
+      [32m+[0m[0m policy           = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "ec2:*",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                      [32m+[0m[0m Sid      = ""
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m policy_id        = (known after apply)
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+    }
+
+[1m  # module.global.module.iam.aws_iam_policy.ec2s3access[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "ec2s3access" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m attachment_count = (known after apply)
+      [32m+[0m[0m description      = "ec2 can access s3 install"
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m name             = (known after apply)
+      [32m+[0m[0m name_prefix      = (known after apply)
+      [32m+[0m[0m path             = "/"
+      [32m+[0m[0m policy           = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "s3:ListBucket",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:s3:::installers-fja",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "s3:GetObject",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:s3:::installers-fja/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "s3:PutObject",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:s3:::installers-fja/*",
+                        ]
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m policy_id        = (known after apply)
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+    }
+
+[1m  # module.global.module.iam.aws_iam_policy_attachment.assumerole-ec2ro-attach[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy_attachment" "assumerole-ec2ro-attach" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m name       = "assumerole-ec2ro-attach"
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m roles      = (known after apply)
+    }
+
+[1m  # module.global.module.iam.aws_iam_policy_attachment.assumerole-ec2s3access-attach[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy_attachment" "assumerole-ec2s3access-attach" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m name       = "assumerole-ec2s3access-attach"
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m roles      = (known after apply)
+    }
+
+[1m  # module.global.module.iam.aws_iam_policy_attachment.assumerole-getsecret-attach[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy_attachment" "assumerole-getsecret-attach" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m name       = "assumerole-getsecret-attach"
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m roles      = (known after apply)
+    }
+
+[1m  # module.global.module.iam.aws_iam_role.assumerole[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "assumerole" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "sts:AssumeRole"
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = {
+                          [32m+[0m[0m Service = "ec2.amazonaws.com"
+                        }
+                      [32m+[0m[0m Sid       = ""
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m force_detach_policies = false
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = (known after apply)
+      [32m+[0m[0m name_prefix           = (known after apply)
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags_all              = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m unique_id             = (known after apply)
+
+      [32m+[0m[0m inline_policy (known after apply)
+    }
+
+[1m  # module.global.module.route53.aws_route53_zone.ezlab[0m will be created
+[0m  [32m+[0m[0m resource "aws_route53_zone" "ezlab" {
+      [32m+[0m[0m arn                 = (known after apply)
+      [32m+[0m[0m comment             = "Managed by Terraform"
+      [32m+[0m[0m force_destroy       = false
+      [32m+[0m[0m id                  = (known after apply)
+      [32m+[0m[0m name                = "ez-lab.xyz"
+      [32m+[0m[0m name_servers        = (known after apply)
+      [32m+[0m[0m primary_name_server = (known after apply)
+      [32m+[0m[0m tags                = {
+          [32m+[0m[0m "Environment" = "lab"
+        }
+      [32m+[0m[0m tags_all            = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m zone_id             = (known after apply)
+
+      [32m+[0m[0m vpc {
+          [32m+[0m[0m vpc_id     = (known after apply)
+          [32m+[0m[0m vpc_region = (known after apply)
+        }
+    }
+
+[1m  # module.global.module.vpc.aws_egress_only_internet_gateway.egw6[0m will be created
+[0m  [32m+[0m[0m resource "aws_egress_only_internet_gateway" "egw6" {
+      [32m+[0m[0m id       = (known after apply)
+      [32m+[0m[0m tags     = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "ezlab-egw6"
+        }
+      [32m+[0m[0m tags_all = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "ezlab-egw6"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id   = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_eip.natip[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_eip" "natip" {
+      [32m+[0m[0m allocation_id        = (known after apply)
+      [32m+[0m[0m arn                  = (known after apply)
+      [32m+[0m[0m association_id       = (known after apply)
+      [32m+[0m[0m carrier_ip           = (known after apply)
+      [32m+[0m[0m customer_owned_ip    = (known after apply)
+      [32m+[0m[0m domain               = "vpc"
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m instance             = (known after apply)
+      [32m+[0m[0m ipam_pool_id         = (known after apply)
+      [32m+[0m[0m network_border_group = (known after apply)
+      [32m+[0m[0m network_interface    = (known after apply)
+      [32m+[0m[0m private_dns          = (known after apply)
+      [32m+[0m[0m private_ip           = (known after apply)
+      [32m+[0m[0m ptr_record           = (known after apply)
+      [32m+[0m[0m public_dns           = (known after apply)
+      [32m+[0m[0m public_ip            = (known after apply)
+      [32m+[0m[0m public_ipv4_pool     = (known after apply)
+      [32m+[0m[0m tags                 = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "natip-0"
+        }
+      [32m+[0m[0m tags_all             = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "natip-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc                  = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_internet_gateway.gw[0m will be created
+[0m  [32m+[0m[0m resource "aws_internet_gateway" "gw" {
+      [32m+[0m[0m arn      = (known after apply)
+      [32m+[0m[0m id       = (known after apply)
+      [32m+[0m[0m owner_id = (known after apply)
+      [32m+[0m[0m tags     = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "ezlab-igw"
+        }
+      [32m+[0m[0m tags_all = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "ezlab-igw"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id   = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_nat_gateway.natgw[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_nat_gateway" "natgw" {
+      [32m+[0m[0m allocation_id                      = (known after apply)
+      [32m+[0m[0m association_id                     = (known after apply)
+      [32m+[0m[0m connectivity_type                  = "public"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m network_interface_id               = (known after apply)
+      [32m+[0m[0m private_ip                         = (known after apply)
+      [32m+[0m[0m public_ip                          = (known after apply)
+      [32m+[0m[0m secondary_private_ip_address_count = (known after apply)
+      [32m+[0m[0m secondary_private_ip_addresses     = (known after apply)
+      [32m+[0m[0m subnet_id                          = (known after apply)
+      [32m+[0m[0m tags                               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "natgw-0"
+        }
+      [32m+[0m[0m tags_all                           = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "natgw-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+    }
+
+[1m  # module.global.module.vpc.aws_route.private[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route" "private" {
+      [32m+[0m[0m destination_cidr_block = "0.0.0.0/0"
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m instance_id            = (known after apply)
+      [32m+[0m[0m instance_owner_id      = (known after apply)
+      [32m+[0m[0m nat_gateway_id         = (known after apply)
+      [32m+[0m[0m network_interface_id   = (known after apply)
+      [32m+[0m[0m origin                 = (known after apply)
+      [32m+[0m[0m route_table_id         = (known after apply)
+      [32m+[0m[0m state                  = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route.private-v6[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route" "private-v6" {
+      [32m+[0m[0m destination_ipv6_cidr_block = "::/0"
+      [32m+[0m[0m egress_only_gateway_id      = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m instance_id                 = (known after apply)
+      [32m+[0m[0m instance_owner_id           = (known after apply)
+      [32m+[0m[0m network_interface_id        = (known after apply)
+      [32m+[0m[0m origin                      = (known after apply)
+      [32m+[0m[0m route_table_id              = (known after apply)
+      [32m+[0m[0m state                       = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route_table.private-rt[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "private-rt" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m route            = (known after apply)
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "private-rt-0"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "private-rt-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route_table.public-rt[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "public-rt" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m egress_only_gateway_id     = (known after apply)
+              [32m+[0m[0m ipv6_cidr_block            = "::/0"
+                [90m# (11 unchanged attributes hidden)[0m[0m
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m gateway_id                 = (known after apply)
+                [90m# (11 unchanged attributes hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "public-rt"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "public-rt"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route_table_association.private_back_association[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private_back_association" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route_table_association.private_backup_association[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private_backup_association" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route_table_association.private_exchange_association[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private_exchange_association" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route_table_association.private_subnet_web_association[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private_subnet_web_association" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route_table_association.public_subnet_gw_association[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "public_subnet_gw_association" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_route_table_association.public_subnet_mgmt_association[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "public_subnet_mgmt_association" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_security_group.vpc_endpoints[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "vpc_endpoints" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Security group for VPC interface endpoints"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m description      = "Allow all outbound"
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "10.0.0.0/16",
+                ]
+              [32m+[0m[0m description      = "HTTPS from VPC"
+              [32m+[0m[0m from_port        = 443
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 443
+            },
+        ]
+      [32m+[0m[0m name                   = "tf_ezlab_vpc_endpoints"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "vpc-endpoints-sg"
+        }
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "vpc-endpoints-sg"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_subnet.back[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "back" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = true
+      [32m+[0m[0m availability_zone                              = "eu-west-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.51.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                                = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "subnet-back-0"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "subnet-back-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_subnet.backup[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "backup" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = true
+      [32m+[0m[0m availability_zone                              = "eu-west-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.41.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                                = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "subnet-backup-0"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "subnet-backup-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_subnet.exchange[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "exchange" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = true
+      [32m+[0m[0m availability_zone                              = "eu-west-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.31.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                                = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "subnet-exchange-0"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "subnet-exchange-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_subnet.gw[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "gw" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = true
+      [32m+[0m[0m availability_zone                              = "eu-west-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.101.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                                = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "subnet-gw-0"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "subnet-gw-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_subnet.mgmt[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "mgmt" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = true
+      [32m+[0m[0m availability_zone                              = "eu-west-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.11.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                                = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "subnet-mgmt-0"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "subnet-mgmt-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_subnet.web[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "web" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = true
+      [32m+[0m[0m availability_zone                              = "eu-west-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.0.1.0/24"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                                = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "subnet-web-0"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "subnet-web-0"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_vpc.ezlab[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc" "ezlab" {
+      [32m+[0m[0m arn                                  = (known after apply)
+      [32m+[0m[0m assign_generated_ipv6_cidr_block     = true
+      [32m+[0m[0m cidr_block                           = "10.0.0.0/16"
+      [32m+[0m[0m default_network_acl_id               = (known after apply)
+      [32m+[0m[0m default_route_table_id               = (known after apply)
+      [32m+[0m[0m default_security_group_id            = (known after apply)
+      [32m+[0m[0m dhcp_options_id                      = (known after apply)
+      [32m+[0m[0m enable_dns_hostnames                 = true
+      [32m+[0m[0m enable_dns_support                   = true
+      [32m+[0m[0m enable_network_address_usage_metrics = (known after apply)
+      [32m+[0m[0m id                                   = (known after apply)
+      [32m+[0m[0m instance_tenancy                     = "default"
+      [32m+[0m[0m ipv6_association_id                  = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                      = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_network_border_group = (known after apply)
+      [32m+[0m[0m main_route_table_id                  = (known after apply)
+      [32m+[0m[0m owner_id                             = (known after apply)
+      [32m+[0m[0m tags                                 = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "ezlab-vpc"
+        }
+      [32m+[0m[0m tags_all                             = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "ezlab-vpc"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+    }
+
+[1m  # module.global.module.vpc.aws_vpc_endpoint.ec2messages[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "ec2messages" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m cidr_blocks           = (known after apply)
+      [32m+[0m[0m dns_entry             = (known after apply)
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m ip_address_type       = (known after apply)
+      [32m+[0m[0m network_interface_ids = (known after apply)
+      [32m+[0m[0m owner_id              = (known after apply)
+      [32m+[0m[0m policy                = (known after apply)
+      [32m+[0m[0m prefix_list_id        = (known after apply)
+      [32m+[0m[0m private_dns_enabled   = true
+      [32m+[0m[0m requester_managed     = (known after apply)
+      [32m+[0m[0m route_table_ids       = (known after apply)
+      [32m+[0m[0m security_group_ids    = (known after apply)
+      [32m+[0m[0m service_name          = "com.amazonaws.eu-west-1.ec2messages"
+      [32m+[0m[0m service_region        = (known after apply)
+      [32m+[0m[0m state                 = (known after apply)
+      [32m+[0m[0m subnet_ids            = (known after apply)
+      [32m+[0m[0m tags                  = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "ec2messages-endpoint"
+        }
+      [32m+[0m[0m tags_all              = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "ec2messages-endpoint"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_endpoint_type     = "Interface"
+      [32m+[0m[0m vpc_id                = (known after apply)
+
+      [32m+[0m[0m dns_options (known after apply)
+
+      [32m+[0m[0m subnet_configuration (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_vpc_endpoint.private-s3[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "private-s3" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m cidr_blocks           = (known after apply)
+      [32m+[0m[0m dns_entry             = (known after apply)
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m ip_address_type       = (known after apply)
+      [32m+[0m[0m network_interface_ids = (known after apply)
+      [32m+[0m[0m owner_id              = (known after apply)
+      [32m+[0m[0m policy                = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "*"
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = "*"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                ]
+            }
+        )
+      [32m+[0m[0m prefix_list_id        = (known after apply)
+      [32m+[0m[0m private_dns_enabled   = (known after apply)
+      [32m+[0m[0m requester_managed     = (known after apply)
+      [32m+[0m[0m route_table_ids       = (known after apply)
+      [32m+[0m[0m security_group_ids    = (known after apply)
+      [32m+[0m[0m service_name          = "com.amazonaws.eu-west-1.s3"
+      [32m+[0m[0m service_region        = (known after apply)
+      [32m+[0m[0m state                 = (known after apply)
+      [32m+[0m[0m subnet_ids            = (known after apply)
+      [32m+[0m[0m tags                  = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "s3-endpoint"
+        }
+      [32m+[0m[0m tags_all              = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "s3-endpoint"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_endpoint_type     = "Gateway"
+      [32m+[0m[0m vpc_id                = (known after apply)
+
+      [32m+[0m[0m dns_options (known after apply)
+
+      [32m+[0m[0m subnet_configuration (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_vpc_endpoint.secretsmanager[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "secretsmanager" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m cidr_blocks           = (known after apply)
+      [32m+[0m[0m dns_entry             = (known after apply)
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m ip_address_type       = (known after apply)
+      [32m+[0m[0m network_interface_ids = (known after apply)
+      [32m+[0m[0m owner_id              = (known after apply)
+      [32m+[0m[0m policy                = (known after apply)
+      [32m+[0m[0m prefix_list_id        = (known after apply)
+      [32m+[0m[0m private_dns_enabled   = true
+      [32m+[0m[0m requester_managed     = (known after apply)
+      [32m+[0m[0m route_table_ids       = (known after apply)
+      [32m+[0m[0m security_group_ids    = (known after apply)
+      [32m+[0m[0m service_name          = "com.amazonaws.eu-west-1.secretsmanager"
+      [32m+[0m[0m service_region        = (known after apply)
+      [32m+[0m[0m state                 = (known after apply)
+      [32m+[0m[0m subnet_ids            = (known after apply)
+      [32m+[0m[0m tags                  = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "secretsmanager-endpoint"
+        }
+      [32m+[0m[0m tags_all              = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "secretsmanager-endpoint"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_endpoint_type     = "Interface"
+      [32m+[0m[0m vpc_id                = (known after apply)
+
+      [32m+[0m[0m dns_options (known after apply)
+
+      [32m+[0m[0m subnet_configuration (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_vpc_endpoint.ssm[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "ssm" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m cidr_blocks           = (known after apply)
+      [32m+[0m[0m dns_entry             = (known after apply)
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m ip_address_type       = (known after apply)
+      [32m+[0m[0m network_interface_ids = (known after apply)
+      [32m+[0m[0m owner_id              = (known after apply)
+      [32m+[0m[0m policy                = (known after apply)
+      [32m+[0m[0m prefix_list_id        = (known after apply)
+      [32m+[0m[0m private_dns_enabled   = true
+      [32m+[0m[0m requester_managed     = (known after apply)
+      [32m+[0m[0m route_table_ids       = (known after apply)
+      [32m+[0m[0m security_group_ids    = (known after apply)
+      [32m+[0m[0m service_name          = "com.amazonaws.eu-west-1.ssm"
+      [32m+[0m[0m service_region        = (known after apply)
+      [32m+[0m[0m state                 = (known after apply)
+      [32m+[0m[0m subnet_ids            = (known after apply)
+      [32m+[0m[0m tags                  = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "ssm-endpoint"
+        }
+      [32m+[0m[0m tags_all              = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "ssm-endpoint"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_endpoint_type     = "Interface"
+      [32m+[0m[0m vpc_id                = (known after apply)
+
+      [32m+[0m[0m dns_options (known after apply)
+
+      [32m+[0m[0m subnet_configuration (known after apply)
+    }
+
+[1m  # module.global.module.vpc.aws_vpc_endpoint.ssmmessages[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "ssmmessages" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m cidr_blocks           = (known after apply)
+      [32m+[0m[0m dns_entry             = (known after apply)
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m ip_address_type       = (known after apply)
+      [32m+[0m[0m network_interface_ids = (known after apply)
+      [32m+[0m[0m owner_id              = (known after apply)
+      [32m+[0m[0m policy                = (known after apply)
+      [32m+[0m[0m prefix_list_id        = (known after apply)
+      [32m+[0m[0m private_dns_enabled   = true
+      [32m+[0m[0m requester_managed     = (known after apply)
+      [32m+[0m[0m route_table_ids       = (known after apply)
+      [32m+[0m[0m security_group_ids    = (known after apply)
+      [32m+[0m[0m service_name          = "com.amazonaws.eu-west-1.ssmmessages"
+      [32m+[0m[0m service_region        = (known after apply)
+      [32m+[0m[0m state                 = (known after apply)
+      [32m+[0m[0m subnet_ids            = (known after apply)
+      [32m+[0m[0m tags                  = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "Name"        = "ssmmessages-endpoint"
+        }
+      [32m+[0m[0m tags_all              = {
+          [32m+[0m[0m "Environment" = "lab"
+          [32m+[0m[0m "ManagedBy"   = "Terraform"
+          [32m+[0m[0m "Name"        = "ssmmessages-endpoint"
+          [32m+[0m[0m "Project"     = "terraform-lab"
+          [32m+[0m[0m "Repository"  = "github.com/fjacquet/terraform-lab"
+        }
+      [32m+[0m[0m vpc_endpoint_type     = "Interface"
+      [32m+[0m[0m vpc_id                = (known after apply)
+
+      [32m+[0m[0m dns_options (known after apply)
+
+      [32m+[0m[0m subnet_configuration (known after apply)
+    }
+
+[1mPlan:[0m 62 to add, 0 to change, 0 to destroy.
+[0m
+Changes to Outputs:
+  [32m+[0m[0m aws_sg_da_id             = (known after apply)
+  [32m+[0m[0m aws_sg_dc_id             = (known after apply)
+  [32m+[0m[0m aws_sg_dhcp_id           = (known after apply)
+  [32m+[0m[0m aws_sg_exchange_id       = (known after apply)
+  [32m+[0m[0m aws_sg_fs_id             = (known after apply)
+  [32m+[0m[0m aws_sg_guacamole_id      = (known after apply)
+  [32m+[0m[0m aws_sg_ipam_id           = (known after apply)
+  [32m+[0m[0m aws_sg_nbuclient_ids     = [
+      [32m+[0m[0m [90mnull[0m[0m,
+    ]
+  [32m+[0m[0m aws_sg_nbumaster_ids     = [
+      [32m+[0m[0m [90mnull[0m[0m,
+    ]
+  [32m+[0m[0m aws_sg_oracle_id         = (known after apply)
+  [32m+[0m[0m aws_sg_pki-crl_ids       = []
+  [32m+[0m[0m aws_sg_pki-ica_ids       = []
+  [32m+[0m[0m aws_sg_pki-rca_ids       = []
+  [32m+[0m[0m aws_sg_rdp_id            = (known after apply)
+  [32m+[0m[0m aws_sg_sharepoint_id     = (known after apply)
+  [32m+[0m[0m aws_sg_simpana_client_id = (known after apply)
+  [32m+[0m[0m aws_sg_simpana_master_id = (known after apply)
+  [32m+[0m[0m aws_sg_sql_id            = (known after apply)
+  [32m+[0m[0m aws_sg_ssh_id            = (known after apply)
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mNull value found in list[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with module.services["oracle"].aws_instance.service[2],
+[31m│[0m [0m  on modules/service/main.tf line 105, in resource "aws_instance" "service":
+[31m│[0m [0m 105:   vpc_security_group_ids = [4mlocal.all_sg_ids[0m[0m
+[31m│[0m [0m
+[31m│[0m [0mNull values are not allowed for this attribute value.
+[31m╵[0m[0m
+Operation failed: failed running terraform plan (exit 1)

@@ -283,10 +283,58 @@ resource "aws_security_group" "domain_member" {
   }
 }
 
-# Simpana client security group (placeholder - will be created by simpana service)
-# This is referenced by other services, so we need to handle it specially
-locals {
-  simpana_client_sg_id = try(module.services["simpana"].security_group_id, "")
+# Simpana/Commvault client security group
+# Created separately to avoid circular dependency (clients need this before simpana server exists)
+resource "aws_security_group" "simpana_client" {
+  name        = "tf_ezlab_simpana_client"
+  description = "Security group for Simpana/Commvault backup clients"
+  vpc_id      = module.global.aws_vpc_id
+
+  # Simpana client-to-server communication
+  ingress {
+    description = "Simpana client services (CVD)"
+    from_port   = 8400
+    to_port     = 8403
+    protocol    = "tcp"
+    self        = true
+  }
+
+  # Simpana data transfer
+  ingress {
+    description = "Simpana data transfer"
+    from_port   = 8600
+    to_port     = 8699
+    protocol    = "tcp"
+    self        = true
+  }
+
+  # Simpana web console
+  ingress {
+    description = "Simpana web console"
+    from_port   = 81
+    to_port     = 81
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  dynamic "egress" {
+    for_each = local.common_egress_rules
+    content {
+      description      = egress.value.description
+      from_port        = egress.value.from_port
+      to_port          = egress.value.to_port
+      protocol         = egress.value.protocol
+      cidr_blocks      = egress.value.cidr_blocks
+      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
+    }
+  }
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "tf_ezlab_simpana_client"
+    }
+  )
 }
 
 # ============================================================================
@@ -333,7 +381,7 @@ data "aws_ami" "debian" {
 }
 
 data "aws_ami" "rhel9" {
-  count       = (var.aws_number["nbu"] + var.aws_number["oracle"]) > 0 ? 1 : 0
+  count       = (lookup(var.aws_number, "nbu", 0) + lookup(var.aws_number, "oracle", 0)) > 0 ? 1 : 0
   most_recent = true
   filter {
     name   = "name"
@@ -347,17 +395,20 @@ data "aws_ami" "rhel9" {
 }
 
 data "aws_ami" "bsd" {
-  count       = var.aws_number["bsd"] > 0 ? 1 : 0
+  count       = lookup(var.aws_number, "bsd", 0) > 0 ? 1 : 0
   most_recent = true
   filter {
     name   = "name"
-    values = ["FreeBSD 13.*-RELEASE-amd64*"]
+    values = ["FreeBSD*15.0-CURRENT-*ZFS"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-  owners = ["118940168514"]
+  owners = ["782442783595"]
+  
+  # Note: FreeBSD AMIs may not be available in all regions
+  # If deployment fails, set bsd = 0 in your tfvars file
 }
 
 # ============================================================================
@@ -369,8 +420,8 @@ locals {
     windows2022 = data.aws_ami.windows2022.id
     sql2019     = data.aws_ami.sql2019.id
     debian      = data.aws_ami.debian.id
-    rhel9       = (var.aws_number["nbu"] + var.aws_number["oracle"]) > 0 ? data.aws_ami.rhel9[0].id : ""
-    bsd         = var.aws_number["bsd"] > 0 ? data.aws_ami.bsd[0].id : ""
+    rhel9       = lookup(var.aws_number, "nbu", 0) + lookup(var.aws_number, "oracle", 0) > 0 ? data.aws_ami.rhel9[0].id : ""
+    bsd         = lookup(var.aws_number, "bsd", 0) > 0 ? data.aws_ami.bsd[0].id : ""
   }
 }
 
@@ -417,7 +468,7 @@ module "services" {
     rdp            = aws_security_group.rdp.id
     ssh            = aws_security_group.ssh.id
     domain_member  = aws_security_group.domain_member.id
-    simpana_client = local.simpana_client_sg_id
+    simpana_client = aws_security_group.simpana_client.id
   }
 
   # NBU client security groups (for services that need them)
