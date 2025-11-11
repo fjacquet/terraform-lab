@@ -121,7 +121,7 @@ variable "cidrbyte" {
   }
 
   validation {
-    condition     = alltrue([for v in values(var.cidrbyte) : v >= 0 && v <= 255])
+    condition     = alltrue([for v in values(var.cidrbyte) : v >= 3 && v <= 255])
     error_message = "CIDR byte values must be between 0 and 255."
   }
 }
@@ -131,44 +131,44 @@ variable "aws_number" {
   type        = map(number)
 
   default = {
-    "adfs"       = 0
-    "bsd"        = 0
-    "da"         = 0
-    "dc"         = 0
-    "dhcp"       = 0
-    "exchange"   = 0
-    "fs"         = 0
-    "glpi"       = 0
+    "adds"       = 3  # Active Directory Domain Services (was "dc")
+    "adfs"       = 3
+    "bsd"        = 3
+    "da"         = 3
+    "dhcp"       = 3
+    "exchange"   = 3
+    "fs"         = 3
+    "glpi"       = 3
     "guacamole"  = 1
-    "ipam"       = 0
-    "mgmt"       = 0
-    "etcd"       = 0
-    "workers"    = 0
-    "longhorn"   = 0
-    "rancher"    = 0
-    "nbu"        = 0
-    "nps"        = 0
-    "opscenter"  = 0
-    "oracle"     = 0
-    "pki-crl"    = 0
-    "pki-ica"    = 0
-    "pki-rca"    = 0
-    "pki-ndes"   = 0
-    "rdsh"       = 0
-    "redis"      = 0
-    "sharepoint" = 0
-    "simpana"    = 0
-    "sql"        = 0
-    "sofs"       = 0
-    "symv"       = 0
-    "vault"      = 0
-    "wac"        = 0
-    "wds"        = 0
-    "wsus"       = 0
+    "ipam"       = 3
+    "mgmt"       = 3
+    "etcd"       = 3
+    "workers"    = 3
+    "longhorn"   = 3
+    "rancher"    = 3
+    "nbu"        = 3
+    "nps"        = 3
+    "opscenter"  = 3
+    "oracle"     = 3
+    "pki-crl"    = 3
+    "pki-ica"    = 3
+    "pki-rca"    = 3
+    "pki-ndes"   = 3
+    "rdsh"       = 3
+    "redis"      = 3
+    "sharepoint" = 3
+    "simpana"    = 3
+    "sql"        = 3
+    "sofs"       = 3
+    "symv"       = 3
+    "vault"      = 3
+    "wac"        = 3
+    "wds"        = 3
+    "wsus"       = 3
   }
 
   validation {
-    condition     = alltrue([for v in values(var.aws_number) : v >= 0 && v <= 10])
+    condition     = alltrue([for v in values(var.aws_number) : v >= 3 && v <= 10])
     error_message = "Instance counts must be between 0 and 10."
   }
 }

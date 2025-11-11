@@ -57,8 +57,8 @@ Problem: The microsoft/ and unix/ layers are just pass-through wrappers that add
 
 Modern Approach: Flatten to 2 levels (root → services) using Terraform for_each
 
-- [ ] 22: Eliminate intermediate layers and modernize with for_each
-  - [ ] 22.1: Create unified service configuration in root locals.tf
+- [x] 22: Eliminate intermediate layers and modernize with for_each
+  - [x] 22.1: Create unified service configuration in root locals.tf
     - Add windows_services and unix_services maps to root locals.tf
     - Each service defines: instance_type, subnet_type, security_rules, os_type
     - Use optional() for service-specific overrides
@@ -66,7 +66,7 @@ Modern Approach: Flatten to 2 levels (root → services) using Terraform for_eac
     - Impact: Single source of truth, eliminates microsoft/ and unix/ layers
     - Requirements: 21.2, 21.3, 21.5
 
-  - [ ] 22.2: Create single unified service module
+  - [x] 22.2: Create single unified service module
     - Create modules/service/ directory (works for both Windows and Unix)
     - Implement generic instance resource with configurable parameters
     - Implement generic security group with dynamic rules
@@ -75,7 +75,7 @@ Modern Approach: Flatten to 2 levels (root → services) using Terraform for_eac
     - Impact: ONE module for ALL services (Windows + Unix)
     - Requirements: 21.2, 21.3, 21.4
 
-  - [ ] 22.3: Refactor root main.tf to use for_each directly
+  - [x] 22.3: Refactor root main.tf to use for_each directly
     - Remove microsoft/ and unix/ module calls entirely
     - Replace with single for_each calling modules/service/ directly
     - Filter services based on var.aws_number[k] > 0
@@ -83,7 +83,7 @@ Modern Approach: Flatten to 2 levels (root → services) using Terraform for_eac
     - Impact: 3 levels → 2 levels, 90% code reduction
     - Requirements: 21.1, 21.2, 21.3
 
-  - [ ] 22.4: Create moved blocks for safe migration
+  - [x] 22.4: Create moved blocks for safe migration
     - Add moved blocks: module.microsoft.module.adds → module.services["adds"]
     - Add moved blocks: module.unix.module.guacamole → module.services["guacamole"]
     - Test migration with terraform plan (verify no resource recreation)
@@ -91,14 +91,14 @@ Modern Approach: Flatten to 2 levels (root → services) using Terraform for_eac
     - Impact: Zero-downtime refactoring
     - Requirements: 20.3, 20.4
 
-  - [ ] 22.5: Update outputs to work with flattened structure
+  - [x] 22.5: Update outputs to work with flattened structure
     - Use for expressions to collect outputs from for_each modules
     - Maintain backward compatibility with existing output structure
     - Remove microsoft/ and unix/ output pass-throughs
     - Document output changes
     - Requirements: 20.1, 21.4
 
-  - [ ] 22.6: Remove microsoft/ and unix/ directories
+  - [x] 22.6: Remove microsoft/ and unix/ directories
     - Archive old module structure for reference
     - Update documentation to reflect new structure
     - Clean up unused files

@@ -1,0 +1,6 @@
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mSaving a generated plan is currently not supported[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mThe "remote" backend does not support saving the generated execution plan
+[31m│[0m [0mlocally at this time.
+[31m╵[0m[0m

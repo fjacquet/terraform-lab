@@ -5,42 +5,47 @@
 admin_cidr_blocks          = ["10.0.0.0/16"]
 enable_public_admin_access = false
 
-# Minimal instance counts for testing
+# Instance counts for testing - matching services defined in locals.tf
 aws_number = {
-  "adfs"       = 3
-  "bsd"        = 3
-  "da"         = 3
-  "dc"         = 3 # Domain controller - set to 0 for minimal test
-  "dhcp"       = 3
-  "exchange"   = 3
-  "fs"         = 3
-  "glpi"       = 3
-  "guacamole"  = 1 # Keep bastion host for access
-  "ipam"       = 3
-  "mgmt"       = 3
-  "etcd"       = 3
-  "workers"    = 3
-  "longhorn"   = 3
-  "rancher"    = 3
-  "nbu"        = 3
-  "nps"        = 3
-  "opscenter"  = 3
-  "oracle"     = 3
-  "pki-crl"    = 3
-  "pki-ica"    = 3
-  "pki-rca"    = 3
-  "pki-ndes"   = 3
-  "rdsh"       = 3
-  "redis"      = 3
-  "sharepoint" = 3
-  "simpana"    = 3
-  "sql"        = 3
-  "sofs"       = 3
-  "symv"       = 3
-  "vault"      = 3
-  "wac"        = 3
-  "wds"        = 3
-  "wsus"       = 3
+  # Windows Services
+  "adds"       = 3  # Active Directory Domain Services (was "dc")
+  "adfs"       = 3  # Active Directory Federation Services
+  "dhcp"       = 3  # DHCP Server
+  "da"         = 3  # DirectAccess
+  "exchange"   = 3  # Exchange Server
+  "fs"         = 3  # File Server
+  "ipam"       = 3  # IP Address Management
+  "mgmt"       = 3  # Management Server
+  "nps"        = 3  # Network Policy Server
+  "rdsh"       = 3  # Remote Desktop Session Host
+  "sharepoint" = 3  # SharePoint Server
+  "sql"        = 3  # SQL Server
+  "simpana"    = 3  # Commvault Simpana
+  "sofs"       = 3  # Scale-Out File Server
+  "wac"        = 3  # Windows Admin Center
+  "wds"        = 3  # Windows Deployment Services
+  "wsus"       = 3  # Windows Server Update Services
+  
+  # Unix/Linux Services
+  "guacamole"  = 1  # Apache Guacamole (bastion host)
+  "glpi"       = 3  # GLPI IT Asset Management
+  "vault"      = 3  # HashiCorp Vault
+  "nbu"        = 3  # Veritas NetBackup
+  "oracle"     = 3  # Oracle Database
+  "redis"      = 3  # Redis
+  "bsd"        = 3  # FreeBSD
+  
+  # Services not yet implemented in unified module (set to 0)
+  "etcd"       = 0  # Not yet implemented
+  "workers"    = 0  # Not yet implemented
+  "longhorn"   = 0  # Not yet implemented
+  "rancher"    = 0  # Not yet implemented
+  "opscenter"  = 0  # Not yet implemented
+  "pki-crl"    = 0  # PKI services need special handling
+  "pki-ica"    = 0  # PKI services need special handling
+  "pki-rca"    = 0  # PKI services need special handling
+  "pki-ndes"   = 0  # PKI services need special handling
+  "symv"       = 0  # Not yet implemented
 }
 
 # Use single AZ for testing
