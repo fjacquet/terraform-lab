@@ -348,6 +348,14 @@ dig guacamole-0.ez-lab.xyz
 - [ ] Services accessible (after deployment)
 - [ ] Ansible configuration complete (after deployment)
 
+## Quick Links
+
+- 📖 [Configuration Guide](CONFIGURATION.md) - Detailed configuration options
+- 🏗️ [Architecture](../ARCHITECTURE.md) - Architecture overview and patterns
+- 🔒 [Security](SECURITY.md) - Security configuration and best practices
+- 📦 [Service Module](../modules/service/README.md) - Module documentation
+- 🔄 [Migration Guide](MIGRATION-GUIDE.md) - For existing deployments
+
 ## Deployment Instructions
 
 ### For New Deployments
@@ -373,6 +381,8 @@ terraform apply
 ansible-parallel playbooks/system/*.yml
 ansible-parallel playbooks/apps/*.yml
 ```
+
+See [CONFIGURATION.md](CONFIGURATION.md) for detailed configuration options.
 
 ### For Existing Deployments
 
