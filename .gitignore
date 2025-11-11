@@ -21,3 +21,4 @@ sonar-check.sh
 .cache/
 .dccache
 org-token.txt
+liste-ami.json
