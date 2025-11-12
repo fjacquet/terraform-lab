@@ -1,18 +1,17 @@
 ---
-
 - name: test if vault_owner is set correctly
   ansible.builtin.assert:
     that:
       - vault_owner is defined
       - vault_owner is string
-    quiet: yes
+    quiet: true
 
 - name: test if vault_group is set correctly
   ansible.builtin.assert:
     that:
       - vault_group is defined
       - vault_group is string
-    quiet: yes
+    quiet: true
 
 - name: test if vault_disable_clustering is set correctly
   ansible.builtin.assert:
@@ -20,14 +19,14 @@
       - vault_disable_clustering is defined
       - vault_disable_clustering is string
       - vault_disable_clustering in [ "false", "true" ]
-    quiet: yes
+    quiet: true
 
 - name: test if vault_cluster_addr is set correctly
   ansible.builtin.assert:
     that:
       - vault_cluster_addr is defined
       - vault_cluster_addr is string
-    quiet: yes
+    quiet: true
   when:
     - vault_disable_clustering == "false"
 
@@ -36,21 +35,21 @@
     that:
       - vault_api_addr is defined
       - vault_api_addr is string
-    quiet: yes
+    quiet: true
 
 - name: test if vault_plugin_directory is set correctly
   ansible.builtin.assert:
     that:
       - vault_plugin_directory is defined
       - vault_plugin_directory is string
-    quiet: yes
+    quiet: true
 
 - name: test if vault_storages is set correctly
   ansible.builtin.assert:
     that:
       - vault_storages is defined
       - vault_storages is iterable
-    quiet: yes
+    quiet: true
 
 - name: test if item in vault_storages is set correctly
   ansible.builtin.assert:
@@ -62,7 +61,7 @@
       - item.path is string
       - item.node_id is defined
       - item.node_id is string
-    quiet: yes
+    quiet: true
   loop: "{{ vault_storages }}"
   loop_control:
     label: "{{ item.name }}"
@@ -72,7 +71,7 @@
     that:
       - vault_listeners is defined
       - vault_listeners is iterable
-    quiet: yes
+    quiet: true
 
 - name: test if item in vault_listeners is set correctly
   ansible.builtin.assert:
@@ -87,7 +86,7 @@
       - item.tls_disable is defined
       - item.tls_disable is string
       - item.tls_disable in [ "false", "true" ]
-    quiet: yes
+    quiet: true
   loop: "{{ vault_listeners }}"
   loop_control:
     label: "{{ item.name }}"
@@ -98,7 +97,7 @@
       - vault_ui is defined
       - vault_ui is string
       - vault_ui in [ "false", "true" ]
-    quiet: yes
+    quiet: true
 
 - name: test if vault_key_shares is set correctly
   ansible.builtin.assert:
@@ -106,7 +105,7 @@
       - vault_key_shares is defined
       - vault_key_shares is number
       - vault_key_shares > 0
-    quiet: yes
+    quiet: true
 
 - name: test if vault_key_threshold is set correctly
   ansible.builtin.assert:
@@ -114,27 +113,27 @@
       - vault_key_threshold is defined
       - vault_key_threshold is number
       - vault_key_threshold > 0
-    quiet: yes
+    quiet: true
 
 - name: test if vault_key_shares and vault_key_threshold are set correctly
   ansible.builtin.assert:
     that:
       - vault_key_threshold <= vault_key_shares
-    quiet: yes
+    quiet: true
 
 - name: test if vault_show_unseal_information is set correctly
   ansible.builtin.assert:
     that:
       - vault_show_unseal_information is defined
       - vault_show_unseal_information is boolean
-    quiet: yes
+    quiet: true
 
 - name: test if vault_unseal_keys is set correctly
   ansible.builtin.assert:
     that:
       - vault_unseal_keys | length >= vault_key_threshold
       - vault_unseal_keys is iterable
-    quiet: yes
+    quiet: true
   when:
     - vault_unseal_keys is defined
 
@@ -144,21 +143,21 @@
       - vault_disable_mlock is defined
       - vault_disable_mlock is string
       - vault_disable_mlock in [ "false", "true" ]
-    quiet: yes
+    quiet: true
 
 - name: test if vault_make_backup is set correctly
   ansible.builtin.assert:
     that:
       - vault_make_backup is defined
       - vault_make_backup is boolean
-    quiet: yes
+    quiet: true
 
 - name: test if vault_backup_path is set correctly
   ansible.builtin.assert:
     that:
       - vault_backup_path is defined
       - vault_backup_path is string
-    quiet: yes
+    quiet: true
   when:
     - vault_make_backup | bool
 
@@ -166,7 +165,7 @@
   ansible.builtin.assert:
     that:
       - vault_namespace is string
-    quiet: yes
+    quiet: true
   when:
     - vault_namespace is defined
 
@@ -174,7 +173,7 @@
   ansible.builtin.assert:
     that:
       - vault_kv_secrets is iterable
-    quiet: yes
+    quiet: true
   when:
     - vault_kv_secrets is defined
 
@@ -185,7 +184,7 @@
       - item.name is string
       - item.data is defined
       - item.data is mapping
-    quiet: yes
+    quiet: true
   loop: "{{ vault_kv_secrets }}"
   loop_control:
     label: "{{ item.name }}"
@@ -197,7 +196,7 @@
     that:
       - item.cas is number
       - item.cas in [ 0, 1 ]
-    quiet: yes
+    quiet: true
   loop: "{{ vault_kv_secrets }}"
   when:
     - vault_kv_secrets is defined
@@ -208,27 +207,27 @@
     that:
       - vault_kv_max_versions is defined
       - vault_kv_max_versions is number
-    quiet: yes
+    quiet: true
 
 - name: test if vault_kv_cas_required is set correctly
   ansible.builtin.assert:
     that:
       - vault_kv_cas_required is defined
       - vault_kv_cas_required in [ "false", "true" ]
-    quiet: yes
+    quiet: true
 
 - name: test if vault_kv_delete_version_after is set correctly
   ansible.builtin.assert:
     that:
       - vault_kv_delete_version_after is defined
       - vault_kv_delete_version_after is string
-    quiet: yes
+    quiet: true
 
 - name: test if vault_license is set correctly
   ansible.builtin.assert:
     that:
       - vault_license is string
-    quiet: yes
+    quiet: true
   when:
     - vault_license is defined
 
@@ -238,4 +237,4 @@
       - vault_log_level is defined
       - vault_log_level is string
       - vault_log_level in [ "trace", "debug", "info", "warn", "err" ]
-    quiet: yes
+    quiet: true

@@ -2,7 +2,7 @@
 # tasks file for glpi
 
 - name: install some package
-  apt:
+  ansible.builtin.apt:
     name:
       - libapache2-mod-php
       - php
@@ -29,11 +29,11 @@
       - php-zip
       # - php-zlib
     state: present
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 3600
 
 - name: Download glpi.tgz
-  get_url:
+  ansible.builtin.get_url:
     url: "https://github.com/glpi-project/glpi/releases/download/{{ glpi_version }}/glpi-{{ glpi_version }}.tgz"
     dest: /tmp/glpi.tgz
     mode: "0755"
@@ -48,7 +48,7 @@
   ansible.builtin.file:
     path: "/var/www/glpi"
     state: directory
-    recurse: yes
+    recurse: true
     owner: www-data
     group: www-data
 
@@ -59,7 +59,7 @@
     owner: www-data
     group: www-data
     mode: "0755"
-    remote_src: yes
+    remote_src: true
 
 - name: Copy file with owner and permissions
   ansible.builtin.copy:
@@ -68,7 +68,7 @@
     owner: www-data
     group: www-data
     mode: "0755"
-    remote_src: yes
+    remote_src: true
 
 - name: Create a directory if it does not exist
   ansible.builtin.file:
@@ -94,9 +94,8 @@
     group: www-data
     mode: "0755"
 
-
 - name: Create a new database with name 'glpi'
-  mysql_db:
+  community.mysql.mysql_db:
     name: glpi
     state: present
 
@@ -108,17 +107,18 @@
     state: present
 
 - name: Execute the command in remote shell; stdout goes to the specified file on the remote
-  ansible.builtin.command: "php /var/www/glpi/bin/console db:install --default-language={{ glpi_lang }}  --db-host={{ glpi_hostname }} --db-name={{ glpi_database }} --db-user={{ glpi_username }} --db-password={{ glpi_password }} --no-interaction"
+  ansible.builtin.command: "php /var/www/glpi/bin/console db:install --default-language={{ glpi_lang }}  --db-host={{ glpi_hostname }} --db-name={{ glpi_database
+    }} --db-user={{ glpi_username }} --db-password={{ glpi_password }} --no-interaction"
 
 - name: Make sure a service is running
   ansible.builtin.systemd:
-    enabled: yes
+    enabled: true
     name: apache2
     state: started
 
 - name: Make sure a service is running
   ansible.builtin.systemd:
-    enabled: yes
+    enabled: true
     name: mariadb
     state: started
 
@@ -128,9 +128,9 @@
     state: absent
 
 - name: Remove useless packages from the cache
-  apt:
-    autoclean: yes
+  ansible.builtin.apt:
+    autoclean: true
 
 - name: Remove dependencies that are no longer required
-  apt:
-    autoremove: yes
+  ansible.builtin.apt:
+    autoremove: true

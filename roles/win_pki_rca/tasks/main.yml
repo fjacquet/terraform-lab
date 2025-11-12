@@ -1,11 +1,10 @@
 ---
-
 - name: Install requirements for ADDS with sub features and management tools
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
-    include_sub_features: yes
-    include_management_tools: yes
+    include_sub_features: true
+    include_management_tools: true
   register: win_feature
   with_items:
     - Adcs-Cert-Authority
@@ -24,11 +23,11 @@
   ansible.windows.win_template:
     src: templates/capolicy.inf.j2
     dest: C:\Windows\capolicy.inf
-    newline_sequence: '\n'
-    backup: yes
+    newline_sequence: "\\n"
+    backup: true
 
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     import-module -name pspki
     Install-AdcsCertificationAuthority `
       -CAType StandaloneRootCA `
@@ -39,107 +38,86 @@
       -ValidityPeriod Years `
       -ValidityPeriodUnits 20 `
       -Force
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     $crllist = Get-CACrlDistributionPoint
     foreach ($crl in $crllist) {
       Remove-CACrlDistributionPoint $crl.uri -Force
     }
-# create valide crl
-# Configure
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     Add-CACRLDistributionPoint `
     -Uri C:\Windows\System32\CertSrv\CertEnroll\$($root)%8%9.crl `
     -PublishToServer `
     -PublishDeltaToServer `
     -Force
-
-# Configure
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     Add-CACRLDistributionPoint `
       -Uri http://pki."{{ domain }}"/pki/$($root)%8%9.crl `
       -AddToCertificateCDP `
       -AddToFreshestCrl `
       -Force
-
-# Configure
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     Get-CAAuthorityInformationAccess `
     | Where-Object { $_.uri -like '*ldap*' -or $_.uri -like '*http*' -or $_.uri -like '*file*' } `
     | Remove-CAAuthorityInformationAccess `
       -Force
-
-# Configure
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     Add-CAAuthorityInformationAccess `
     -AddToCertificateAia http://pki.$($domain)/pki/$($root)%3%4.crt `
     -Force
-
-# Configure
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe –setreg CA\CRLPeriodUnits 20
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe –setreg CA\CRLPeriod "Years"
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe –setreg CA\CRLOverlapPeriodUnits 3
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe –setreg CA\CRLOverlapPeriod "Weeks"
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe –setreg CA\ValidityPeriodUnits 10
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe –setreg CA\ValidityPeriod "Years"
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe -setreg CA\AuditFilter 127
-
 - name: Restart ca
-  win_service:
+  ansible.windows.win_service:
     name: certsvc
     state: restarted
 
 # publish
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil -crl
-
-# TODO: end conversion
 - name: Copy ca locally
   ansible.windows.win_copy:
     src: "{{ certdir }}\\{{ ansible_hostname }}_{{ caname }}.crt"
     dest: "{{ localdir }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Copy a root localy
   ansible.windows.win_copy:
     src: "{{ certdir }}\\{{ root }}.crt"
     dest: "{{ localdir }}"
-    remote_src: yes
+    remote_src: true
 
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     Write-S3Object -File "{{ localdir }}\\{{ ansible_hostname }}_{{ caname }}.crt" `
       -BucketName {{ s3bucket }}t `
       -Key "{{ ansible_hostname }}_{{ caname }}.crt"
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     Write-S3Object -File "{{ localdir }}\\{{ root }}.crl" `
       -BucketName {{ s3bucket }} `
       -Key root-ca.crl

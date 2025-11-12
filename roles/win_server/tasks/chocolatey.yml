@@ -1,9 +1,9 @@
 ---
 - name: Install via chocolatey
-  win_chocolatey:
+  chocolatey.chocolatey.win_chocolatey:
     name: "{{ item }}"
     state: present
-  ignore_errors: yes
+  ignore_errors: true
   with_items:
     - 7zip.install
     - baretail

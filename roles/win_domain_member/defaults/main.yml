@@ -1,7 +1,7 @@
 ---
 # defaults file for domain_member
-region: 'eu-west-1'
-domain: 'ez-lab.xyz'
+region: "eu-west-1"
+domain: "ez-lab.xyz"
 username: "joinuser"
 secret: "toto"
 ou_win: "OU=Windows,OU=Servers,DC=ez-lab,DC=xyz"

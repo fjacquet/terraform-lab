@@ -1,28 +1,47 @@
 ---
+# yamllint configuration for Ansible projects
+# Compliant with ansible-lint requirements
+
 ignore: |
   /.tox/
   /.venv/
   /.github/
+  .cache/
+  collections/
 
 extends: default
 
 rules:
+  # Braces spacing
   braces:
     max-spaces-inside: 1
     level: error
+
+  # Brackets spacing
   brackets:
     max-spaces-inside: 1
     level: error
+
+  # Comments spacing - REQUIRED by ansible-lint
+  comments:
+    min-spaces-from-content: 1 # Must be 1 for ansible-lint compatibility
+
+  # Octal values - REQUIRED by ansible-lint
+  octal-values:
+    forbid-implicit-octal: true # Must be true for ansible-lint compatibility
+    forbid-explicit-octal: true # Must be true for ansible-lint compatibility
+
+  # Truthy values
   truthy:
     allowed-values: ["yes", "no", "true", "false", "True", "False"]
     level: error
-  # Disabled rules
+
+  # Disabled rules (for flexibility)
   document-start: disable
   indentation: disable
   line-length: disable
   colons: disable
   empty-lines: disable
-  comments: disable
   comments-indentation: disable
   trailing-spaces: disable
   new-line-at-end-of-file: disable

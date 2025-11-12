@@ -1,0 +1,1302 @@
+[
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'glpi' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/debian_glpi/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/debian_glpi/tests",
+        "fingerprint": "d37c263a0b2772ee328af296c312c286f641a6677afe97f2cebc719de95f49e3",
+        "location": {
+            "path": "roles/debian_glpi/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'guacamole' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/debian_guacamole/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/debian_guacamole/tests",
+        "fingerprint": "dce08d696bd6ff6eb20818193344d6b1cd19e7441e057145ca9b35bea3c3cd5d",
+        "location": {
+            "path": "roles/debian_guacamole/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[meta]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$.galaxy_info.platforms[5].versions[0] 11.3 is not one of ['6.1', '7.1', '7.2', 'all']. See https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+        "fingerprint": "73853f4ff5c5ecab97e75f23430b0f73be6eaf1f36a77d4f30ad00b93387e7be",
+        "location": {
+            "path": "roles/linux_apache/meta/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[meta]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$.galaxy_info.platforms[0].versions[0] 7 is not one of ['6.1', '7.1', '7.2', 'all']. See https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+        "fingerprint": "c0fc5061b1631610520d056deb0fb539345529c1a83fb481fbb08cf1f5b4a44b",
+        "location": {
+            "path": "roles/linux_mysql/meta/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "inline-env-var",
+        "categories": [
+            "command-shell",
+            "idiom"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/inline-env-var/",
+        "severity": "minor",
+        "description": "Command module does not accept setting environment variables inline.",
+        "fingerprint": "a3066677a53639ef1566926a30220c9e269f8b6e66e5527e7cd31bf16a0e2c15",
+        "location": {
+            "path": "roles/linux_mysql/tasks/configure.yml",
+            "lines": {
+                "begin": 38
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Create slow query log file (if configured)."
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "inline-env-var",
+        "categories": [
+            "command-shell",
+            "idiom"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/inline-env-var/",
+        "severity": "minor",
+        "description": "Command module does not accept setting environment variables inline.",
+        "fingerprint": "b5ed9d98329d1c121633d982e226dd548523a50096863ccc7a429ded48df35ef",
+        "location": {
+            "path": "roles/linux_mysql/tasks/configure.yml",
+            "lines": {
+                "begin": 63
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Create error log file (if configured)."
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[meta]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$.galaxy_info.platforms[0].versions[0] 7 is not one of ['6.1', '7.1', '7.2', 'all']. See https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+        "fingerprint": "775f44baf1842f82ec727ea2a1e9e7577c25f2cf485e6ad458690f05afbc6256",
+        "location": {
+            "path": "roles/linux_php/meta/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[moves]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "with_flattened was moved to with_community.general.flattened in 2.10",
+        "fingerprint": "4ddd506d4ba22f7f10429d95f33cb47ece32a977fd3f63122bddffc9673e4155",
+        "location": {
+            "path": "roles/linux_php/tasks/configure.yml",
+            "lines": {
+                "begin": 2
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "warning[outdated-tag]",
+        "categories": [
+            "core",
+            "experimental"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/warning/",
+        "severity": "minor",
+        "description": "Replaced outdated tag '208' with 'risky-file-permissions', replace it to avoid future errors",
+        "fingerprint": "830b9e1a4672f8f0f2d9dd11aa47a4b41fb9b241016c2cce2ca0e62e7083fb52",
+        "location": {
+            "path": "roles/linux_php/tasks/install-from-source.yml",
+            "lines": {
+                "begin": 74
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'debian_redis' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/linux_redis/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/linux_redis/tests",
+        "fingerprint": "b4c8e540d0d13017ca71ae3116b418b71664f4c809d6a986db09c262da981812",
+        "location": {
+            "path": "roles/linux_redis/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[meta]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$.galaxy_info.platforms[0].versions[0] 8 is not one of ['6.1', '7.1', '7.2', 'all']. See https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+        "fingerprint": "a41a485cc65dc57edbd1f7b3490216f3684d114eb767fff06dea454abaffe1e9",
+        "location": {
+            "path": "roles/linux_vault/meta/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'ansible-role-vault' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/linux_vault/molecule/default/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/linux_vault/molecule/default",
+        "fingerprint": "1db605cd16aa51ba341ba0cd7112e90b6181e16821f1d7403759c86b9b7687e0",
+        "location": {
+            "path": "roles/linux_vault/molecule/default/converge.yml",
+            "positions": {
+                "begin": {
+                    "line": 8,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'robertdebock.bootstrap' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/linux_vault/molecule/default/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/linux_vault/molecule/default",
+        "fingerprint": "6632c2ed07c5bef1be9d578c625979d10e2ca718dc042bc479963b88e8559c97",
+        "location": {
+            "path": "roles/linux_vault/molecule/default/prepare.yml",
+            "positions": {
+                "begin": {
+                    "line": 8,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'exchange' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/ms_exchange/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/ms_exchange/tests",
+        "fingerprint": "0452075d60a7200442b7866a9c1c0149a77951e6445802eadb7080b0f31a5d38",
+        "location": {
+            "path": "roles/ms_exchange/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'sharepoint' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/ms_sharepoint/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/ms_sharepoint/tests",
+        "fingerprint": "402175ca9b7ae79a6334d3ab08b6282206d1f3b00739dedaef5d9fc02d724b6b",
+        "location": {
+            "path": "roles/ms_sharepoint/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'nbu_server' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/rhel_nbu_server/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/rhel_nbu_server/tests",
+        "fingerprint": "1ae870f4e618c1c23f448000f5aa640260ef6017abdc889ce6b7e81b6650aa57",
+        "location": {
+            "path": "roles/rhel_nbu_server/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "ed0b00dd1d5ea230a48a0468f443682521cb849217a7508028da44b8ac68e7a0",
+        "location": {
+            "path": "roles/rhel_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 47
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "ed0b00dd1d5ea230a48a0468f443682521cb849217a7508028da44b8ac68e7a0",
+        "location": {
+            "path": "roles/rhel_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 67
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "ed0b00dd1d5ea230a48a0468f443682521cb849217a7508028da44b8ac68e7a0",
+        "location": {
+            "path": "roles/rhel_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 84
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "ed0b00dd1d5ea230a48a0468f443682521cb849217a7508028da44b8ac68e7a0",
+        "location": {
+            "path": "roles/rhel_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 101
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "ed0b00dd1d5ea230a48a0468f443682521cb849217a7508028da44b8ac68e7a0",
+        "location": {
+            "path": "roles/rhel_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 127
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[tasks]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$[1].register None is not of type 'string'",
+        "fingerprint": "87c3f76b2df5e266faf21630820b8ab70f72daaf90aea46ec79881992d3c4cfb",
+        "location": {
+            "path": "roles/rhel_server/tasks/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'rhel8_basic' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/rhel_server/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/rhel_server/tests",
+        "fingerprint": "f20e0658742f67f78807be7ad4e67fec5efafd3b2d3c35e36defd8ca56604620",
+        "location": {
+            "path": "roles/rhel_server/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'adfs' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_adfs/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_adfs/tests",
+        "fingerprint": "d1ab648aaf70a7ba24817b580752d812219a2501b7bfb25313a3fc2884f5ce19",
+        "location": {
+            "path": "roles/win_adfs/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'wac' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_admin_center/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_admin_center/tests",
+        "fingerprint": "1847e972ef5e69eec758b39e188d2480f128b81977bbbead3998172c1a466571",
+        "location": {
+            "path": "roles/win_admin_center/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[meta]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$.galaxy_info.platforms[0].versions[0] 'Server 2016' is not one of ['6.1', '7.1', '7.2', 'all']. See https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+        "fingerprint": "610d21559da791c8cdf45c26bdc03324674cd30a64c62c5f2d053f88d5efba74",
+        "location": {
+            "path": "roles/win_chocolatey_server/meta/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'csv' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_csv/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_csv/tests",
+        "fingerprint": "81881e44bd5afd641e82ff3aa9cf8bb625da720075ccfa5cb22e086a17e35244",
+        "location": {
+            "path": "roles/win_csv/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'wds' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_deployment/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_deployment/tests",
+        "fingerprint": "49053f3ef040fae0e2546842db2a07c57f20728fa9a2a3fa81bca6713364b44e",
+        "location": {
+            "path": "roles/win_deployment/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'dhcp' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_dhcp/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_dhcp/tests",
+        "fingerprint": "d19a6b1f535b8dace0afb0928af055c394650e0fccc1358ca73aa66989808fed",
+        "location": {
+            "path": "roles/win_dhcp/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'da' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_direct_access/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_direct_access/tests",
+        "fingerprint": "66bea833cc1f940476aa458704aac6ff8ea2378de291db33069a3a3592c9bbcb",
+        "location": {
+            "path": "roles/win_direct_access/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'domain_member' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_domain_member/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_domain_member/tests",
+        "fingerprint": "d067764b4c427586f4839a7525101a8f57f843b5c38d64f443fe5226ccb449a6",
+        "location": {
+            "path": "roles/win_domain_member/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'domain_odc' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_domain_odc/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_domain_odc/tests",
+        "fingerprint": "f57647870030b85244755ada9bacbdb2d6a82850b417260e79df1e20b3c21f67",
+        "location": {
+            "path": "roles/win_domain_odc/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'domain_pdc' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_domain_pdc/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_domain_pdc/tests",
+        "fingerprint": "072a60eb6dfb511b653fe9a55e4b0f87449e3bc5f9faa408c0d6be94e5f54ce4",
+        "location": {
+            "path": "roles/win_domain_pdc/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'fs' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_fileserver/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_fileserver/tests",
+        "fingerprint": "465e376b6ad1756193eb10fa9cf0229140366ded1827d6c18e2b5c29042a090b",
+        "location": {
+            "path": "roles/win_fileserver/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'ipam' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_ipam/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_ipam/tests",
+        "fingerprint": "7e76202d2cee47929df6d9fd57f8cbbf7f156fb8e844f511d8fd96a3e735afaf",
+        "location": {
+            "path": "roles/win_ipam/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[meta]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$.galaxy_info.platforms[0].versions[0] 2016 is not one of ['6.1', '7.1', '7.2', 'all']. See https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+        "fingerprint": "c863e7e2ab820334aeedaa13e955a8418d14fd4d5e691e405a5f3e76239ab586",
+        "location": {
+            "path": "roles/win_laps/meta/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[tasks]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "'become_method' must be one of the currently available values: ansible.builtin.runas, ansible.builtin.su, ansible.builtin.sudo, ansible.netcommon.enable, community.general.doas, community.general.dzdo, community.general.ksu, community.general.machinectl, community.general.pbrun, community.general.pfexec, community.general.pmrun, community.general.run0, community.general.sesu, community.general.sudosu, containers.podman.podman_unshare",
+        "fingerprint": "60c6125e8c361b6b61fa6c805d77448ec29bf516e3412520a4cd0a841e83e0e4",
+        "location": {
+            "path": "roles/win_laps/tasks/server.yml",
+            "positions": {
+                "begin": {
+                    "line": 32,
+                    "column": 18
+                }
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[tasks]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "'become_method' must be one of the currently available values: ansible.builtin.runas, ansible.builtin.su, ansible.builtin.sudo, ansible.netcommon.enable, community.general.doas, community.general.dzdo, community.general.ksu, community.general.machinectl, community.general.pbrun, community.general.pfexec, community.general.pmrun, community.general.run0, community.general.sesu, community.general.sudosu, containers.podman.podman_unshare",
+        "fingerprint": "5eca80d1bfe75d3dd740d22711db57687d5078be5929365a7dda6b0eca8a5761",
+        "location": {
+            "path": "roles/win_laps/tasks/server.yml",
+            "positions": {
+                "begin": {
+                    "line": 57,
+                    "column": 18
+                }
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[tasks]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "'become_method' must be one of the currently available values: ansible.builtin.runas, ansible.builtin.su, ansible.builtin.sudo, ansible.netcommon.enable, community.general.doas, community.general.dzdo, community.general.ksu, community.general.machinectl, community.general.pbrun, community.general.pfexec, community.general.pmrun, community.general.run0, community.general.sesu, community.general.sudosu, containers.podman.podman_unshare",
+        "fingerprint": "2f4af4d4d1dbc7ae36eb5aff843baa0b10389e8f894fbcccf4c75a7024b9a2bf",
+        "location": {
+            "path": "roles/win_laps/tasks/server.yml",
+            "positions": {
+                "begin": {
+                    "line": 72,
+                    "column": 18
+                }
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "The 'ansible.windows.win_domain' module has been removed. Use microsoft.ad.domain instead. This feature was removed from collection 'ansible.windows' version 3.0.0.",
+        "fingerprint": "75b06e5aa567e7777ed2a5abc40d6bd419afd5924c6e981c387c02606562a051",
+        "location": {
+            "path": "roles/win_laps/tests/setup-domain.yml",
+            "positions": {
+                "begin": {
+                    "line": 16,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'management' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_mgmt/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_mgmt/tests",
+        "fingerprint": "ff1d90bdffb30d1a3d53757b045911df92d8016f3227d9c68aabe12a880b8ec9",
+        "location": {
+            "path": "roles/win_mgmt/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'nbu_client' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_nbu_client/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_nbu_client/tests",
+        "fingerprint": "2da47d56cd9fa9e2e16e5aa039d2f0cd394b8e2a131d70b20ff51415158a9f21",
+        "location": {
+            "path": "roles/win_nbu_client/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'mps' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_nps/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_nps/tests",
+        "fingerprint": "cda62598e17d3a3c236ce933f9cca449d6c69c170e2426acf7e490fd68c86a7f",
+        "location": {
+            "path": "roles/win_nps/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[meta]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$.galaxy_info.platforms[0].versions[0] 2019 is not one of ['6.1', '7.1', '7.2', 'all']. See https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+        "fingerprint": "6b8bdfe45bfc36a4a80cfb3a248fbc211a6e4cb9085f884088a6328ea4a6dd0b",
+        "location": {
+            "path": "roles/win_openssh/meta/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "name[template]",
+        "categories": [
+            "idiom"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/name/",
+        "severity": "major",
+        "description": "Jinja templates should only be at the end of 'name'",
+        "fingerprint": "8600f8c01abc51cb3aaf821809b7ce56294b66e0d55a26fdf26f7447097896cc",
+        "location": {
+            "path": "roles/win_openssh/tasks/service.yml",
+            "positions": {
+                "begin": {
+                    "line": 16,
+                    "column": 9
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: open port {{ opt_openssh_port }} for inbound SSH connections"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "no-tabs",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/no-tabs/",
+        "severity": "minor",
+        "description": "Most files should not contain tabs.",
+        "fingerprint": "2b260db72ce3ec75dcafffb4810cf897ba1f6e05db2eb7ccee32763576204b44",
+        "location": {
+            "path": "roles/win_openssh/tests/custom_vars.yml",
+            "positions": {
+                "begin": {
+                    "line": 97,
+                    "column": 34
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: set_fact expected_subsystem_line=Subsystem\tpowershell\tC:\\PROGRA~1\\POWERS~1\\7\\pwsh.exe -sshs -NoLogo -NoProfile"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'pki_crl' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_pki_crl/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_pki_crl/tests",
+        "fingerprint": "2617e12ff0a8dbd28bc7cd12dbbd2f8a6fe75ed7ede8476368867817f51efa01",
+        "location": {
+            "path": "roles/win_pki_crl/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'pki_ica' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_pki_ica/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_pki_ica/tests",
+        "fingerprint": "9b419630e0e51c7982d5091b6a31a786327cb3923d44195afdf602fab606d9fa",
+        "location": {
+            "path": "roles/win_pki_ica/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'pki_ndes' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_pki_ndes/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_pki_ndes/tests",
+        "fingerprint": "f72d6ab90d0b94fe1e90c7fb55b5019c971ee5bfaa61fd7a47e9b572f6e48542",
+        "location": {
+            "path": "roles/win_pki_ndes/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'pki_rca' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_pki_rca/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_pki_rca/tests",
+        "fingerprint": "18506fda38e9a5957bf0f18cdca7c15709832439822d87346cb2d1635a27e1b9",
+        "location": {
+            "path": "roles/win_pki_rca/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'rds' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_rds/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_rds/tests",
+        "fingerprint": "2c006e99b2b0ee927ca409b11b3076e6b9eaf0922409c54ff99417a3331c89e8",
+        "location": {
+            "path": "roles/win_rds/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "name[template]",
+        "categories": [
+            "idiom"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/name/",
+        "severity": "major",
+        "description": "Jinja templates should only be at the end of 'name'",
+        "fingerprint": "06d9632aabaf04672594bb425105ea559b701719d40dcfdf0ca52e00f5be884d",
+        "location": {
+            "path": "roles/win_server/tasks/locale.yml",
+            "positions": {
+                "begin": {
+                    "line": 2,
+                    "column": 9
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Set the region format to {{ format }} and copy settings to new profiles"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'basic' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_server/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_server/tests",
+        "fingerprint": "add37404d5463be0b31211fa623e299e79d55fb906c3b2e03a5eb39c51774fd6",
+        "location": {
+            "path": "roles/win_server/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "0fe09ec660139008c3952be4cf0024d63428a3ef39e0e5a2705e785b5aab0002",
+        "location": {
+            "path": "roles/win_simpana_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 47
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "0fe09ec660139008c3952be4cf0024d63428a3ef39e0e5a2705e785b5aab0002",
+        "location": {
+            "path": "roles/win_simpana_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 67
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "0fe09ec660139008c3952be4cf0024d63428a3ef39e0e5a2705e785b5aab0002",
+        "location": {
+            "path": "roles/win_simpana_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 84
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "0fe09ec660139008c3952be4cf0024d63428a3ef39e0e5a2705e785b5aab0002",
+        "location": {
+            "path": "roles/win_simpana_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 101
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "jinja[invalid]",
+        "categories": [
+            "formatting"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/jinja/",
+        "severity": "major",
+        "description": "Syntax error in template: Expected an expression, got 'end of print statement'",
+        "fingerprint": "0fe09ec660139008c3952be4cf0024d63428a3ef39e0e5a2705e785b5aab0002",
+        "location": {
+            "path": "roles/win_simpana_server/molecule/default/create.yml",
+            "positions": {
+                "begin": {
+                    "line": 14,
+                    "column": 127
+                }
+            }
+        },
+        "content": {
+            "body": "Task/Handler: Populate instance config dict"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'simpana' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_simpana_server/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_simpana_server/tests",
+        "fingerprint": "4778c483445ad46dff214682b4233112d5d1063a4ed20866cda2411f111c1cda",
+        "location": {
+            "path": "roles/win_simpana_server/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 5,
+                    "column": 7
+                }
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "schema[meta]",
+        "categories": [
+            "core"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/schema/",
+        "severity": "major",
+        "description": "$.galaxy_info.platforms[0].versions[0] 2016 is not one of ['6.1', '7.1', '7.2', 'all']. See https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+        "fingerprint": "25968da9261ee6a9647a33643c2426f8dc4ca16a93eacf1a62c91ba90b7f8a90",
+        "location": {
+            "path": "roles/win_sus/meta/main.yml",
+            "lines": {
+                "begin": 1
+            }
+        },
+        "content": {
+            "body": " Returned errors will not include exact line numbers, but they will mention\nthe schema name being used as a tag, like ``schema[playbook]``,\n``schema[tasks]``.\n\nThis rule is not skippable and stops further processing of the file.\n\nIf incorrect schema was picked, you might want to either:\n\n* move the file to standard location, so its file is detected correctly.\n* use ``kinds:`` option in linter config to help it pick correct file type.\n"
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "syntax-check[specific]",
+        "categories": [
+            "core",
+            "unskippable"
+        ],
+        "url": "https://ansible.readthedocs.io/projects/lint/rules/syntax-check/",
+        "severity": "major",
+        "description": "the role 'wsus' was not found in /Users/fjacquet/Projects/kiro/terraform-lab/roles/win_sus/tests/roles:/Users/fjacquet/Projects/kiro/terraform-lab/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/.ansible/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles:/Users/fjacquet/Projects/kiro/terraform-lab/roles/win_sus/tests",
+        "fingerprint": "c500b32fe7de7a38326f55c95dcedd4f6f50e7f73a567605f1b774418c869bfc",
+        "location": {
+            "path": "roles/win_sus/tests/test.yml",
+            "positions": {
+                "begin": {
+                    "line": 4,
+                    "column": 7
+                }
+            }
+        }
+    }
+]

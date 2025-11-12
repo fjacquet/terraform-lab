@@ -1,11 +1,12 @@
+---
 - name: Set the region format to {{ format }} and copy settings to new profiles
-  win_region:
+  ansible.windows.win_region:
     format: "{{ format }}"
     unicode_language: "{{ lang }}"
     location: "{{ location }}"
-    copy_settings: yes
+    copy_settings: true
   register: result
 
 - name: reboot for local if needed
-  win_reboot:
+  ansible.windows.win_reboot:
   when: result.restart_required

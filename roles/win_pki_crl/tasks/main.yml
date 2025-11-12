@@ -6,8 +6,8 @@
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
-    include_sub_features: yes
-    include_management_tools: yes
+    include_sub_features: true
+    include_management_tools: true
   register: win_feature
   with_items:
     - Web-server
@@ -24,14 +24,12 @@
     state: present
 
 - name: Start synchronization
-  win_shell: |
+  ansible.windows.win_shell: |
     Set-Location "inetsrv"
     .\Appcmd Set-Variable config “Default Web Site” /section:system.webServer/Security/requestFiltering -allowDoubleEscaping:True
-
 - name: Start synchronization
-  win_shell: |
+  ansible.windows.win_shell: |
     Copy-S3Object -BucketName "{{ s3bucket }}" -Key 'root-ca.crt' -LocalFile "{{ cacrt }}"
-
 - name: Start synchronization
-  win_shell: |
+  ansible.windows.win_shell: |
     Copy-S3Object -BucketName "{{ s3bucket }}" -Key 'ent-ca.crl' -LocalFile "{{ entcrt }}"

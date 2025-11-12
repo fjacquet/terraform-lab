@@ -1,5 +1,5 @@
 ---
 # defaults file for wac
 wacport: 6516
-dldir: 'C:\installers'
+dldir: "C:\\installers"
 wacfile: "{{ dldir }}\\wac.msi"

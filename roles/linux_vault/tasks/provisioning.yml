@@ -1,5 +1,4 @@
 ---
-
 - name: get status of kv secrets engine
   ansible.builtin.uri:
     url: "{{ vault_api_addr }}/v1/sys/mounts"
@@ -8,7 +7,7 @@
       X-Vault-Token: "{{ vault_init_output.root_token | default(vault_root_token) }}"
       X-Vault-Namespace: "{{ vault_namespace | default(omit) }}"
   failed_when:
-    - no
+    - false
   register: vault_status_kv_secrets_engine
 
 - name: enable kv secrets engine
@@ -57,8 +56,7 @@
     body:
       options:
         cas: "{{ item.cas | default(omit) }}"
-      data:
-        "{{ item.data }}"
+      data: "{{ item.data }}"
     body_format: json
   loop: "{{ vault_kv_secrets }}"
   loop_control:

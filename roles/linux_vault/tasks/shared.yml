@@ -21,7 +21,7 @@
 - name: select leader if vault_leader is unset
   ansible.builtin.set_fact:
     vault_leader: "{{ inventory_hostname }}"
-  run_once: yes
+  run_once: true
   when:
     - vault_leader is not defined
 
@@ -67,8 +67,8 @@
   environment:
     VAULT_ADDR: "{{ vault_api_addr }}"
   register: vault_status_raw
-  changed_when: no
-  check_mode: no
+  changed_when: false
+  check_mode: false
   failed_when:
     - vault_status_raw.rc == 1
 

@@ -3,7 +3,7 @@
 
 - name: import assert.yml
   ansible.builtin.import_tasks: assert.yml
-  run_once: yes
+  run_once: true
   delegate_to: localhost
 
 - name: run shared tasks
@@ -26,5 +26,4 @@
     file: provisioning.yml
   when:
     - vault_kv_secrets is defined
-    - vault_root_token is defined or
-      vault_init_output.root_token is defined
+    - vault_root_token is defined or vault_init_output.root_token is defined

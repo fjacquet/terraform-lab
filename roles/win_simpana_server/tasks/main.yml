@@ -2,7 +2,7 @@
 # tasks file for simpana
 
 - name: download bin to Ansible controller
-  aws_s3:
+  amazon.aws.s3_object:
     bucket: "{{ s3bucket }}"
     object: "{{ bin }}"
     dest: "/tmp/{{ bin }}"
@@ -10,12 +10,12 @@
   delegate_to: localhost
 
 - name: copy s3 object from Ansible controller to Windows host
-  win_copy:
+  ansible.windows.win_copy:
     src: "/tmp/{{ bin }}"
     dest: "{{ dlroot }}\\{{ bin }}"
 
 - name: download lic to Ansible controller
-  aws_s3:
+  amazon.aws.s3_object:
     bucket: "{{ s3bucket }}"
     object: "{{ xml }}"
     dest: "/tmp/{{ xml }}"
@@ -23,7 +23,7 @@
   delegate_to: localhost
 
 - name: copy s3 object from Ansible controller to Windows host
-  win_copy:
+  ansible.windows.win_copy:
     src: "/tmp/{{ xml }}"
     dest: "{{ dlroot }}\\{{ bin }}"
 

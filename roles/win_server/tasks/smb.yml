@@ -1,6 +1,6 @@
 ---
 - name: Disable LMHosts
-  win_shell: |
+  ansible.windows.win_shell: |
     $disable = 2
     $adapters = (gwmi win32_networkadapterconfiguration)
     foreach ($adapter in $adapters) {
@@ -8,21 +8,16 @@
       $adapter.settcpipnetbios($disable)
     }
 - name: Remove SMBv1
-  win_shell: Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol -NoRestart
-
+  ansible.windows.win_shell: Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol -NoRestart
 - name: Disable Netbios
-  win_shell: |
+  ansible.windows.win_shell: |
     $nicClass = Get-WmiObject -List Win32_NetworkAdapterConfiguration
     $nicClass.enableWins($false, $false)
-
 - name: Disable EnableSMB1Protocol
-  win_shell: Set-SmbServerConfiguration -EnableSMB1Protocol $false -Confirm:$false
-
+  ansible.windows.win_shell: Set-SmbServerConfiguration -EnableSMB1Protocol $false -Confirm:$false
 - name: Set-SmbServerConfiguration RequireSecuritySignature
-  win_shell: Set-SmbServerConfiguration -RequireSecuritySignature $true -EnableSecuritySignature $true -EncryptData $true -Confirm:$false
-
+  ansible.windows.win_shell: Set-SmbServerConfiguration -RequireSecuritySignature $true -EnableSecuritySignature $true -EncryptData $true -Confirm:$false
 - name: Disable auto share
-  win_shell: Set-SmbServerConfiguration -AutoShareServer $false -AutoShareWorkstation $false  -Confirm:$false
-
+  ansible.windows.win_shell: Set-SmbServerConfiguration -AutoShareServer $false -AutoShareWorkstation $false  -Confirm:$false
 - name: Disable hidden
-  win_shell: Set-SmbServerConfiguration -ServerHidden $true  -AnnounceServer $false  -Confirm:$false
+  ansible.windows.win_shell: Set-SmbServerConfiguration -ServerHidden $true  -AnnounceServer $false  -Confirm:$false

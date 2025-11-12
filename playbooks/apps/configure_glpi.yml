@@ -1,16 +1,16 @@
 ---
 - hosts: tag_type_glpi
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
   strategy: free
 
   tasks:
     - name: Install mysql
-      include_role:
+      ansible.builtin.include_role:
         name: linux_mysql
 
     - name: Install apache
-      include_role:
+      ansible.builtin.include_role:
         name: linux_apache
       vars:
         apache_state: started
@@ -20,7 +20,7 @@
             documentroot: "/var/www/glpi"
 
     - name: Install php
-      include_role:
+      ansible.builtin.include_role:
         name: linux_php
       vars:
         php_memory_limit: "64M"
@@ -29,5 +29,5 @@
         php_session_auto_start: "off"
 
     - name: Install glpi
-      include_role:
+      ansible.builtin.include_role:
         name: debian_glpi

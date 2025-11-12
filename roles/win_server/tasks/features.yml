@@ -1,18 +1,19 @@
+---
 # Install-Module -Name AWSPowerShell
 
 - name: Install features with sub features and management tools
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
-    include_sub_features: yes
-    include_management_tools: yes
+    include_sub_features: true
+    include_management_tools: true
   register: win_feature
   with_items:
-  - RSAT
-  - DSC-Service
-  - GPMC
-  - SNMP-Service
-  - Bitlocker
+    - RSAT
+    - DSC-Service
+    - GPMC
+    - SNMP-Service
+    - Bitlocker
 
 # - name: Reboot if installing feature requires it
   # ansible.windows.win_reboot:

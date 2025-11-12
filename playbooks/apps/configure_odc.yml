@@ -1,7 +1,7 @@
 ---
 - hosts: tag_Name_dc_1
-  become: no
-  gather_facts: yes
+  become: false
+  gather_facts: true
   strategy: free
 
   roles:

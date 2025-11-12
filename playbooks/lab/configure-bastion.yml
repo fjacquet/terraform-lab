@@ -1,8 +1,7 @@
 ---
-
 - hosts: tag_type_guacamole
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
 
   roles:
     - debian_server

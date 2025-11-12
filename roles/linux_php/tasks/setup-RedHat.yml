@@ -1,6 +1,6 @@
 ---
 - name: Ensure PHP packages are installed.
-  package:
+  ansible.builtin.package:
     name: "{{ php_packages + php_packages_extra }}"
     state: "{{ php_packages_state }}"
     enablerepo: "{{ php_enablerepo | default(omit, true) }}"

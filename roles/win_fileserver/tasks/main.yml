@@ -4,8 +4,8 @@
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
-    include_sub_features: yes
-    include_management_tools: yes
+    include_sub_features: true
+    include_management_tools: true
   register: win_feature
   with_items:
     - File-Services
@@ -19,7 +19,6 @@
 - name: Reboot if installing feature requires it
   ansible.windows.win_reboot:
   when: win_feature.reboot_required
-
 
 # new-Partition -PartitionNumber 2  -DriveLetter D  | Format-Volume  -FileSystem NTFS   -Force:$true   -Compress   -UseLargeFRS  -Confirm:$false
 - name: Disable smbv1

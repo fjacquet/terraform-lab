@@ -4,8 +4,8 @@
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
-    include_sub_features: yes
-    include_management_tools: yes
+    include_sub_features: true
+    include_management_tools: true
   register: win_feature
   with_items:
     - AD-Domain-Services
@@ -15,7 +15,7 @@
   when: win_feature.reboot_required
 
 - name: Promote server with custom paths
-  ansible.windows.win_domain_controller:
+  microsoft.ad.domain_controller:
     dns_domain_name: "{{ domain }}"
     domain_admin_user: "{{ username }}"
     domain_admin_password: "{{ secret }}"

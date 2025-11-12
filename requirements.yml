@@ -1,23 +1,26 @@
+---
 roles:
-- geerlingguy.certbot
-- geerlingguy.firewall
-- geerlingguy.ntp
-- geerlingguy.haproxy
+  - name: geerlingguy.certbot
+  - name: geerlingguy.firewall
+  - name: geerlingguy.ntp
+  - name: geerlingguy.haproxy
 
 collections:
-- amazon.aws
-- ansible.windows
-- azure.azcollection
-- cisco.intersight
-- cisco.iosxr
-- cisco.ise
-- cisco.ucs
-- community.crypto
-- community.general
-- community.hashi_vault
-- community.mysql
-- community.vmware
-- community.windows
-- purestorage.flasharray
-- vmware.vmware_rest
-- middleware_automation.keycloak
+  - amazon.aws
+  - azure.azcollection
+  - cisco.intersight
+  - cisco.iosxr
+  - cisco.ise
+  - cisco.ucs
+  - community.crypto
+  - community.general
+  - community.hashi_vault
+  - community.mysql
+  - community.vmware
+  - community.windows
+  - dellemc.powerflex
+  - dellemc.enterprise_sonic
+  - microsoft.ad
+  - purestorage.flasharray
+  - vmware.vmware_rest
+  - middleware_automation.keycloak

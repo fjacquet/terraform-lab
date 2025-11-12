@@ -1,10 +1,10 @@
 ---
 - hosts: tag_type_nps
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
   strategy: free
 
   tasks:
     - name: Install radius
-      include_role:
+      ansible.builtin.include_role:
         name: win_nps

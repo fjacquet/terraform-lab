@@ -1,13 +1,13 @@
 ---
 - name: Check for existing OpCache config files.
-  find:
+  ansible.builtin.find:
     paths: "{{ item }}"
-    contains: 'zend_extension(\s+)?=(\s+)?opcache\.so'
+    contains: "zend_extension(\\s+)?=(\\s+)?opcache\\.so"
   register: php_installed_opcache_confs
   with_items: "{{ php_extension_conf_paths }}"
 
 - name: Remove any non-role-supplied OpCache config files.
-  file:
+  ansible.builtin.file:
     path: "{{ item.1.path }}"
     state: absent
   when: php_opcache_conf_filename != (item.1.path.split('/') | last)
@@ -17,19 +17,19 @@
   notify: restart webserver
 
 - name: Ensure OpCache config file is present.
-  template:
+  ansible.builtin.template:
     src: opcache.ini.j2
     dest: "{{ item }}/{{ php_opcache_conf_filename }}"
     owner: root
     group: root
     force: true
-    mode: 0644
+    mode: "0644"
   with_items: "{{ php_extension_conf_paths }}"
   when: php_opcache_enable | bool
   notify: restart webserver
 
 - name: Remove OpCache config file if OpCache is disabled.
-  file:
+  ansible.builtin.file:
     path: "{{ item }}/{{ php_opcache_conf_filename }}"
     state: absent
   with_items: "{{ php_extension_conf_paths }}"

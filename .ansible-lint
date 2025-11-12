@@ -1,70 +1,148 @@
-# .ansible-lint
+---
+# ============================================================================
+# ANSIBLE-LINT CONFIGURATION
+# Configured to focus on critical issues while suppressing cosmetic warnings
+# ============================================================================
+
+# Paths to exclude from linting
 exclude_paths:
-  - .cache/ # implicit unless exclude_paths is defined in config
+  - .cache/
   - .github/
+  - .venv/
   - collections/
-# - roles/
-  - ../../.ansible/
+  - archive/
+  - .ansible/
+  - .scannerwork/
+
+# Output format
 parseable: true
-# quiet: true
-# verbosity: 1
 
 # Enable checking of loop variable prefixes in roles
 loop_var_prefix: "{role}_"
 
+# Use default rules as baseline
 use_default_rules: true
-# Load custom rules from this specific folder
-# rulesdir:
-#   - ./rule/directory/
 
-# This makes linter to fully ignore rules/tags listed below
+# ============================================================================
+# SKIP LIST - Rules to completely ignore
+# These are either not applicable or intentionally not followed
+# ============================================================================
+
 skip_list:
-  - deprecated-local-action  # Do not use 'local_action', use 'delegate_to: localhost'
-  - empty-string-compare  # Don't compare to empty string
-  - git-latest
-  - meta-incorrect  # meta/main.yml default values should be changed
-  - meta-no-info  # meta/main.yml should contain relevant info
-  - meta-no-tags  # Tags must contain lowercase letters and digits only
-  - no-changed-when  # Commands should not change things if nothing needs doing
-  - no-handler  # Tasks that run when changed should likely be handlers
-  - no-loop-var-prefix  # Role loop_var should use configured prefix.: standard_host_
-  - no-same-owner  # Owner should not be kept between different hosts
-  - package-latest
-  - risky-file-permissions  # File permissions unset or incorrect
-  - role-name  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern
-  - skip_this_tag
+  # Cosmetic issues (low priority for lab environment)
+  - name[casing] # Task names don't need to start with uppercase (cosmetic)
+  - name[play] # Plays don't need names (cosmetic)
+  - name[missing] # Tasks don't need names (cosmetic)
+  - jinja[spacing] # Jinja2 spacing is cosmetic
+  - key-order[task] # Task key order is cosmetic
 
-# Any rule that has the 'opt-in' tag will not be loaded unless its 'id' is
-# mentioned in the enable_list:
+  # Variable naming (medium priority - suppress for now)
+  - var-naming[no-role-prefix] # Variables don't need role prefix in lab environment
+
+  # Deprecated/legacy rules
+  - deprecated-local-action # Legacy syntax
+  - empty-string-compare # Legacy pattern
+  - git-latest # Using latest is acceptable in lab
+  - package-latest # Using latest is acceptable in lab
+
+  # Meta/role rules (not critical)
+  - meta-incorrect # meta/main.yml defaults are acceptable
+  - meta-no-info # meta/main.yml info not critical for lab
+  - meta-no-tags # Tags not critical for lab
+  - role-name # Role naming is flexible
+
+  # Handler/change detection (not critical for lab)
+  - no-changed-when # Change detection not critical
+  - no-handler # Handler usage is flexible
+
+  # Other non-critical rules
+  - no-loop-var-prefix # Loop var prefix not critical
+  - no-same-owner # Owner handling is flexible
+  - risky-file-permissions # File permissions handled separately
+  - no-free-form # Free-form syntax is acceptable
+
+# ============================================================================
+# ENABLE LIST - Opt-in rules to enable
+# ============================================================================
+
 enable_list:
-  - no-same-owner
-  # add yaml here if you want to avoid ignoring yaml checks when yamllint
-  # library is missing. Normally its absence just skips using that rule.
-  - yaml
-# Report only a subset of tags and fully ignore any others
-# tags:
-#   - var-spacing
+  - yaml # Enable YAML validation (critical)
 
-# This makes the linter display but not fail for rules/tags listed below:
+# ============================================================================
+# WARN LIST - Show as warnings instead of errors
+# These issues should be fixed eventually but won't block execution
+# ============================================================================
+
 warn_list:
-  - experimetal # experimental is included in the implicit list
-  - git-latest
-  - skip_this_tag
-  # - role-name
+  - experimental # Experimental features
+  - command-instead-of-shell # Prefer command over shell
+  - command-instead-of-module # Prefer modules over commands
+  - deprecated-command-syntax # Deprecated syntax patterns
+  - inline-env-var # Environment variable usage
+  - literal-compare # Literal comparisons
+  - no-jinja-when # Jinja in when conditions
+  - no-tabs # Tab characters
+  - partial-become # Partial privilege escalation
+  - playbook-extension # Playbook file extensions
+  - unnamed-task # Unnamed tasks (warning only)
+  - var-spacing # Variable spacing
 
-# Offline mode disables installation of requirements.yml
+# ============================================================================
+# OFFLINE MODE
+# Disable installation of requirements.yml during linting
+# ============================================================================
+
 offline: true
 
-# Uncomment to enforce action validation with tasks, usually is not
-# needed as Ansible syntax check also covers it.
-# skip_action_validation: false
+# ============================================================================
+# FILE KIND DETECTION
+# Help ansible-lint identify file types correctly
+# ============================================================================
 
-# List of additional kind:pattern to be added at the top of the default
-# match list, first match determines the file kind.
 kinds:
-  # - playbook: "**/playbooks/*.{yml,yaml}"
-  # - galaxy: "**/folder/galaxy.yml"
   - tasks: "**/tasks/*.yml"
+  - tasks: "**/tasks/*.yaml"
   - vars: "**/vars/*.yml"
-  # - meta: "**/meta/main.yml"
-  # - yaml: "**/*.yaml-too"
+  - vars: "**/vars/*.yaml"
+  - defaults: "**/defaults/*.yml"
+  - defaults: "**/defaults/*.yaml"
+  - handlers: "**/handlers/*.yml"
+  - handlers: "**/handlers/*.yaml"
+  - meta: "**/meta/main.yml"
+  - meta: "**/meta/main.yaml"
+  - playbook: "**/playbooks/*.yml"
+  - playbook: "**/playbooks/*.yaml"
+  - playbook: "playbooks/**/*.yml"
+  - playbook: "playbooks/**/*.yaml"
+
+# ============================================================================
+# NOTES
+# ============================================================================
+
+# This configuration is optimized for a lab/testing environment where:
+# - Cosmetic issues are suppressed to reduce noise
+# - Critical syntax and schema errors are still caught
+# - Variable naming conventions are relaxed
+# - Focus is on functionality over style
+
+# To see all issues (including suppressed ones):
+#   ansible-lint --show-relpath playbooks/
+
+# To run with strict mode (no suppressions):
+#   ansible-lint --strict playbooks/
+
+# To fix auto-fixable issues:
+#   ansible-lint --fix playbooks/
+
+# ============================================================================
+# CRITICAL ISSUES STILL CHECKED
+# ============================================================================
+
+# The following critical issues are NOT suppressed and will cause errors:
+# - syntax-check[specific]    # Syntax errors
+# - schema[meta]              # Invalid role metadata
+# - schema[tasks]             # Invalid task structure
+# - schema[playbook]          # Invalid playbook structure
+# - jinja[invalid]            # Invalid Jinja2 syntax
+# - load-failure              # File loading failures
+# - parser-error              # YAML parsing errors

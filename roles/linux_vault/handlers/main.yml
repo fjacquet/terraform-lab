@@ -15,4 +15,4 @@
   loop: "{{ vault_init_output.unseal_keys_b64 | default(vault_unseal_keys) }}"
   loop_control:
     label: "hidden"
-  no_log: yes
+  no_log: true

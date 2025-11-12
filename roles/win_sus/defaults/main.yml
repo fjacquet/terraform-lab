@@ -1,5 +1,5 @@
 ---
-wsus_content_folder: 'D:\WSUS'
+wsus_content_folder: "D:\\WSUS"
 
 wsus_use_proxy: false
 wsus_install_management_tools: true

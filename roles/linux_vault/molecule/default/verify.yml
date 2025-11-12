@@ -1,8 +1,8 @@
 ---
 - name: Verify
   hosts: all
-  become: yes
-  gather_facts: no
+  become: true
+  gather_facts: false
 
   tasks:
     - name: try vault --version
@@ -24,13 +24,13 @@
       ansible.builtin.assert:
         that:
           - vault_status.initialized | bool
-        quiet: yes
+        quiet: true
 
     - name: check if vault is unsealed
       ansible.builtin.assert:
         that:
           - not vault_status.sealed | bool
-        quiet: yes
+        quiet: true
 
     - name: connect to vault ui
       ansible.builtin.uri:
@@ -39,7 +39,7 @@
     - name: check if backup exists
       ansible.builtin.find:
         path: /root
-        pattern: '*.snapshot'
+        pattern: "*.snapshot"
       register: vault_check_backup
       failed_when:
         - vault_check_backup.matched <= 0

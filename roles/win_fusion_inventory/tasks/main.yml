@@ -5,9 +5,8 @@
     url: "{{ url }}"
     dest: "{{ dest }}"
 
-
 - name: Install fusion inventory
-  win_shell: |
+  ansible.windows.win_shell: |
     $arg = ('/acceptlicense',
       '/add-firewall-exception',
       '/execmode=Service',

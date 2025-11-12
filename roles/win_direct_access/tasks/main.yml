@@ -3,8 +3,8 @@
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
-    include_sub_features: yes
-    include_management_tools: yes
+    include_sub_features: true
+    include_management_tools: true
   register: win_feature
   with_items:
     - DirectAccess-VPN
@@ -12,11 +12,10 @@
 - name: Reboot if installing feature requires it
   ansible.windows.win_reboot:
   when: win_feature.reboot_required
-  ignore_errors: True
-
+  ignore_errors: true
 
 - name: Configure DA
-  ansible.windows.win_shell : |
+  ansible.windows.win_shell: |
     Install-RemoteAccess `
     -DAInstallType FullInstall `
     -ConnectToAddress da.{{ dns_domain }} `

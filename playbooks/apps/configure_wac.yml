@@ -1,7 +1,7 @@
 ---
 - hosts: tag_type_wac
-  become: no
-  gather_facts: yes
+  become: false
+  gather_facts: true
   strategy: free
 
   roles:

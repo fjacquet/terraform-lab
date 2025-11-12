@@ -14,29 +14,25 @@
   ansible.windows.win_template:
     src: templates/capolicy.inf.j2
     dest: C:\Windows\capolicy.inf
-    newline_sequence: '\n'
-    backup: yes
+    newline_sequence: "\\n"
+    backup: true
 
 # Copy-Item -Path $file -Destination "C:\Windows\capolicy.inf"
 
 - name: Start synchronization
-  win_shell: |
+  ansible.windows.win_shell: |
     Copy-S3Object -BucketName "{{ s3bucket }}" -Key 'root-ca.crt' -LocalFile "{{ cacrt }}"
-
 - name: Start synchronization
-  win_shell: |
+  ansible.windows.win_shell: |
     Copy-S3Object -BucketName "{{ s3bucket }}" -Key 'ent-ca.crl' -LocalFile "{{ cacrl }}"
-
 - name: Push to domain
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe -dsPublish -f "{{ cacrl }}" RootCA
-
 - name: Add to local store
-  win_shell: |
+  ansible.windows.win_shell: |
     certutil.exe –addstore –f root "{{ cacrl }}"
-
 - name: startup configuration
-  win_shell: |
+  ansible.windows.win_shell: |
     Install-AdcsCertificationAuthority `
       -CAType EnterpriseSubordinateCA `
       -CACommonName  "{{ caname }}" `

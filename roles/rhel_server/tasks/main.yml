@@ -1,7 +1,7 @@
 ---
 # tasks file for rhel8_basic
 - name: install some package
-  yum:
+  ansible.builtin.dnf:
     name:
       - wget
       - libaio
@@ -11,15 +11,13 @@
     state: present
 
 - name: Upgrade all packages
-  yum:
-    name: '*'
+  ansible.builtin.dnf:
+    name: "*"
     state: latest
-  register:
 
 - name: Set a hostname
   ansible.builtin.hostname:
     name: "{{ ansible_hostname }}"
-
 
 # yum -y upgrade
 

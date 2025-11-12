@@ -1,6 +1,6 @@
 ---
 - name: download bin to Ansible controller
-  aws_s3:
+  amazon.aws.s3_object:
     bucket: "{{ s3bucket }}"
     object: "{{ bin }}"
     dest: "/tmp/{{ bin }}"
@@ -8,7 +8,7 @@
   delegate_to: localhost
 
 - name: copy s3 object from Ansible controller to Windows host
-  win_copy:
+  ansible.windows.win_copy:
     src: "/tmp/{{ bin }}"
     dest: "{{ dlroot }}\\{{ bin }}"
 
@@ -23,8 +23,8 @@
   ansible.windows.win_feature:
     name: "{{ item }}"
     state: present
-    include_sub_features: yes
-    include_management_tools: yes
+    include_sub_features: true
+    include_management_tools: true
   register: win_feature
   with_items:
     - NET-Framework-45-Features

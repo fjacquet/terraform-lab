@@ -1,6 +1,6 @@
 ---
 - name: Start synchronization
-  win_shell: |
+  ansible.windows.win_shell: |
     $secret = (Get-SECSecretValue -SecretId "{{ domain }}".xyz/pki/svc-ndes").SecretString | ConvertFrom-Json
     Install-AdcsNetworkDeviceEnrollmentService `
       -ServiceAccountName "{{ domain }}"\"{{ user }}" `

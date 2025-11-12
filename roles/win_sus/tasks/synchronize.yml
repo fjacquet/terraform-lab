@@ -1,12 +1,11 @@
 ---
 - name: Start synchronization
-  win_shell: |
+  ansible.windows.win_shell: |
     $wsus = Get-WSUSServer
     $subscription = $wsus.GetSubscription()
     $subscription.StartSynchronization()
-
 - name: Wait for synchronization to complete
-  win_shell: |
+  ansible.windows.win_shell: |
     $wsus = Get-WSUSServer
     $subscription = $wsus.GetSubscription()
     if ($subscription.GetSynchronizationStatus() -ne 'NotProcessing'){

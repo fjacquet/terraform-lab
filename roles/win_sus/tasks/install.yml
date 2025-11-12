@@ -1,6 +1,6 @@
 ---
 - name: Install UpdateServices
-  win_feature:
+  ansible.windows.win_feature:
     name: UpdateServices
     state: present
     include_sub_features: false
@@ -8,7 +8,7 @@
   register: _wsusfeature
 
 - name: Install UpdateServices-WidDB
-  win_feature:
+  ansible.windows.win_feature:
     name: UpdateServices-WidDB
     state: present
     include_sub_features: false
@@ -16,7 +16,7 @@
   register: _widdb
 
 - name: Install UpdateServices-Services
-  win_feature:
+  ansible.windows.win_feature:
     name: UpdateServices-Services
     state: present
     include_sub_features: false
@@ -24,7 +24,7 @@
   register: _services
 
 - name: Install Deduplication
-  win_feature:
+  ansible.windows.win_feature:
     name: FS-Data-Deduplication
     state: present
     include_sub_features: true
@@ -40,7 +40,5 @@
   when: wsus_install_report_viewer
 
 - name: Reboot for WSUS Install
-  win_reboot:
-  when: _wsusfeature.reboot_required
-    or _widdb.reboot_required
-    or _services.reboot_required
+  ansible.windows.win_reboot:
+  when: _wsusfeature.reboot_required or _widdb.reboot_required or _services.reboot_required

@@ -1,3 +1,4 @@
+---
 plugin: aws_ec2
 # Take from environment
 # aws_access_key: <YOUR-AWS-ACCESS-KEY-HERE>
@@ -7,7 +8,7 @@ regions:
 keyed_groups:
   # Add e.g. x86_64 hosts to an arch_x86_64 group
   - prefix: arch
-    key: 'architecture'
+    key: "architecture"
   # Add hosts to tag_Name_Value groups for each Name/Value tag pair
   - prefix: tag
     key: tags
@@ -16,10 +17,10 @@ keyed_groups:
     key: instance_type
   # Create security_groups_sg_abcd1234 group for each SG
   - key: 'security_groups|json_query("[].group_id")'
-    prefix: 'security_groups'
+    prefix: "security_groups"
   # Create a group for each value of the Application tag
   - key: tags.Application
-    separator: ''
+    separator: ""
   # Create a group per region e.g. aws_region_us_east_2
   - key: placement.region
     prefix: aws_region

@@ -29,9 +29,7 @@
               ansible.builtin.debug:
                 msg: "{{ vault_init_output.root_token | default(vault_root_token) }}"
               when:
-                - vault_init_output is defined and
-                  vault_init_output.root_token is defined or
-                  vault_root_token is defined
+                - vault_init_output is defined and vault_init_output.root_token is defined or vault_root_token is defined
           when:
             - vault_show_unseal_information | bool
 
@@ -43,15 +41,13 @@
           loop: "{{ vault_init_output.unseal_keys_b64 | default(vault_unseal_keys) }}"
           loop_control:
             label: "hidden"
-          no_log: yes
+          no_log: true
           when:
             - vault_status.sealed | bool
       when:
-        - (vault_init_output is defined and
-          vault_init_output.unseal_keys_b64 is defined and
-          vault_init_output.unseal_keys_b64 is iterable) or
+        - (vault_init_output is defined and vault_init_output.unseal_keys_b64 is defined and vault_init_output.unseal_keys_b64 is iterable) or
           (vault_unseal_keys is defined)
-  run_once: yes
+  run_once: true
 
 - name: make a snapshot
   ansible.builtin.command:
@@ -65,6 +61,4 @@
     VAULT_TOKEN: "{{ vault_init_output.root_token | default(vault_root_token) }}"
   when:
     - vault_make_backup | bool
-    - vault_init_output is defined and
-      vault_init_output.root_token is defined or
-      vault_root_token is defined
+    - vault_init_output is defined and vault_init_output.root_token is defined or vault_root_token is defined

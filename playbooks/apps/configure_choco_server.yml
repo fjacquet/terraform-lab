@@ -1,9 +1,9 @@
 ---
 - hosts: tag_type_mgmt
-  become: no
-  gather_facts: no
+  become: false
+  gather_facts: false
 
   tasks:
-  - name: install Chocolatey Server with the defaults
-    include_role:
-      name: win_chocolatey_server
+    - name: install Chocolatey Server with the defaults
+      ansible.builtin.include_role:
+        name: win_chocolatey_server

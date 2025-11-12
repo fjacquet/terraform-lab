@@ -14,7 +14,7 @@
 
   pre_tasks:
     - name: Update apt cache.
-      apt: update_cache=true cache_valid_time=600
+      ansible.builtin.apt: update_cache=true cache_valid_time=600
       when: ansible_os_family == 'Debian'
       changed_when: false
 
@@ -23,9 +23,9 @@
 
   post_tasks:
     - name: Confirm PHP configuration is correct.
-      shell: php -i | grep 'memory_limit.*192'
+      ansible.builtin.shell: php -i | grep 'memory_limit.*192'
       changed_when: false
 
     - name: Check the installed PHP version.
-      shell: '/usr/bin/php --version | grep -qF "PHP {{ php_version }}"'
+      ansible.builtin.shell: '/usr/bin/php --version | grep -qF "PHP {{ php_version }}"'
       changed_when: false

@@ -3,7 +3,7 @@
 
 - name: install sql server
   ansible.windows.win_powershell:
-    script: |
+    script: |2-
 
       $CredEngine = Get-Credential
       $CredSa     = Get-Credential 'sa'

@@ -1,11 +1,11 @@
 ---
 # Common variables
-opt_laps_configure_gpo: False
-opt_laps_install_client: False
-opt_laps_install_powershell: False
-opt_laps_install_server: False
-opt_laps_install_ui: False
-opt_laps_skip_reboot: False
+opt_laps_configure_gpo: false
+opt_laps_install_client: false
+opt_laps_install_powershell: false
+opt_laps_install_server: false
+opt_laps_install_ui: false
+opt_laps_skip_reboot: false
 
 # Server variables
 
@@ -19,5 +19,5 @@ opt_laps_domain_server: "ez-lab"
 opt_laps_domain_username: "adnin"
 opt_laps_domain_password: "passwed"
 opt_laps_s3bucket: "installers-fja"
-opt_laps_install: 'C:\installers'
+opt_laps_install: "C:\\installers"
 opt_laps_file: "LAPS.x64.msi"

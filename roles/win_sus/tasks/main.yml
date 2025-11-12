@@ -1,15 +1,11 @@
 ---
 - name: Check Variables
-  import_tasks: validate.yml
-
+  ansible.builtin.import_tasks: validate.yml
 - name: Install WSUS Binaries
-  import_tasks: install.yml
-
+  ansible.builtin.import_tasks: install.yml
 - name: Configure WSUS Server
-  import_tasks: configure.yml
-
+  ansible.builtin.import_tasks: configure.yml
 - name: Configure Auto Cleanup
-  import_tasks: cleanup.yml
-
+  ansible.builtin.import_tasks: cleanup.yml
 - name: Pull updates
-  import_tasks: synchronize.yml
+  ansible.builtin.import_tasks: synchronize.yml

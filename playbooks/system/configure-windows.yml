@@ -1,7 +1,7 @@
 ---
 - hosts: tag_system_windows, tag_system_management
-  become: no
-  gather_facts: yes
+  become: false
+  gather_facts: true
   strategy: free
 
   roles:

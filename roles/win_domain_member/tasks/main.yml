@@ -11,12 +11,9 @@
 #     | Set-DnsClientServerAddress -ServerAddresses (
 #     "10.0.51.85",
 #     "10.0.52.144")
-
-
-
 - name: Set multiple lookup addresses on all visible adapters (usually physical adapters that are in the Up state), with debug logging to a file
   ansible.windows.win_dns_client:
-    adapter_names: '*'
+    adapter_names: "*"
     dns_servers: "{{ dns_servers }}"
 
 # TODO check if needed
@@ -27,8 +24,8 @@
 #   win_shell: Add-Computer –domainname "{{domain}}"-Credential $Credential  -Restart:$false  –Force
 
 - name: join domain
-  win_domain_membership:
-    dns_domain_name:  "{{ domain }}"
+  microsoft.ad.membership:
+    dns_domain_name: "{{ domain }}"
     domain_admin_user: "{{ username }}"
     domain_admin_password: "{{ secret }}"
     domain_ou_path: "{{ ou_win }}"
@@ -36,5 +33,5 @@
   register: domain_state
 
 - name: reboot if needed
-  win_reboot:
+  ansible.windows.win_reboot:
   when: domain_state.reboot_required

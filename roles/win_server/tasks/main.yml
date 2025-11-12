@@ -19,27 +19,18 @@
 #     Enable-PSRemoting –Force
 
 - name: disable ie esc
-  include_tasks: ieesc.yml
-
+  ansible.builtin.include_tasks: ieesc.yml
 - name: disable defender
-  include_tasks: defender.yml
-
+  ansible.builtin.include_tasks: defender.yml
 - name: manage smb
-  include_tasks: smb.yml
-
+  ansible.builtin.include_tasks: smb.yml
 - name: Include features
-  include_tasks: features.yml
-
+  ansible.builtin.include_tasks: features.yml
 - name: Include chocolatey
-  include_tasks: chocolatey.yml
-
+  ansible.builtin.include_tasks: chocolatey.yml
 - name: set powershell
-  include_tasks: powershell.yml
-
+  ansible.builtin.include_tasks: powershell.yml
 - name: create admin
-  include_tasks: admin.yml
-
+  ansible.builtin.include_tasks: admin.yml
 - name: set locale
-  include_tasks: locale.yml
-# - name: Reboot the machine with all defaults
-#   ansible.windows.win_reboot:
+  ansible.builtin.include_tasks: locale.yml

@@ -3,5 +3,5 @@
   hosts: all
   tasks:
     - name: "Include win-wac"
-      include_role:
+      ansible.builtin.include_role:
         name: "win-wac"

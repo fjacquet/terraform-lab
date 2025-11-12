@@ -1,6 +1,6 @@
 ---
 # handlers file for debian_redis
 - name: restart redis
-  service:
+  ansible.builtin.service:
     name: "{{ redis_daemon }}"
     state: restarted"

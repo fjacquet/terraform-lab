@@ -1,21 +1,21 @@
 ---
 - name: Create Script Folder
-  win_file:
+  ansible.windows.win_file:
     path: "{{ wsus_script_folder }}"
     state: directory
 
 - name: Create Log Folder
-  win_file:
+  ansible.windows.win_file:
     path: "{{ wsus_log_folder }}"
     state: directory
 
 - name: Copy WSUSCleanup script to machine
-  win_template:
+  ansible.windows.win_template:
     src: wsuscleanup.j2
     dest: "{{ wsus_script_folder }}\\WSUSCleanup.ps1"
 
 - name: Create task to run a WSUS cleanup script
-  win_scheduled_task:
+  community.windows.win_scheduled_task:
     name: WSUS Cleanup
     description: Run WSUS Cleanup
     actions:
