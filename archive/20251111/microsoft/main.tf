@@ -11,8 +11,8 @@ module "adcs" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number_pki-crl  = var.aws_number["pki-crl"]
@@ -47,8 +47,8 @@ module "adds" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["dc"]
@@ -80,8 +80,8 @@ module "adfs" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["adfs"]
@@ -111,8 +111,8 @@ module "dhcp" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["dhcp"]
@@ -142,8 +142,8 @@ module "da" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["da"]
@@ -173,8 +173,8 @@ module "exchange" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["exchange"]
@@ -204,8 +204,8 @@ module "fs" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["fs"]
@@ -237,8 +237,8 @@ module "ipam" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["ipam"]
@@ -268,9 +268,9 @@ module "mgmt" {
   dns_public_zone_id      = local.common_windows_config.dns_public_zone_id
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
-  dns_suffix              = local.common_windows_config.dns_suffix
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
+  dns_suffix                        = local.common_windows_config.dns_suffix
 
   # Service-specific configuration
   aws_number    = var.aws_number["mgmt"]
@@ -294,8 +294,8 @@ module "nps" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["nps"]
@@ -325,8 +325,8 @@ module "rdsh" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number            = var.aws_number["rdsh"]
@@ -357,8 +357,8 @@ module "sharepoint" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["sharepoint"]
@@ -390,8 +390,8 @@ module "sql" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["sql"]
@@ -425,8 +425,8 @@ module "simpana" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["simpana"]
@@ -456,8 +456,8 @@ module "sofs" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number            = var.aws_number["sofs"]
@@ -488,8 +488,8 @@ module "wac" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["wac"]
@@ -519,8 +519,8 @@ module "wds" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["wds"]
@@ -550,8 +550,8 @@ module "wsus" {
   dns_suffix              = local.common_windows_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific configuration
   aws_number    = var.aws_number["wsus"]

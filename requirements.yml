@@ -1,5 +1,8 @@
 roles:
 - geerlingguy.certbot
+- geerlingguy.firewall
+- geerlingguy.ntp
+- geerlingguy.haproxy
 
 collections:
 - amazon.aws
@@ -17,3 +20,4 @@ collections:
 - community.windows
 - purestorage.flasharray
 - vmware.vmware_rest
+- middleware_automation.keycloak

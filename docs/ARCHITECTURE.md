@@ -15,20 +15,22 @@ This project uses a modern, flattened Terraform architecture that eliminates unn
 
 ```
 terraform-lab/
-├── main.tf                      # Root module with unified service deployment
-├── locals.tf                    # ALL service configurations (single source of truth)
+├── main.tf                      # Core orchestration (~70 lines)
+├── security-groups.tf           # Security group definitions (~350 lines)
+├── data-sources.tf              # AMI lookups and data sources (~100 lines)
+├── locals.tf                    # Service configurations + helper maps
 ├── variables.tf                 # Input variables
 ├── outputs.tf                   # Output values (backward compatible)
 ├── versions.tf                  # Terraform and provider versions
-├── backend.tf                   # Terraform Cloud backend configuration
-├── moved-blocks.tf              # State migration blocks (temporary)
+├── backend.tf                   # Terraform backend and SSH key pair
 │
 ├── modules/
 │   └── service/                 # UNIFIED service module (Windows + Unix)
 │       ├── main.tf              # Generic instance, SG, and DNS resources
 │       ├── variables.tf         # Module inputs
 │       ├── outputs.tf           # Module outputs
-│       └── versions.tf          # Module version constraints
+│       ├── versions.tf          # Module version constraints
+│       └── README.md            # Module documentation
 │
 ├── global/                      # Global infrastructure (VPC, IAM, Route53)
 │   ├── vpc/
@@ -48,9 +50,29 @@ terraform-lab/
 │   └── aws_ec2.yaml
 │
 └── docs/                        # Documentation
+    ├── CONFIGURATION.md         # Configuration guide
+    ├── DEPLOYMENT-STATUS.md     # Deployment instructions
     ├── MIGRATION-GUIDE.md       # Migration instructions
-    └── ARCHITECTURE.md          # This file
+    ├── SECURITY.md              # Security best practices
+    └── TERRAFORM-DOCS.md        # Terraform documentation
 ```
+
+### File Organization
+
+**Core Terraform Files:**
+- `main.tf` - High-level orchestration (global module + service deployment)
+- `security-groups.tf` - All security group definitions (RDP, SSH, domain, simpana)
+- `data-sources.tf` - AMI lookups for Windows, Linux, BSD
+- `locals.tf` - Service configurations and computed values
+- `variables.tf` - Input variables and validation
+- `outputs.tf` - Output values for deployed services
+
+**Benefits of Split Structure:**
+- ✅ Easy to scan main.tf (70 lines vs 500 lines)
+- ✅ Security groups isolated for review
+- ✅ Data sources clearly separated
+- ✅ Logical organization by concern
+- ✅ Follows Terraform community conventions
 
 ## Old vs New Architecture
 

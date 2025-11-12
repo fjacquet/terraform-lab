@@ -360,7 +360,12 @@ dig guacamole-0.ez-lab.xyz
 
 ### For New Deployments
 
-1. **Configure Services** in `terraform.tfvars`:
+1. **Create Configuration File**:
+```bash
+cp terraform.tfvars.example terraform.tfvars
+```
+
+2. **Configure Services** in `terraform.tfvars`:
 ```hcl
 aws_number = {
   "guacamole" = 1  # Bastion host
@@ -369,11 +374,17 @@ aws_number = {
 }
 ```
 
-2. **Deploy Infrastructure**:
+3. **Deploy Infrastructure**:
 ```bash
 terraform init
 terraform plan
 terraform apply
+```
+
+**For Testing:** Use the pre-configured test file:
+```bash
+terraform plan -var-file=test.tfvars
+terraform apply -var-file=test.tfvars
 ```
 
 3. **Configure with Ansible**:

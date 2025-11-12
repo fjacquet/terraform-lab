@@ -1,0 +1,128 @@
+# Terraform Variables Configuration Example
+# Copy this file to terraform.tfvars and customize for your deployment
+# cp terraform.tfvars.example terraform.tfvars
+
+# ============================================================================
+# QUICK START CONFIGURATIONS
+# ============================================================================
+
+# Option 1: Minimal Deployment (Recommended for getting started)
+# Uncomment and use this for a basic lab with bastion and domain controllers
+#
+# aws_number = {
+#   "guacamole" = 1  # Bastion host for secure access
+#   "adds"      = 2  # Domain controllers (2 for redundancy)
+# }
+
+# Option 2: Core Infrastructure
+# Uncomment for a more complete lab with essential services
+#
+# aws_number = {
+#   "guacamole" = 1  # Bastion host
+#   "adds"      = 2  # Domain controllers
+#   "dhcp"      = 1  # DHCP server
+#   "dns"       = 1  # DNS server
+#   "mgmt"      = 1  # Management server
+# }
+
+# Option 3: Full Lab Deployment
+# For complete testing, see test.tfvars or uncomment below
+#
+# aws_number = {
+#   # Windows Services
+#   "adds"       = 3  # Active Directory
+#   "adfs"       = 3  # AD Federation Services
+#   "dhcp"       = 3  # DHCP Server
+#   "exchange"   = 3  # Exchange Server
+#   "sql"        = 3  # SQL Server
+#   "sharepoint" = 3  # SharePoint
+#   # ... add other services as needed
+#   
+#   # Unix/Linux Services
+#   "guacamole"  = 1  # Bastion host
+#   "vault"      = 3  # HashiCorp Vault
+#   "glpi"       = 3  # IT Asset Management
+#   # ... add other services as needed
+# }
+
+# ============================================================================
+# SECURITY CONFIGURATION
+# ============================================================================
+
+# Admin Access Control
+# Restrict administrative access (RDP, SSH, WinRM) to specific CIDR blocks
+# Default: VPC CIDR only (10.0.0.0/16) - secure for lab environments
+admin_cidr_blocks = ["10.0.0.0/16"]
+
+# Examples:
+# Corporate office only:
+# admin_cidr_blocks = ["203.0.113.0/24", "198.51.100.0/24"]
+#
+# VPN + VPC access:
+# admin_cidr_blocks = ["10.0.0.0/16", "192.168.1.0/24"]
+
+# Emergency Public Access (NOT RECOMMENDED for production)
+# Set to true to allow admin access from anywhere (0.0.0.0/0)
+# Only use for temporary troubleshooting
+enable_public_admin_access = false
+
+# ============================================================================
+# NETWORK CONFIGURATION
+# ============================================================================
+
+# AWS Region
+aws_region = "eu-west-1"
+
+# Availability Zones
+# Use 1 AZ for testing, 2-3 for production high availability
+azs = ["eu-west-1a"]
+
+# Multi-AZ example:
+# azs = [
+#   "eu-west-1a",
+#   "eu-west-1b",
+#   "eu-west-1c"
+# ]
+
+# ============================================================================
+# DNS CONFIGURATION
+# ============================================================================
+
+# DNS Domain Suffix
+dns_suffix = "ez-lab.xyz"
+
+# Public Route53 Zone ID (if you have one)
+public_dns_id = "Z07150253A0MNSTGYQG5P"
+
+# ============================================================================
+# SSH KEY CONFIGURATION
+# ============================================================================
+
+# SSH Key Pair Name
+key_name = "aws"
+
+# SSH Public Key (optional - can also be set in variables.tf)
+# public_key = "ssh-rsa AAAA... your-key-here"
+
+# ============================================================================
+# NOTES
+# ============================================================================
+
+# 1. Service Dependencies:
+#    - Deploy guacamole first (bastion host)
+#    - Deploy adds (domain controllers) before other Windows services
+#    - Exchange and SharePoint require SQL Server and domain controllers
+
+# 2. Cost Considerations:
+#    - Minimal deployment (guacamole + 2 adds): ~$75/month
+#    - Core infrastructure: ~$150/month
+#    - Full lab (all services): ~$500-1000/month
+
+# 3. Testing:
+#    - Use test.tfvars for full lab testing:
+#      terraform plan -var-file=test.tfvars
+
+# 4. Documentation:
+#    - See README.md for quick start guide
+#    - See docs/CONFIGURATION.md for detailed options
+#    - See docs/DEPLOYMENT-STATUS.md for deployment instructions

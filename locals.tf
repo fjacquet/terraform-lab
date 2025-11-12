@@ -503,4 +503,35 @@ locals {
 
   # Combined services map for easy iteration
   all_services = merge(local.windows_services, local.unix_services)
+
+  # ============================================================================
+  # HELPER MAPS FOR MAIN.TF
+  # Computed values to simplify service module configuration
+  # ============================================================================
+
+  # Subnet map for service module
+  subnet_map = {
+    back     = module.global.aws_subnet_back_id
+    web      = module.global.aws_subnet_web_id
+    mgmt     = module.global.aws_subnet_mgmt_id
+    exchange = module.global.aws_subnet_exchange_id
+    backup   = module.global.aws_subnet_backup_id
+  }
+
+  # Security group map for service module
+  security_group_map = {
+    rdp            = aws_security_group.rdp.id
+    ssh            = aws_security_group.ssh.id
+    domain_member  = aws_security_group.domain_member.id
+    simpana_client = aws_security_group.simpana_client.id
+  }
+
+  # AMI ID map
+  ami_ids = {
+    windows2022 = data.aws_ami.windows2022.id
+    sql2019     = data.aws_ami.sql2019.id
+    debian      = data.aws_ami.debian.id
+    rhel9       = lookup(var.aws_number, "nbu", 0) + lookup(var.aws_number, "oracle", 0) > 0 ? data.aws_ami.rhel9[0].id : ""
+    bsd         = lookup(var.aws_number, "bsd", 0) > 0 ? data.aws_ami.bsd[0].id : ""
+  }
 }

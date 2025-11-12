@@ -31,7 +31,7 @@ variable "config" {
     cidr_override    = optional(string, null)
     extra_dns_names  = optional(list(string), [])
     extra_volumes    = optional(map(number), {})
-    ingress_rules    = optional(list(object({
+    ingress_rules = optional(list(object({
       description      = string
       from_port        = number
       to_port          = number

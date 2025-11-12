@@ -1,24 +1,281 @@
+# ============================================================================
+# TERRAFORM
+# ============================================================================
+
 # Local .terraform directories
 **/.terraform/*
+.terraform/
 
-# .tfstate files (contain sensitive data and managed remotely)
+# Terraform state files (contain sensitive data and managed remotely)
 *.tfstate
 *.tfstate.*
+*.tfstate.backup
 
-# .tfvars files (may contain secrets - exclude by default)
+# Terraform plan files
+*.tfplan
+plan.out
+
+# Terraform variable files (may contain secrets - exclude by default)
 *.tfvars
+*.tfvars.json
 
-# Exception: Allow test.tfvars (no secrets)
+# Exceptions: Allow example and test files (no secrets)
+!terraform.tfvars.example
 !test.tfvars
 
-# Note: .terraform.lock.hcl should be committed to ensure consistent provider versions
-**/bin/*
+# Terraform CLI configuration files
+.terraformrc
+terraform.rc
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Note: .terraform.lock.hcl SHOULD be committed to ensure consistent provider versions
+
+# ============================================================================
+# ANSIBLE
+# ============================================================================
+
+# Ansible retry files
+*.retry
+
+# Ansible vault password files
+.vault_pass
+.vault_password
+vault_pass.txt
+
+# Ansible collections and roles cache
+.ansible/
+collections/ansible_collections/
+
+# Ansible logs
+ansible.log
+
+# ============================================================================
+# PYTHON
+# ============================================================================
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.virtualenv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Environments
+.env
+.env.local
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# UV lock file (optional - commit if you want reproducible builds)
+# uv.lock
+
+# ============================================================================
+# IDE / EDITOR
+# ============================================================================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.*.sw?
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================================================
+# OS
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# PROJECT SPECIFIC
+# ============================================================================
+
+# Secrets and sensitive data
 **/secrets/*
 **/private/*
-.DS_Store
-convert
-sonar-check.sh
+**/bin/*
+org-token.txt
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Logs
+*.log
+audit.txt
+
+# Cache directories
 .cache/
 .dccache
-org-token.txt
+.scannerwork/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+convert
 liste-ami.json
+
+# Scripts (if they contain sensitive data)
+sonar-check.sh
+verify-fixes.sh
+
+# Archive directory (optional - uncomment if you don't want to commit archives)
+# archive/
+
+# ============================================================================
+# DOCUMENTATION ARTIFACTS
+# ============================================================================
+
+# Temporary documentation files
+*-COMPLETE.md
+*-PLAN.md
+REFACTORING-*.md
+VARIABLE-CLEANUP-*.md
+
+# ============================================================================
+# CI/CD
+# ============================================================================
+
+# GitHub Actions
+# .github/ - Keep this committed
+
+# Pre-commit
+# .pre-commit-config.yaml - Keep this committed
+
+# ============================================================================
+# NOTES
+# ============================================================================
+
+# Files that SHOULD be committed:
+# - .terraform.lock.hcl (ensures consistent provider versions)
+# - .pre-commit-config.yaml (pre-commit hooks configuration)
+# - .ansible-lint (Ansible linting configuration)
+# - .yamllint (YAML linting configuration)
+# - terraform.tfvars.example (template for users)
+# - test.tfvars (test configuration without secrets)
+# - requirements.yml (Ansible dependencies)
+# - pyproject.toml (Python project configuration)

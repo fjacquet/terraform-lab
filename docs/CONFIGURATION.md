@@ -150,26 +150,29 @@ default_tags {
 
 ### Enabling Services
 
-Edit `terraform.tfvars` or `variables.tf`:
+**Step 1:** Copy the example configuration:
+
+```bash
+cp terraform.tfvars.example terraform.tfvars
+```
+
+**Step 2:** Edit `terraform.tfvars` to enable services:
 
 ```hcl
-variable "aws_number" {
-  description = "Number of instances per service (0-10)"
-  type        = map(number)
-  
-  default = {
-    "guacamole" = 1  # Bastion host
-    "adds"      = 2  # Domain controllers
-    "dhcp"      = 1  # DHCP server
-    "sql"       = 1  # SQL Server
-    # ... set others as needed
-  }
+aws_number = {
+  "guacamole" = 1  # Bastion host
+  "adds"      = 2  # Domain controllers
+  "dhcp"      = 1  # DHCP server
+  "sql"       = 1  # SQL Server
+  # ... set others as needed
 }
 ```
 
 **Service Count:**
-- `0` = Service disabled
+- `0` = Service disabled (default)
 - `1-10` = Number of instances to deploy
+
+**Note:** All services default to 0 (disabled) in `variables.tf`. You must explicitly enable services in `terraform.tfvars`.
 
 ### Service Dependencies
 

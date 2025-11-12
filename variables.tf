@@ -124,44 +124,53 @@ variable "cidrbyte" {
 }
 
 variable "aws_number" {
-  description = "Number of instances to create for each service type (0-10)"
+  description = "Number of instances to create for each service type (0-10). Default is 0 (disabled) for all services. Enable services by setting count > 0 in terraform.tfvars."
   type        = map(number)
 
   default = {
-    "adds"       = 3  # Active Directory Domain Services (was "dc")
-    "adfs"       = 3
-    "bsd"        = 3
-    "da"         = 3
-    "dhcp"       = 3
-    "exchange"   = 3
-    "fs"         = 3
-    "glpi"       = 3
-    "guacamole"  = 1
-    "ipam"       = 3
-    "mgmt"       = 3
-    "etcd"       = 3
-    "workers"    = 3
-    "longhorn"   = 3
-    "rancher"    = 3
-    "nbu"        = 3
-    "nps"        = 3
-    "opscenter"  = 3
-    "oracle"     = 3
-    "pki-crl"    = 3
-    "pki-ica"    = 3
-    "pki-rca"    = 3
-    "pki-ndes"   = 3
-    "rdsh"       = 3
-    "redis"      = 3
-    "sharepoint" = 3
-    "simpana"    = 3
-    "sql"        = 3
-    "sofs"       = 3
-    "symv"       = 3
-    "vault"      = 3
-    "wac"        = 3
-    "wds"        = 3
-    "wsus"       = 3
+    # Windows Services (default: disabled)
+    "adds"       = 0 # Active Directory Domain Services
+    "adfs"       = 0 # Active Directory Federation Services
+    "dhcp"       = 0 # DHCP Server
+    "da"         = 0 # DirectAccess VPN
+    "exchange"   = 0 # Exchange Server
+    "fs"         = 0 # File Server
+    "ipam"       = 0 # IP Address Management
+    "mgmt"       = 0 # Management Server
+    "nps"        = 0 # Network Policy Server (RADIUS)
+    "rdsh"       = 0 # Remote Desktop Session Host
+    "sharepoint" = 0 # SharePoint Server
+    "sql"        = 0 # SQL Server
+    "simpana"    = 0 # Commvault Backup
+    "sofs"       = 0 # Scale-Out File Server
+    "wac"        = 0 # Windows Admin Center
+    "wds"        = 0 # Windows Deployment Services
+    "wsus"       = 0 # Windows Server Update Services
+
+    # Unix/Linux Services (default: disabled)
+    "guacamole" = 0 # Apache Guacamole (Bastion/Jump Host)
+    "glpi"      = 0 # IT Asset Management
+    "vault"     = 0 # HashiCorp Vault (Secrets Management)
+    "nbu"       = 0 # Veritas NetBackup
+    "oracle"    = 0 # Oracle Database
+    "redis"     = 0 # Redis Cache
+    "bsd"       = 0 # FreeBSD System
+
+    # Kubernetes/Container Services (not yet fully implemented)
+    "etcd"     = 0 # etcd cluster for Kubernetes
+    "workers"  = 0 # Kubernetes worker nodes
+    "longhorn" = 0 # Distributed block storage
+    "rancher"  = 0 # Kubernetes management platform
+
+    # Additional Backup Services (not yet fully implemented)
+    "opscenter" = 0 # DataStax OpsCenter
+    "symv"      = 0 # Symantec/Veritas backup
+
+    # PKI Services (require special handling)
+    "pki-crl"  = 0 # PKI CRL Distribution Point
+    "pki-ica"  = 0 # PKI Issuing CA
+    "pki-rca"  = 0 # PKI Root CA
+    "pki-ndes" = 0 # PKI NDES (SCEP)
   }
 
   validation {

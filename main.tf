@@ -1,11 +1,11 @@
 # ============================================================================
-# TERRAFORM-LAB ROOT MODULE (REFACTORED)
-# Modern architecture using for_each pattern
-# 3 levels → 2 levels: root → modules/service
+# TERRAFORM-LAB ROOT MODULE
+# Modern 2-level architecture: root → unified service module
 # ============================================================================
 
 # ============================================================================
 # GLOBAL INFRASTRUCTURE
+# VPC, subnets, IAM roles, Route53 zones, VPC endpoints
 # ============================================================================
 
 module "global" {
@@ -24,410 +24,11 @@ module "global" {
 }
 
 # ============================================================================
-# COMMON SECURITY GROUPS
-# ============================================================================
-
-# Windows RDP/SSH/WinRM access
-resource "aws_security_group" "rdp" {
-  name        = "tf_ezlab_rdp"
-  description = "Security group for Windows administrative access (RDP, SSH, WinRM)"
-  vpc_id      = module.global.aws_vpc_id
-
-  ingress {
-    description = "Allow RDP from admin CIDR blocks"
-    from_port   = 3389
-    to_port     = 3389
-    protocol    = "tcp"
-    cidr_blocks = local.admin_cidr_blocks
-  }
-
-  ingress {
-    description = "Allow SSH from admin CIDR blocks"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = local.admin_cidr_blocks
-  }
-
-  ingress {
-    description = "Allow WinRM (HTTP and HTTPS) from admin CIDR blocks"
-    from_port   = 5985
-    to_port     = 5986
-    protocol    = "tcp"
-    cidr_blocks = local.admin_cidr_blocks
-  }
-
-  dynamic "egress" {
-    for_each = local.common_egress_rules
-    content {
-      description      = egress.value.description
-      from_port        = egress.value.from_port
-      to_port          = egress.value.to_port
-      protocol         = egress.value.protocol
-      cidr_blocks      = egress.value.cidr_blocks
-      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
-    }
-  }
-}
-
-# Unix/Linux SSH access
-resource "aws_security_group" "ssh" {
-  name        = "tf_ezlab_lssh"
-  description = "Security group for Unix/Linux administrative access (SSH)"
-  vpc_id      = module.global.aws_vpc_id
-
-  ingress {
-    description = "Allow SSH from admin CIDR blocks"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = local.admin_cidr_blocks
-  }
-
-  ingress {
-    description = "Allow Cockpit web console from VPC"
-    from_port   = 9090
-    to_port     = 9090
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
-
-  dynamic "egress" {
-    for_each = local.common_egress_rules
-    content {
-      description      = egress.value.description
-      from_port        = egress.value.from_port
-      to_port          = egress.value.to_port
-      protocol         = egress.value.protocol
-      cidr_blocks      = egress.value.cidr_blocks
-      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
-    }
-  }
-}
-
-# Active Directory domain member traffic
-resource "aws_security_group" "domain_member" {
-  name        = "tf_ezlab_domain_member"
-  description = "Security group for Active Directory domain member traffic"
-  vpc_id      = module.global.aws_vpc_id
-
-  # ICMP ping
-  ingress {
-    description = "Allow ICMP ping from domain members"
-    from_port   = 8
-    to_port     = 8
-    protocol    = "icmp"
-    self        = true
-  }
-
-  # DNS (TCP and UDP)
-  ingress {
-    description = "Allow DNS TCP from domain members"
-    from_port   = 53
-    to_port     = 53
-    protocol    = "tcp"
-    self        = true
-  }
-  ingress {
-    description = "Allow DNS UDP from domain members"
-    from_port   = 53
-    to_port     = 53
-    protocol    = "udp"
-    self        = true
-  }
-
-  # Kerberos (TCP and UDP)
-  ingress {
-    description = "Allow Kerberos TCP from domain members"
-    from_port   = 88
-    to_port     = 88
-    protocol    = "tcp"
-    self        = true
-  }
-  ingress {
-    description = "Allow Kerberos UDP from domain members"
-    from_port   = 88
-    to_port     = 88
-    protocol    = "udp"
-    self        = true
-  }
-
-  # NTP
-  ingress {
-    description = "Allow NTP from domain members"
-    from_port   = 123
-    to_port     = 123
-    protocol    = "udp"
-    self        = true
-  }
-
-  # RPC endpoint mapper
-  ingress {
-    description = "Allow RPC endpoint mapper from domain members"
-    from_port   = 135
-    to_port     = 135
-    protocol    = "tcp"
-    self        = true
-  }
-
-  # LDAP (TCP and UDP)
-  ingress {
-    description = "Allow LDAP TCP from domain members"
-    from_port   = 389
-    to_port     = 389
-    protocol    = "tcp"
-    self        = true
-  }
-  ingress {
-    description = "Allow LDAP UDP from domain members"
-    from_port   = 389
-    to_port     = 389
-    protocol    = "udp"
-    self        = true
-  }
-
-  # SMB/CIFS (TCP and UDP)
-  ingress {
-    description = "Allow SMB TCP from domain members"
-    from_port   = 445
-    to_port     = 445
-    protocol    = "tcp"
-    self        = true
-  }
-  ingress {
-    description = "Allow SMB UDP from domain members"
-    from_port   = 445
-    to_port     = 445
-    protocol    = "udp"
-    self        = true
-  }
-
-  # LDAPS
-  ingress {
-    description = "Allow LDAPS TCP from domain members"
-    from_port   = 636
-    to_port     = 636
-    protocol    = "tcp"
-    self        = true
-  }
-  ingress {
-    description = "Allow LDAPS UDP from domain members"
-    from_port   = 636
-    to_port     = 636
-    protocol    = "udp"
-    self        = true
-  }
-
-  # Kerberos password change
-  ingress {
-    description = "Allow Kerberos password change from domain members"
-    from_port   = 749
-    to_port     = 749
-    protocol    = "udp"
-    self        = true
-  }
-
-  # LDAP Global Catalog
-  ingress {
-    description = "Allow LDAP Global Catalog from domain members"
-    from_port   = 3268
-    to_port     = 3269
-    protocol    = "tcp"
-    self        = true
-  }
-
-  # WinRM
-  ingress {
-    description = "Allow WinRM from domain members"
-    from_port   = 5985
-    to_port     = 5986
-    protocol    = "tcp"
-    self        = true
-  }
-
-  # Dynamic RPC ports
-  ingress {
-    description = "Allow dynamic RPC ports from domain members"
-    from_port   = 49152
-    to_port     = 65535
-    protocol    = "tcp"
-    self        = true
-  }
-
-  # FusionInventory agent
-  ingress {
-    description = "Allow FusionInventory agent from VPC"
-    from_port   = 62354
-    to_port     = 62354
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
-  ingress {
-    description      = "Allow FusionInventory agent from IPv6"
-    from_port        = 62354
-    to_port          = 62354
-    protocol         = "tcp"
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  dynamic "egress" {
-    for_each = local.common_egress_rules
-    content {
-      description      = egress.value.description
-      from_port        = egress.value.from_port
-      to_port          = egress.value.to_port
-      protocol         = egress.value.protocol
-      cidr_blocks      = egress.value.cidr_blocks
-      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
-    }
-  }
-}
-
-# Simpana/Commvault client security group
-# Created separately to avoid circular dependency (clients need this before simpana server exists)
-resource "aws_security_group" "simpana_client" {
-  name        = "tf_ezlab_simpana_client"
-  description = "Security group for Simpana/Commvault backup clients"
-  vpc_id      = module.global.aws_vpc_id
-
-  # Simpana client-to-server communication
-  ingress {
-    description = "Simpana client services (CVD)"
-    from_port   = 8400
-    to_port     = 8403
-    protocol    = "tcp"
-    self        = true
-  }
-
-  # Simpana data transfer
-  ingress {
-    description = "Simpana data transfer"
-    from_port   = 8600
-    to_port     = 8699
-    protocol    = "tcp"
-    self        = true
-  }
-
-  # Simpana web console
-  ingress {
-    description = "Simpana web console"
-    from_port   = 81
-    to_port     = 81
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
-
-  dynamic "egress" {
-    for_each = local.common_egress_rules
-    content {
-      description      = egress.value.description
-      from_port        = egress.value.from_port
-      to_port          = egress.value.to_port
-      protocol         = egress.value.protocol
-      cidr_blocks      = egress.value.cidr_blocks
-      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
-    }
-  }
-
-  tags = merge(
-    local.common_tags,
-    {
-      Name = "tf_ezlab_simpana_client"
-    }
-  )
-}
-
-# ============================================================================
-# AMI DATA SOURCES
-# ============================================================================
-
-data "aws_ami" "windows2022" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["Windows_Server-2022-English-Full-Base-*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["801119661308"]
-}
-
-data "aws_ami" "sql2019" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["Windows_Server-2019-English-Full-SQL_2019_Standard-*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["801119661308"]
-}
-
-data "aws_ami" "debian" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["debian-12-amd64-*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["136693071363"]
-}
-
-data "aws_ami" "rhel9" {
-  count       = (lookup(var.aws_number, "nbu", 0) + lookup(var.aws_number, "oracle", 0)) > 0 ? 1 : 0
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["RHEL-9.*_HVM-*-x86_64-*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["309956199498"]
-}
-
-data "aws_ami" "bsd" {
-  count       = lookup(var.aws_number, "bsd", 0) > 0 ? 1 : 0
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["FreeBSD*15.0-CURRENT-*ZFS"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["782442783595"]
-  
-  # Note: FreeBSD AMIs may not be available in all regions
-  # If deployment fails, set bsd = 0 in your tfvars file
-}
-
-# ============================================================================
-# AMI ID MAP
-# ============================================================================
-
-locals {
-  ami_ids = {
-    windows2022 = data.aws_ami.windows2022.id
-    sql2019     = data.aws_ami.sql2019.id
-    debian      = data.aws_ami.debian.id
-    rhel9       = lookup(var.aws_number, "nbu", 0) + lookup(var.aws_number, "oracle", 0) > 0 ? data.aws_ami.rhel9[0].id : ""
-    bsd         = lookup(var.aws_number, "bsd", 0) > 0 ? data.aws_ami.bsd[0].id : ""
-  }
-}
-
-# ============================================================================
 # UNIFIED SERVICE DEPLOYMENT
-# Single for_each loop for ALL services (Windows + Unix)
+# Single for_each loop deploys ALL 23 services (Windows + Unix)
+# Services are configured in locals.tf
+# Security groups are defined in security-groups.tf
+# AMI lookups are in data-sources.tf
 # ============================================================================
 
 module "services" {
@@ -435,48 +36,34 @@ module "services" {
 
   source = "./modules/service"
 
+  # Service identification
   service_name   = each.key
   instance_count = var.aws_number[each.key]
   config         = each.value
 
-  # Common configuration passed once for all services
-  ami_ids                     = local.ami_ids
-  common_metadata_options     = local.common_instance_metadata_options
-  common_root_block_device    = local.common_instance_root_block_device
+  # Common configuration (passed once for all services)
+  ami_ids                  = local.ami_ids
+  common_metadata_options  = local.common_instance_metadata_options
+  common_root_block_device = local.common_instance_root_block_device
 
-  vpc_id = module.global.aws_vpc_id
-
-  subnets = {
-    back     = module.global.aws_subnet_back_id
-    web      = module.global.aws_subnet_web_id
-    mgmt     = module.global.aws_subnet_mgmt_id
-    exchange = module.global.aws_subnet_exchange_id
-    backup   = module.global.aws_subnet_backup_id
-  }
-
+  # Network configuration
+  vpc_id      = module.global.aws_vpc_id
+  subnets     = local.subnet_map
   cidr_blocks = local.cidr_blocks
 
+  # Instance configuration
   azs                  = var.azs
   iam_instance_profile = module.global.aws_iip_assumerole
   key_pair_id          = aws_key_pair.auth.id
 
+  # DNS configuration
   dns_zone_id        = module.global.dns_zone_id
   dns_public_zone_id = var.public_dns_id
   dns_suffix         = var.dns_suffix
 
-  security_groups = {
-    rdp            = aws_security_group.rdp.id
-    ssh            = aws_security_group.ssh.id
-    domain_member  = aws_security_group.domain_member.id
-    simpana_client = aws_security_group.simpana_client.id
-  }
+  # Security groups
+  security_groups = local.security_group_map
 
-  # NBU client security groups (for services that need them)
+  # NBU client security groups (for services that need backup client access)
   nbu_client_sg_ids = try([module.services["nbu"].security_group_id], [])
 }
-
-# ============================================================================
-# SSH KEY PAIR
-# ============================================================================
-
-# Note: aws_key_pair.auth is defined in backend.tf

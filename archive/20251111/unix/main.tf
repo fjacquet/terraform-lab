@@ -11,8 +11,8 @@ module "bsd" {
   dns_suffix           = local.common_unix_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Common security groups
   aws_sg_ids = local.common_unix_sg_ids
@@ -33,8 +33,8 @@ module "glpi" {
   dns_suffix              = local.common_unix_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific security groups
   aws_sg_ids = flatten([
@@ -57,8 +57,8 @@ module "vault" {
   dns_suffix              = local.common_unix_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific security groups
   aws_sg_ids = flatten([
@@ -82,9 +82,9 @@ module "guacamole" {
   dns_public_zone_id      = local.common_unix_config.dns_public_zone_id
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
-  dns_suffix              = local.common_unix_config.dns_suffix
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
+  dns_suffix                        = local.common_unix_config.dns_suffix
 
   # Service-specific security groups
   aws_sg_ids = flatten([
@@ -110,8 +110,8 @@ module "nbu" {
   dns_suffix              = local.common_unix_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Use computed CIDR blocks from root locals
   cidr = local.cidr_blocks.backup
@@ -137,8 +137,8 @@ module "oracle" {
   dns_suffix              = local.common_unix_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Use computed CIDR blocks from root locals
   cidr = local.cidr_blocks.back
@@ -167,8 +167,8 @@ module "redis" {
   dns_suffix              = local.common_unix_config.dns_suffix
 
   # Common instance configuration
-  common_instance_metadata_options    = local.common_instance_metadata_options
-  common_instance_root_block_device   = local.common_instance_root_block_device
+  common_instance_metadata_options  = local.common_instance_metadata_options
+  common_instance_root_block_device = local.common_instance_root_block_device
 
   # Service-specific security groups
   aws_sg_ids = flatten([

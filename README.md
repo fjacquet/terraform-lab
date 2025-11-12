@@ -13,11 +13,9 @@ Automated AWS lab environment for testing Windows and Linux services. Deploy com
 pip3 install -r requirements.txt
 ansible-galaxy install -r requirements.yml
 
-# 2. Configure services (edit terraform.tfvars)
-aws_number = {
-  "guacamole" = 1  # Bastion host
-  "adds"      = 2  # Domain controllers
-}
+# 2. Configure services
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars to enable services you need
 
 # 3. Deploy
 terraform init
@@ -27,6 +25,14 @@ terraform apply
 # 4. Configure with Ansible
 ansible-parallel playbooks/system/*.yml
 ansible-parallel playbooks/apps/*.yml
+```
+
+**Minimal deployment example** (terraform.tfvars):
+```hcl
+aws_number = {
+  "guacamole" = 1  # Bastion host
+  "adds"      = 2  # Domain controllers
+}
 ```
 
 ## What You Get
@@ -40,6 +46,7 @@ ansible-parallel playbooks/apps/*.yml
 | File Server, RDS, WSUS, WAC | Redis, FreeBSD |
 
 **Modern Architecture:**
+
 - Single unified module for all services
 - All configs in one file (`locals.tf`)
 - 90% less code than traditional approach
@@ -55,18 +62,21 @@ ansible-parallel playbooks/apps/*.yml
 ## Key Features
 
 ✅ **Secure by Default**
+
 - IMDSv2 enforced on all instances
 - Restricted admin access via CIDR blocks
 - AWS Secrets Manager integration
 - VPC endpoints for private connectivity
 
 ✅ **Easy to Use**
+
 - Deploy services by setting instance count
 - Single source of truth for configuration
 - Backward compatible outputs
 - Comprehensive documentation
 
 ✅ **Production Ready**
+
 - Automated tagging for cost tracking
 - Pre-commit hooks for code quality
 - Ansible automation included
@@ -86,14 +96,17 @@ ansible-parallel playbooks/apps/*.yml
 
 ### Deploy a Service
 
-```hcl
-# In terraform.tfvars
+```bash
+# 1. Copy example configuration
+cp terraform.tfvars.example terraform.tfvars
+
+# 2. Edit terraform.tfvars
+# Enable services by setting count > 0
 aws_number = {
   "myservice" = 2  # Deploy 2 instances
 }
-```
 
-```bash
+# 3. Deploy
 terraform apply
 ```
 
